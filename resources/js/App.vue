@@ -15,6 +15,9 @@
                         <li class="nav-item">
                             <router-link to="/shipments" class="nav-link">Shipments</router-link>
                         </li>
+                        <li class="nav-item">
+                            <router-link to="/datatable" class="nav-link">Datatable</router-link>
+                        </li>
 
                     </ul>
                     <!-- Right Side Of Navbar -->
