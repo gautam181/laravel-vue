@@ -1,56 +1,59 @@
 <template>
-    <div>
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <router-link to="/" class="navbar-brand">{{ this.application.name }}</router-link>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item">
-                            <router-link to="/" class="nav-link">Home</router-link>
-                        </li>
-                        <li class="nav-item">
-                            <router-link to="/shipments" class="nav-link">Shipments</router-link>
-                        </li>
-                        <li class="nav-item">
-                            <router-link to="/datatable" class="nav-link">Datatable</router-link>
-                        </li>
-
-                    </ul>
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                {{this.user.name}}
-                                <span class="caret"></span>
+    <main>
+        <!-- Header -->
+        <div id="header">
+            <div id="logo" class="light-version">
+        <span>
+            {{this.application.name}}
+        </span>
+            </div>
+            <nav role="navigation"  class="navbar-expand-lg">
+                <div class="header-link hide-menu"><i class="fa fa-bars"></i></div>
+                <div class="small-logo">
+                    <span class="text-primary">{{ this.application.name }}</span>
+                </div>
+                <form role="search" class="navbar-form-custom" method="post" action="#">
+                    <div class="form-group">
+                        <input type="text" placeholder="Search something special" class="form-control" name="search">
+                    </div>
+                </form>
+                <div class="mobile-menu">
+                    <button type="button" class="navbar-toggler mobile-menu-toggle" data-toggle="collapse" data-target="#mobile-collapse">
+                        <i class="fa fa-chevron-down"></i>
+                    </button>
+                    <div class="collapse mobile-navbar" id="mobile-collapse">
+                        <ul class="nav navbar-nav">
+                            <li>
+                                <a class="" href="#">Link</a>
+                            </li>
+                            <li>
+                                <a class="" href="#">Link</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="navbar-right pull-right">
+                    <ul class="nav navbar-nav no-borders">
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-sign-out"></i>
                             </a>
-
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="/logout"
-                                   onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                    Logout
-                                </a>
-
-
-                            </div>
                         </li>
                     </ul>
                 </div>
+            </nav>
+        </div>
+        <Sidebar></Sidebar>
+        <div id="wrapper">
+            <div class="content animate-panel">
+                <router-view></router-view>
             </div>
-
-        </nav>
-        <main class="py-4">
-            <router-view></router-view>
-        </main>
-
-    </div>
+        </div>
+    </main>
 </template>
 
 <script>
+    import Sidebar from './components/sidebar/Sidebar.vue'
     export default {
         data() {
           return {
@@ -61,7 +64,7 @@
         name: "app",
 
         components: {
-
+            Sidebar
         },
         mounted() {
             console.log('App mounted.', this.user)
