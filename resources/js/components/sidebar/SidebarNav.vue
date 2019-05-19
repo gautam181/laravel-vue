@@ -19,6 +19,13 @@
         },
         components: {
             NavList
+        },
+        methods: {
+            handleCollapseOther: function(menu) {
+                for (let i = 0; i < this.menus.length; i++) {
+                    this.$refs.navList[i].collapse(menu);
+                }
+            }
         }
     }
 </script>

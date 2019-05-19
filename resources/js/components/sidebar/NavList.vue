@@ -5,7 +5,7 @@
             <span class="nav-label">{{ menu.title }}</span>
             <span class="fa arrow"></span>
         </a>
-        <ul class="nav nav-second-level" v-bind:class="{ 'd-block': this.isActive == true, 'd-none': this.isActive == false }" v-bind:style="{ marginTop: (pageOptions.pageSidebarMinified) ? - (scrollTop + 40) + 'px' : '' }">
+        <ul class="nav nav-second-level" v-bind:class="{ 'd-block': this.isActive == true, 'd-none': this.isActive == false }" v-bind:style="{ marginTop: (options.sidebarMinified) ? - (scrollTop + 40) + 'px' : '' }">
             <template v-for="submenu in menu.children">
                 <nav-list v-bind:menu="submenu" v-bind:key="submenu.path" ref="navList" v-on:collapse-other="handleCollapseOther(submenu)"></nav-list>
             </template>
@@ -23,6 +23,7 @@
 
 <script>
     import Navlist from "./NavList.vue"
+    import Settings from "../../config/Settings"
 
     export default {
         name: "NavList",
@@ -33,7 +34,7 @@
         data(){
             return {
                 isActive:'',
-                pageOptions: {pageSidebarMinified: false}
+                options: Settings
             }
         },
         methods: {
@@ -55,7 +56,7 @@
             },
             handleCollapseOther: function(menu) {
                 for (var i = 0; i < this.menu.children.length; i++) {
-                    this.$refs.sidebarNavList[i].collapse(menu);
+                    this.$refs.navList[i].collapse(menu);
                 }
             },
             subIsActive(path) {

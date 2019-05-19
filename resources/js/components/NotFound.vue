@@ -1,10 +1,13 @@
 <template>
-    <div class="container">
-        <div class="flex-center position-ref full-height">
-            <div class="code">404</div>
+    <div class="error-container">
+        <h1><i class="fa fa-warning big-icon"></i>
+             404</h1>
+        <strong>Page Not Found</strong>
+        <p>
+            Sorry, but the page you are looking for has note been found. Try checking the URL for error, then hit the refresh button on your browser or try found something else in our app.
 
-            <div class="message" style="padding: 10px;">Not Found</div>
-        </div>
+        </p>
+        <a href="#/" class="btn btn-xs btn-success">Go back to dashboard</a>
     </div>
 </template>
 
