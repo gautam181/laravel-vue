@@ -33,7 +33,7 @@
             <div class="navbar-right pull-right">
                 <ul class="nav navbar-nav no-borders">
                     <li class="dropdown ">
-                        <a class="dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-item b-nav-dropdown dropdown" href="#" data-toggle="dropdown" aria-expanded="false">
                             <i class="fa fa-user"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-right hdropdown notification animated flipInX">
@@ -56,7 +56,7 @@
                         </ul>
                     </li>
                     <li class="dropdown">
-                        <a class="dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-item b-nav-dropdown dropdown" href="#" data-toggle="dropdown" aria-expanded="false">
                             <i class="fa fa-cog"></i>
                         </a>
 

@@ -1,7 +1,7 @@
 <template>
     <div class="profile-picture">
         <a href="index.html">
-            <img src="../../images/profile.jpg" class="img-circle m-b" alt="logo">
+            <img src="../../images/profile.jpg" class="rounded-circle" alt="logo">
         </a>
 
         <div class="stats-label text-color">
@@ -11,12 +11,12 @@
                 <a class="dropdown-toggle" href="#" data-toggle="dropdown">
                     <small class="text-muted">Founder of App <b class="caret"></b></small>
                 </a>
-                <ul class="dropdown-menu animated flipInX m-t-xs">
-                    <li><a href="contacts.html">Contacts</a></li>
-                    <li><a href="profile.html">Profile</a></li>
-                    <li><a href="analytics.html">Analytics</a></li>
-                    <li class="divider"></li>
-                    <li><a href="login.html">Logout</a></li>
+                <ul class="dropdown-menu dropdown-menu-right animated flipInX m-t-xs">
+                    <li class="dropdown-item"><a href="contacts.html">Contacts</a></li>
+                    <li class="dropdown-item"><a href="profile.html">Profile</a></li>
+                    <li class="dropdown-item"><a href="analytics.html">Analytics</a></li>
+                    <li class="dropdown-divider"></li>
+                    <li class="dropdown-item"><a href="login.html">Logout</a></li>
                 </ul>
             </div>
 
