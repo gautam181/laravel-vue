@@ -33,8 +33,9 @@
             <div class="navbar-right pull-right">
                 <ul class="nav navbar-nav no-borders">
                     <li class="dropdown ">
-                        <a class="nav-item b-nav-dropdown dropdown" href="#" data-toggle="dropdown" aria-expanded="false">
-                            <i class="fa fa-user"></i>
+                        <a class="nav-item b-nav-dropdown dropdown count-info" href="#" data-toggle="dropdown" aria-expanded="false">
+                            <i class="fa fa-envelope"></i>
+                            <!--<span class="badge badge-warning">16</span>-->
                         </a>
                         <ul class="dropdown-menu dropdown-menu-right hdropdown notification animated flipInX">
                             <li>

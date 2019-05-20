@@ -28,6 +28,7 @@
         "admin-lte": "^3.0.0-alpha.2",
         "mockjs": "^1.0.1-beta3",
         "moment": "^2.24.0",
+        "vue-fragment": "^1.5.1",
         "vue-router": "^3.0.6",
         "vue2-datatable-component": "^2.3.1"
     }

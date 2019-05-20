@@ -1,7 +1,7 @@
 <template>
     <ul class="nav flex-column" id="side-menu" v-if="menus">
         <template v-for="menu in menus">
-            <nav-list ref="navList" v-bind:menu="menu" v-bind:scrollTop="scrollTop" v-bind:key="menu.path" v-bind:status="menu.status" v-on:collapse-other="handleCollapseOther(menu)"></nav-list>
+            <nav-list ref="navList" v-bind:menu="menu" v-bind:key="menu.path" v-bind:status="menu.status" v-on:collapse-other="handleCollapseOther(menu)"></nav-list>
         </template>
     </ul>
 </template>

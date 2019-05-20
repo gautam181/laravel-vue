@@ -306,8 +306,9 @@
 }
 
 .navbar-nav > li > a {
-  padding: 15px 20px;
-  font-size: 25px;
+  padding: 10px 20px;
+  font-size: 20px;
+  display: block;
 }
 
 .navbar-nav > li:last-child > a {
@@ -758,7 +759,14 @@ a.list-group-item.active, a.list-group-item.active:hover, a.list-group-item.acti
   font-size: 13px;
   border-radius: 3px;
 }
+.count-info .badge {
+  line-height: 12px;
+  padding: 2px 5px;
+  position: absolute;
+  right: 6px;
+  top: 12px;
 
+}
 .dropdown-example {
   display: inline-block;
   margin: 0px 10px 10px 10px;
