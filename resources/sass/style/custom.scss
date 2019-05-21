@@ -15,3 +15,11 @@
 .profile-picture {
   img.rounded-circle{max-height: 48px;}
 }
+
+#side-menu .has-sub.active > .sub-menu {
+  display: block!important;
+}
+#side-menu .sub-menu {
+  display: none;
+}
+

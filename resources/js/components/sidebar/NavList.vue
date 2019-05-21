@@ -1,11 +1,11 @@
 <template>
     <!-- menu with submenu -->
-    <li v-if="menu.children" class="nav-item" v-bind:class="{ 'active': subIsActive(menu.path) }">
+    <li v-if="menu.children" class="nav-item has-sub" v-bind:class="{ 'active': subIsActive(menu.path) }">
         <a href="#" class="nav-link" v-on:click.prevent.stop="expand()">
             <span class="nav-label">{{ menu.title }}</span>
             <span class="fa arrow"></span>
         </a>
-        <ul class="nav nav-second-level" v-bind:class="{ 'd-block': this.isActive == true, 'd-none': this.isActive == false }" v-bind:style="{ marginTop: (options.sidebarMinified) ? - (scrollTop + 40) + 'px' : '' }">
+        <ul  class="nav nav-second-level sub-menu" v-bind:class="{ 'd-block': this.stat == 'expand', 'd-none': this.stat == 'collapse' }">
             <template v-for="submenu in menu.children">
                 <nav-list v-bind:menu="submenu" v-bind:key="submenu.path" ref="navList" v-on:collapse-other="handleCollapseOther(submenu)"></nav-list>
             </template>
@@ -33,16 +33,16 @@
         },
         data(){
             return {
-                isActive:'',
+                stat: '',
                 options: Settings
             }
         },
         methods: {
             expand: function() {
-                if (this.isActive == '') {
-                    this.isActive = (this.subIsActive(this.menu.path)) ? false : true;
+                if (this.stat == '') {
+                    this.stat = (this.subIsActive(this.menu.path)) ? 'collapse' : 'expand';
                 } else {
-                    this.isActive = (this.stat == 'expand') ? false : true
+                    this.stat = (this.stat == 'expand') ? 'collapse' : 'expand'
                 }
                 this.$emit('collapse-other', this.menu)
             },
@@ -55,7 +55,7 @@
                 this.$emit('collapse-other', this.menu)
             },
             handleCollapseOther: function(menu) {
-                for (var i = 0; i < this.menu.children.length; i++) {
+                for (let i = 0; i < this.menu.children.length; i++) {
                     this.$refs.navList[i].collapse(menu);
                 }
             },

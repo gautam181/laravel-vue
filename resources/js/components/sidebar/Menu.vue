@@ -4,8 +4,8 @@
         { path: '/analytics', title: 'Analytics', badge: {'class': 'warning', 'label': 'new'} },
         { path: '/interface', title: 'Interface',
             children: [
-                { path: 'interface/panels', title: 'Panels design'},
-                { path: 'interface/typography', title: 'Typography'},
+                { path: '/interface/shipments', title: 'Shipments'},
+                { path: '/interface/datatable', title: 'Datatable'},
             ]
         }
     ]
