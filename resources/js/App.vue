@@ -4,6 +4,7 @@
         <Header></Header>
         <Sidebar></Sidebar>
         <div id="wrapper">
+            <PageHeader></PageHeader>
             <div class="content animate-panel">
                 <router-view></router-view>
             </div>
@@ -14,13 +15,15 @@
 <script>
     import Sidebar from './components/sidebar/Sidebar.vue'
     import Header from './components/header/Header'
+    import PageHeader from './components/page/Header'
 
 
     export default {
         name: "app",
         components: {
             Sidebar,
-            Header
+            Header,
+            PageHeader
         },
         mounted() {
             console.log('App mounted.', this.user)

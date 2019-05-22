@@ -1,9 +1,7 @@
 <template>
     <div id="header">
         <div id="logo" class="light-version">
-            <span>
-                {{this.application.name}}
-            </span>
+            <img src="../../images/vue-laravel.png" :alt="application.name" class="brand-image">
         </div>
         <nav role="navigation"  class="navbar-expand-lg">
             <div class="header-link hide-menu" v-on:click="handleSidebarMinified"><i class="fa fa-bars"></i></div>

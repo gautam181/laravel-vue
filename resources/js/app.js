@@ -12,12 +12,14 @@ import Vue from 'vue';
 import VueRouter from 'vue-router'
 import Datatable from 'vue2-datatable-component'
 import { Plugin } from 'vue-fragment'
+import BootstrapVue from 'bootstrap-vue'
 
 window.Vue = require('vue');
 Vue.prototype.$user = window.user;
 Vue.prototype.$app = window.application;
 Vue.use(Datatable)
 Vue.use(Plugin)
+Vue.use(BootstrapVue)
 /**
  * Router
  */
