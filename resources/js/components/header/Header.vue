@@ -8,11 +8,6 @@
             <div class="small-logo">
                 <span class="text-primary">{{ this.application.name }}</span>
             </div>
-            <form role="search" class="navbar-form-custom" method="post" action="#">
-                <div class="form-group">
-                    <input type="text" placeholder="Search something special" class="form-control" name="search">
-                </div>
-            </form>
             <div class="mobile-menu">
                 <button type="button" class="navbar-toggler mobile-menu-toggle" data-toggle="collapse" data-target="#mobile-collapse">
                     <i class="fa fa-chevron-down"></i>
