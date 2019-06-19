@@ -4,9 +4,9 @@
         <Header></Header>
         <Sidebar></Sidebar>
         <div id="wrapper">
-            <PageHeader></PageHeader>
+            <PageHeader :headerData="pageHeaderData"></PageHeader>
             <div class="content animate-panel">
-                <router-view></router-view>
+                <router-view v-on:handle-page-header="handlePageHeader"></router-view>
             </div>
         </div>
     </fragment>
@@ -25,8 +25,18 @@
             Header,
             PageHeader
         },
+        data(){
+          return {
+              pageHeaderData: ''
+          }
+        },
         mounted() {
             console.log('App mounted.', this.user)
+        },
+        methods:{
+            handlePageHeader: function(data){
+                this.pageHeaderData = data
+            }
         }
     }
 </script>

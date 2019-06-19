@@ -134,7 +134,8 @@
 <script>
     export default {
         mounted() {
-            console.log('Component mounted.')
+            console.log('Component mounted.');
+            this.$emit('handle-page-header', {})
         }
     }
 </script>

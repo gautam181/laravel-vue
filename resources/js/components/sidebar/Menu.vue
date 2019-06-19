@@ -2,10 +2,16 @@
     const menu = [
         { path: '/dashboard', title: 'Dashboard', badge: {'class': 'success', 'label': 'v 1.0'} },
         { path: '/analytics', title: 'Analytics', badge: {'class': 'warning', 'label': 'new'} },
-        { path: '/interface', title: 'Interface',
+        { path: '/shipments', title: 'Shipments',
             children: [
-                { path: '/interface/shipments', title: 'Shipments'},
-                { path: '/interface/datatable', title: 'Datatable'},
+                { path: '/shipments/view', title: 'View'}
+            ]
+        },
+        {
+            path: '/sales', 'title': 'Sales',
+            children: [
+                {path: '/sales/customers', title:'Customers'},
+                {path: '/sales/sales', title:'Sales'}
             ]
         }
     ]

@@ -13,13 +13,20 @@ import VueRouter from 'vue-router'
 import Datatable from 'vue2-datatable-component'
 import { Plugin } from 'vue-fragment'
 import BootstrapVue from 'bootstrap-vue'
+import VueBreadcrumbs from 'vue-breadcrumbs'
+
 
 window.Vue = require('vue');
 Vue.prototype.$user = window.user;
 Vue.prototype.$app = window.application;
-Vue.use(Datatable)
-Vue.use(Plugin)
-Vue.use(BootstrapVue)
+Vue.use(Datatable);
+Vue.use(Plugin);
+Vue.use(BootstrapVue);
+Vue.use(VueBreadcrumbs, {
+    template: '<ol class="hbreadcrumb breadcrumb" v-if="$breadcrumbs.length"> ' +
+        '<router-link class="breadcrumb-item" v-for="(crumb, key) in $breadcrumbs" :to="linkProp(crumb)" :key="key">{{ crumb | crumbText }}</router-link> ' +
+        '</ol>'
+});
 /**
  * Router
  */

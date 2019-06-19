@@ -77,6 +77,7 @@
     export default {
         mounted() {
             console.log('Component mounted.')
+            this.$emit('handle-page-header', {label:'Analytics', desc:'Daily reports'})
         }
     }
 </script>
