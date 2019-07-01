@@ -17,7 +17,7 @@ class ProjectController extends Controller
     public function index()
     {
 
-        $data = Project::with(['createdby', 'owner'])->orderby('id', 'asc')->paginate(100);
+        $data = Project::with(['created_by', 'owner'])->orderby('id', 'asc')->paginate(100);
         return response()->json($data);
     }
 
@@ -69,7 +69,7 @@ class ProjectController extends Controller
     public function show($id)
     {
 
-        return response()->json(Project::with(['createdby', 'owner'])->findOrFail($id), 200);
+        return response()->json(Project::with(['created_by', 'owner'])->findOrFail($id), 200);
     }
 
     /**

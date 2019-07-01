@@ -9,7 +9,7 @@ class Project extends Model
 {
     //
 
-    public function createdBy(){
+    public function created_by(){
         return $this->belongsTo(User::class, 'created_by');
     }
 
