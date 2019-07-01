@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Validator;
+use DB;
 use App\Models\Project;
 use Illuminate\Http\Request;
 
@@ -15,6 +16,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
+
         $data = Project::with(['createdby', 'owner'])->orderby('id', 'asc')->paginate(100);
         return response()->json($data);
     }
@@ -61,12 +63,13 @@ class ProjectController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Project  $project
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Project $project)
+    public function show($id)
     {
-        //
+
+        return response()->json(Project::with(['createdby', 'owner'])->findOrFail($id), 200);
     }
 
     /**
