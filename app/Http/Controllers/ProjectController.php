@@ -52,7 +52,7 @@ class ProjectController extends Controller
             $project->created_by = $request->user()->id;
             $project->save();
 
-            return response()->json(["msg"=>"Record created successfully", 'data'=>$project->toArray()], 201);
+            return response()->json(["message"=>"Project created successfully", 'data'=>$project->toArray()], 201);
         }
     }
 
@@ -97,7 +97,7 @@ class ProjectController extends Controller
             $project->owner = $request->owner;
             $project->save();
 
-            return response()->json(["msg"=>"Record updated successfully", 'data'=> $project->toArray()], 202);
+            return response()->json(["message"=>"Project updated successfully", 'data'=> $project->toArray()], 202);
         }
     }
 
@@ -109,6 +109,11 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        //
+        $status = $project->delete();
+
+        return response()->json([
+            'status' => $status,
+            'message' => $status ? 'Project Deleted!' : 'Error Deleting Product'
+        ], 200);
     }
 }

@@ -7,11 +7,11 @@ use Faker\Generator as Faker;
 
 $factory->define(Project::class, function (Faker $faker) {
     return [
-        'name'=> "Project By ".$faker->name,
-        'description'=> $faker->paragraphs(),
+        'name'=> $faker->name,
+        'description'=> $faker->paragraph(),
         'start_date' => now(),
         'end_date'  => now(),
-        'owner'=> null,
-        'created_by'=> null
+        'owner'=> 1,
+        'created_by'=> 1
     ];
 });

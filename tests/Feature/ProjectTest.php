@@ -12,6 +12,9 @@ class ProjectTest extends TestCase
 {
     use RefreshDatabase;
 
+    /**
+     * @return array
+     */
     private function data(){
         return [
             'name' => 'Test project',
@@ -20,6 +23,16 @@ class ProjectTest extends TestCase
             'end_date' => null,
             'owner' => 1
         ];
+    }
+
+    /**
+     * @param int $count
+     * @param array $data
+     *
+     * @return mixed
+     */
+    private function addProjects($count=3, $data= []){
+        return factory(Project::class, $count)->create($data);
     }
     /**
      * test all routes for project to make sure they are projected for un-authenticated user access
@@ -47,14 +60,48 @@ class ProjectTest extends TestCase
     }
 
     /**
+     * project list with output structure test
+     *
      * @test
      */
     public function viewProjectsList()
     {
         $this->actingAs(factory(User::class)->create(), 'api');
+        $this->addProjects(2, ['owner'=>1]);
         $response = $this->json('GET', route('project.list'));
         $response->assertStatus(200);
+        $response->assertJsonStructure([
+            "current_page",
+            "total",
+            "data" => [
+                "*" => [
+                    "id",
+                    "name",
+                    "description",
+                    "start_date",
+                    "end_date",
+                    "owner",
+                    "created_by"
+                ]
+            ]
+        ]);
     }
+
+    /**
+     * creating the project with owner
+     *
+     * @test
+     */
+    public function viewProjectsWithOwnerList()
+    {
+        $this->actingAs(factory(User::class)->create(), 'api');
+        $this->addProjects(2, ['owner'=> null]);
+        $response = $this->json('GET', route('project.list'));
+        $response->assertStatus(200);
+        $response->assertJsonFragment(["owner" => null]);
+    }
+
+
 
     /**
      * @test
@@ -93,13 +140,57 @@ class ProjectTest extends TestCase
      */
     public function updateProject()
     {
-        /*$this->actingAs(factory(User::class)->create(), 'api');
-
-        $response = $this->json('PUT', route('project.update'),
-            $this->data()
+        $this->actingAs(factory(User::class)->create(), 'api');
+        $projects = $this->addProjects(1);
+        $project = $projects[0]->toArray();
+        $data = [
+            'name' => 'edit project',
+            'description' => 'Test Description',
+            'start_date' => null,
+            'end_date' => null,
+            'owner' => 1
+        ];
+        $response = $this->json('PUT', route('project.update', $project['id']),
+            $data
         );
         $this->assertCount(1, Project::all());
-        $response->assertStatus(202);*/
+        $response->assertStatus(202);
+        $response->assertJson(['message' => "Project updated successfully"]);
+        $response->assertJson(['data' => $data]);
+    }
+
+    /**
+     * @test
+     */
+    public function deleteProject()
+    {
+        $this->actingAs(factory(User::class)->create(), 'api');
+        $projects = $this->addProjects(1);
+        $project = $projects[0]->toArray();
+        $response = $this->json('DELETE', route('project.destroy', $project['id']));
+        $this->assertCount(0, Project::all());
+        $response->assertStatus(200);
+    }
+
+    /**
+     * @test
+     */
+    public function viewProject()
+    {
+        $this->actingAs(factory(User::class)->create(), 'api');
+        $projects = $this->addProjects(1);
+        $project = $projects[0]->toArray();
+        $response = $this->json('GET', route('project.show', $project['id']));
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+                    "id",
+                    "name",
+                    "description",
+                    "start_date",
+                    "end_date",
+                    "owner" => [],
+                    "created_by" => []
+        ]);
     }
 
 }
