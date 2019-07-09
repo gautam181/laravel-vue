@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProjectRequest;
 use Validator;
 use DB;
 use App\Models\Project;
@@ -34,18 +35,13 @@ class ProjectController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param ProjectRequest $request
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    public function store(ProjectRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'description' => 'required',
-        ]);
-        if ($validator->fails()) {
-            return reponse()->json($validator, 500);
-        } else {
+       if( $request->validated()) {
             // store
             $project = new Project();
             $project->name = $request->name;
@@ -56,7 +52,7 @@ class ProjectController extends Controller
             $project->created_by = $request->user()->id;
             $project->save();
 
-            return response()->json(["msg"=>"Record created successfully"], 201);
+            return response()->json(["msg"=>"Record created successfully", 'data'=>$project->toArray()], 201);
         }
     }
 
@@ -86,13 +82,23 @@ class ProjectController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  ProjectRequest  $request
      * @param  \App\Models\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Project $project)
+    public function update(ProjectRequest $request, Project $project)
     {
-        //
+        if( $request->validated()) {
+            // store
+            $project->name = $request->name;
+            $project->description = $request->description;
+            $project->start_date = $request->start_date;
+            $project->end_date = $request->end_date;
+            $project->owner = $request->owner;
+            $project->save();
+
+            return response()->json(["msg"=>"Record updated successfully", 'data'=> $project->toArray()], 202);
+        }
     }
 
     /**
