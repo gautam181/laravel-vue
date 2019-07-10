@@ -19,6 +19,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::group(['prefix'=>'/v1', 'middleware'=>['auth:api'] ], function (){
+    Route::get('ticket', ['uses'=>'TicketController@index', 'as'=>'ticket.list']);
+    Route::resource('ticket', 'TicketController',['except'=>['index', 'create', 'edit']]);
     Route::get('project', ['uses'=>'ProjectController@index', 'as'=>'project.list']);
     Route::resource('project', 'ProjectController',['except'=>['index', 'create', 'edit']]);
 });

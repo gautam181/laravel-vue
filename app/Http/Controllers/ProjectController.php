@@ -113,7 +113,7 @@ class ProjectController extends Controller
 
         return response()->json([
             'status' => $status,
-            'message' => $status ? 'Project Deleted!' : 'Error Deleting Product'
+            'message' => $status ? 'Project Deleted!' : 'Error Deleting Project'
         ], 200);
     }
 }
