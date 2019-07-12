@@ -120,6 +120,38 @@ class ProjectTest extends TestCase
     }
 
     /**
+    *@test
+    */
+    public function ownerIsValidUser(){
+        $this->actingAs(factory(User::class)->create(), 'api');
+
+        $response = $this->json('POST', route('project.store'),
+            array_merge($this->data(), ['owner'=>'1'])
+        );
+
+
+        $this->assertCount(1, Project::all());
+        $response->assertStatus(201);
+        $response->assertJson(['message' => "Project created successfully"]);
+    }
+
+    /**
+     *@test
+     */
+    public function ownerIsInValidUser(){
+        $this->actingAs(factory(User::class)->create(), 'api');
+
+        $response = $this->json('POST', route('project.store'),
+            array_merge($this->data(), ['owner'=>'524'])
+        );
+
+
+        $this->assertCount(0, Project::all());
+        $response->assertStatus(422);
+        $response->assertJsonValidationErrors('owner');
+    }
+
+    /**
      * @test
      */
     public function descriptionIsRequiredForProject()
