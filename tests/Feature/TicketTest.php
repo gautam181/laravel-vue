@@ -247,9 +247,9 @@ class TicketTest extends TestCase
             "description",
             "start_date",
             "end_date",
-            "assigned_to" => [],
-            'project' => [],
-            "created_by" => []
+            "assigned_to" => ['name'],
+            'project' => ['name'],
+            "created_by" => ['name']
         ]);
     }
 }
