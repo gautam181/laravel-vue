@@ -24,7 +24,9 @@ class TicketRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|max:200'
+            'title' => 'required|max:200',
+            'assigned_to' => ['nullable', 'exists:Users,id'],
+            'project_id' => ['nullable', 'exists:Projects,id'],
         ];
     }
 }
