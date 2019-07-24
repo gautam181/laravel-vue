@@ -32,11 +32,11 @@ Vue.use(VueBreadcrumbs, {
  */
 import routes from './config/Routes'
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 const router = new VueRouter({
     //mode: 'history',
     routes // short for `routes: routes`
-})
+});
 
 //Global variables
 import App from './App.vue'
@@ -44,4 +44,4 @@ import App from './App.vue'
 new Vue({
     render: h => h(App),
     router
-}).$mount('#app')
+}).$mount('#app');

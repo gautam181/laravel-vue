@@ -51,7 +51,7 @@
                     </li>
                     <li>
                         <a href="#">
-                            <i class="fa fa-sign-out"></i>
+                            <i class="fas fa-sign-out-alt"></i>
                         </a>
                     </li>
                 </ul>
