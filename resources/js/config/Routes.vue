@@ -16,11 +16,10 @@ const routes =[
     {path: '/', redirect:'/dashboard', meta:{breadcrumb: 'Dashboard'}},
     {path: '/dashboard', name: 'dashboard', component: Dashboard, meta: {breadcrumb: 'Dashboard'}},
     {path: '/projects', name: 'projects', component: ProjectList,
-        children: [
-            {path: '/projects/:id/tickets', name: 'project-detail', component: ProjectDetail, meta: {breadcrumb: 'Project Detail'}},
-        ],
+        children: [],
         meta: {breadcrumb: 'Projects'}
     },
+    {path: '/projects/:id/tickets', name: 'project-detail', component: ProjectDetail, meta: {breadcrumb: 'Project Detail'}},
 
     {path: '/analytics', name:'Analytics', component: Analytics, meta: {breadcrumb: 'Analytics'}},
     {path: '/shipments', name:'shipments', component: Shipments,

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProjectRequest;
+use App\Models\Ticket;
 use Validator;
 use DB;
 use App\Models\Project;
@@ -115,5 +116,15 @@ class ProjectController extends Controller
             'status' => $status,
             'message' => $status ? 'Project Deleted!' : 'Error Deleting Project'
         ], 200);
+    }
+
+    /**
+     * get ticket for a project
+     *
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function tickets($id){
+        return response()->json(Ticket::where('project_id', $id)->orderby('id', 'asc')->paginate(100), 200);
     }
 }

@@ -4,7 +4,11 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
+
 require('./bootstrap');
+
+//import configuration
+import settings from "./config/Settings";
 
 import Vue from 'vue';
 
@@ -19,6 +23,7 @@ import VueBreadcrumbs from 'vue-breadcrumbs'
 window.Vue = require('vue');
 Vue.prototype.$user = window.user;
 Vue.prototype.$app = window.application;
+Vue.prototype.$settings = settings;
 Vue.use(Datatable);
 Vue.use(Plugin);
 Vue.use(BootstrapVue);
