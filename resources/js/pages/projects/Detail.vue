@@ -11,7 +11,7 @@
                         </p>
 
                         <div class="table-responsive">
-                            <table v-if="tickets" class="table table-hover table-bordered table-striped">
+                            <table v-if="tickets.length > 0" class="table table-hover table-bordered table-striped">
                                 <tbody>
                                 <template v-for="ticket in tickets">
                                     <tr>
