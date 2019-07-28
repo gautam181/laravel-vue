@@ -10,6 +10,9 @@ import SalesIndex from '../pages/sales/Index'
 import SalesList from '../pages/sales/sales/Index'
 import ProjectList from '../pages/projects/Index'
 import ProjectDetail from '../pages/projects/Detail'
+import TicketList from '../pages/tickets/Index'
+import TicketDetail from '../pages/tickets/Detail'
+import TicketComments from '../pages/tickets/Comments'
 
 
 const routes =[
@@ -20,6 +23,9 @@ const routes =[
         meta: {breadcrumb: 'Projects'}
     },
     {path: '/projects/:id/tickets', name: 'project-detail', component: ProjectDetail, meta: {breadcrumb: 'Project Detail'}},
+    {path: '/tickets', name: 'tickets', component: TicketList, meta: {breadcrumb: 'Tickets'}},
+    {path: '/tickets/:id', name: 'ticket-detail', component: TicketDetail, meta: {breadcrumb: 'Ticket Detail'}},
+    {path: '/tickets/:id/comments', name: 'ticket-comments', component: TicketComments, meta: {breadcrumb: 'Ticket Comments'}},
 
     {path: '/analytics', name:'Analytics', component: Analytics, meta: {breadcrumb: 'Analytics'}},
     {path: '/shipments', name:'shipments', component: Shipments,
