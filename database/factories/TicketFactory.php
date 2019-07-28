@@ -7,7 +7,7 @@ use Faker\Generator as Faker;
 
 $factory->define(Ticket::class, function (Faker $faker) {
     return [
-        'title'=> $faker->sentence(40),
+        'title'=> $faker->sentence(15),
         'description' => $faker->paragraph(),
         'start_date' => now(),
         'end_date' => now(),
