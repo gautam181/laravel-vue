@@ -9,8 +9,8 @@ $factory->define(Project::class, function (Faker $faker) {
     return [
         'name'=> $faker->company,
         'description'=> $faker->paragraph(),
-        'start_date' => now(),
-        'end_date'  => now(),
+        'start_date' => $faker->dateTimeBetween('+0 days', '+1 month'),
+        'end_date'  => $faker->dateTimeBetween('+1 month', '+6 months'),
         'owner'=> 1,
         'created_by'=> 1
     ];
