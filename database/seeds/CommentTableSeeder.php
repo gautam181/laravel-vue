@@ -17,7 +17,7 @@ class CommentTableSeeder extends Seeder
         for($i=0; $i < 20; $i++){
             $ticket = $this->getRandomTicket();
             factory(Comment::class, rand(10, 20))->create([
-                'created_by' => User::getRandomUser(),
+                'created_by' => function() { return User::getRandomUser(); } ,
                 'project_id' => $ticket->project_id,
                 'ticket_id' => $ticket->id,
             ]);
