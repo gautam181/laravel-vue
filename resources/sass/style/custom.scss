@@ -23,3 +23,18 @@
   display: none;
 }
 .navbar-right, .pull-right{float: right;}
+.forum-box {
+    .panel-body {
+        border-bottom: none;
+        .media-author{
+            text-align: center;
+            margin-right: 10px;
+            min-width: 100px;
+        }
+        .media-info{
+            text-align: right;
+            margin-left: 10px;
+            min-width: 100px;
+        }
+    }
+}

@@ -118,6 +118,6 @@ class TicketController extends Controller
 
     public function comments($id)
     {
-        return response()->json(Comment::where('ticket_id', $id)->orderby('id', 'asc')->paginate(100), 200);
+        return response()->json(Comment::with(['created_by'])->where('ticket_id', $id)->orderby('id', 'asc')->paginate(100), 200);
     }
 }

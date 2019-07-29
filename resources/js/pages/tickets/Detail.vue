@@ -13,42 +13,34 @@
                 </div>
             </div>
             <div class="col-md-12">
-                <div class="hpanel">
-                    <div class="panel-heading">Comments</div>
+                <div class="hpanel forum-box" v-if="comments.length > 0">
+                    <template v-for="row in comments">
                     <div class="panel-body">
-                        <div class="table-responsive">
-                            <table v-if="comments.length > 0" class="table table-hover table-bordered table-striped">
-                                <tbody>
-                                <template v-for="row in comments">
-                                    <tr>
-                                        <td class="issue-info">
-                                            <router-link v-bind:to="{'name': 'project-detail', params: {'id': ticket.id }}" active-class="" class="">
-                                                {{ ticket.title }}
-                                            </router-link>
-                                            <br>
-                                            <small>
-                                                {{ ticket.description }}
-                                            </small>
-                                        </td>
-                                        <td>
-                                            {{ ticket.assigned_to.name }}
-                                        </td>
-                                        <td>
-                                            {{ ticket.updated_at }}
-                                        </td>
-                                        <td class="text-right">
-                                            <button class="btn btn-default btn-xs"> Edit</button>
-                                        </td>
-                                    </tr>
-                                </template>
-                                </tbody>
-                            </table>
-                            <p v-else>
-                                No comments found for ticket <strong>{{ ticket.title }}</strong>
-                            </p>
+                        <div class="media">
+                            <div class="media-author pull-left">
+                                <div class="author-info">
+                                    <strong>{{ row.created_by.name}}</strong><br>
+                                    {{ row.updated_at }}
+                                    <!--<div class="badges">
+                                        <i class="fa fa-star text-warning"></i>
+                                        <i class="fa fa-shield text-success"></i>
+                                    </div>-->
+                                </div>
+                            </div>
+                            <div class="media-body">
+                               {{ row.comment }}
+                            </div>
+                            <div class="media-info pull-right">
+                                {{ row.updated_at }}
+                                <button class="btn btn-default dropdown" data-toggle="dropdown" type="button" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></button>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a href="" class="dropdown-item">Edit</a>
+                                    <a href="" class="dropdown-item">Delete</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
-
+                    </template>
                 </div>
             </div>
         </div>
@@ -85,7 +77,11 @@
                     });
             },
             getComments: function (id, data) {
-
+                axios.get(this.$settings.APIURL+"/ticket/"+id+'/comments')
+                    .then(response => {
+                        let res = response.data;
+                        this.comments = res.data;
+                    });
             }
         }
     }
