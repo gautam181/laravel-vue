@@ -19,8 +19,8 @@
                         <div class="media">
                             <div class="media-author pull-left">
                                 <div class="author-info">
-                                    <strong>{{ row.created_by.name}}</strong><br>
-                                    {{ row.updated_at }}
+                                    <strong>{{ row.created_by.name }} </strong><br>
+                                    {{ row.updated_at | moment("from", "now" ) }}
                                     <!--<div class="badges">
                                         <i class="fa fa-star text-warning"></i>
                                         <i class="fa fa-shield text-success"></i>
@@ -31,7 +31,7 @@
                                {{ row.comment }}
                             </div>
                             <div class="media-info pull-right">
-                                {{ row.updated_at }}
+                                <span v-bind:title="row.updated_at">{{ row.updated_at | moment("from", "now") }}</span>
                                 <button class="btn btn-default dropdown" data-toggle="dropdown" type="button" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></button>
                                 <div class="dropdown-menu dropdown-menu-right">
                                     <a href="" class="dropdown-item">Edit</a>

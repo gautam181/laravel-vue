@@ -7,6 +7,7 @@
 
 require('./bootstrap');
 
+
 //import configuration
 import settings from "./config/Settings";
 
@@ -26,6 +27,7 @@ Vue.prototype.$app = window.application;
 Vue.prototype.$settings = settings;
 Vue.use(Datatable);
 Vue.use(Plugin);
+Vue.use(require('vue-moment'));
 Vue.use(BootstrapVue);
 Vue.use(VueBreadcrumbs, {
     template: '<ol class="hbreadcrumb breadcrumb" v-if="$breadcrumbs.length"> ' +
