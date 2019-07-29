@@ -10,8 +10,6 @@ $factory->define(Comment::class, function (Faker $faker) {
         'comment'=> $faker->paragraph(5),
         'project_id'=> null,
         'ticket_id'=> null,
-        'start_date' => $faker->dateTimeBetween('+0 days', '+1 month'),
-        'end_date'  => $faker->dateTimeBetween('+1 month', '+6 months'),
         'created_by'=> 1
     ];
 });
