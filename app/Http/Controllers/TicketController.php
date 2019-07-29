@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TicketRequest;
+use App\Models\Comment;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
 
@@ -113,5 +114,10 @@ class TicketController extends Controller
             'status' => $status,
             'message' => $status ? 'Project Deleted!' : 'Error Deleting Project'
         ], 200);
+    }
+
+    public function comments($id)
+    {
+        return response()->json(Comment::where('ticket_id', $id)->orderby('id', 'asc')->paginate(100), 200);
     }
 }
