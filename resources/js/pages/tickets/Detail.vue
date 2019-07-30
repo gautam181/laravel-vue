@@ -72,15 +72,14 @@
             getTicket: function (id) {
                 axios.get(this.$settings.APIURL+"/ticket/"+id)
                     .then(response => {
-                        let res = response.data;
-                        this.ticket = res;
+                        this.ticket = response.data;
                     });
             },
             getComments: function (id, data) {
                 axios.get(this.$settings.APIURL+"/ticket/"+id+'/comments')
                     .then(response => {
-                        let res = response.data;
-                        this.comments = res.data;
+                        const {data: data1} = response;
+                        this.comments = data1.data;
                     });
             }
         },
