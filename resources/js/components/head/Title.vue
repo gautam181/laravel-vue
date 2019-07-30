@@ -8,7 +8,12 @@
             title: {
                 immediate: true,
                 handler() {
-                    document.title = this.title + TITLE_SEP + TITLE;
+                    if (this.title != undefined)
+                        document.title = this.title + TITLE_SEP + TITLE;
+                    else if(this.$route.meta.title)
+                        document.title = this.$route.meta.title;
+                    else
+                        document.title = TITLE;
                 }
             }
         },
