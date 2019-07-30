@@ -2434,6 +2434,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+var TITLE = 'Laravel Vue App';
+var TITLE_SEP = ' - ';
 var routes = [{
   path: '/',
   redirect: '/dashboard',
@@ -2453,35 +2455,40 @@ var routes = [{
   component: _pages_projects_Index__WEBPACK_IMPORTED_MODULE_8__["default"],
   children: [],
   meta: {
-    breadcrumb: 'Projects'
+    breadcrumb: 'Projects',
+    title: 'projects list' + TITLE_SEP + TITLE
   }
 }, {
   path: '/projects/:id/tickets',
   name: 'project-detail',
   component: _pages_projects_Detail__WEBPACK_IMPORTED_MODULE_9__["default"],
   meta: {
-    breadcrumb: 'Project Detail'
+    breadcrumb: 'Project Detail',
+    title: 'project detail' + TITLE_SEP + TITLE
   }
 }, {
   path: '/tickets',
   name: 'tickets',
   component: _pages_tickets_Index__WEBPACK_IMPORTED_MODULE_10__["default"],
   meta: {
-    breadcrumb: 'Tickets'
+    breadcrumb: 'Tickets',
+    title: 'ticket list' + TITLE_SEP + TITLE
   }
 }, {
   path: '/tickets/:id',
   name: 'ticket-detail',
   component: _pages_tickets_Detail__WEBPACK_IMPORTED_MODULE_11__["default"],
   meta: {
-    breadcrumb: 'Ticket Detail'
+    breadcrumb: 'Ticket Detail',
+    title: 'ticket detail' + TITLE_SEP + TITLE
   }
 }, {
   path: '/tickets/:id/comments',
   name: 'ticket-comments',
   component: _pages_tickets_Comments__WEBPACK_IMPORTED_MODULE_12__["default"],
   meta: {
-    breadcrumb: 'Ticket Comments'
+    breadcrumb: 'Ticket Comments',
+    title: 'ticket comments' + TITLE_SEP + TITLE
   }
 }, {
   path: '/analytics',
@@ -97871,6 +97878,13 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_2__["default"]({
   //mode: 'history',
   routes: _config_Routes__WEBPACK_IMPORTED_MODULE_7__["default"] // short for `routes: routes`
 
+});
+router.beforeEach(function (to, from, next) {
+  var nearestWithTitle = to.matched.slice().reverse().find(function (r) {
+    return r.meta && r.meta.title;
+  });
+  if (nearestWithTitle) document.title = nearestWithTitle.meta.title;
+  return next();
 }); //Global variables
 
 

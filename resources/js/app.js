@@ -45,6 +45,12 @@ const router = new VueRouter({
     routes // short for `routes: routes`
 });
 
+router.beforeEach((to, from, next) => {
+    const nearestWithTitle = to.matched.slice().reverse().find(r => r.meta && r.meta.title);
+    if(nearestWithTitle) document.title = nearestWithTitle.meta.title;
+    return next();
+});
+
 //Global variables
 import App from './App.vue'
 

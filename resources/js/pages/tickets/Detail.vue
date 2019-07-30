@@ -19,7 +19,7 @@
                         <div class="media">
                             <div class="media-author pull-left">
                                 <div class="author-info">
-                                    <strong>{{ row.created_by.name }} </strong><br>
+                                    <p class="author-name" v-bind:title="row.created_by.name">{{ row.created_by.name }} </p>
                                     {{ row.updated_at | moment("from", "now" ) }}
                                     <!--<div class="badges">
                                         <i class="fa fa-star text-warning"></i>
@@ -83,6 +83,12 @@
                         this.comments = res.data;
                     });
             }
+        },
+        beforeRouteUpdate (to, from, next) {
+            this.ticket_id = to.params.id;
+            this.getTicket(this.ticket_id);
+            this.getComments(this.ticket_id);
+            next();
         }
     }
 </script>

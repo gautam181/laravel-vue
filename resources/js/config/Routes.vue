@@ -14,18 +14,20 @@ import TicketList from '../pages/tickets/Index'
 import TicketDetail from '../pages/tickets/Detail'
 import TicketComments from '../pages/tickets/Comments'
 
+const TITLE = 'Laravel Vue App';
+const TITLE_SEP = ' - ';
 
 const routes =[
     {path: '/', redirect:'/dashboard', meta:{breadcrumb: 'Dashboard'}},
     {path: '/dashboard', name: 'dashboard', component: Dashboard, meta: {breadcrumb: 'Dashboard'}},
     {path: '/projects', name: 'projects', component: ProjectList,
         children: [],
-        meta: {breadcrumb: 'Projects'}
+        meta: {breadcrumb: 'Projects', title: 'projects list'+TITLE_SEP+TITLE}
     },
-    {path: '/projects/:id/tickets', name: 'project-detail', component: ProjectDetail, meta: {breadcrumb: 'Project Detail'}},
-    {path: '/tickets', name: 'tickets', component: TicketList, meta: {breadcrumb: 'Tickets'}},
-    {path: '/tickets/:id', name: 'ticket-detail', component: TicketDetail, meta: {breadcrumb: 'Ticket Detail'}},
-    {path: '/tickets/:id/comments', name: 'ticket-comments', component: TicketComments, meta: {breadcrumb: 'Ticket Comments'}},
+    {path: '/projects/:id/tickets', name: 'project-detail', component: ProjectDetail, meta: {breadcrumb: 'Project Detail', title: 'project detail'+TITLE_SEP+TITLE}},
+    {path: '/tickets', name: 'tickets', component: TicketList, meta: {breadcrumb: 'Tickets', title: 'ticket list'+TITLE_SEP+TITLE}},
+    {path: '/tickets/:id', name: 'ticket-detail', component: TicketDetail, meta: {breadcrumb: 'Ticket Detail', title: 'ticket detail'+TITLE_SEP+TITLE}},
+    {path: '/tickets/:id/comments', name: 'ticket-comments', component: TicketComments, meta: {breadcrumb: 'Ticket Comments', title: 'ticket comments'+TITLE_SEP+TITLE}},
 
     {path: '/analytics', name:'Analytics', component: Analytics, meta: {breadcrumb: 'Analytics'}},
     {path: '/shipments', name:'shipments', component: Shipments,
