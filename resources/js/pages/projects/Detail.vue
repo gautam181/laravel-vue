@@ -1,5 +1,6 @@
 <template>
     <div>
+        <vue-title :title="project.name"></vue-title>
         <div class="row projects">
             <div class="col-md-12">
                 <div class="hpanel">

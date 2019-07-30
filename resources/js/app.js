@@ -10,9 +10,11 @@ require('./bootstrap');
 
 //import configuration
 import settings from "./config/Settings";
+import titleComponent from './components/head/Title';
 
 import Vue from 'vue';
 
+Vue.component('vue-title', titleComponent);
 //plugins
 import VueRouter from 'vue-router'
 import Datatable from 'vue2-datatable-component'

@@ -1,5 +1,6 @@
 <template>
     <div>
+        <vue-title :title="ticket.title"></vue-title>
         <div class="row">
             <div class="col-md-12">
                 <div class="hpanel">

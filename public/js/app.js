@@ -2018,6 +2018,33 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/head/Title.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/head/Title.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var TITLE = 'Laravel Vue App';
+var TITLE_SEP = ' - ';
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "Title",
+  props: ['title'],
+  watch: {
+    title: {
+      immediate: true,
+      handler: function handler() {
+        document.title = this.title + TITLE_SEP + TITLE;
+      }
+    }
+  },
+  render: function render() {}
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/header/Header.vue?vue&type=script&lang=js&":
 /*!************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/header/Header.vue?vue&type=script&lang=js& ***!
@@ -2574,6 +2601,7 @@ var settings = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -3349,6 +3377,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ticket-detail",
   data: function data() {
@@ -3380,16 +3409,15 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       axios.get(this.$settings.APIURL + "/ticket/" + id).then(function (response) {
-        var res = response.data;
-        _this2.ticket = res;
+        _this2.ticket = response.data;
       });
     },
     getComments: function getComments(id, data) {
       var _this3 = this;
 
       axios.get(this.$settings.APIURL + "/ticket/" + id + '/comments').then(function (response) {
-        var res = response.data;
-        _this3.comments = res.data;
+        var data1 = response.data;
+        _this3.comments = data1.data;
       });
     }
   },
@@ -75619,118 +75647,128 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("div", { staticClass: "row projects" }, [
-      _c("div", { staticClass: "col-md-12" }, [
-        _c("div", { staticClass: "hpanel" }, [
-          _c("div", { staticClass: "panel-heading" }, [
-            _vm._v("Project: " + _vm._s(_vm.project.name))
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "panel-body" }, [
-            _c("p", [
-              _vm._v(
-                "\n                        " +
-                  _vm._s(_vm.project.description) +
-                  "\n                    "
-              )
+  return _c(
+    "div",
+    [
+      _c("vue-title", { attrs: { title: _vm.project.name } }),
+      _vm._v(" "),
+      _c("div", { staticClass: "row projects" }, [
+        _c("div", { staticClass: "col-md-12" }, [
+          _c("div", { staticClass: "hpanel" }, [
+            _c("div", { staticClass: "panel-heading" }, [
+              _vm._v("Project: " + _vm._s(_vm.project.name))
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "panel-body" }, [
+              _c("p", [
+                _vm._v(
+                  "\n                        " +
+                    _vm._s(_vm.project.description) +
+                    "\n                    "
+                )
+              ])
             ])
           ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-12" }, [
-        _vm.tickets.length > 0
-          ? _c(
-              "div",
-              { staticClass: "hpanel forum-box" },
-              [
-                _c("div", { staticClass: "panel-heading" }, [
-                  _vm._v("Ticket List")
-                ]),
-                _vm._v(" "),
-                _vm._l(_vm.tickets, function(row) {
-                  return [
-                    _c("div", { staticClass: "panel-body" }, [
-                      _c("div", { staticClass: "media" }, [
-                        _c("div", { staticClass: "media-author pull-left" }, [
-                          _c("div", { staticClass: "author-info" }, [
-                            _c(
-                              "p",
-                              {
-                                staticClass: "author-name",
-                                attrs: { title: row.assigned_to.name }
-                              },
-                              [_vm._v(_vm._s(row.assigned_to.name) + " ")]
-                            ),
-                            _vm._v(
-                              "\n                                    " +
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-12" }, [
+          _vm.tickets.length > 0
+            ? _c(
+                "div",
+                { staticClass: "hpanel forum-box" },
+                [
+                  _c("div", { staticClass: "panel-heading" }, [
+                    _vm._v("Ticket List")
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(_vm.tickets, function(row) {
+                    return [
+                      _c("div", { staticClass: "panel-body" }, [
+                        _c("div", { staticClass: "media" }, [
+                          _c("div", { staticClass: "media-author pull-left" }, [
+                            _c("div", { staticClass: "author-info" }, [
+                              _c(
+                                "p",
+                                {
+                                  staticClass: "author-name",
+                                  attrs: { title: row.assigned_to.name }
+                                },
+                                [_vm._v(_vm._s(row.assigned_to.name) + " ")]
+                              ),
+                              _vm._v(
+                                "\n                                    " +
+                                  _vm._s(
+                                    _vm._f("moment")(
+                                      row.updated_at,
+                                      "from",
+                                      "now"
+                                    )
+                                  ) +
+                                  "\n                                "
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "media-body" },
+                            [
+                              _c(
+                                "router-link",
+                                {
+                                  attrs: {
+                                    to: {
+                                      name: "ticket-detail",
+                                      params: { id: row.id }
+                                    },
+                                    "active-class": ""
+                                  }
+                                },
+                                [_c("strong", [_vm._v(_vm._s(row.title))])]
+                              ),
+                              _c("br"),
+                              _vm._v(
+                                "\n                                " +
+                                  _vm._s(row.description) +
+                                  "\n                            "
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "media-info pull-right" }, [
+                            _c("span", { attrs: { title: row.updated_at } }, [
+                              _vm._v(
                                 _vm._s(
                                   _vm._f("moment")(
                                     row.updated_at,
                                     "from",
                                     "now"
                                   )
-                                ) +
-                                "\n                                "
-                            )
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          { staticClass: "media-body" },
-                          [
-                            _c(
-                              "router-link",
-                              {
-                                attrs: {
-                                  to: {
-                                    name: "ticket-detail",
-                                    params: { id: row.id }
-                                  },
-                                  "active-class": ""
-                                }
-                              },
-                              [_c("strong", [_vm._v(_vm._s(row.title))])]
-                            ),
-                            _c("br"),
-                            _vm._v(
-                              "\n                                " +
-                                _vm._s(row.description) +
-                                "\n                            "
-                            )
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "media-info pull-right" }, [
-                          _c("span", { attrs: { title: row.updated_at } }, [
-                            _vm._v(
-                              _vm._s(
-                                _vm._f("moment")(row.updated_at, "from", "now")
+                                )
                               )
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _vm._m(0, true),
-                          _vm._v(" "),
-                          _vm._m(1, true)
+                            ]),
+                            _vm._v(" "),
+                            _vm._m(0, true),
+                            _vm._v(" "),
+                            _vm._m(1, true)
+                          ])
                         ])
                       ])
-                    ])
-                  ]
-                })
-              ],
-              2
-            )
-          : _c("p", [
-              _vm._v("\n                No ticket found for project "),
-              _c("strong", [_vm._v(_vm._s(_vm.project.name))])
-            ])
+                    ]
+                  })
+                ],
+                2
+              )
+            : _c("p", [
+                _vm._v("\n                No ticket found for project "),
+                _c("strong", [_vm._v(_vm._s(_vm.project.name))])
+              ])
+        ])
       ])
-    ])
-  ])
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {
@@ -76690,92 +76728,102 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-md-12" }, [
-        _c("div", { staticClass: "hpanel" }, [
-          _c("div", { staticClass: "panel-heading" }, [
-            _vm._v(_vm._s(_vm.ticket.title))
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "panel-body" }, [
-            _c("p", [
-              _vm._v(
-                "\n                        " +
-                  _vm._s(_vm.ticket.description) +
-                  "\n                    "
-              )
+  return _c(
+    "div",
+    [
+      _c("vue-title", { attrs: { title: _vm.ticket.title } }),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-12" }, [
+          _c("div", { staticClass: "hpanel" }, [
+            _c("div", { staticClass: "panel-heading" }, [
+              _vm._v(_vm._s(_vm.ticket.title))
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "panel-body" }, [
+              _c("p", [
+                _vm._v(
+                  "\n                        " +
+                    _vm._s(_vm.ticket.description) +
+                    "\n                    "
+                )
+              ])
             ])
           ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-12" }, [
-        _vm.comments.length > 0
-          ? _c(
-              "div",
-              { staticClass: "hpanel forum-box" },
-              [
-                _vm._l(_vm.comments, function(row) {
-                  return [
-                    _c("div", { staticClass: "panel-body" }, [
-                      _c("div", { staticClass: "media" }, [
-                        _c("div", { staticClass: "media-author pull-left" }, [
-                          _c("div", { staticClass: "author-info" }, [
-                            _c(
-                              "p",
-                              {
-                                staticClass: "author-name",
-                                attrs: { title: row.created_by.name }
-                              },
-                              [_vm._v(_vm._s(row.created_by.name) + " ")]
-                            ),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-12" }, [
+          _vm.comments.length > 0
+            ? _c(
+                "div",
+                { staticClass: "hpanel forum-box" },
+                [
+                  _vm._l(_vm.comments, function(row) {
+                    return [
+                      _c("div", { staticClass: "panel-body" }, [
+                        _c("div", { staticClass: "media" }, [
+                          _c("div", { staticClass: "media-author pull-left" }, [
+                            _c("div", { staticClass: "author-info" }, [
+                              _c(
+                                "p",
+                                {
+                                  staticClass: "author-name",
+                                  attrs: { title: row.created_by.name }
+                                },
+                                [_vm._v(_vm._s(row.created_by.name) + " ")]
+                              ),
+                              _vm._v(
+                                "\n                                " +
+                                  _vm._s(
+                                    _vm._f("moment")(
+                                      row.updated_at,
+                                      "from",
+                                      "now"
+                                    )
+                                  ) +
+                                  "\n                                "
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "media-body" }, [
                             _vm._v(
-                              "\n                                " +
+                              "\n                           " +
+                                _vm._s(row.comment) +
+                                "\n                        "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "media-info pull-right" }, [
+                            _c("span", { attrs: { title: row.updated_at } }, [
+                              _vm._v(
                                 _vm._s(
                                   _vm._f("moment")(
                                     row.updated_at,
                                     "from",
                                     "now"
                                   )
-                                ) +
-                                "\n                                "
-                            )
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "media-body" }, [
-                          _vm._v(
-                            "\n                           " +
-                              _vm._s(row.comment) +
-                              "\n                        "
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "media-info pull-right" }, [
-                          _c("span", { attrs: { title: row.updated_at } }, [
-                            _vm._v(
-                              _vm._s(
-                                _vm._f("moment")(row.updated_at, "from", "now")
+                                )
                               )
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _vm._m(0, true),
-                          _vm._v(" "),
-                          _vm._m(1, true)
+                            ]),
+                            _vm._v(" "),
+                            _vm._m(0, true),
+                            _vm._v(" "),
+                            _vm._m(1, true)
+                          ])
                         ])
                       ])
-                    ])
-                  ]
-                })
-              ],
-              2
-            )
-          : _vm._e()
+                    ]
+                  })
+                ],
+                2
+              )
+            : _vm._e()
+        ])
       ])
-    ])
-  ])
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {
@@ -97831,16 +97879,17 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _config_Settings__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./config/Settings */ "./resources/js/config/Settings.vue");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
-/* harmony import */ var vue2_datatable_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue2-datatable-component */ "./node_modules/vue2-datatable-component/src/main.js");
-/* harmony import */ var vue_fragment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-fragment */ "./node_modules/vue-fragment/dist/vue-fragment.esm.js");
-/* harmony import */ var bootstrap_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! bootstrap-vue */ "./node_modules/bootstrap-vue/esm/index.js");
-/* harmony import */ var vue_breadcrumbs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vue-breadcrumbs */ "./node_modules/vue-breadcrumbs/dist/vue-breadcrumbs.common.js");
-/* harmony import */ var vue_breadcrumbs__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(vue_breadcrumbs__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _config_Routes__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./config/Routes */ "./resources/js/config/Routes.vue");
-/* harmony import */ var _App_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./App.vue */ "./resources/js/App.vue");
+/* harmony import */ var _components_head_Title__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/head/Title */ "./resources/js/components/head/Title.vue");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
+/* harmony import */ var vue2_datatable_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue2-datatable-component */ "./node_modules/vue2-datatable-component/src/main.js");
+/* harmony import */ var vue_fragment__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue-fragment */ "./node_modules/vue-fragment/dist/vue-fragment.esm.js");
+/* harmony import */ var bootstrap_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! bootstrap-vue */ "./node_modules/bootstrap-vue/esm/index.js");
+/* harmony import */ var vue_breadcrumbs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vue-breadcrumbs */ "./node_modules/vue-breadcrumbs/dist/vue-breadcrumbs.common.js");
+/* harmony import */ var vue_breadcrumbs__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(vue_breadcrumbs__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _config_Routes__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./config/Routes */ "./resources/js/config/Routes.vue");
+/* harmony import */ var _App_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./App.vue */ "./resources/js/App.vue");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -97850,7 +97899,9 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); //import 
 
 
 
- //plugins
+
+
+vue__WEBPACK_IMPORTED_MODULE_2___default.a.component('vue-title', _components_head_Title__WEBPACK_IMPORTED_MODULE_1__["default"]); //plugins
 
 
 
@@ -97858,14 +97909,14 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); //import 
 
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
-vue__WEBPACK_IMPORTED_MODULE_1___default.a.prototype.$user = window.user;
-vue__WEBPACK_IMPORTED_MODULE_1___default.a.prototype.$app = window.application;
-vue__WEBPACK_IMPORTED_MODULE_1___default.a.prototype.$settings = _config_Settings__WEBPACK_IMPORTED_MODULE_0__["default"];
-vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue2_datatable_component__WEBPACK_IMPORTED_MODULE_3__["default"]);
-vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_fragment__WEBPACK_IMPORTED_MODULE_4__["Plugin"]);
-vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(__webpack_require__(/*! vue-moment */ "./node_modules/vue-moment/dist/vue-moment.js"));
-vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_5__["default"]);
-vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_breadcrumbs__WEBPACK_IMPORTED_MODULE_6___default.a, {
+vue__WEBPACK_IMPORTED_MODULE_2___default.a.prototype.$user = window.user;
+vue__WEBPACK_IMPORTED_MODULE_2___default.a.prototype.$app = window.application;
+vue__WEBPACK_IMPORTED_MODULE_2___default.a.prototype.$settings = _config_Settings__WEBPACK_IMPORTED_MODULE_0__["default"];
+vue__WEBPACK_IMPORTED_MODULE_2___default.a.use(vue2_datatable_component__WEBPACK_IMPORTED_MODULE_4__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_2___default.a.use(vue_fragment__WEBPACK_IMPORTED_MODULE_5__["Plugin"]);
+vue__WEBPACK_IMPORTED_MODULE_2___default.a.use(__webpack_require__(/*! vue-moment */ "./node_modules/vue-moment/dist/vue-moment.js"));
+vue__WEBPACK_IMPORTED_MODULE_2___default.a.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_6__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_2___default.a.use(vue_breadcrumbs__WEBPACK_IMPORTED_MODULE_7___default.a, {
   template: '<ol class="hbreadcrumb breadcrumb" v-if="$breadcrumbs.length"> ' + '<router-link class="breadcrumb-item" v-for="(crumb, key) in $breadcrumbs" :to="linkProp(crumb)" :key="key">{{ crumb | crumbText }}</router-link> ' + '</ol>'
 });
 /**
@@ -97873,10 +97924,10 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_breadcrumbs__WEBPACK_IMPORTED
  */
 
 
-vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_2__["default"]);
-var router = new vue_router__WEBPACK_IMPORTED_MODULE_2__["default"]({
+vue__WEBPACK_IMPORTED_MODULE_2___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_3__["default"]);
+var router = new vue_router__WEBPACK_IMPORTED_MODULE_3__["default"]({
   //mode: 'history',
-  routes: _config_Routes__WEBPACK_IMPORTED_MODULE_7__["default"] // short for `routes: routes`
+  routes: _config_Routes__WEBPACK_IMPORTED_MODULE_8__["default"] // short for `routes: routes`
 
 });
 router.beforeEach(function (to, from, next) {
@@ -97888,9 +97939,9 @@ router.beforeEach(function (to, from, next) {
 }); //Global variables
 
 
-new vue__WEBPACK_IMPORTED_MODULE_1___default.a({
+new vue__WEBPACK_IMPORTED_MODULE_2___default.a({
   render: function render(h) {
-    return h(_App_vue__WEBPACK_IMPORTED_MODULE_8__["default"]);
+    return h(_App_vue__WEBPACK_IMPORTED_MODULE_9__["default"]);
   },
   router: router
 }).$mount('#app');
@@ -98159,6 +98210,56 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NotFound_vue_vue_type_template_id_2ce50e5a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/components/head/Title.vue":
+/*!************************************************!*\
+  !*** ./resources/js/components/head/Title.vue ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Title_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Title.vue?vue&type=script&lang=js& */ "./resources/js/components/head/Title.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+var render, staticRenderFns
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
+  _Title_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"],
+  render,
+  staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/head/Title.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/head/Title.vue?vue&type=script&lang=js&":
+/*!*************************************************************************!*\
+  !*** ./resources/js/components/head/Title.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Title_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./Title.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/head/Title.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Title_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
