@@ -9,41 +9,45 @@
                         <p>
                             {{ project.description }}
                         </p>
-
-                        <div class="table-responsive">
-                            <table v-if="tickets.length > 0" class="table table-hover table-bordered table-striped">
-                                <tbody>
-                                <template v-for="ticket in tickets">
-                                    <tr>
-                                        <td class="issue-info">
-                                            <router-link v-bind:to="{'name': 'project-detail', params: {'id': ticket.id }}" active-class="" class="">
-                                                {{ ticket.title }}
-                                            </router-link>
-                                            <br>
-                                            <small>
-                                                {{ ticket.description }}
-                                            </small>
-                                        </td>
-                                        <td>
-                                            {{ ticket.assigned_to.name }}
-                                        </td>
-                                        <td>
-                                            {{ ticket.updated_at }}
-                                        </td>
-                                        <td class="text-right">
-                                            <button class="btn btn-default btn-xs"> Edit</button>
-                                        </td>
-                                    </tr>
-                                </template>
-                                </tbody>
-                            </table>
-                            <p v-else>
-                                No project found for project <strong>{{ project.name }}</strong>
-                            </p>
-                        </div>
                     </div>
 
                 </div>
+            </div>
+            <div class="col-md-12">
+
+                <div class="hpanel forum-box" v-if="tickets.length > 0">
+                    <div class="panel-heading">Ticket List</div>
+                    <template v-for="row in tickets">
+                        <div class="panel-body">
+                            <div class="media">
+                                <div class="media-author pull-left">
+                                    <div class="author-info">
+                                        <p class="author-name" v-bind:title="row.assigned_to.name">{{ row.assigned_to.name }} </p>
+                                        {{ row.updated_at | moment("from", "now" ) }}
+                                    </div>
+                                </div>
+                                <div class="media-body">
+
+                                    <router-link v-bind:to="{'name': 'ticket-detail', params: {'id': row.id }}" active-class="" class="">
+                                        <strong>{{ row.title }}</strong>
+                                    </router-link><br>
+                                    {{ row.description }}
+                                </div>
+                                <div class="media-info pull-right">
+                                    <span v-bind:title="row.updated_at">{{ row.updated_at | moment("from", "now") }}</span>
+                                    <button class="btn btn-default dropdown" data-toggle="dropdown" type="button" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></button>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a href="" class="dropdown-item">Edit</a>
+                                        <a href="" class="dropdown-item">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+                <p v-else>
+                    No ticket found for project <strong>{{ project.name }}</strong>
+                </p>
             </div>
         </div>
     </div>
@@ -85,10 +89,16 @@
                         this.tickets = res.data;
                     });
             }
+        },
+        beforeRouteUpdate (to, from, next) {
+            this.project_id = to.params.id;
+            this.getProject(this.project_id);
+            this.getTickets(this.project_id);
+            next();
         }
     }
 </script>
 
 <style scoped>
-
+h5{font-size: 14px;}
 </style>

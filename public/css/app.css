@@ -17034,6 +17034,14 @@ ul.h-list li:hover a {
   text-align: center;
   margin-right: 10px;
   min-width: 100px;
+  max-width: 100px;
+}
+
+.forum-box .panel-body .media-author .author-name {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-weight: bold;
+  overflow: hidden;
 }
 
 .forum-box .panel-body .media-info {

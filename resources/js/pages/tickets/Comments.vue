@@ -256,14 +256,14 @@
 
 <script>
     export default {
-        name: "project-detail",
+        name: "ticket-comments",
         data(){
             return {
                 myRoute : {}
             }
         },
         mounted(){
-            this.$emit('handle-page-header', {label:'Projects', desc:'Project Detail'});
+            this.$emit('handle-page-header', {label:'Comments', desc:'Ticket Comments'});
             this.myRoute = this.$router.options.routes.find(route => route.name === this.$route.name);
         },
         methods:{

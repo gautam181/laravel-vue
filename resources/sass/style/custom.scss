@@ -29,7 +29,8 @@
         .media-author{
             text-align: center;
             margin-right: 10px;
-            min-width: 100px;
+            min-width: 100px;max-width: 100px;
+            .author-name{white-space: nowrap;text-overflow: ellipsis;font-weight: bold;overflow: hidden;}
         }
         .media-info{
             text-align: right;

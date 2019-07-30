@@ -125,6 +125,6 @@ class ProjectController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function tickets($id){
-        return response()->json(Ticket::where('project_id', $id)->orderby('id', 'asc')->paginate(100), 200);
+        return response()->json(Ticket::with(['assigned_to'])->where('project_id', $id)->orderby('id', 'asc')->paginate(100), 200);
     }
 }
