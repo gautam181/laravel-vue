@@ -8,26 +8,33 @@
 require('./bootstrap');
 
 
+
+
 //import configuration
 import settings from "./config/Settings";
 import titleComponent from './components/head/Title';
 
 import Vue from 'vue';
 
-Vue.component('vue-title', titleComponent);
+
 //plugins
 import VueRouter from 'vue-router'
 import Datatable from 'vue2-datatable-component'
 import { Plugin } from 'vue-fragment'
 import BootstrapVue from 'bootstrap-vue'
 import VueBreadcrumbs from 'vue-breadcrumbs'
+import Paginate from 'vuejs-paginate'
 
+//component
+Vue.component('vue-title', titleComponent);
+Vue.component('paginate', Paginate)
 
 window.Vue = require('vue');
 Vue.prototype.$user = window.user;
 Vue.prototype.$app = window.application;
 Vue.prototype.$settings = settings;
 Vue.use(Datatable);
+
 Vue.use(Plugin);
 Vue.use(require('vue-moment'));
 Vue.use(BootstrapVue);

@@ -1,18 +1,24 @@
 <template>
     <div>
         <router-view v-on:handle-page-header="handlePageHeader" ref="myChild"></router-view>
+        <b-pagination
+            v-model="page"
+            :total-rows="totalRows"
+            :per-page="perPage"
+            align="right"
+        ></b-pagination>
         <div v-if="$route.name == 'tickets'" class="row projects">
             <template v-for="row in tickets">
                 <div class="col-md-12">
                     <div class="hpanel hgreen">
                         <div class="panel-body">
                             <div class="row">
-                                <div class="col-sm-8">
-                                    <h4>
+                                <div class="col-sm-8 col-md-10">
+                                    <h5>
                                         <router-link v-bind:to="{'name': 'ticket-detail', params: {'id': row.id }}" active-class="" class="">
                                             {{ row.title }}
                                         </router-link>
-                                    </h4>
+                                    </h5>
 
 
                                     <p>
@@ -21,7 +27,7 @@
 
                                     <div class="row">
                                         <div class="col-sm-4">
-                                            <div class="project-label">DEDLINE</div>
+                                            <div class="project-label">DEADLINE</div>
                                             <small>{{ row.end_date }}</small>
                                         </div>
                                         <div class="col-sm-4">
@@ -34,7 +40,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-4 project-info">
+                                <div class="col-sm-4 col-md-2 project-info">
                                     <div class="project-action m-t-md">
                                         <div class="btn-group">
                                             <button class="btn btn-xs btn-default"> View</button>
@@ -56,7 +62,14 @@
                     </div>
                 </div>
             </template>
+
         </div>
+        <b-pagination
+            v-model="page"
+            :total-rows="totalRows"
+            :per-page="perPage"
+            align="right"
+        ></b-pagination>
     </div>
 </template>
 
@@ -67,8 +80,10 @@
             return {
                 myRoute : {},
                 tickets : [],
-                current_page: 1,
-                totalPages : 0
+                page: 1,
+                totalPages : 0,
+                totalRows : 0,
+                perPage: 0
             }
         },
         mounted(){
@@ -77,17 +92,29 @@
             if(this.$route.name == 'tickets')
                 this.projects = this.getTickets();
         },
+        watch:{
+            page: function (val) {
+                this.getTickets();
+            }
+        },
         methods:{
             handlePageHeader: function(data){
                 this.$emit('handle-page-header', data);
             },
-            getTickets: function (data) {
-                axios.get(this.$settings.APIURL+"/tickets")
+            getTickets: function () {
+                let url = this.$settings.APIURL+"/tickets?page="+this.page;
+
+                axios.get(url)
                     .then(response => {
                         let res = response.data;
                         this.tickets = res.data;
+                        this.totalPages = res.last_page;
+                        this.page = res.current_page;
+                        this.perPage = res.per_page;
+                        this.totalRows = res.total;
                     });
             }
+
         }
     }
 </script>
