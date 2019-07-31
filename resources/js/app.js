@@ -23,11 +23,9 @@ import Datatable from 'vue2-datatable-component'
 import { Plugin } from 'vue-fragment'
 import BootstrapVue from 'bootstrap-vue'
 import VueBreadcrumbs from 'vue-breadcrumbs'
-import Paginate from 'vuejs-paginate'
 
 //component
 Vue.component('vue-title', titleComponent);
-Vue.component('paginate', Paginate)
 
 window.Vue = require('vue');
 Vue.prototype.$user = window.user;

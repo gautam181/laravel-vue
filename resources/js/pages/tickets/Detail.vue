@@ -3,8 +3,13 @@
         <vue-title :title="ticket.title"></vue-title>
         <div class="row">
             <div class="col-md-12">
-                <div class="hpanel">
-                    <div class="panel-heading">{{ ticket.title }}</div>
+                <div id="ticket" class="hpanel">
+                    <div class="panel-heading hbuilt">
+                        {{ ticket.title }}
+                        <div class="panel-tools">
+                            <a class="showhide" v-on:click="togglePanel('#ticket')"><i class="fa fa-chevron-up"></i></a>
+                        </div>
+                    </div>
                     <div class="panel-body">
                         <p>
                             {{ ticket.description }}
@@ -12,6 +17,27 @@
                     </div>
 
                 </div>
+            </div>
+            <div class="col-md-12">
+                <div class="list-options">
+                    <h2 class="">Comments</h2>
+                    <div class="btn-options text-right">
+                        <button data-toggle="dropdown" class="btn btn-default dropdown-toggle" aria-expanded="false">Sort: <span class="action">Date ASC</span><span class="caret"></span></button>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li>Date ASC</li>
+                            <li>Date DESC</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-12">
+                <CommentForm
+                    :author="this.$user"
+                    :comment="add_comment"
+                    :ticket="ticket"
+                    :edit="true"
+                ></CommentForm>
             </div>
             <div class="col-md-12">
                 <div class="hpanel forum-box" v-if="comments.length > 0">
@@ -49,6 +75,7 @@
 </template>
 
 <script>
+    import CommentForm from "../../components/forms/CommentForm";
     export default {
         name: "ticket-detail",
         data(){
@@ -56,9 +83,13 @@
                 myRoute : {},
                 ticket_id : this.$route.params.id,
                 ticket: {},
-                comments: []
+                comments: [],
+                add_comment: {body:'', id:''}
 
             }
+        },
+        components: {
+            CommentForm
         },
         mounted(){
             this.getTicket(this.ticket_id);
@@ -82,6 +113,11 @@
                         const {data: data1} = response;
                         this.comments = data1.data;
                     });
+            },
+            togglePanel: function (id) {
+                $(id).find(".showhide i").toggleClass('fa-chevron-up').toggleClass('fa-chevron-down');
+                $(id).find(".panel-body").slideToggle(300);
+                $(id).find(".panel-footr").slideToggle(200);
             }
         },
         beforeRouteUpdate (to, from, next) {

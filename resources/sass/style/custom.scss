@@ -23,6 +23,11 @@
   display: none;
 }
 .navbar-right, .pull-right{float: right;}
+.navbar-left, .pull-left{float: left;}
+.list-options {display:flex; padding: 10px 0px;}
+.list-options .btn{min-width:10rem;}
+.list-options h2 {flex:1; font-size:20px; font-weight:500;}
+.list-options .btn-options {flex:1; }
 .forum-box {
     .panel-body {
         border-bottom: none;
