@@ -14,12 +14,14 @@ class ProjectController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
+     *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
 
-        $data = Project::with(['created_by', 'owner'])->orderby('id', 'asc')->paginate(100);
+        $data = Project::with(['created_by', 'owner'])->orderby('id', 'asc')->paginate($request->per_page);
         return response()->json($data);
     }
 

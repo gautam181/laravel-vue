@@ -12,12 +12,14 @@ class TicketController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
+     *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $data = Ticket::with(['created_by', 'assigned_to', 'project'])
-                      ->orderby('id', 'asc')->paginate(100);
+                      ->orderby('id', 'asc')->paginate($request->per_page);
         return response()->json($data);
     }
 
