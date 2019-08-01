@@ -32,41 +32,22 @@
 
             </div>
             <div class="col-md-12">
-                <CommentForm
+                <Comment
                     :author="this.$user"
                     :comment="add_comment"
                     :ticket="ticket"
                     :edit="true"
-                ></CommentForm>
+                ></Comment>
             </div>
             <div class="col-md-12">
                 <div class="hpanel forum-box" v-if="comments.length > 0">
                     <template v-for="row in comments">
-                    <div class="panel-body">
-                        <div class="media">
-                            <div class="media-author pull-left">
-                                <div class="author-info">
-                                    <p class="author-name" v-bind:title="row.created_by.name">{{ row.created_by.name }} </p>
-                                    {{ row.updated_at | moment("from", "now" ) }}
-                                    <!--<div class="badges">
-                                        <i class="fa fa-star text-warning"></i>
-                                        <i class="fa fa-shield text-success"></i>
-                                    </div>-->
-                                </div>
-                            </div>
-                            <div class="media-body">
-                               {{ row.comment }}
-                            </div>
-                            <div class="media-info pull-right">
-                                <span v-bind:title="row.updated_at">{{ row.updated_at | moment("from", "now") }}</span>
-                                <button class="btn btn-default dropdown" data-toggle="dropdown" type="button" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></button>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a href="" class="dropdown-item">Edit</a>
-                                    <a href="" class="dropdown-item">Delete</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        <Comment
+                            :author="row.created_by"
+                            :comment="row"
+                            :ticket="ticket"
+                            :edit="false"
+                        ></Comment>
                     </template>
                 </div>
             </div>
@@ -75,7 +56,7 @@
 </template>
 
 <script>
-    import CommentForm from "../../components/forms/CommentForm";
+    import Comment from "../../components/util/Comment";
     export default {
         name: "ticket-detail",
         data(){
@@ -84,12 +65,12 @@
                 ticket_id : this.$route.params.id,
                 ticket: {},
                 comments: [],
-                add_comment: {body:'', id:''}
+                add_comment: {comment:'', id:''}
 
             }
         },
         components: {
-            CommentForm
+            Comment
         },
         mounted(){
             this.getTicket(this.ticket_id);

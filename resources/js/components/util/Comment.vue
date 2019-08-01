@@ -8,12 +8,15 @@
                     </div>
                 </div>
                 <div class="media-body">
-                    <form action="">
-                        <div v-if="mode == 'update'">
-                            <textarea name="comments" v-model="comment_body" class="form-control" placeholder="add your comments"> {{ comment_body }}</textarea>
-                            <div class="hr-line-dashed"></div>
-                            <button class="btn btn-primary" type="button" v-on:click="saveComment()" :disabled="comment_body.length < 1">Save Comment</button> or
-                            <button class="btn w-xs btn-link"  type="button" v-on:onclick="resetComment()">Cancel</button>
+                    <form action="" >
+                        <div v-if="mode == 'update'" v-bind:class="{active: activated}">
+                            <textarea name="comments" v-model="comment_body" v-on:click.self="enableComment()" class="form-control" placeholder="add your comments"> {{ comment_body }}</textarea>
+                            <div v-if="activated">
+                                <div class="hr-line-dashed"></div>
+                                <button class="btn btn-primary" type="button" v-on:click="saveComment()" :disabled="comment_body.length < 1">Save Comment</button> or
+                                <button class="btn w-xs btn-link"  type="button" v-on:click="resetComment()">Cancel</button>
+                            </div>
+
                         </div>
                         <div class="formatted-comment" v-else="">
                             {{ comment_body }}
@@ -21,7 +24,7 @@
                     </form>
                 </div>
                 <div class="media-info pull-right" v-if="mode == 'view'">
-                    <span v-bind:title="comment_updated_at">{{ comment_updated_at | moment("from", "now") }}</span>
+                    <span v-bind:title="comment.updated_at">{{ comment.updated_at | moment("from", "now") }}</span>
                     <button class="btn btn-default dropdown" data-toggle="dropdown" type="button" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></button>
                     <div class="dropdown-menu dropdown-menu-right">
                         <a href="" class="dropdown-item">Edit</a>
@@ -36,28 +39,27 @@
 
 <script>
     export default {
-        name: "CommentForm",
+        name: "Comment",
         props: ['author', 'comment', 'ticket', 'edit'],
-        data(){
+        data: function(){
             return {
-                author_id: this.author.id,
-                ticket_id: this.ticket.id,
-                project_id: this.ticket.project_id,
-                comment_body: this.comment.body,
-                comment_id: this.comment.id,
-                comment_updated_at : this.comment.updated_at,
-                mode: this.edit ? 'update': 'view'
+                mode: this.edit ? 'update': 'view',
+                comment_body: this.comment.comment,
+                activated: false
             }
+        },
+        mounted(){
+            //console.log(this.ticket, this.author_id);
         },
         methods: {
             saveComment: function () {
                 axios({
-                    method: this.comment_id ? 'put' : 'post',
-                    url: this.$settings.APIURL+'/comment'+(this.comment_id ? '/'+this.comment_id : ''),
+                    method: this.comment.id ? 'put' : 'post',
+                    url: this.$settings.APIURL+'/comment'+(this.comment.id ? '/'+this.comment.id : ''),
                     data: {
-                        author_id: this.author_id,
-                        ticket_id: this.ticket_id,
-                        project_id: this.project_id,
+                        author_id: this.author.id,
+                        ticket_id: this.ticket.id,
+                        project_id: this.ticket.project_id,
                         comment: this.comment_body
                     }
                 }).
@@ -66,8 +68,11 @@
                 });
             },
             resetComment: function () {
-                console.log('reset comment');
-                this.comment_body = '';
+                this.comment_body = "";
+                this.activated = false;
+            },
+            enableComment(){
+                this.activated = true;
             }
         },
 
@@ -75,5 +80,6 @@
 </script>
 
 <style scoped>
-
+    textarea {height: 40px; background: #f1f3f6;}
+    .active textarea {height: 100px; background: transparent;}
 </style>
