@@ -3,21 +3,21 @@
         <vue-title :title="project.name"></vue-title>
         <div class="row projects">
             <div class="col-md-12">
-                <div class="hpanel">
-                    <div class="panel-heading">Project: {{ project.name }}</div>
-                    <div class="panel-body">
-
-                        <p>
-                            {{ project.description }}
-                        </p>
-                    </div>
-
-                </div>
+                <vue-panel
+                    id="project"
+                    :title="'Project: '+project.name"
+                    tools="1"
+                >{{ project.description }}</vue-panel>
             </div>
             <div class="col-md-12">
 
-                <div class="hpanel forum-box" v-if="tickets.length > 0">
-                    <div class="panel-heading">Ticket List</div>
+                <div class="hpanel forum-box" id="tickets" v-if="tickets.length > 0">
+                    <div class="panel-heading hbuilt">
+                        Ticket List
+                        <div class="panel-tools">
+                            <a class="showhide" v-on:click="togglePanel('#tickets')"><i class="fa fa-chevron-up"></i></a>
+                        </div>
+                    </div>
                     <template v-for="row in tickets">
                         <div class="panel-body">
                             <div class="media">
@@ -63,8 +63,10 @@
                 project_id : this.$route.params.id,
                 project: {},
                 tickets: []
-
             }
+        },
+        components: {
+            //
         },
         mounted(){
             this.getProject(this.project_id);

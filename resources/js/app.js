@@ -13,6 +13,7 @@ require('./bootstrap');
 //import configuration
 import settings from "./config/Settings";
 import titleComponent from './components/head/Title';
+import PanelVue from "./components/util/Panel";
 
 import Vue from 'vue';
 
@@ -26,6 +27,7 @@ import VueBreadcrumbs from 'vue-breadcrumbs'
 
 //component
 Vue.component('vue-title', titleComponent);
+Vue.component('vue-panel', PanelVue);
 
 window.Vue = require('vue');
 Vue.prototype.$user = window.user;
