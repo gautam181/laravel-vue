@@ -17068,6 +17068,10 @@ ul.h-list li:hover a {
   overflow: hidden;
 }
 
+.forum-box .panel-body .media-author .vue-avatar--wrapper {
+  margin: 0px auto;
+}
+
 .forum-box .panel-body .media-info {
   text-align: right;
   margin-left: 10px;

@@ -2474,6 +2474,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Comment",
   props: ['author', 'comment', 'ticket', 'edit'],
@@ -2741,6 +2742,7 @@ var settings = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -75920,7 +75922,18 @@ var render = function() {
             "div",
             { staticClass: "author-info" },
             [
-              _c("avatar", { attrs: { username: _vm.author.name, size: "40" } })
+              _c("avatar", {
+                attrs: { username: _vm.author.name, size: "40" }
+              }),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "author-name",
+                  attrs: { title: _vm.author.name }
+                },
+                [_vm._v(_vm._s(_vm.author.name) + " ")]
+              )
             ],
             1
           )
@@ -76226,27 +76239,39 @@ var render = function() {
                       _c("div", { staticClass: "panel-body" }, [
                         _c("div", { staticClass: "media" }, [
                           _c("div", { staticClass: "media-author pull-left" }, [
-                            _c("div", { staticClass: "author-info" }, [
-                              _c(
-                                "p",
-                                {
-                                  staticClass: "author-name",
-                                  attrs: { title: row.assigned_to.name }
-                                },
-                                [_vm._v(_vm._s(row.assigned_to.name) + " ")]
-                              ),
-                              _vm._v(
-                                "\n                                    " +
-                                  _vm._s(
-                                    _vm._f("moment")(
-                                      row.updated_at,
-                                      "from",
-                                      "now"
-                                    )
-                                  ) +
-                                  "\n                                "
-                              )
-                            ])
+                            _c(
+                              "div",
+                              { staticClass: "author-info" },
+                              [
+                                _c("avatar", {
+                                  attrs: {
+                                    username: row.assigned_to.name,
+                                    size: "40"
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "author-name",
+                                    attrs: { title: row.assigned_to.name }
+                                  },
+                                  [_vm._v(_vm._s(row.assigned_to.name) + " ")]
+                                ),
+                                _vm._v(
+                                  "\n                                    " +
+                                    _vm._s(
+                                      _vm._f("moment")(
+                                        row.updated_at,
+                                        "from",
+                                        "now"
+                                      )
+                                    ) +
+                                    "\n                                "
+                                )
+                              ],
+                              1
+                            )
                           ]),
                           _vm._v(" "),
                           _c(

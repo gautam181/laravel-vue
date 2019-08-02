@@ -5,6 +5,7 @@
                 <div class="media-author pull-left">
                     <div class="author-info">
                         <avatar :username="author.name" size="40"></avatar>
+                        <div class="author-name" v-bind:title="author.name" >{{ author.name }} </div>
                     </div>
                 </div>
                 <div class="media-body">

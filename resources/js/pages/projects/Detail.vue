@@ -23,7 +23,8 @@
                             <div class="media">
                                 <div class="media-author pull-left">
                                     <div class="author-info">
-                                        <p class="author-name" v-bind:title="row.assigned_to.name">{{ row.assigned_to.name }} </p>
+                                        <avatar :username="row.assigned_to.name" size="40"></avatar>
+                                        <div class="author-name" v-bind:title="row.assigned_to.name" >{{ row.assigned_to.name }} </div>
                                         {{ row.updated_at | moment("from", "now" ) }}
                                     </div>
                                 </div>
