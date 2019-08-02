@@ -3,30 +3,23 @@
         <vue-title :title="ticket.title"></vue-title>
         <div class="row">
             <div class="col-md-12">
-                <div id="ticket" class="hpanel">
-                    <div class="panel-heading hbuilt">
-                        {{ ticket.title }}
-                        <div class="panel-tools">
-                            <a class="showhide" v-on:click="togglePanel('#ticket')"><i class="fa fa-chevron-up"></i></a>
-                        </div>
-                    </div>
-                    <div class="panel-body">
-                        <p>
-                            {{ ticket.description }}
-                        </p>
-                    </div>
-
-                </div>
+                <vue-panel
+                    id="ticket"
+                    :title="ticket.title"
+                    tools="1"
+                >{{ ticket.description }}</vue-panel>
             </div>
             <div class="col-md-12">
                 <div class="list-options">
                     <h2 class="">Comments</h2>
                     <div class="btn-options text-right">
-                        <button data-toggle="dropdown" class="btn btn-default dropdown-toggle" aria-expanded="false">Sort: <span class="action">Date ASC</span><span class="caret"></span></button>
-                        <ul class="dropdown-menu dropdown-menu-right">
-                            <li>Date ASC</li>
-                            <li>Date DESC</li>
-                        </ul>
+                        <b-dropdown variant="default">
+                            <template slot="button-content">
+                                <strong>Sort By: </strong> Date Ascending
+                            </template>
+                            <b-dropdown-item-button active>Date Ascending</b-dropdown-item-button>
+                            <b-dropdown-item-button >Date Descending</b-dropdown-item-button>
+                        </b-dropdown>
                     </div>
                 </div>
 

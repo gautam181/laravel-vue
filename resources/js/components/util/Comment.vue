@@ -4,7 +4,7 @@
             <div class="media">
                 <div class="media-author pull-left">
                     <div class="author-info">
-                        <p class="author-name" v-bind:title="author.name">{{ author.name }} </p>
+                        <avatar :username="author.name" size="40"></avatar>
                     </div>
                 </div>
                 <div class="media-body">

@@ -14,6 +14,7 @@ require('./bootstrap');
 import settings from "./config/Settings";
 import titleComponent from './components/head/Title';
 import PanelVue from "./components/util/Panel";
+import Avatar from 'vue-avatar';
 
 import Vue from 'vue';
 
@@ -28,6 +29,7 @@ import VueBreadcrumbs from 'vue-breadcrumbs'
 //component
 Vue.component('vue-title', titleComponent);
 Vue.component('vue-panel', PanelVue);
+Vue.component('avatar', Avatar);
 
 window.Vue = require('vue');
 Vue.prototype.$user = window.user;
@@ -38,6 +40,7 @@ Vue.use(Datatable);
 Vue.use(Plugin);
 Vue.use(require('vue-moment'));
 Vue.use(BootstrapVue);
+
 Vue.use(VueBreadcrumbs, {
     template: '<ol class="hbreadcrumb breadcrumb" v-if="$breadcrumbs.length"> ' +
         '<router-link class="breadcrumb-item" v-for="(crumb, key) in $breadcrumbs" :to="linkProp(crumb)" :key="key">{{ crumb | crumbText }}</router-link> ' +
