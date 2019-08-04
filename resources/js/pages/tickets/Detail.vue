@@ -13,12 +13,12 @@
                 <div class="list-options">
                     <h2 class="">Comments</h2>
                     <div class="btn-options text-right">
-                        <b-dropdown variant="default">
+                        <b-dropdown variant="default" >
                             <template slot="button-content">
-                                <strong>Sort By: </strong> Date Ascending
+                                <strong>Sort By: </strong> Date <span v-show="sort == 'desc'">Descending</span> <span v-show="sort == 'asc'">Ascending</span>
                             </template>
-                            <b-dropdown-item-button active>Date Ascending</b-dropdown-item-button>
-                            <b-dropdown-item-button >Date Descending</b-dropdown-item-button>
+                            <b-dropdown-item-button  v-on:click="changeCommentSort('asc')" active>Date Ascending</b-dropdown-item-button>
+                            <b-dropdown-item-button v-on:click="changeCommentSort('desc')">Date Descending</b-dropdown-item-button>
                         </b-dropdown>
                     </div>
                 </div>
@@ -58,6 +58,8 @@
                 ticket_id : this.$route.params.id,
                 ticket: {},
                 comments: [],
+                sort: 'asc',
+                order_by: 'date',
                 add_comment: {comment:'', id:''}
 
             }
@@ -66,8 +68,8 @@
             Comment
         },
         mounted(){
-            this.getTicket(this.ticket_id);
-            this.getComments(this.ticket_id);
+            this.getTicket();
+            this.getComments();
             this.$emit('handle-page-header', {label:'Ticket', desc:'Ticket Detail'});
             this.myRoute = this.$router.options.routes.find(route => route.name === this.$route.name);
         },
@@ -75,14 +77,19 @@
             handlePageHeader: function(data){
                 this.$emit('handle-page-header', data);
             },
-            getTicket: function (id) {
-                axios.get(this.$settings.APIURL+"/ticket/"+id)
+            getTicket: function () {
+                axios.get(this.$settings.APIURL+"/ticket/"+this.ticket_id)
                     .then(response => {
                         this.ticket = response.data;
                     });
             },
-            getComments: function (id, data) {
-                axios.get(this.$settings.APIURL+"/ticket/"+id+'/comments')
+            changeCommentSort: function(val){
+                console.log("data changed", val);
+                this.sort = val;
+                this.getComments();
+            },
+            getComments: function () {
+                axios.get(this.$settings.APIURL+"/ticket/"+this.ticket_id+'/comments?sort='+this.sort)
                     .then(response => {
                         const {data: data1} = response;
                         this.comments = data1.data;

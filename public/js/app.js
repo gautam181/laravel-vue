@@ -2475,6 +2475,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Comment",
   props: ['author', 'comment', 'ticket', 'edit'],
@@ -2482,8 +2484,15 @@ __webpack_require__.r(__webpack_exports__);
     return {
       mode: this.edit ? 'update' : 'view',
       comment_body: this.comment.comment,
-      activated: false
+      activated: false,
+      size: 40,
+      id_deleted: false
     };
+  },
+  watch: {
+    comment: function comment(val) {
+      this.comment_body = this.comment.comment;
+    }
   },
   mounted: function mounted() {//console.log(this.ticket, this.author_id);
   },
@@ -2499,15 +2508,26 @@ __webpack_require__.r(__webpack_exports__);
           comment: this.comment_body
         }
       }).then(function (response) {
-        console.log(response);
+        this.activated = false;
+        if (this.edit === false) this.mode = 'view';
       });
     },
     resetComment: function resetComment() {
-      this.comment_body = "";
       this.activated = false;
+      if (this.edit === false) this.mode = 'view';
+      this.comment_body = this.comment.comment;
     },
     enableComment: function enableComment() {
       this.activated = true;
+    },
+    editComment: function editComment() {
+      this.mode = 'update';
+      this.activated = true;
+      console.info("Edit Called");
+    },
+    deleteComment: function deleteComment() {
+      console.info("delete called");
+      this.id_deleted = true;
     }
   }
 });
@@ -3556,6 +3576,8 @@ __webpack_require__.r(__webpack_exports__);
       ticket_id: this.$route.params.id,
       ticket: {},
       comments: [],
+      sort: 'asc',
+      order_by: 'date',
       add_comment: {
         comment: '',
         id: ''
@@ -3568,8 +3590,8 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
-    this.getTicket(this.ticket_id);
-    this.getComments(this.ticket_id);
+    this.getTicket();
+    this.getComments();
     this.$emit('handle-page-header', {
       label: 'Ticket',
       desc: 'Ticket Detail'
@@ -3582,17 +3604,22 @@ __webpack_require__.r(__webpack_exports__);
     handlePageHeader: function handlePageHeader(data) {
       this.$emit('handle-page-header', data);
     },
-    getTicket: function getTicket(id) {
+    getTicket: function getTicket() {
       var _this2 = this;
 
-      axios.get(this.$settings.APIURL + "/ticket/" + id).then(function (response) {
+      axios.get(this.$settings.APIURL + "/ticket/" + this.ticket_id).then(function (response) {
         _this2.ticket = response.data;
       });
     },
-    getComments: function getComments(id, data) {
+    changeCommentSort: function changeCommentSort(val) {
+      console.log("data changed", val);
+      this.sort = val;
+      this.getComments();
+    },
+    getComments: function getComments() {
       var _this3 = this;
 
-      axios.get(this.$settings.APIURL + "/ticket/" + id + '/comments').then(function (response) {
+      axios.get(this.$settings.APIURL + "/ticket/" + this.ticket_id + '/comments?sort=' + this.sort).then(function (response) {
         var data1 = response.data;
         _this3.comments = data1.data;
       });
@@ -75914,169 +75941,211 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { class: { "hpanel forum-box": _vm.mode == "update" } }, [
-    _c("div", { staticClass: "panel-body" }, [
-      _c("div", { staticClass: "media" }, [
-        _c("div", { staticClass: "media-author pull-left" }, [
-          _c(
-            "div",
-            { staticClass: "author-info" },
-            [
-              _c("avatar", {
-                attrs: { username: _vm.author.name, size: "40" }
-              }),
-              _vm._v(" "),
+  return !_vm.id_deleted
+    ? _c("div", { class: { "hpanel forum-box": _vm.mode == "update" } }, [
+        _c("div", { staticClass: "panel-body" }, [
+          _c("div", { staticClass: "media" }, [
+            _c("div", { staticClass: "media-author pull-left" }, [
               _c(
                 "div",
-                {
-                  staticClass: "author-name",
-                  attrs: { title: _vm.author.name }
-                },
-                [_vm._v(_vm._s(_vm.author.name) + " ")]
-              )
-            ],
-            1
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "media-body" }, [
-          _c("form", { attrs: { action: "" } }, [
-            _vm.mode == "update"
-              ? _c("div", { class: { active: _vm.activated } }, [
-                  _c(
-                    "textarea",
-                    {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.comment_body,
-                          expression: "comment_body"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: {
-                        name: "comments",
-                        placeholder: "add your comments"
-                      },
-                      domProps: { value: _vm.comment_body },
-                      on: {
-                        click: function($event) {
-                          if ($event.target !== $event.currentTarget) {
-                            return null
-                          }
-                          return _vm.enableComment()
-                        },
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.comment_body = $event.target.value
-                        }
-                      }
-                    },
-                    [_vm._v(" " + _vm._s(_vm.comment_body))]
-                  ),
+                { staticClass: "author-info" },
+                [
+                  _c("avatar", {
+                    attrs: { username: _vm.author.name, size: _vm.size }
+                  }),
                   _vm._v(" "),
-                  _vm.activated
-                    ? _c("div", [
-                        _c("div", { staticClass: "hr-line-dashed" }),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "author-name",
+                      attrs: { title: _vm.author.name }
+                    },
+                    [_vm._v(_vm._s(_vm.author.name) + " ")]
+                  )
+                ],
+                1
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "media-body" }, [
+              _c("form", { attrs: { action: "" } }, [
+                _c(
+                  "div",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: "update" === _vm.mode,
+                        expression: "'update'===mode"
+                      }
+                    ],
+                    class: { active: _vm.activated }
+                  },
+                  [
+                    _c(
+                      "textarea",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.comment_body,
+                            expression: "comment_body"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          name: "comments",
+                          placeholder: "add your comments"
+                        },
+                        domProps: { value: _vm.comment_body },
+                        on: {
+                          click: function($event) {
+                            if ($event.target !== $event.currentTarget) {
+                              return null
+                            }
+                            return _vm.enableComment()
+                          },
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.comment_body = $event.target.value
+                          }
+                        }
+                      },
+                      [_vm._v(" " + _vm._s(_vm.comment_body))]
+                    ),
+                    _vm._v(" "),
+                    _vm.activated
+                      ? _c("div", [
+                          _c("div", { staticClass: "hr-line-dashed" }),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary",
+                              attrs: {
+                                type: "button",
+                                disabled: _vm.comment_body.length < 1
+                              },
+                              on: {
+                                click: function($event) {
+                                  return _vm.saveComment()
+                                }
+                              }
+                            },
+                            [_vm._v("Save Comment")]
+                          ),
+                          _vm._v(" or\n                            "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn w-xs btn-link",
+                              attrs: { type: "button" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.resetComment()
+                                }
+                              }
+                            },
+                            [_vm._v("Cancel")]
+                          )
+                        ])
+                      : _vm._e()
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: "view" === _vm.mode,
+                        expression: "'view'===mode"
+                      }
+                    ],
+                    staticClass: "formatted-comment"
+                  },
+                  [
+                    _vm._v(
+                      "\n                        " +
+                        _vm._s(_vm.comment_body) +
+                        "\n                    "
+                    )
+                  ]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            "view" === _vm.mode
+              ? _c(
+                  "div",
+                  { staticClass: "media-info pull-right" },
+                  [
+                    _c("span", { attrs: { title: _vm.comment.updated_at } }, [
+                      _vm._v(
+                        _vm._s(
+                          _vm._f("moment")(
+                            _vm.comment.updated_at,
+                            "from",
+                            "now"
+                          )
+                        )
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "b-dropdown",
+                      {
+                        attrs: { right: "", variant: "default", "no-caret": "" }
+                      },
+                      [
+                        _c("template", { slot: "button-content" }, [
+                          _c("i", { staticClass: "fas fa-ellipsis-v" })
+                        ]),
                         _vm._v(" "),
                         _c(
-                          "button",
+                          "b-dropdown-item",
                           {
-                            staticClass: "btn btn-primary",
-                            attrs: {
-                              type: "button",
-                              disabled: _vm.comment_body.length < 1
-                            },
+                            attrs: { href: "javascript:void(0);" },
                             on: {
                               click: function($event) {
-                                return _vm.saveComment()
+                                return _vm.editComment()
                               }
                             }
                           },
-                          [_vm._v("Save Comment")]
+                          [_vm._v("Edit")]
                         ),
-                        _vm._v(" or\n                            "),
+                        _vm._v(" "),
                         _c(
-                          "button",
+                          "b-dropdown-item",
                           {
-                            staticClass: "btn w-xs btn-link",
-                            attrs: { type: "button" },
+                            attrs: { href: "javascript:void(0);" },
                             on: {
                               click: function($event) {
-                                return _vm.resetComment()
+                                return _vm.deleteComment()
                               }
                             }
                           },
-                          [_vm._v("Cancel")]
+                          [_vm._v("Delete")]
                         )
-                      ])
-                    : _vm._e()
-                ])
-              : _c("div", { staticClass: "formatted-comment" }, [
-                  _vm._v(
-                    "\n                        " +
-                      _vm._s(_vm.comment_body) +
-                      "\n                    "
-                  )
-                ])
-          ])
-        ]),
-        _vm._v(" "),
-        _vm.mode == "view"
-          ? _c("div", { staticClass: "media-info pull-right" }, [
-              _c("span", { attrs: { title: _vm.comment.updated_at } }, [
-                _vm._v(
-                  _vm._s(
-                    _vm._f("moment")(_vm.comment.updated_at, "from", "now")
-                  )
+                      ],
+                      2
+                    )
+                  ],
+                  1
                 )
-              ]),
-              _vm._v(" "),
-              _vm._m(0),
-              _vm._v(" "),
-              _vm._m(1)
-            ])
-          : _vm._e()
+              : _vm._e()
+          ])
+        ])
       ])
-    ])
-  ])
+    : _vm._e()
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass: "btn btn-default dropdown",
-        attrs: {
-          "data-toggle": "dropdown",
-          type: "button",
-          "aria-expanded": "false"
-        }
-      },
-      [_c("i", { staticClass: "fas fa-ellipsis-v" })]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "dropdown-menu dropdown-menu-right" }, [
-      _c("a", { staticClass: "dropdown-item", attrs: { href: "" } }, [
-        _vm._v("Edit")
-      ]),
-      _vm._v(" "),
-      _c("a", { staticClass: "dropdown-item", attrs: { href: "" } }, [
-        _vm._v("Delete")
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -77356,14 +77425,62 @@ var render = function() {
                   [
                     _c("template", { slot: "button-content" }, [
                       _c("strong", [_vm._v("Sort By: ")]),
-                      _vm._v(" Date Ascending\n                        ")
+                      _vm._v(" Date "),
+                      _c(
+                        "span",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.sort == "desc",
+                              expression: "sort == 'desc'"
+                            }
+                          ]
+                        },
+                        [_vm._v("Descending")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "span",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.sort == "asc",
+                              expression: "sort == 'asc'"
+                            }
+                          ]
+                        },
+                        [_vm._v("Ascending")]
+                      )
                     ]),
                     _vm._v(" "),
-                    _c("b-dropdown-item-button", { attrs: { active: "" } }, [
-                      _vm._v("Date Ascending")
-                    ]),
+                    _c(
+                      "b-dropdown-item-button",
+                      {
+                        attrs: { active: "" },
+                        on: {
+                          click: function($event) {
+                            return _vm.changeCommentSort("asc")
+                          }
+                        }
+                      },
+                      [_vm._v("Date Ascending")]
+                    ),
                     _vm._v(" "),
-                    _c("b-dropdown-item-button", [_vm._v("Date Descending")])
+                    _c(
+                      "b-dropdown-item-button",
+                      {
+                        on: {
+                          click: function($event) {
+                            return _vm.changeCommentSort("desc")
+                          }
+                        }
+                      },
+                      [_vm._v("Date Descending")]
+                    )
                   ],
                   2
                 )

@@ -124,9 +124,13 @@ class ProjectController extends Controller
      * get ticket for a project
      *
      * @param $id
+     * @param Request $request
+     *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function tickets($id){
-        return response()->json(Ticket::with(['assigned_to'])->where('project_id', $id)->orderby('id', 'asc')->paginate(100), 200);
+    public function tickets($id, Request $request){
+        $dir = $request->get('sort');
+        $dir = $dir? $dir : 'asc';
+        return response()->json(Ticket::with(['assigned_to'])->where('project_id', $id)->orderby('update_at', $dir)->paginate(100), 200);
     }
 }

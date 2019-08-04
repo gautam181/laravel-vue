@@ -1,16 +1,16 @@
 <template>
-    <div v-bind:class="{'hpanel forum-box' : mode == 'update'}">
+    <div v-bind:class="{'hpanel forum-box' : mode == 'update'}" v-if="!id_deleted">
         <div class="panel-body">
             <div class="media">
                 <div class="media-author pull-left">
                     <div class="author-info">
-                        <avatar :username="author.name" size="40"></avatar>
+                        <avatar :username="author.name" :size="size"></avatar>
                         <div class="author-name" v-bind:title="author.name" >{{ author.name }} </div>
                     </div>
                 </div>
                 <div class="media-body">
                     <form action="" >
-                        <div v-if="mode == 'update'" v-bind:class="{active: activated}">
+                        <div v-show="'update'===mode" v-bind:class="{active: activated}">
                             <textarea name="comments" v-model="comment_body" v-on:click.self="enableComment()" class="form-control" placeholder="add your comments"> {{ comment_body }}</textarea>
                             <div v-if="activated">
                                 <div class="hr-line-dashed"></div>
@@ -19,18 +19,20 @@
                             </div>
 
                         </div>
-                        <div class="formatted-comment" v-else="">
+                        <div class="formatted-comment" v-show="'view'===mode">
                             {{ comment_body }}
                         </div>
                     </form>
                 </div>
-                <div class="media-info pull-right" v-if="mode == 'view'">
+                <div class="media-info pull-right" v-if="'view'===mode">
                     <span v-bind:title="comment.updated_at">{{ comment.updated_at | moment("from", "now") }}</span>
-                    <button class="btn btn-default dropdown" data-toggle="dropdown" type="button" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></button>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <a href="" class="dropdown-item">Edit</a>
-                        <a href="" class="dropdown-item">Delete</a>
-                    </div>
+                    <b-dropdown right variant="default" no-caret>
+                        <template slot="button-content">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </template>
+                        <b-dropdown-item href="javascript:void(0);" @click="editComment()" >Edit</b-dropdown-item>
+                        <b-dropdown-item href="javascript:void(0);" @click="deleteComment()">Delete</b-dropdown-item>
+                    </b-dropdown>
                 </div>
             </div>
 
@@ -46,7 +48,14 @@
             return {
                 mode: this.edit ? 'update': 'view',
                 comment_body: this.comment.comment,
-                activated: false
+                activated: false,
+                size: 40,
+                id_deleted: false
+            }
+        },
+        watch: {
+            comment: function(val){
+                this.comment_body = this.comment.comment;
             }
         },
         mounted(){
@@ -65,15 +74,29 @@
                     }
                 }).
                 then(function (response) {
-                    console.log(response);
+                    this.activated = false;
+                    if(this.edit=== false)
+                        this.mode = 'view';
                 });
             },
             resetComment: function () {
-                this.comment_body = "";
                 this.activated = false;
+                if(this.edit=== false)
+                    this.mode = 'view';
+                this.comment_body = this.comment.comment;
             },
             enableComment(){
                 this.activated = true;
+            },
+            editComment(){
+                this.mode = 'update';
+                this.activated = true;
+
+                console.info("Edit Called")
+            },
+            deleteComment(){
+                console.info("delete called");
+                this.id_deleted = true;
             }
         },
 

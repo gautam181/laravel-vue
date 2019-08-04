@@ -74,13 +74,22 @@ class CommentController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Comment  $comment
+     * @param  CommentRequest  $request
+     * @param  Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Comment $comment)
+    public function update(CommentRequest $request, Comment $comment)
     {
-        //
+        if( $request->validated()) {
+            // store
+            $comment->comment = $request->comment;
+            $comment->ticket_id = $request->ticket_id;
+            $comment->project_id = $request->project_id;
+            $comment->created_by = $request->user()->id;
+            $comment->save();
+
+            return response()->json(["message"=>"Comment updated successfully", 'data'=>$comment->toArray()], 202);
+        }
     }
 
     /**

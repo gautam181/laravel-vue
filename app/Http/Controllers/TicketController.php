@@ -118,8 +118,10 @@ class TicketController extends Controller
         ], 200);
     }
 
-    public function comments($id)
+    public function comments($id, Request $request)
     {
-        return response()->json(Comment::with(['created_by'])->where('ticket_id', $id)->orderby('id', 'asc')->paginate(100), 200);
+        $dir = $request->get('sort');
+        $dir = $dir? $dir : 'asc';
+        return response()->json(Comment::with(['created_by'])->where('ticket_id', $id)->orderby('updated_at', $dir)->paginate(100), 200);
     }
 }
