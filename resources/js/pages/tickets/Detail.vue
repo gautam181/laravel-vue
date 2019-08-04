@@ -17,8 +17,8 @@
                             <template slot="button-content">
                                 <strong>Sort By: </strong> Date <span v-show="sort == 'desc'">Descending</span> <span v-show="sort == 'asc'">Ascending</span>
                             </template>
-                            <b-dropdown-item-button  v-on:click="changeCommentSort('asc')" active>Date Ascending</b-dropdown-item-button>
-                            <b-dropdown-item-button v-on:click="changeCommentSort('desc')">Date Descending</b-dropdown-item-button>
+                            <b-dropdown-item-button  v-on:click="changeCommentSort('asc')" :active="sort === 'asc'">Date Ascending</b-dropdown-item-button>
+                            <b-dropdown-item-button v-on:click="changeCommentSort('desc')" :active="sort === 'desc'">Date Descending</b-dropdown-item-button>
                         </b-dropdown>
                     </div>
                 </div>
