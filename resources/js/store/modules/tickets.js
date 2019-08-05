@@ -9,7 +9,7 @@ import axios from 'axios';
 
 // initial state
 const state = {
-    sort_by: JSON.parse(localStorage.getItem('ticket_sort_by')) || 'asc',
+    sort_by: localStorage.getItem('ticket_comment_sort_by') || 'asc',
     tickets: [],
     ticket: {},
     ticket_comments: []
@@ -44,7 +44,10 @@ const mutations = {
     setTickets: (state, tickets) => { Object.assign(state.tickets = tickets) },
     setTicket: (state, ticket) => { state.ticket = ticket },
     setTicketComments: (state, comments) => { state.ticket_comments = comments },
-    setSortBy: (state, sortby) => { state.sort_by = sortby },
+    setSortBy: (state, sortby) => {
+        state.sort_by = sortby;
+        localStorage.setItem('ticket_comment_sort_by', sortby);
+    },
 };
 
 export default {

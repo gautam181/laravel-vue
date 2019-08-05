@@ -9,7 +9,7 @@ import axios from 'axios';
 
 // initial state
 const state = {
-    sortBy: JSON.parse(localStorage.getItem('ticket_sort_by')) || 'asc',
+    sortBy: localStorage.getItem('comment_sort_by') || 'asc',
     comments: []
 }
 
