@@ -56,12 +56,20 @@
             return {
                 myRoute : {},
                 ticket_id : this.$route.params.id,
-                ticket: {},
-                comments: [],
-                sort: 'asc',
                 order_by: 'date',
                 add_comment: {comment:'', id:''}
 
+            }
+        },
+        computed:{
+            ticket(){
+                return this.$store.getters['tickets/getTicket'];
+            },
+            comments(){
+                return this.$store.getters['tickets/getTicketComments'];
+            },
+            sort(){
+                return this.$store.getters['tickets/getSortBy']
             }
         },
         components: {
@@ -78,22 +86,15 @@
                 this.$emit('handle-page-header', data);
             },
             getTicket: function () {
-                axios.get(this.$settings.APIURL+"/ticket/"+this.ticket_id)
-                    .then(response => {
-                        this.ticket = response.data;
-                    });
+                this.$store.dispatch('tickets/getTicket', this.ticket_id)
             },
             changeCommentSort: function(val){
                 console.log("data changed", val);
-                this.sort = val;
+                this.$store.commit('tickets/setSortBy', val)
                 this.getComments();
             },
             getComments: function () {
-                axios.get(this.$settings.APIURL+"/ticket/"+this.ticket_id+'/comments?sort='+this.sort)
-                    .then(response => {
-                        const {data: data1} = response;
-                        this.comments = data1.data;
-                    });
+                this.$store.dispatch('tickets/getTicketComments', this.ticket_id)
             },
             togglePanel: function (id) {
                 $(id).find(".showhide i").toggleClass('fa-chevron-up').toggleClass('fa-chevron-down');

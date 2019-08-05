@@ -19,6 +19,7 @@ import Avatar from 'vue-avatar';
 import Vue from 'vue';
 
 
+
 //plugins
 import VueRouter from 'vue-router'
 import Datatable from 'vue2-datatable-component'
@@ -30,6 +31,9 @@ import VueBreadcrumbs from 'vue-breadcrumbs'
 Vue.component('vue-title', titleComponent);
 Vue.component('vue-panel', PanelVue);
 Vue.component('avatar', Avatar);
+
+//store
+import store from './store'
 
 window.Vue = require('vue');
 Vue.prototype.$user = window.user;
@@ -68,5 +72,6 @@ import App from './App.vue'
 
 new Vue({
     render: h => h(App),
-    router
+    router,
+    store
 }).$mount('#app');
