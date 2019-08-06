@@ -1,8 +1,8 @@
 <template>
     <div>
         <router-view v-on:handle-page-header="handlePageHeader" ref="myChild"></router-view>
-        <b-pagination
-            v-model="page"
+        <b-pagination v-on:change="paginate"
+            :page="page"
             :total-rows="totalRows"
             :per-page="perPage"
             align="right"
@@ -64,8 +64,8 @@
             </template>
 
         </div>
-        <b-pagination
-            v-model="page"
+        <b-pagination v-on:change="paginate"
+            :page="page"
             :total-rows="totalRows"
             :per-page="perPage"
             align="right"
@@ -78,12 +78,24 @@
         name: "ticket-index",
         data(){
             return {
-                myRoute : {},
-                tickets : [],
-                page: 1,
-                totalPages : 0,
-                totalRows : 0,
-                perPage: 0
+                myRoute : {}
+            }
+        },
+        computed:{
+            tickets(){
+                return this.$store.getters['tickets/getTickets'];
+            },
+            page(){
+                return this.$store.getters['tickets/getPage'];
+            },
+            perPage(){
+                return this.$store.getters['tickets/getPerPage'];
+            },
+            totalPages(){
+                return this.$store.getters['tickets/getTotalPages'];
+            },
+            totalRows(){
+                return this.$store.getters['tickets/getTotalRows'];
             }
         },
         mounted(){
@@ -92,27 +104,16 @@
             if(this.$route.name == 'tickets')
                 this.projects = this.getTickets();
         },
-        watch:{
-            page: function (val) {
-                this.getTickets();
-            }
-        },
         methods:{
             handlePageHeader: function(data){
                 this.$emit('handle-page-header', data);
             },
             getTickets: function () {
-                let url = this.$settings.APIURL+"/tickets?page="+this.page;
-
-                axios.get(url)
-                    .then(response => {
-                        let res = response.data;
-                        this.tickets = res.data;
-                        this.totalPages = res.last_page;
-                        this.page = res.current_page;
-                        this.perPage = res.per_page;
-                        this.totalRows = res.total;
-                    });
+                this.$store.dispatch('tickets/getTickets');
+            },
+            paginate: function (val) {
+                this.$store.commit('tickets/setPage', val);
+                this.getTickets();
             }
 
         }
