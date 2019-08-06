@@ -15,41 +15,57 @@ const state = {
 
 // getters
 const getters = {
-    //getUser(state){return state.user}
+    getComments: (state) => { return state.comments }
 }
 
 // actions
 const actions = {
-    updateProfile(context, data){
+    getComment: (context, id) => {
+        let comment = {};
+        axios.get("/comment/"+id)
+            .then(response => {
+                comment = response.data;
+            });
+
+        return comment;
+    },
+    saveComment: (context, data) => {
+        let id = data.id;
         return new Promise((resolve, reject) => {
-            axios.post('/update-profile', data)
-                .then(response => {
-                    resolve(response)
+            axios({
+                method: id ? 'put' : 'post',
+                url: '/comment'+(id ? '/'+id : ''),
+                data: data.body
+            }).
+                then(function (response) {
+                    resolve(response);
                 })
                 .catch(error => {
                     console.log(error);
                     reject(error);
-                })
-        })
-    }
+                });
+        });
+    },
+    deleteComment: (context, id) => {
+        return new Promise((resolve, reject) => {
+            axios({
+                method: 'delete',
+                url: '/comment/'+id
+            }).
+            then(function (response) {
+                resolve(response);
+            })
+                .catch(error => {
+                    console.log(error);
+                    reject(error);
+                });
+        });
+    },
 }
 
 // mutations
 const mutations = {
-    setOauth(state, oauth) {
-        state.oauth = oauth
-    },
-    setUser(state, user) {
-        Object.assign(state.user = user)
-    },
-    setName(state, name){
-        state.user.name= name;
-    },
-    destroyToken(state) {
-        state.oauth = null;
-        state.user = {};
-    }
-
+    setTickets: (state, tickets) => { state.tickets = tickets },
 }
 
 export default {

@@ -100,7 +100,12 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
-        //
+        $status = $comment->delete();
+
+        return response()->json([
+            'status' => $status,
+            'message' => $status ? 'Ticket Deleted!' : 'Error Deleting Project'
+        ], 200);
     }
 
 }

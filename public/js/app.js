@@ -2498,18 +2498,24 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     saveComment: function saveComment() {
-      axios({
-        method: this.comment.id ? 'put' : 'post',
-        url: this.$settings.APIURL + '/comment' + (this.comment.id ? '/' + this.comment.id : ''),
-        data: {
+      var _this = this;
+
+      this.$store.dispatch('comments/saveComment', {
+        id: this.comment.id,
+        body: {
           author_id: this.author.id,
           ticket_id: this.ticket.id,
           project_id: this.ticket.project_id,
           comment: this.comment_body
         }
       }).then(function (response) {
-        this.activated = false;
-        if (this.edit === false) this.mode = 'view';
+        _this.activated = false;
+        if (_this.edit === false) _this.mode = 'view';
+        if (!_this.comment.id) _this.comment_body = _this.comment.comment;
+
+        _this.$emit('commentUpdate', response);
+      })["catch"](function (error) {
+        console.log(error);
       });
     },
     resetComment: function resetComment() {
@@ -2526,8 +2532,12 @@ __webpack_require__.r(__webpack_exports__);
       console.info("Edit Called");
     },
     deleteComment: function deleteComment() {
+      var _this2 = this;
+
       console.info("delete called");
-      this.id_deleted = true;
+      this.$store.dispatch('comments/deleteComment', this.comment.id).then(function (res) {
+        _this2.id_deleted = true;
+      });
     }
   }
 });
@@ -3627,6 +3637,9 @@ __webpack_require__.r(__webpack_exports__);
       $(id).find(".showhide i").toggleClass('fa-chevron-up').toggleClass('fa-chevron-down');
       $(id).find(".panel-body").slideToggle(300);
       $(id).find(".panel-footr").slideToggle(200);
+    },
+    commentUpdate: function commentUpdate(val) {
+      this.getComments();
     }
   },
   beforeRouteUpdate: function beforeRouteUpdate(to, from, next) {
@@ -3727,13 +3740,25 @@ __webpack_require__.r(__webpack_exports__);
   name: "ticket-index",
   data: function data() {
     return {
-      myRoute: {},
-      tickets: [],
-      page: 1,
-      totalPages: 0,
-      totalRows: 0,
-      perPage: 0
+      myRoute: {}
     };
+  },
+  computed: {
+    tickets: function tickets() {
+      return this.$store.getters['tickets/getTickets'];
+    },
+    page: function page() {
+      return this.$store.getters['tickets/getPage'];
+    },
+    perPage: function perPage() {
+      return this.$store.getters['tickets/getPerPage'];
+    },
+    totalPages: function totalPages() {
+      return this.$store.getters['tickets/getTotalPages'];
+    },
+    totalRows: function totalRows() {
+      return this.$store.getters['tickets/getTotalRows'];
+    }
   },
   mounted: function mounted() {
     var _this = this;
@@ -3747,27 +3772,16 @@ __webpack_require__.r(__webpack_exports__);
     });
     if (this.$route.name == 'tickets') this.projects = this.getTickets();
   },
-  watch: {
-    page: function page(val) {
-      this.getTickets();
-    }
-  },
   methods: {
     handlePageHeader: function handlePageHeader(data) {
       this.$emit('handle-page-header', data);
     },
     getTickets: function getTickets() {
-      var _this2 = this;
-
-      var url = this.$settings.APIURL + "/tickets?page=" + this.page;
-      axios.get(url).then(function (response) {
-        var res = response.data;
-        _this2.tickets = res.data;
-        _this2.totalPages = res.last_page;
-        _this2.page = res.current_page;
-        _this2.perPage = res.per_page;
-        _this2.totalRows = res.total;
-      });
+      this.$store.dispatch('tickets/getTickets');
+    },
+    paginate: function paginate(val) {
+      this.$store.commit('tickets/setPage', val);
+      this.getTickets();
     }
   }
 });
@@ -77500,7 +77514,8 @@ var render = function() {
                 comment: _vm.add_comment,
                 ticket: _vm.ticket,
                 edit: true
-              }
+              },
+              on: { commentUpdate: _vm.commentUpdate }
             })
           ],
           1
@@ -77566,17 +77581,12 @@ var render = function() {
       _vm._v(" "),
       _c("b-pagination", {
         attrs: {
+          page: _vm.page,
           "total-rows": _vm.totalRows,
           "per-page": _vm.perPage,
           align: "right"
         },
-        model: {
-          value: _vm.page,
-          callback: function($$v) {
-            _vm.page = $$v
-          },
-          expression: "page"
-        }
+        on: { change: _vm.paginate }
       }),
       _vm._v(" "),
       _vm.$route.name == "tickets"
@@ -77674,17 +77684,12 @@ var render = function() {
       _vm._v(" "),
       _c("b-pagination", {
         attrs: {
+          page: _vm.page,
           "total-rows": _vm.totalRows,
           "per-page": _vm.perPage,
           align: "right"
         },
-        model: {
-          value: _vm.page,
-          callback: function($$v) {
-            _vm.page = $$v
-          },
-          expression: "page"
-        }
+        on: { change: _vm.paginate }
       })
     ],
     1
@@ -101533,39 +101538,57 @@ __webpack_require__.r(__webpack_exports__);
  // initial state
 
 var state = {
-  sortBy: JSON.parse(localStorage.getItem('ticket_sort_by')) || 'asc',
+  sortBy: localStorage.getItem('comment_sort_by') || 'asc',
   comments: [] // getters
 
 };
-var getters = {} //getUser(state){return state.user}
-// actions
-;
+var getters = {
+  getComments: function getComments(state) {
+    return state.comments;
+  } // actions
+
+};
 var actions = {
-  updateProfile: function updateProfile(context, data) {
+  getComment: function getComment(context, id) {
+    var comment = {};
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/comment/" + id).then(function (response) {
+      comment = response.data;
+    });
+    return comment;
+  },
+  saveComment: function saveComment(context, data) {
+    var id = data.id;
     return new Promise(function (resolve, reject) {
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/update-profile', data).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default()({
+        method: id ? 'put' : 'post',
+        url: '/comment' + (id ? '/' + id : ''),
+        data: data.body
+      }).then(function (response) {
         resolve(response);
       })["catch"](function (error) {
         console.log(error);
         reject(error);
       });
     });
-  }
-}; // mutations
+  },
+  deleteComment: function deleteComment(context, id) {
+    return new Promise(function (resolve, reject) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default()({
+        method: 'delete',
+        url: '/comment/' + id
+      }).then(function (response) {
+        resolve(response);
+      })["catch"](function (error) {
+        console.log(error);
+        reject(error);
+      });
+    });
+  } // mutations
 
+};
 var mutations = {
-  setOauth: function setOauth(state, oauth) {
-    state.oauth = oauth;
-  },
-  setUser: function setUser(state, user) {
-    Object.assign(state.user = user);
-  },
-  setName: function setName(state, name) {
-    state.user.name = name;
-  },
-  destroyToken: function destroyToken(state) {
-    state.oauth = null;
-    state.user = {};
+  setTickets: function setTickets(state, tickets) {
+    state.tickets = tickets;
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -101598,7 +101621,7 @@ __webpack_require__.r(__webpack_exports__);
  // initial state
 
 var state = {
-  sortBy: JSON.parse(localStorage.getItem('ticket_sort_by')) || 'asc',
+  sortBy: localStorage.getItem('project_sort_by') || 'asc',
   comments: [] // getters
 
 };
@@ -101663,10 +101686,14 @@ __webpack_require__.r(__webpack_exports__);
  // initial state
 
 var state = {
-  sort_by: JSON.parse(localStorage.getItem('ticket_sort_by')) || 'asc',
+  sort_by: localStorage.getItem('ticket_comment_sort_by') || 'asc',
   tickets: [],
   ticket: {},
-  ticket_comments: []
+  ticket_comments: [],
+  page: 1,
+  totalPages: 0,
+  totalRows: 0,
+  perPage: 0
 }; // getters
 
 var getters = {
@@ -101679,12 +101706,34 @@ var getters = {
   getSortBy: function getSortBy(state) {
     return state.sort_by;
   },
+  getPage: function getPage(state) {
+    return state.page;
+  },
+  getTotalPages: function getTotalPages(state) {
+    return state.totalPages;
+  },
+  getPerPage: function getPerPage(state) {
+    return state.perPage;
+  },
+  getTotalRows: function getTotalRows(state) {
+    return state.totalRows;
+  },
   getTicketComments: function getTicketComments(state) {
     return state.ticket_comments;
   }
 }; // actions
 
 var actions = {
+  getTickets: function getTickets(context) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/tickets?page=" + context.state.page).then(function (response) {
+      var res = response.data;
+      context.commit('setTickets', res.data);
+      context.commit('setTotalPages', res.last_page);
+      context.commit('setTotalRows', res.total);
+      context.commit('setPage', res.current_page);
+      context.commit('setPerPage', res.per_page);
+    });
+  },
   getTicket: function getTicket(context, id) {
     axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/ticket/" + id).then(function (response) {
       context.commit('setTicket', response.data);
@@ -101699,16 +101748,29 @@ var actions = {
 
 var mutations = {
   setTickets: function setTickets(state, tickets) {
-    Object.assign(state.tickets = tickets);
+    state.tickets = tickets;
   },
-  setTicket: function setTicket(state, ticket) {
-    state.ticket = ticket;
+  setTicket: function setTicket(state, val) {
+    state.ticket = val;
+  },
+  setPerPage: function setPerPage(state, val) {
+    state.perPage = val;
+  },
+  setTotalPages: function setTotalPages(state, val) {
+    state.totalPages = val;
+  },
+  setTotalRows: function setTotalRows(state, val) {
+    state.totalRows = val;
+  },
+  setPage: function setPage(state, val) {
+    state.page = val;
   },
   setTicketComments: function setTicketComments(state, comments) {
     state.ticket_comments = comments;
   },
   setSortBy: function setSortBy(state, sortby) {
     state.sort_by = sortby;
+    localStorage.setItem('ticket_comment_sort_by', sortby);
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = ({

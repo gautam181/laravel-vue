@@ -25,7 +25,7 @@
 
             </div>
             <div class="col-md-12">
-                <Comment
+                <Comment v-on:commentUpdate="commentUpdate"
                     :author="this.$user"
                     :comment="add_comment"
                     :ticket="ticket"
@@ -100,6 +100,9 @@
                 $(id).find(".showhide i").toggleClass('fa-chevron-up').toggleClass('fa-chevron-down');
                 $(id).find(".panel-body").slideToggle(300);
                 $(id).find(".panel-footr").slideToggle(200);
+            },
+            commentUpdate: function (val) {
+                this.getComments();
             }
         },
         beforeRouteUpdate (to, from, next) {

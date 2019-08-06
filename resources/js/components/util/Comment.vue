@@ -63,21 +63,26 @@
         },
         methods: {
             saveComment: function () {
-                axios({
-                    method: this.comment.id ? 'put' : 'post',
-                    url: this.$settings.APIURL+'/comment'+(this.comment.id ? '/'+this.comment.id : ''),
-                    data: {
+                this.$store.dispatch('comments/saveComment', {
+                    id: this.comment.id,
+                    body: {
                         author_id: this.author.id,
                         ticket_id: this.ticket.id,
                         project_id: this.ticket.project_id,
                         comment: this.comment_body
                     }
-                }).
-                then(function (response) {
-                    this.activated = false;
-                    if(this.edit=== false)
-                        this.mode = 'view';
-                });
+                })
+                    .then(response => {
+                        this.activated = false;
+                        if(this.edit=== false)
+                            this.mode = 'view';
+                        if (!this.comment.id)
+                            this.comment_body = this.comment.comment;
+                        this.$emit('commentUpdate', response);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
             },
             resetComment: function () {
                 this.activated = false;
@@ -91,12 +96,16 @@
             editComment(){
                 this.mode = 'update';
                 this.activated = true;
-
                 console.info("Edit Called")
             },
             deleteComment(){
                 console.info("delete called");
-                this.id_deleted = true;
+                this.$store.dispatch('comments/deleteComment', this.comment.id)
+                    .then(res=>{
+                        this.id_deleted = true;
+                    })
+
+
             }
         },
 
