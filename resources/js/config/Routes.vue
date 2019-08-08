@@ -25,7 +25,7 @@ const routes =[
         meta: {breadcrumb: 'Projects', title: 'projects list'+TITLE_SEP+TITLE}
     },
     {path: '/projects/:id/tickets', name: 'project-detail', component: ProjectDetail, meta: {breadcrumb: 'Project Detail', title: 'project detail'+TITLE_SEP+TITLE}},
-    {path: '/tickets', name: 'tickets', component: TicketList, meta: {breadcrumb: 'Tickets', title: 'ticket list'+TITLE_SEP+TITLE}},
+    {path: '/tickets', name: 'tickets', component: TicketList, meta: {breadcrumb: 'Tickets', title: 'Tickets List'+TITLE_SEP+TITLE}},
     {path: '/tickets/:id', name: 'ticket-detail', component: TicketDetail, meta: {breadcrumb: 'Ticket Detail', title: 'ticket detail'+TITLE_SEP+TITLE}},
     {path: '/tickets/:id/comments', name: 'ticket-comments', component: TicketComments, meta: {breadcrumb: 'Ticket Comments', title: 'ticket comments'+TITLE_SEP+TITLE}},
 

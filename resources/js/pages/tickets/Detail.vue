@@ -3,11 +3,16 @@
         <vue-title :title="ticket.title"></vue-title>
         <div class="row">
             <div class="col-md-12">
-                <vue-panel
-                    id="ticket"
-                    :title="ticket.title"
-                    tools="1"
-                >{{ ticket.description }}</vue-panel>
+                <div class="list-options">
+                    <h2 class="">Ticket Detail</h2>
+                </div>
+
+            </div>
+            <div class="col-md-12">
+                <Ticket
+                    :ticket="ticket"
+                    desc=true
+                ></Ticket>
             </div>
             <div class="col-md-12">
                 <div class="list-options">
@@ -50,6 +55,7 @@
 
 <script>
     import Comment from "../../components/util/Comment";
+    import Ticket from "../../components/util/Ticket";
     export default {
         name: "ticket-detail",
         data(){
@@ -73,7 +79,7 @@
             }
         },
         components: {
-            Comment
+            Comment, Ticket
         },
         mounted(){
             this.getTicket();

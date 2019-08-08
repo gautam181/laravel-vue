@@ -26,11 +26,13 @@ import Datatable from 'vue2-datatable-component'
 import { Plugin } from 'vue-fragment'
 import BootstrapVue from 'bootstrap-vue'
 import VueBreadcrumbs from 'vue-breadcrumbs'
+import VueLadda from 'vue-ladda'
 
 //component
 Vue.component('vue-title', titleComponent);
 Vue.component('vue-panel', PanelVue);
 Vue.component('avatar', Avatar);
+Vue.component('vue-ladda', VueLadda);
 
 //store
 import store from './store'

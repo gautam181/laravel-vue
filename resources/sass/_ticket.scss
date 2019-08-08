@@ -1,0 +1,54 @@
+.ticket-wrapper {
+    .ticket-row {
+        position: relative;
+        padding: 5px 30px 5px 195px;
+        line-height: 22px;
+        .estimate {position: absolute; right: 0px;background: #e7e9ea; border-radius:4px; padding: 1px 5px;}
+        .ticket-heading {
+            padding-right:70px;
+            position:relative;
+            .ticket-title{
+                cursor: pointer;
+                .ticket-name{display:inline-block; margin-bottom:0px;}
+            }
+            .assignedto{
+                width:140px;
+                position:absolute;
+                left:-144px;
+                background:#e7e9ea;
+                border-radius: 4px;
+                padding: 0px 5px;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+            }
+        }
+        .ticket-controls{
+            position: absolute;right: auto;left: 0px; width: 190px;padding-right:95px;
+            a{opacity: 0;}
+        }
+    }
+    .ticket-row:hover{
+        .ticket-controls{
+            a{opacity: 1;}
+        }
+    }
+    .ticket-description{
+        margin-left: 50px;
+        .ticket-desc{
+            padding:15px 0px;
+            border-top: 1px #AAA dotted;
+            border-bottom: 1px #F4F4F4 solid;
+            margin-top:5px;
+        }
+    }
+}
+.tickets-list {
+    .ticket-wrapper {
+        border-bottom: 1px solid #f0efef;
+        .ticket-description {
+            background: #f7f8fa; padding: 0px 10px; border-radius: 5px; margin-bottom: 10px;
+            .ticket-desc{border:none;}
+        }
+    }
+}
