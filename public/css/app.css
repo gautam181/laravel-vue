@@ -12981,6 +12981,11 @@ input[type=color].form-control:disabled {
   border-left: 6px solid #3498db;
 }
 
+.modal-xlg,
+.modal-xlg {
+  max-width: 1300px;
+}
+
 .h-modal-icon {
   font-size: 66px;
 }
@@ -13014,7 +13019,6 @@ input[type=color].form-control:disabled {
 }
 
 .modal-header {
-  padding: 40px 30px;
   background: #f7f9fa;
 }
 
@@ -16995,6 +16999,88 @@ ul.h-list li:hover a {
   .landing-page .navbar .navbar-brand {
     margin-left: 10px;
   }
+}
+
+.ticket-wrapper .ticket-row {
+  position: relative;
+  padding: 5px 30px 5px 195px;
+  line-height: 22px;
+}
+
+.ticket-wrapper .ticket-row .estimate {
+  position: absolute;
+  right: 0px;
+  background: #e7e9ea;
+  border-radius: 4px;
+  padding: 1px 5px;
+}
+
+.ticket-wrapper .ticket-row .ticket-heading {
+  padding-right: 70px;
+  position: relative;
+}
+
+.ticket-wrapper .ticket-row .ticket-heading .ticket-title {
+  cursor: pointer;
+}
+
+.ticket-wrapper .ticket-row .ticket-heading .ticket-title .ticket-name {
+  display: inline-block;
+  margin-bottom: 0px;
+}
+
+.ticket-wrapper .ticket-row .ticket-heading .assignedto {
+  width: 140px;
+  position: absolute;
+  left: -144px;
+  background: #e7e9ea;
+  border-radius: 4px;
+  padding: 0px 5px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.ticket-wrapper .ticket-row .ticket-controls {
+  position: absolute;
+  right: auto;
+  left: 0px;
+  width: 190px;
+  padding-right: 95px;
+}
+
+.ticket-wrapper .ticket-row .ticket-controls a {
+  opacity: 0;
+}
+
+.ticket-wrapper .ticket-row:hover .ticket-controls a {
+  opacity: 1;
+}
+
+.ticket-wrapper .ticket-description {
+  margin-left: 50px;
+}
+
+.ticket-wrapper .ticket-description .ticket-desc {
+  padding: 15px 0px;
+  border-top: 1px #AAA dotted;
+  border-bottom: 1px #F4F4F4 solid;
+  margin-top: 5px;
+}
+
+.tickets-list .ticket-wrapper {
+  border-bottom: 1px solid #f0efef;
+}
+
+.tickets-list .ticket-wrapper .ticket-description {
+  background: #f7f8fa;
+  padding: 0px 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.tickets-list .ticket-wrapper .ticket-description .ticket-desc {
+  border: none;
 }
 
 /**

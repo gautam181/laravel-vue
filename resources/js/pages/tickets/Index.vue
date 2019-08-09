@@ -1,12 +1,21 @@
 <template>
     <div>
         <router-view v-on:handle-page-header="handlePageHeader" ref="myChild"></router-view>
-        <b-pagination v-on:change="paginate"
-            :page="page"
-            :total-rows="totalRows"
-            :per-page="perPage"
-            align="right"
-        ></b-pagination>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="list-options">
+                    <h2 class="">Ticket List</h2>
+                    <b-pagination v-on:change="paginate"
+                                  :page="page"
+                                  :total-rows="totalRows"
+                                  :per-page="perPage"
+                                  align="right"
+                    ></b-pagination>
+                </div>
+
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-md-12">
                 <div class="hpanel">
@@ -123,7 +132,7 @@
             }
         },
         mounted(){
-            this.$emit('handle-page-header', {label:'Tickets', desc:'List of tickets'});
+            this.$emit('handle-page-header', {label:''});
             this.myRoute = this.$router.options.routes.find(route => route.name === this.$route.name);
             if(this.$route.name == 'tickets')
                 this.projects = this.getTickets();

@@ -9,10 +9,14 @@
 
             </div>
             <div class="col-md-12">
-                <Ticket
-                    :ticket="ticket"
-                    desc=true
-                ></Ticket>
+                <div class="hpanel">
+                    <div class="panel-body">
+                        <Ticket
+                            :ticket="ticket"
+                            desc=true
+                        ></Ticket>
+                    </div>
+                </div>
             </div>
             <div class="col-md-12">
                 <div class="list-options">
@@ -84,7 +88,7 @@
         mounted(){
             this.getTicket();
             this.getComments();
-            this.$emit('handle-page-header', {label:'Ticket', desc:'Ticket Detail'});
+            this.$emit('handle-page-header', {label:''});
             this.myRoute = this.$router.options.routes.find(route => route.name === this.$route.name);
         },
         methods:{

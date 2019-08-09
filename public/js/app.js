@@ -2597,6 +2597,137 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/util/Ticket.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/util/Ticket.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "Ticket",
+  props: {
+    'ticket': Object,
+    'view': {
+      type: Boolean,
+      "default": true
+    },
+    'desc': {
+      type: Boolean,
+      "default": false
+    },
+    'list': {
+      type: Boolean,
+      "default": false
+    }
+  },
+  data: function data() {
+    return {
+      mode: this.view == true ? 'view' : 'from',
+      id_deleted: false,
+      is_list: this.list,
+      show_desc: this.desc,
+      more_desc: this.desc ? 'less' : 'more',
+      view_desc: this.desc ? 'Hide' : 'Show'
+    };
+  },
+  watch: {
+    show_desc: function show_desc(val) {
+      this.view_desc = val ? 'Hide' : 'Show';
+      this.more_desc = this.show_desc ? 'less' : 'more';
+    },
+    comment: function comment(val) {
+      this.comment_body = this.comment.comment;
+    }
+  },
+  mounted: function mounted() {//console.log(this.ticket, this.author_id);
+  },
+  methods: {
+    showDesc: function showDesc() {
+      this.show_desc = !this.show_desc;
+    },
+    saveComment: function saveComment() {
+      var _this = this;
+
+      this.$store.dispatch('comments/saveComment', {
+        id: this.comment.id,
+        body: {
+          author_id: this.author.id,
+          ticket_id: this.ticket.id,
+          project_id: this.ticket.project_id,
+          comment: this.comment_body
+        }
+      }).then(function (response) {
+        _this.activated = false;
+        if (_this.edit === false) _this.mode = 'view';
+        if (!_this.comment.id) _this.comment_body = _this.comment.comment;
+
+        _this.$emit('commentUpdate', response);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    resetComment: function resetComment() {
+      this.activated = false;
+      if (this.edit === false) this.mode = 'view';
+      this.comment_body = this.comment.comment;
+    },
+    enableComment: function enableComment() {
+      this.activated = true;
+    },
+    editComment: function editComment() {
+      this.mode = 'update';
+      this.activated = true;
+      console.info("Edit Called");
+    },
+    deleteComment: function deleteComment() {
+      var _this2 = this;
+
+      console.info("delete called");
+      this.$store.dispatch('comments/deleteComment', this.comment.id).then(function (res) {
+        _this2.id_deleted = true;
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/config/Routes.vue?vue&type=script&lang=js&":
 /*!*************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/config/Routes.vue?vue&type=script&lang=js& ***!
@@ -2670,7 +2801,7 @@ var routes = [{
   component: _pages_tickets_Index__WEBPACK_IMPORTED_MODULE_10__["default"],
   meta: {
     breadcrumb: 'Tickets',
-    title: 'ticket list' + TITLE_SEP + TITLE
+    title: 'Tickets List' + TITLE_SEP + TITLE
   }
 }, {
   path: '/tickets/:id',
@@ -3527,6 +3658,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_util_Comment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/util/Comment */ "./resources/js/components/util/Comment.vue");
+/* harmony import */ var _components_util_Ticket__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/util/Ticket */ "./resources/js/components/util/Ticket.vue");
 //
 //
 //
@@ -3577,6 +3709,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ticket-detail",
@@ -3603,7 +3745,8 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   components: {
-    Comment: _components_util_Comment__WEBPACK_IMPORTED_MODULE_0__["default"]
+    Comment: _components_util_Comment__WEBPACK_IMPORTED_MODULE_0__["default"],
+    Ticket: _components_util_Ticket__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   mounted: function mounted() {
     var _this = this;
@@ -3611,8 +3754,7 @@ __webpack_require__.r(__webpack_exports__);
     this.getTicket();
     this.getComments();
     this.$emit('handle-page-header', {
-      label: 'Ticket',
-      desc: 'Ticket Detail'
+      label: ''
     });
     this.myRoute = this.$router.options.routes.find(function (route) {
       return route.name === _this.$route.name;
@@ -3661,6 +3803,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _components_util_Ticket__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/util/Ticket */ "./resources/js/components/util/Ticket.vue");
 //
 //
 //
@@ -3736,12 +3879,45 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ticket-index",
   data: function data() {
     return {
-      myRoute: {}
+      myRoute: {},
+      formTitle: 'Edit Project',
+      showForm: false,
+      showDelete: false
     };
+  },
+  components: {
+    Ticket: _components_util_Ticket__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   computed: {
     tickets: function tickets() {
@@ -3764,8 +3940,7 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     this.$emit('handle-page-header', {
-      label: 'Tickets',
-      desc: 'List of tickets'
+      label: ''
     });
     this.myRoute = this.$router.options.routes.find(function (route) {
       return route.name === _this.$route.name;
@@ -3778,6 +3953,37 @@ __webpack_require__.r(__webpack_exports__);
     },
     getTickets: function getTickets() {
       this.$store.dispatch('tickets/getTickets');
+    },
+    editTicket: function editTicket(id) {
+      this.formTitle = 'Edit Project';
+      this.showForm = true;
+    },
+    deleteTicket: function deleteTicket(id) {
+      var _this2 = this;
+
+      this.$bvModal.msgBoxConfirm('Please confirm that you want to delete ticket?', {
+        title: 'Please Confirm',
+        size: 'md',
+        buttonSize: 'sm',
+        titleTag: 'h4',
+        modalClass: 'hmodal-danger',
+        okVariant: 'danger',
+        cancelVariantVariant: 'default',
+        okTitle: 'YES',
+        cancelTitle: 'NO',
+        footerClass: 'p-2',
+        hideHeaderClose: false,
+        centered: true
+      }).then(function (value) {
+        if (value) {
+          _this2.$store.dispatch('tickets/deleteTicket', id).then(function (res) {
+            $("#ticket_" + id).hide();
+          })["catch"](function (error) {
+            console.log(error);
+          });
+        }
+      })["catch"](function (err) {// An error occurred
+      });
     },
     paginate: function paginate(val) {
       this.$store.commit('tickets/setPage', val);
@@ -35303,6 +35509,25 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 // module
 exports.push([module.i, "\ntextarea[data-v-0c765006] {height: 40px; background: #f1f3f6;}\n.active textarea[data-v-0c765006] {height: 100px; background: transparent;}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/util/Ticket.vue?vue&type=style&index=0&id=284d5f44&scoped=true&lang=css&":
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/util/Ticket.vue?vue&type=style&index=0&id=284d5f44&scoped=true&lang=css& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\ntextarea[data-v-284d5f44] {height: 40px; background: #f1f3f6;}\n.active textarea[data-v-284d5f44] {height: 100px; background: transparent;}\n", ""]);
 
 // exports
 
@@ -72035,6 +72260,36 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/util/Ticket.vue?vue&type=style&index=0&id=284d5f44&scoped=true&lang=css&":
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/util/Ticket.vue?vue&type=style&index=0&id=284d5f44&scoped=true&lang=css& ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./Ticket.vue?vue&type=style&index=0&id=284d5f44&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/util/Ticket.vue?vue&type=style&index=0&id=284d5f44&scoped=true&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/projects/Detail.vue?vue&type=style&index=0&id=2dcbde4d&scoped=true&lang=css&":
 /*!********************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/projects/Detail.vue?vue&type=style&index=0&id=2dcbde4d&scoped=true&lang=css& ***!
@@ -72789,6 +73044,24 @@ __webpack_require__.r(__webpack_exports__);
 var e=function(){return(e=Object.assign||function(e){for(var t,r=1,s=arguments.length;r<s;r++)for(var a in t=arguments[r])Object.prototype.hasOwnProperty.call(t,a)&&(e[a]=t[a]);return e}).apply(this,arguments)},t={kebab:/-(\w)/g,styleProp:/:(.*)/,styleList:/;(?![^(]*\))/g};function r(e,t){return t?t.toUpperCase():""}function s(e){for(var s,a={},c=0,o=e.split(t.styleList);c<o.length;c++){var n=o[c].split(t.styleProp),i=n[0],l=n[1];(i=i.trim())&&("string"==typeof l&&(l=l.trim()),a[(s=i,s.replace(t.kebab,r))]=l)}return a}function a(){for(var t,r,a={},c=arguments.length;c--;)for(var o=0,n=Object.keys(arguments[c]);o<n.length;o++)switch(t=n[o]){case"class":case"style":case"directives":if(Array.isArray(a[t])||(a[t]=[]),"style"===t){var i=void 0;i=Array.isArray(arguments[c].style)?arguments[c].style:[arguments[c].style];for(var l=0;l<i.length;l++){var y=i[l];"string"==typeof y&&(i[l]=s(y))}arguments[c].style=i}a[t]=a[t].concat(arguments[c][t]);break;case"staticClass":if(!arguments[c][t])break;void 0===a[t]&&(a[t]=""),a[t]&&(a[t]+=" "),a[t]+=arguments[c][t].trim();break;case"on":case"nativeOn":a[t]||(a[t]={});for(var p=0,f=Object.keys(arguments[c][t]||{});p<f.length;p++)r=f[p],a[t][r]?a[t][r]=[].concat(a[t][r],arguments[c][t][r]):a[t][r]=arguments[c][t][r];break;case"attrs":case"props":case"domProps":case"scopedSlots":case"staticStyle":case"hook":case"transition":a[t]||(a[t]={}),a[t]=e({},arguments[c][t],a[t]);break;case"slot":case"key":case"ref":case"tag":case"show":case"keepAlive":default:a[t]||(a[t]=arguments[c][t])}return a}
 //# sourceMappingURL=lib.esm.js.map
 
+
+/***/ }),
+
+/***/ "./node_modules/vue-ladda/dist/vue-ladda.js":
+/*!**************************************************!*\
+  !*** ./node_modules/vue-ladda/dist/vue-ladda.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+!function(n,t){ true?module.exports=t():undefined}(this,function(){return function(n){function t(e){if(a[e])return a[e].exports;var d=a[e]={i:e,l:!1,exports:{}};return n[e].call(d.exports,d,d.exports,t),d.l=!0,d.exports}var a={};return t.m=n,t.c=a,t.i=function(n){return n},t.d=function(n,a,e){t.o(n,a)||Object.defineProperty(n,a,{configurable:!1,enumerable:!0,get:e})},t.n=function(n){var a=n&&n.__esModule?function(){return n.default}:function(){return n};return t.d(a,"a",a),a},t.o=function(n,t){return Object.prototype.hasOwnProperty.call(n,t)},t.p="",t(t.s=2)}([function(n,t,a){a(9);var e=a(7)(a(1),a(8),null,null);e.options.__file="/Users/zhangchaofan/Dev/Temp/vue-ladda/src/vue-ladda.vue",e.esModule&&Object.keys(e.esModule).some(function(n){return"default"!==n&&"__esModule"!==n})&&console.error("named exports are not supported in *.vue files."),e.options.functional&&console.error("[vue-loader] vue-ladda.vue: functional components are not supported with templates, they should use render functions."),n.exports=e.exports},function(n,t,a){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var e=a(5),d=function(n){return n&&n.__esModule?n:{default:n}}(e);t.default={name:"VueLadda",props:{buttonClass:{type:String,default:"ladda-button"},dataStyle:{type:String,default:"expand-left"},loading:{type:Boolean,required:!0},progress:{validator:function(n){return n>=0&&n<=1},default:0}},watch:{loading:function(n){n?this.ladda.start():this.ladda.stop()},progress:function(n){this.ladda.setProgress(n)}},methods:{handleClick:function(n){this.$emit("click",n)}},mounted:function(){this.ladda=d.default.create(this.$refs.ladda),this.loading?this.ladda.start():this.ladda.stop()},beforeDestroy:function(){this.ladda.remove(),delete this.ladda}}},function(n,t,a){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var e=a(0),d=function(n){return n&&n.__esModule?n:{default:n}}(e),o={install:function(n,t){n.component("vue-ladda",d.default)}};"undefined"!=typeof window&&window.Vue&&window.Vue.use(o),t.default=d.default},function(n,t,a){t=n.exports=a(4)(!1),t.push([n.i,'/*!\r\n * Ladda including the default theme.\r\n */\n/*!\r\n * Ladda\r\n * http://lab.hakim.se/ladda\r\n * MIT licensed\r\n *\r\n * Copyright (C) 2016 Hakim El Hattab, http://hakim.se\r\n */\n/*************************************\r\n * CONFIG\r\n */\n/*************************************\r\n * MIXINS\r\n */\n/*************************************\r\n * BUTTON BASE\r\n */\n.ladda-button {\n  position: relative;\n}\n\n/* Spinner animation */\n.ladda-button .ladda-spinner {\n  position: absolute;\n  z-index: 2;\n  display: inline-block;\n  width: 32px;\n  top: 50%;\n  margin-top: 0;\n  opacity: 0;\n  pointer-events: none;\n}\n\n/* Button label */\n.ladda-button .ladda-label {\n  position: relative;\n  z-index: 3;\n}\n\n/* Progress bar */\n.ladda-button .ladda-progress {\n  position: absolute;\n  width: 0;\n  height: 100%;\n  left: 0;\n  top: 0;\n  background: rgba(0, 0, 0, 0.2);\n  display: none;\n  -webkit-transition: 0.1s linear all !important;\n  -moz-transition: 0.1s linear all !important;\n  -ms-transition: 0.1s linear all !important;\n  -o-transition: 0.1s linear all !important;\n  transition: 0.1s linear all !important;\n}\n.ladda-button[data-loading] .ladda-progress {\n  display: block;\n}\n\n/*************************************\r\n * EASING\r\n */\n.ladda-button,\n.ladda-button .ladda-spinner,\n.ladda-button .ladda-label {\n  -webkit-transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) all !important;\n  -moz-transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) all !important;\n  -ms-transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) all !important;\n  -o-transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) all !important;\n  transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) all !important;\n}\n.ladda-button[data-style=zoom-in],\n.ladda-button[data-style=zoom-in] .ladda-spinner,\n.ladda-button[data-style=zoom-in] .ladda-label,\n.ladda-button[data-style=zoom-out],\n.ladda-button[data-style=zoom-out] .ladda-spinner,\n.ladda-button[data-style=zoom-out] .ladda-label {\n  -webkit-transition: 0.3s ease all !important;\n  -moz-transition: 0.3s ease all !important;\n  -ms-transition: 0.3s ease all !important;\n  -o-transition: 0.3s ease all !important;\n  transition: 0.3s ease all !important;\n}\n\n/*************************************\r\n * EXPAND RIGHT\r\n */\n.ladda-button[data-style=expand-right] .ladda-spinner {\n  right: -6px;\n}\n.ladda-button[data-style=expand-right][data-size="s"] .ladda-spinner,\n.ladda-button[data-style=expand-right][data-size="xs"] .ladda-spinner {\n  right: -12px;\n}\n.ladda-button[data-style=expand-right][data-loading] {\n  padding-right: 56px;\n}\n.ladda-button[data-style=expand-right][data-loading] .ladda-spinner {\n    opacity: 1;\n}\n.ladda-button[data-style=expand-right][data-loading][data-size="s"], .ladda-button[data-style=expand-right][data-loading][data-size="xs"] {\n    padding-right: 40px;\n}\n\n/*************************************\r\n * EXPAND LEFT\r\n */\n.ladda-button[data-style=expand-left] .ladda-spinner {\n  left: 26px;\n}\n.ladda-button[data-style=expand-left][data-size="s"] .ladda-spinner,\n.ladda-button[data-style=expand-left][data-size="xs"] .ladda-spinner {\n  left: 4px;\n}\n.ladda-button[data-style=expand-left][data-loading] {\n  padding-left: 56px;\n}\n.ladda-button[data-style=expand-left][data-loading] .ladda-spinner {\n    opacity: 1;\n}\n.ladda-button[data-style=expand-left][data-loading][data-size="s"], .ladda-button[data-style=expand-left][data-loading][data-size="xs"] {\n    padding-left: 40px;\n}\n\n/*************************************\r\n * EXPAND UP\r\n */\n.ladda-button[data-style=expand-up] {\n  overflow: hidden;\n}\n.ladda-button[data-style=expand-up] .ladda-spinner {\n    top: -32px;\n    left: 50%;\n    margin-left: 0;\n}\n.ladda-button[data-style=expand-up][data-loading] {\n    padding-top: 54px;\n}\n.ladda-button[data-style=expand-up][data-loading] .ladda-spinner {\n      opacity: 1;\n      top: 26px;\n      margin-top: 0;\n}\n.ladda-button[data-style=expand-up][data-loading][data-size="s"], .ladda-button[data-style=expand-up][data-loading][data-size="xs"] {\n      padding-top: 32px;\n}\n.ladda-button[data-style=expand-up][data-loading][data-size="s"] .ladda-spinner, .ladda-button[data-style=expand-up][data-loading][data-size="xs"] .ladda-spinner {\n        top: 4px;\n}\n\n/*************************************\r\n * EXPAND DOWN\r\n */\n.ladda-button[data-style=expand-down] {\n  overflow: hidden;\n}\n.ladda-button[data-style=expand-down] .ladda-spinner {\n    top: 62px;\n    left: 50%;\n    margin-left: 0;\n}\n.ladda-button[data-style=expand-down][data-size="s"] .ladda-spinner,\n  .ladda-button[data-style=expand-down][data-size="xs"] .ladda-spinner {\n    top: 40px;\n}\n.ladda-button[data-style=expand-down][data-loading] {\n    padding-bottom: 54px;\n}\n.ladda-button[data-style=expand-down][data-loading] .ladda-spinner {\n      opacity: 1;\n}\n.ladda-button[data-style=expand-down][data-loading][data-size="s"], .ladda-button[data-style=expand-down][data-loading][data-size="xs"] {\n      padding-bottom: 32px;\n}\n\n/*************************************\r\n * SLIDE LEFT\r\n */\n.ladda-button[data-style=slide-left] {\n  overflow: hidden;\n}\n.ladda-button[data-style=slide-left] .ladda-label {\n    position: relative;\n}\n.ladda-button[data-style=slide-left] .ladda-spinner {\n    left: 100%;\n    margin-left: 0;\n}\n.ladda-button[data-style=slide-left][data-loading] .ladda-label {\n    opacity: 0;\n    left: -100%;\n}\n.ladda-button[data-style=slide-left][data-loading] .ladda-spinner {\n    opacity: 1;\n    left: 50%;\n}\n\n/*************************************\r\n * SLIDE RIGHT\r\n */\n.ladda-button[data-style=slide-right] {\n  overflow: hidden;\n}\n.ladda-button[data-style=slide-right] .ladda-label {\n    position: relative;\n}\n.ladda-button[data-style=slide-right] .ladda-spinner {\n    right: 100%;\n    margin-left: 0;\n    left: 16px;\n}\n[dir="rtl"] .ladda-button[data-style=slide-right] .ladda-spinner {\n      right: auto;\n}\n.ladda-button[data-style=slide-right][data-loading] .ladda-label {\n    opacity: 0;\n    left: 100%;\n}\n.ladda-button[data-style=slide-right][data-loading] .ladda-spinner {\n    opacity: 1;\n    left: 50%;\n}\n\n/*************************************\r\n * SLIDE UP\r\n */\n.ladda-button[data-style=slide-up] {\n  overflow: hidden;\n}\n.ladda-button[data-style=slide-up] .ladda-label {\n    position: relative;\n}\n.ladda-button[data-style=slide-up] .ladda-spinner {\n    left: 50%;\n    margin-left: 0;\n    margin-top: 1em;\n}\n.ladda-button[data-style=slide-up][data-loading] .ladda-label {\n    opacity: 0;\n    top: -1em;\n}\n.ladda-button[data-style=slide-up][data-loading] .ladda-spinner {\n    opacity: 1;\n    margin-top: 0;\n}\n\n/*************************************\r\n * SLIDE DOWN\r\n */\n.ladda-button[data-style=slide-down] {\n  overflow: hidden;\n}\n.ladda-button[data-style=slide-down] .ladda-label {\n    position: relative;\n}\n.ladda-button[data-style=slide-down] .ladda-spinner {\n    left: 50%;\n    margin-left: 0;\n    margin-top: -2em;\n}\n.ladda-button[data-style=slide-down][data-loading] .ladda-label {\n    opacity: 0;\n    top: 1em;\n}\n.ladda-button[data-style=slide-down][data-loading] .ladda-spinner {\n    opacity: 1;\n    margin-top: 0;\n}\n\n/*************************************\r\n * ZOOM-OUT\r\n */\n.ladda-button[data-style=zoom-out] {\n  overflow: hidden;\n}\n.ladda-button[data-style=zoom-out] .ladda-spinner {\n  left: 50%;\n  margin-left: 32px;\n  -webkit-transform: scale(2.5);\n  -moz-transform: scale(2.5);\n  -ms-transform: scale(2.5);\n  -o-transform: scale(2.5);\n  transform: scale(2.5);\n}\n.ladda-button[data-style=zoom-out] .ladda-label {\n  position: relative;\n  display: inline-block;\n}\n.ladda-button[data-style=zoom-out][data-loading] .ladda-label {\n  opacity: 0;\n  -webkit-transform: scale(0.5);\n  -moz-transform: scale(0.5);\n  -ms-transform: scale(0.5);\n  -o-transform: scale(0.5);\n  transform: scale(0.5);\n}\n.ladda-button[data-style=zoom-out][data-loading] .ladda-spinner {\n  opacity: 1;\n  margin-left: 0;\n  -webkit-transform: none;\n  -moz-transform: none;\n  -ms-transform: none;\n  -o-transform: none;\n  transform: none;\n}\n\n/*************************************\r\n * ZOOM-IN\r\n */\n.ladda-button[data-style=zoom-in] {\n  overflow: hidden;\n}\n.ladda-button[data-style=zoom-in] .ladda-spinner {\n  left: 50%;\n  margin-left: -16px;\n  -webkit-transform: scale(0.2);\n  -moz-transform: scale(0.2);\n  -ms-transform: scale(0.2);\n  -o-transform: scale(0.2);\n  transform: scale(0.2);\n}\n.ladda-button[data-style=zoom-in] .ladda-label {\n  position: relative;\n  display: inline-block;\n}\n.ladda-button[data-style=zoom-in][data-loading] .ladda-label {\n  opacity: 0;\n  -webkit-transform: scale(2.2);\n  -moz-transform: scale(2.2);\n  -ms-transform: scale(2.2);\n  -o-transform: scale(2.2);\n  transform: scale(2.2);\n}\n.ladda-button[data-style=zoom-in][data-loading] .ladda-spinner {\n  opacity: 1;\n  margin-left: 0;\n  -webkit-transform: none;\n  -moz-transform: none;\n  -ms-transform: none;\n  -o-transform: none;\n  transform: none;\n}\n\n/*************************************\r\n * CONTRACT\r\n */\n.ladda-button[data-style=contract] {\n  overflow: hidden;\n  width: 100px;\n}\n.ladda-button[data-style=contract] .ladda-spinner {\n  left: 50%;\n  margin-left: 0;\n}\n.ladda-button[data-style=contract][data-loading] {\n  border-radius: 50%;\n  width: 52px;\n}\n.ladda-button[data-style=contract][data-loading] .ladda-label {\n  opacity: 0;\n}\n.ladda-button[data-style=contract][data-loading] .ladda-spinner {\n  opacity: 1;\n}\n\n/*************************************\r\n * OVERLAY\r\n */\n.ladda-button[data-style=contract-overlay] {\n  overflow: hidden;\n  width: 100px;\n  box-shadow: 0px 0px 0px 2000px rgba(0, 0, 0, 0);\n}\n.ladda-button[data-style=contract-overlay] .ladda-spinner {\n  left: 50%;\n  margin-left: 0;\n}\n.ladda-button[data-style=contract-overlay][data-loading] {\n  border-radius: 50%;\n  width: 52px;\n  /*outline: 10000px solid rgba( 0, 0, 0, 0.5 );*/\n  box-shadow: 0px 0px 0px 2000px rgba(0, 0, 0, 0.8);\n}\n.ladda-button[data-style=contract-overlay][data-loading] .ladda-label {\n  opacity: 0;\n}\n.ladda-button[data-style=contract-overlay][data-loading] .ladda-spinner {\n  opacity: 1;\n}\n[dir="rtl"] .ladda-spinner > div {\n  left: 25% !important;\n}\n\n/*************************************\r\n * CONFIG\r\n */\n/*************************************\r\n * BUTTON THEME\r\n */\n.ladda-button {\n  background: #666;\n  border: 0;\n  padding: 14px 18px;\n  font-size: 18px;\n  cursor: pointer;\n  color: #fff;\n  border-radius: 2px;\n  border: 1px solid transparent;\n  -webkit-appearance: none;\n  -webkit-font-smoothing: antialiased;\n  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);\n}\n.ladda-button:hover {\n    border-color: rgba(0, 0, 0, 0.07);\n    background-color: #888;\n}\n.ladda-button[data-color=green] {\n    background: #2aca76;\n}\n.ladda-button[data-color=green]:hover {\n      background-color: #38d683;\n}\n.ladda-button[data-color=blue] {\n    background: #53b5e6;\n}\n.ladda-button[data-color=blue]:hover {\n      background-color: #69bfe9;\n}\n.ladda-button[data-color=red] {\n    background: #ea8557;\n}\n.ladda-button[data-color=red]:hover {\n      background-color: #ed956e;\n}\n.ladda-button[data-color=purple] {\n    background: #9973C2;\n}\n.ladda-button[data-color=purple]:hover {\n      background-color: #a685ca;\n}\n.ladda-button[data-color=mint] {\n    background: #16a085;\n}\n.ladda-button[data-color=mint]:hover {\n      background-color: #19b698;\n}\n.ladda-button[disabled], .ladda-button[data-loading] {\n    border-color: rgba(0, 0, 0, 0.07);\n}\n.ladda-button[disabled], .ladda-button[disabled]:hover, .ladda-button[data-loading], .ladda-button[data-loading]:hover {\n      cursor: default;\n      background-color: #999;\n}\n.ladda-button[data-size=xs] {\n    padding: 4px 8px;\n}\n.ladda-button[data-size=xs] .ladda-label {\n      font-size: 0.7em;\n}\n.ladda-button[data-size=s] {\n    padding: 6px 10px;\n}\n.ladda-button[data-size=s] .ladda-label {\n      font-size: 0.9em;\n}\n.ladda-button[data-size=l] .ladda-label {\n    font-size: 1.2em;\n}\n.ladda-button[data-size=xl] .ladda-label {\n    font-size: 1.5em;\n}\n',""])},function(n,t){function a(n,t){var a=n[1]||"",d=n[3];if(!d)return a;if(t&&"function"==typeof btoa){var o=e(d);return[a].concat(d.sources.map(function(n){return"/*# sourceURL="+d.sourceRoot+n+" */"})).concat([o]).join("\n")}return[a].join("\n")}function e(n){return"/*# sourceMappingURL=data:application/json;charset=utf-8;base64,"+btoa(unescape(encodeURIComponent(JSON.stringify(n))))+" */"}n.exports=function(n){var t=[];return t.toString=function(){return this.map(function(t){var e=a(t,n);return t[2]?"@media "+t[2]+"{"+e+"}":e}).join("")},t.i=function(n,a){"string"==typeof n&&(n=[[null,n,""]]);for(var e={},d=0;d<this.length;d++){var o=this[d][0];"number"==typeof o&&(e[o]=!0)}for(d=0;d<n.length;d++){var r=n[d];"number"==typeof r[0]&&e[r[0]]||(a&&!r[2]?r[2]=a:a&&(r[2]="("+r[2]+") and ("+a+")"),t.push(r))}},t}},function(n,t,a){/*!
+ * Ladda
+ * http://lab.hakim.se/ladda
+ * MIT licensed
+ *
+ * Copyright (C) 2016 Hakim El Hattab, http://hakim.se
+ */
+!function(t,e){"use strict";n.exports=e(a(6))}(0,function(n){"use strict";function t(n){if(void 0===n)return void console.warn("Ladda button target must be defined.");if(/ladda-button/i.test(n.className)||(n.className+=" ladda-button"),n.hasAttribute("data-style")||n.setAttribute("data-style","expand-right"),!n.querySelector(".ladda-label")){var t=document.createElement("span");t.className="ladda-label",i(n,t)}var a,e=n.querySelector(".ladda-spinner");e||(e=document.createElement("span"),e.className="ladda-spinner"),n.appendChild(e);var d,o={start:function(){return a||(a=r(n)),n.disabled=!0,n.setAttribute("data-loading",""),clearTimeout(d),a.spin(e),this.setProgress(0),this},startAfter:function(n){return clearTimeout(d),d=setTimeout(function(){o.start()},n),this},stop:function(){return o.isLoading()&&(n.disabled=!1,n.removeAttribute("data-loading")),clearTimeout(d),a&&(d=setTimeout(function(){a.stop()},1e3)),this},toggle:function(){return this.isLoading()?this.stop():this.start()},setProgress:function(t){t=Math.max(Math.min(t,1),0);var a=n.querySelector(".ladda-progress");0===t&&a&&a.parentNode?a.parentNode.removeChild(a):(a||(a=document.createElement("div"),a.className="ladda-progress",n.appendChild(a)),a.style.width=(t||0)*n.offsetWidth+"px")},enable:function(){return this.stop()},disable:function(){return this.stop(),n.disabled=!0,this},isLoading:function(){return n.hasAttribute("data-loading")},remove:function(){clearTimeout(d),n.disabled=!1,n.removeAttribute("data-loading"),a&&(a.stop(),a=null),s.splice(s.indexOf(o),1)}};return s.push(o),o}function a(n,t){for(;n.parentNode&&n.tagName!==t;)n=n.parentNode;return t===n.tagName?n:void 0}function e(n){var t=["input","textarea","select"],a=[];return t.forEach(function(t){for(var e=n.getElementsByTagName(t),d=0;d<e.length;d++)e[d].hasAttribute("required")&&a.push(e[d])}),a}function d(n,t){var a;if("string"==typeof n)a=document.querySelectorAll(n);else{if("object"!=typeof n)throw new Error("target must be string or object");a=[n]}t=t||{};for(var e=0;e<a.length;e++)l(a[e],t)}function o(){for(var n=0,t=s.length;n<t;n++)s[n].stop()}function r(t){var a,e,d=t.offsetHeight;0===d&&(d=parseFloat(window.getComputedStyle(t).height)),d>32&&(d*=.8),t.hasAttribute("data-spinner-size")&&(d=parseInt(t.getAttribute("data-spinner-size"),10)),t.hasAttribute("data-spinner-color")&&(a=t.getAttribute("data-spinner-color")),t.hasAttribute("data-spinner-lines")&&(e=parseInt(t.getAttribute("data-spinner-lines"),10));var o=.2*d,r=.6*o,i=o<7?2:3;return new n({color:a||"#fff",lines:e||12,radius:o,length:r,width:i,zIndex:"auto",top:"auto",left:"auto",className:""})}function i(n,t){var a=document.createRange();a.selectNodeContents(n),a.surroundContents(t),n.appendChild(t)}function l(n,d){if("function"==typeof n.addEventListener){var o=t(n),r=-1;n.addEventListener("click",function(){var t=!0,i=a(n,"FORM");if(void 0!==i&&!i.hasAttribute("novalidate"))if("function"==typeof i.checkValidity)t=i.checkValidity();else for(var l=e(i),s=0;s<l.length;s++){var u=l[s],p=u.getAttribute("type");if(""===u.value.replace(/^\s+|\s+$/g,"")&&(t=!1),"checkbox"!==p&&"radio"!==p||u.checked||(t=!1),"email"===p&&(t=/^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9-]+(\.[a-z0-9-]+)*$/i.test(u.value)),"url"===p&&(t=/^([a-z]([a-z]|\d|\+|-|\.)*):(\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?((\[(|(v[\da-f]{1,}\.(([a-z]|\d|-|\.|_|~)|[!\$&'\(\)\*\+,;=]|:)+))\])|((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=])*)(:\d*)?)(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*|(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)|((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)|((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)){0})(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(u.value)),!t)break}t&&(o.startAfter(1),"number"==typeof d.timeout&&(clearTimeout(r),r=setTimeout(o.stop,d.timeout)),"function"==typeof d.callback&&d.callback.apply(null,[o]))},!1)}}var s=[];return{bind:d,create:t,stopAll:o}})},function(n,t,a){var e,d;!function(o,r){"object"==typeof n&&n.exports?n.exports=r():(e=r,void 0!==(d="function"==typeof e?e.call(t,a,t,n):e)&&(n.exports=d))}(0,function(){"use strict";function n(n,t){var a,e=document.createElement(n||"div");for(a in t)e[a]=t[a];return e}function t(n){for(var t=1,a=arguments.length;t<a;t++)n.appendChild(arguments[t]);return n}function a(n,t,a,e){var d=["opacity",t,~~(100*n),a,e].join("-"),o=.01+a/e*100,r=Math.max(1-(1-n)/t*(100-o),n),i=l.substring(0,l.indexOf("Animation")).toLowerCase(),u=i&&"-"+i+"-"||"";return p[d]||(s.insertRule("@"+u+"keyframes "+d+"{0%{opacity:"+r+"}"+o+"%{opacity:"+n+"}"+(o+.01)+"%{opacity:1}"+(o+t)%100+"%{opacity:"+n+"}100%{opacity:"+r+"}}",s.cssRules.length),p[d]=1),d}function e(n,t){var a,e,d=n.style;if(t=t.charAt(0).toUpperCase()+t.slice(1),void 0!==d[t])return t;for(e=0;e<u.length;e++)if(a=u[e]+t,void 0!==d[a])return a}function d(n,t){for(var a in t)n.style[e(n,a)||a]=t[a];return n}function o(n){for(var t=1;t<arguments.length;t++){var a=arguments[t];for(var e in a)void 0===n[e]&&(n[e]=a[e])}return n}function r(n,t){return"string"==typeof n?n:n[t%n.length]}function i(n){this.opts=o(n||{},i.defaults,c)}var l,s,u=["webkit","Moz","ms","O"],p={},c={lines:12,length:7,width:5,radius:10,scale:1,corners:1,color:"#000",opacity:.25,rotate:0,direction:1,speed:1,trail:100,fps:20,zIndex:2e9,className:"spinner",top:"50%",left:"50%",shadow:!1,hwaccel:!1,position:"absolute"};if(i.defaults={},o(i.prototype,{spin:function(t){this.stop();var a=this,e=a.opts,o=a.el=n(null,{className:e.className});if(d(o,{position:e.position,width:0,zIndex:e.zIndex,left:e.left,top:e.top}),t&&t.insertBefore(o,t.firstChild||null),o.setAttribute("role","progressbar"),a.lines(o,a.opts),!l){var r,i=0,s=(e.lines-1)*(1-e.direction)/2,u=e.fps,p=u/e.speed,c=(1-e.opacity)/(p*e.trail/100),f=p/e.lines;!function n(){i++;for(var t=0;t<e.lines;t++)r=Math.max(1-(i+(e.lines-t)*f)%p*c,e.opacity),a.opacity(o,t*e.direction+s,r,e);a.timeout=a.el&&setTimeout(n,~~(1e3/u))}()}return a},stop:function(){var n=this.el;return n&&(clearTimeout(this.timeout),n.parentNode&&n.parentNode.removeChild(n),this.el=void 0),this},lines:function(e,o){function i(t,a){return d(n(),{position:"absolute",width:o.scale*(o.length+o.width)+"px",height:o.scale*o.width+"px",background:t,boxShadow:a,transformOrigin:"left",transform:"rotate("+~~(360/o.lines*u+o.rotate)+"deg) translate("+o.scale*o.radius+"px,0)",borderRadius:(o.corners*o.scale*o.width>>1)+"px"})}for(var s,u=0,p=(o.lines-1)*(1-o.direction)/2;u<o.lines;u++)s=d(n(),{position:"absolute",top:1+~(o.scale*o.width/2)+"px",transform:o.hwaccel?"translate3d(0,0,0)":"",opacity:o.opacity,animation:l&&a(o.opacity,o.trail,p+u*o.direction,o.lines)+" "+1/o.speed+"s linear infinite"}),o.shadow&&t(s,d(i("#000","0 0 4px #000"),{top:"2px"})),t(e,t(s,i(r(o.color,u),"0 0 1px rgba(0,0,0,.1)")));return e},opacity:function(n,t,a){t<n.childNodes.length&&(n.childNodes[t].style.opacity=a)}}),"undefined"!=typeof document){s=function(){var a=n("style",{type:"text/css"});return t(document.getElementsByTagName("head")[0],a),a.sheet||a.styleSheet}();var f=d(n("group"),{behavior:"url(#default#VML)"});!e(f,"transform")&&f.adj?function(){function a(t,a){return n("<"+t+' xmlns="urn:schemas-microsoft.com:vml" class="spin-vml">',a)}s.addRule(".spin-vml","behavior:url(#default#VML)"),i.prototype.lines=function(n,e){function o(){return d(a("group",{coordsize:u+" "+u,coordorigin:-s+" "+-s}),{width:u,height:u})}function i(n,i,l){t(c,t(d(o(),{rotation:360/e.lines*n+"deg",left:~~i}),t(d(a("roundrect",{arcsize:e.corners}),{width:s,height:e.scale*e.width,left:e.scale*e.radius,top:-e.scale*e.width>>1,filter:l}),a("fill",{color:r(e.color,n),opacity:e.opacity}),a("stroke",{opacity:0}))))}var l,s=e.scale*(e.length+e.width),u=2*e.scale*s,p=-(e.width+e.length)*e.scale*2+"px",c=d(o(),{position:"absolute",top:p,left:p});if(e.shadow)for(l=1;l<=e.lines;l++)i(l,-2,"progid:DXImageTransform.Microsoft.Blur(pixelradius=2,makeshadow=1,shadowopacity=.3)");for(l=1;l<=e.lines;l++)i(l);return t(n,c)},i.prototype.opacity=function(n,t,a,e){var d=n.firstChild;e=e.shadow&&e.lines||0,d&&t+e<d.childNodes.length&&(d=d.childNodes[t+e],d=d&&d.firstChild,(d=d&&d.firstChild)&&(d.opacity=a))}}():l=e(f,"animation")}return i})},function(n,t){n.exports=function(n,t,a,e){var d,o=n=n||{},r=typeof n.default;"object"!==r&&"function"!==r||(d=n,o=n.default);var i="function"==typeof o?o.options:o;if(t&&(i.render=t.render,i.staticRenderFns=t.staticRenderFns),a&&(i._scopeId=a),e){var l=Object.create(i.computed||null);Object.keys(e).forEach(function(n){var t=e[n];l[n]=function(){return t}}),i.computed=l}return{esModule:d,exports:o,options:i}}},function(n,t,a){n.exports={render:function(){var n=this,t=n.$createElement,a=n._self._c||t;return a("button",{ref:"ladda",class:n.buttonClass,attrs:{"data-style":n.dataStyle},on:{click:n.handleClick}},[n._t("default",[a("span",{staticClass:"ladda-label"},[n._v("Submit")])])],2)},staticRenderFns:[]},n.exports.render._withStripped=!0},function(n,t,a){var e=a(3);"string"==typeof e&&(e=[[n.i,e,""]]),e.locals&&(n.exports=e.locals);a(10)("e5cb09de",e,!1)},function(n,t,a){function e(n){for(var t=0;t<n.length;t++){var a=n[t],e=u[a.id];if(e){e.refs++;for(var d=0;d<e.parts.length;d++)e.parts[d](a.parts[d]);for(;d<a.parts.length;d++)e.parts.push(o(a.parts[d]));e.parts.length>a.parts.length&&(e.parts.length=a.parts.length)}else{for(var r=[],d=0;d<a.parts.length;d++)r.push(o(a.parts[d]));u[a.id]={id:a.id,refs:1,parts:r}}}}function d(){var n=document.createElement("style");return n.type="text/css",p.appendChild(n),n}function o(n){var t,a,e=document.querySelector('style[data-vue-ssr-id~="'+n.id+'"]');if(e){if(b)return m;e.parentNode.removeChild(e)}if(h){var o=f++;e=c||(c=d()),t=r.bind(null,e,o,!1),a=r.bind(null,e,o,!0)}else e=d(),t=i.bind(null,e),a=function(){e.parentNode.removeChild(e)};return t(n),function(e){if(e){if(e.css===n.css&&e.media===n.media&&e.sourceMap===n.sourceMap)return;t(n=e)}else a()}}function r(n,t,a,e){var d=a?"":e.css;if(n.styleSheet)n.styleSheet.cssText=g(t,d);else{var o=document.createTextNode(d),r=n.childNodes;r[t]&&n.removeChild(r[t]),r.length?n.insertBefore(o,r[t]):n.appendChild(o)}}function i(n,t){var a=t.css,e=t.media,d=t.sourceMap;if(e&&n.setAttribute("media",e),d&&(a+="\n/*# sourceURL="+d.sources[0]+" */",a+="\n/*# sourceMappingURL=data:application/json;base64,"+btoa(unescape(encodeURIComponent(JSON.stringify(d))))+" */"),n.styleSheet)n.styleSheet.cssText=a;else{for(;n.firstChild;)n.removeChild(n.firstChild);n.appendChild(document.createTextNode(a))}}var l="undefined"!=typeof document;if("undefined"!=typeof DEBUG&&DEBUG&&!l)throw new Error("vue-style-loader cannot be used in a non-browser environment. Use { target: 'node' } in your Webpack config to indicate a server-rendering environment.");var s=a(11),u={},p=l&&(document.head||document.getElementsByTagName("head")[0]),c=null,f=0,b=!1,m=function(){},h="undefined"!=typeof navigator&&/msie [6-9]\b/.test(navigator.userAgent.toLowerCase());n.exports=function(n,t,a){b=a;var d=s(n,t);return e(d),function(t){for(var a=[],o=0;o<d.length;o++){var r=d[o],i=u[r.id];i.refs--,a.push(i)}t?(d=s(n,t),e(d)):d=[];for(var o=0;o<a.length;o++){var i=a[o];if(0===i.refs){for(var l=0;l<i.parts.length;l++)i.parts[l]();delete u[i.id]}}}};var g=function(){var n=[];return function(t,a){return n[t]=a,n.filter(Boolean).join("\n")}}()},function(n,t){n.exports=function(n,t){for(var a=[],e={},d=0;d<t.length;d++){var o=t[d],r=o[0],i=o[1],l=o[2],s=o[3],u={id:n+":"+d,css:i,media:l,sourceMap:s};e[r]?e[r].parts.push(u):a.push(e[r]={id:r,parts:[u]})}return a}}])});
 
 /***/ }),
 
@@ -76250,6 +76523,122 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/util/Ticket.vue?vue&type=template&id=284d5f44&scoped=true&":
+/*!**************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/util/Ticket.vue?vue&type=template&id=284d5f44&scoped=true& ***!
+  \**************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "ticket-wrapper", attrs: { id: "ticket_" + _vm.ticket.id } },
+    [
+      _c("div", { staticClass: "ticket-row" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("span", { staticClass: "estimate" }, [_vm._v("10 Hours")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "ticket-heading" }, [
+          _c("div", { staticClass: "assignedto" }, [
+            _c("span", {}, [_vm._v(_vm._s(_vm.ticket.assigned_to.name))])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "ticket-title" }, [
+            _c(
+              "p",
+              { staticClass: "ticket-name" },
+              [
+                _vm.is_list
+                  ? _c(
+                      "router-link",
+                      {
+                        attrs: {
+                          to: {
+                            name: "ticket-detail",
+                            params: { id: _vm.ticket.id }
+                          },
+                          "active-class": ""
+                        }
+                      },
+                      [_vm._v(_vm._s(_vm.ticket.title))]
+                    )
+                  : _c("span", [_vm._v(_vm._s(_vm.ticket.title))])
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _vm.is_list
+              ? _c("span", { staticClass: "ticket-more" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "btn btn-xs",
+                      attrs: { href: "javascript:void(0);" },
+                      on: { click: _vm.showDesc }
+                    },
+                    [_vm._v(_vm._s(_vm.more_desc) + " ....")]
+                  )
+                ])
+              : _vm._e()
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "ticket-description" }, [
+        _vm.show_desc
+          ? _c("div", { staticClass: "ticket-desc" }, [
+              _vm._v(
+                "\n           " + _vm._s(_vm.ticket.description) + "\n        "
+              )
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        !_vm.is_list
+          ? _c(
+              "button",
+              {
+                staticClass: "btn btn-default btn-xs",
+                attrs: { type: "button" },
+                on: { click: _vm.showDesc }
+              },
+              [_vm._v(_vm._s(_vm.view_desc) + " Description ...")]
+            )
+          : _vm._e()
+      ])
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "ticket-controls" }, [
+      _c("a", { staticClass: "edit", attrs: { href: "javascript:void(0);" } }, [
+        _c("i", { staticClass: "fa fa-pencil-alt" })
+      ]),
+      _vm._v("  \n            "),
+      _c("a", { staticClass: "edit", attrs: { href: "javascript:void(0);" } }, [
+        _c("i", { staticClass: "fa fa-trash-alt" })
+      ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/projects/Detail.vue?vue&type=template&id=2dcbde4d&scoped=true&":
 /*!*************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/projects/Detail.vue?vue&type=template&id=2dcbde4d&scoped=true& ***!
@@ -77411,18 +77800,18 @@ var render = function() {
       _c("vue-title", { attrs: { title: _vm.ticket.title } }),
       _vm._v(" "),
       _c("div", { staticClass: "row" }, [
-        _c(
-          "div",
-          { staticClass: "col-md-12" },
-          [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-12" }, [
+          _c("div", { staticClass: "hpanel" }, [
             _c(
-              "vue-panel",
-              { attrs: { id: "ticket", title: _vm.ticket.title, tools: "1" } },
-              [_vm._v(_vm._s(_vm.ticket.description))]
+              "div",
+              { staticClass: "panel-body" },
+              [_c("Ticket", { attrs: { ticket: _vm.ticket, desc: "true" } })],
+              1
             )
-          ],
-          1
-        ),
+          ])
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "col-md-12" }, [
           _c("div", { staticClass: "list-options" }, [
@@ -77549,7 +77938,18 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-12" }, [
+      _c("div", { staticClass: "list-options" }, [
+        _c("h2", {}, [_vm._v("Ticket Detail")])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -77579,108 +77979,51 @@ var render = function() {
         on: { "handle-page-header": _vm.handlePageHeader }
       }),
       _vm._v(" "),
-      _c("b-pagination", {
-        attrs: {
-          page: _vm.page,
-          "total-rows": _vm.totalRows,
-          "per-page": _vm.perPage,
-          align: "right"
-        },
-        on: { change: _vm.paginate }
-      }),
-      _vm._v(" "),
-      _vm.$route.name == "tickets"
-        ? _c(
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-12" }, [
+          _c(
             "div",
-            { staticClass: "row projects" },
+            { staticClass: "list-options" },
             [
-              _vm._l(_vm.tickets, function(row) {
-                return [
-                  _c("div", { staticClass: "col-md-12" }, [
-                    _c("div", { staticClass: "hpanel hgreen" }, [
-                      _c("div", { staticClass: "panel-body" }, [
-                        _c("div", { staticClass: "row" }, [
-                          _c("div", { staticClass: "col-sm-8 col-md-10" }, [
-                            _c(
-                              "h5",
-                              [
-                                _c(
-                                  "router-link",
-                                  {
-                                    attrs: {
-                                      to: {
-                                        name: "ticket-detail",
-                                        params: { id: row.id }
-                                      },
-                                      "active-class": ""
-                                    }
-                                  },
-                                  [
-                                    _vm._v(
-                                      "\n                                        " +
-                                        _vm._s(row.title) +
-                                        "\n                                    "
-                                    )
-                                  ]
-                                )
-                              ],
-                              1
-                            ),
-                            _vm._v(" "),
-                            _c("p", [
-                              _vm._v(
-                                "\n                                    " +
-                                  _vm._s(row.description) +
-                                  "\n                                "
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "row" }, [
-                              _c("div", { staticClass: "col-sm-4" }, [
-                                _c("div", { staticClass: "project-label" }, [
-                                  _vm._v("DEADLINE")
-                                ]),
-                                _vm._v(" "),
-                                _c("small", [_vm._v(_vm._s(row.end_date))])
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "col-sm-4" }, [
-                                _c("div", { staticClass: "project-label" }, [
-                                  _vm._v("Assigned To")
-                                ]),
-                                _vm._v(" "),
-                                row.assigned_to
-                                  ? _c("small", [
-                                      _vm._v(_vm._s(row.assigned_to.name))
-                                    ])
-                                  : _vm._e()
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "col-sm-4" }, [
-                                _c("div", { staticClass: "project-label" }, [
-                                  _vm._v("Created By")
-                                ]),
-                                _vm._v(" "),
-                                row.created_by
-                                  ? _c("small", [
-                                      _vm._v(_vm._s(row.created_by.name))
-                                    ])
-                                  : _vm._e()
-                              ])
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _vm._m(0, true)
-                        ])
-                      ])
-                    ])
-                  ])
-                ]
+              _c("h2", {}, [_vm._v("Ticket List")]),
+              _vm._v(" "),
+              _c("b-pagination", {
+                attrs: {
+                  page: _vm.page,
+                  "total-rows": _vm.totalRows,
+                  "per-page": _vm.perPage,
+                  align: "right"
+                },
+                on: { change: _vm.paginate }
               })
             ],
-            2
+            1
           )
-        : _vm._e(),
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-12" }, [
+          _c("div", { staticClass: "hpanel" }, [
+            _c("div", { staticClass: "panel-body" }, [
+              _vm.$route.name == "tickets"
+                ? _c(
+                    "div",
+                    { staticClass: "tickets-list" },
+                    [
+                      _vm._l(_vm.tickets, function(row) {
+                        return [
+                          _c("Ticket", { attrs: { ticket: row, list: "true" } })
+                        ]
+                      })
+                    ],
+                    2
+                  )
+                : _vm._e()
+            ])
+          ])
+        ])
+      ]),
       _vm._v(" "),
       _c("b-pagination", {
         attrs: {
@@ -77695,40 +78038,7 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-sm-4 col-md-2 project-info" }, [
-      _c("div", { staticClass: "project-action m-t-md" }, [
-        _c("div", { staticClass: "btn-group" }, [
-          _c("button", { staticClass: "btn btn-xs btn-default" }, [
-            _vm._v(" View")
-          ]),
-          _vm._v(" "),
-          _c("button", { staticClass: "btn btn-xs btn-default" }, [
-            _vm._v(" Edit")
-          ]),
-          _vm._v(" "),
-          _c("button", { staticClass: "btn btn-xs btn-default" }, [
-            _vm._v(" Delete")
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "project-value" }, [
-        _c("h2", { staticClass: "text-success" }, [
-          _vm._v(
-            "\n                                        TotalHours\n                                    "
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "project-people" })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -99634,9 +99944,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var bootstrap_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! bootstrap-vue */ "./node_modules/bootstrap-vue/esm/index.js");
 /* harmony import */ var vue_breadcrumbs__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! vue-breadcrumbs */ "./node_modules/vue-breadcrumbs/dist/vue-breadcrumbs.common.js");
 /* harmony import */ var vue_breadcrumbs__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(vue_breadcrumbs__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
-/* harmony import */ var _config_Routes__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./config/Routes */ "./resources/js/config/Routes.vue");
-/* harmony import */ var _App_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./App.vue */ "./resources/js/App.vue");
+/* harmony import */ var vue_ladda__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! vue-ladda */ "./node_modules/vue-ladda/dist/vue-ladda.js");
+/* harmony import */ var vue_ladda__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(vue_ladda__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
+/* harmony import */ var _config_Routes__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./config/Routes */ "./resources/js/config/Routes.vue");
+/* harmony import */ var _App_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./App.vue */ "./resources/js/App.vue");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -99655,11 +99967,13 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); //import 
 
 
 
+
  //component
 
 vue__WEBPACK_IMPORTED_MODULE_4___default.a.component('vue-title', _components_head_Title__WEBPACK_IMPORTED_MODULE_1__["default"]);
 vue__WEBPACK_IMPORTED_MODULE_4___default.a.component('vue-panel', _components_util_Panel__WEBPACK_IMPORTED_MODULE_2__["default"]);
-vue__WEBPACK_IMPORTED_MODULE_4___default.a.component('avatar', vue_avatar__WEBPACK_IMPORTED_MODULE_3___default.a); //store
+vue__WEBPACK_IMPORTED_MODULE_4___default.a.component('avatar', vue_avatar__WEBPACK_IMPORTED_MODULE_3___default.a);
+vue__WEBPACK_IMPORTED_MODULE_4___default.a.component('vue-ladda', vue_ladda__WEBPACK_IMPORTED_MODULE_10___default.a); //store
 
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
@@ -99681,7 +99995,7 @@ vue__WEBPACK_IMPORTED_MODULE_4___default.a.use(vue_breadcrumbs__WEBPACK_IMPORTED
 vue__WEBPACK_IMPORTED_MODULE_4___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_5__["default"]);
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_5__["default"]({
   //mode: 'history',
-  routes: _config_Routes__WEBPACK_IMPORTED_MODULE_11__["default"] // short for `routes: routes`
+  routes: _config_Routes__WEBPACK_IMPORTED_MODULE_12__["default"] // short for `routes: routes`
 
 });
 router.beforeEach(function (to, from, next) {
@@ -99695,10 +100009,10 @@ router.beforeEach(function (to, from, next) {
 
 new vue__WEBPACK_IMPORTED_MODULE_4___default.a({
   render: function render(h) {
-    return h(_App_vue__WEBPACK_IMPORTED_MODULE_12__["default"]);
+    return h(_App_vue__WEBPACK_IMPORTED_MODULE_13__["default"]);
   },
   router: router,
-  store: _store__WEBPACK_IMPORTED_MODULE_10__["default"]
+  store: _store__WEBPACK_IMPORTED_MODULE_11__["default"]
 }).$mount('#app');
 
 /***/ }),
@@ -100633,6 +100947,93 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Panel_vue_vue_type_template_id_060082a2_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Panel_vue_vue_type_template_id_060082a2_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/util/Ticket.vue":
+/*!*************************************************!*\
+  !*** ./resources/js/components/util/Ticket.vue ***!
+  \*************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Ticket_vue_vue_type_template_id_284d5f44_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Ticket.vue?vue&type=template&id=284d5f44&scoped=true& */ "./resources/js/components/util/Ticket.vue?vue&type=template&id=284d5f44&scoped=true&");
+/* harmony import */ var _Ticket_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Ticket.vue?vue&type=script&lang=js& */ "./resources/js/components/util/Ticket.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _Ticket_vue_vue_type_style_index_0_id_284d5f44_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Ticket.vue?vue&type=style&index=0&id=284d5f44&scoped=true&lang=css& */ "./resources/js/components/util/Ticket.vue?vue&type=style&index=0&id=284d5f44&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _Ticket_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Ticket_vue_vue_type_template_id_284d5f44_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Ticket_vue_vue_type_template_id_284d5f44_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "284d5f44",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/util/Ticket.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/util/Ticket.vue?vue&type=script&lang=js&":
+/*!**************************************************************************!*\
+  !*** ./resources/js/components/util/Ticket.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Ticket_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./Ticket.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/util/Ticket.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Ticket_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/util/Ticket.vue?vue&type=style&index=0&id=284d5f44&scoped=true&lang=css&":
+/*!**********************************************************************************************************!*\
+  !*** ./resources/js/components/util/Ticket.vue?vue&type=style&index=0&id=284d5f44&scoped=true&lang=css& ***!
+  \**********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Ticket_vue_vue_type_style_index_0_id_284d5f44_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./Ticket.vue?vue&type=style&index=0&id=284d5f44&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/util/Ticket.vue?vue&type=style&index=0&id=284d5f44&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Ticket_vue_vue_type_style_index_0_id_284d5f44_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Ticket_vue_vue_type_style_index_0_id_284d5f44_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Ticket_vue_vue_type_style_index_0_id_284d5f44_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Ticket_vue_vue_type_style_index_0_id_284d5f44_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Ticket_vue_vue_type_style_index_0_id_284d5f44_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/components/util/Ticket.vue?vue&type=template&id=284d5f44&scoped=true&":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/components/util/Ticket.vue?vue&type=template&id=284d5f44&scoped=true& ***!
+  \********************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Ticket_vue_vue_type_template_id_284d5f44_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./Ticket.vue?vue&type=template&id=284d5f44&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/util/Ticket.vue?vue&type=template&id=284d5f44&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Ticket_vue_vue_type_template_id_284d5f44_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Ticket_vue_vue_type_template_id_284d5f44_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -101737,6 +102138,19 @@ var actions = {
   getTicket: function getTicket(context, id) {
     axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/ticket/" + id).then(function (response) {
       context.commit('setTicket', response.data);
+    });
+  },
+  deleteTicket: function deleteTicket(context, id) {
+    return new Promise(function (resolve, reject) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default()({
+        method: 'delete',
+        url: '/ticket/' + id
+      }).then(function (response) {
+        resolve(response);
+      })["catch"](function (error) {
+        console.log(error);
+        reject(error);
+      });
     });
   },
   getTicketComments: function getTicketComments(context, id) {

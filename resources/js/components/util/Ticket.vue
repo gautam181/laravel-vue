@@ -11,7 +11,10 @@
                     <span class="">{{ ticket.assigned_to.name }}</span>
                 </div>
                 <div class="ticket-title">
-                   <p class="ticket-name">{{ ticket.title }}</p>
+                   <p class="ticket-name">
+                       <router-link v-bind:to="{'name': 'ticket-detail', params: {'id': ticket.id }}" v-if="is_list" active-class="" class="">{{ ticket.title }}</router-link>
+                       <span v-else>{{ ticket.title }}</span>
+                   </p>
                     <span class="ticket-more" v-if="is_list">
                         <a href="javascript:void(0);" class="btn btn-xs" v-on:click="showDesc">{{ more_desc }} ....</a>
                     </span>
