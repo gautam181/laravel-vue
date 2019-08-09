@@ -15,6 +15,7 @@ import settings from "./config/Settings";
 import titleComponent from './components/head/Title';
 import PanelVue from "./components/util/Panel";
 import Avatar from 'vue-avatar';
+import VueSweetalert2 from 'vue-sweetalert2';
 
 import Vue from 'vue';
 
@@ -46,6 +47,7 @@ Vue.use(Datatable);
 Vue.use(Plugin);
 Vue.use(require('vue-moment'));
 Vue.use(BootstrapVue);
+Vue.use(VueSweetalert2);
 
 Vue.use(VueBreadcrumbs, {
     template: '<ol class="hbreadcrumb breadcrumb" v-if="$breadcrumbs.length"> ' +

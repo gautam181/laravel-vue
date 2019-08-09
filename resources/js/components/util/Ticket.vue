@@ -1,9 +1,9 @@
 <template>
-    <div class="ticket-wrapper" :id="'ticket_'+ticket.id">
+    <div class="ticket-wrapper" :id="'ticket_'+ticket.id" v-if="!is_deleted">
         <div class="ticket-row">
             <div class="ticket-controls">
-                <a href="javascript:void(0);" class="edit"><i class="fa fa-pencil-alt"></i></a> &nbsp;
-                <a href="javascript:void(0);" class="edit"><i class="fa fa-trash-alt"></i></a>
+                <a href="javascript:void(0);" class="edit" v-on:click="editTicket"><i class="fa fa-pencil-alt"></i></a> &nbsp;
+                <a href="javascript:void(0);" class="delete" v-on:click="deleteTicket"><i class="fa fa-trash-alt"></i></a>
             </div>
             <span class="estimate">10 Hours</span>
             <div class="ticket-heading">
@@ -43,7 +43,7 @@
         data: function(){
             return {
                 mode: this.view == true ? 'view': 'from',
-                id_deleted: false,
+                is_deleted: false,
                 is_list: this.list,
                 show_desc: this.desc,
                 more_desc: this.desc ? 'less': 'more',
@@ -97,19 +97,35 @@
             enableComment(){
                 this.activated = true;
             },
-            editComment(){
+            editTicket(){
                 this.mode = 'update';
                 this.activated = true;
                 console.info("Edit Called")
             },
-            deleteComment(){
-                console.info("delete called");
-                this.$store.dispatch('comments/deleteComment', this.comment.id)
-                    .then(res=>{
-                        this.id_deleted = true;
-                    })
-
-
+            deleteTicket(){
+                this.$swal(
+                    {
+                        title: 'Are you sure?',
+                        text: "You won't be able to revert this!",
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                        if (result.value) {
+                            this.$store.dispatch('tickets/deleteTicket', this.ticket.id)
+                                .then(res=>{
+                                    this.is_deleted = true;
+                                    if (!this.is_list) //redirect to ticket list
+                                        this.$router.push({ name: 'tickets', query: { } });
+                                })
+                                .catch(exp=>{
+                                    this.$emit('handle-exception', exp);
+                                })
+                        }
+                    }
+                );
             }
         },
 

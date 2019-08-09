@@ -24,7 +24,7 @@
                             <template v-for="row in tickets" >
                                 <Ticket
                                     :ticket="row"
-                                    list=true
+                                    :list=ticketList
                                 ></Ticket>
                                 <!--<div class="col-md-12" :id="'ticket_'+row.id">
                                     <div class="hpanel hgreen">
@@ -109,6 +109,7 @@
                 formTitle: 'Edit Project',
                 showForm: false,
                 showDelete: false,
+                ticketList: true
             }
         },
         components: {

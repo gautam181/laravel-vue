@@ -9,6 +9,12 @@
 //fontawesome
 @import "~@fortawesome/fontawesome-free/css/all.min.css";
 
+// style.scss
+@import '~sweetalert2/src/variables';
+
+//$swal2-background: #990000;
+@import '~sweetalert2/src/sweetalert2';
+
 //style
 @import "style/style";
 
