@@ -10,6 +10,7 @@
             .ticket-title{
                 cursor: pointer;
                 .ticket-name{display:inline-block; margin-bottom:0px;}
+                .form-control{height: 28px;padding: 2px 12px;border:0px;}
             }
             .assignedto{
                 width:140px;
@@ -42,6 +43,9 @@
             margin-top:5px;
         }
     }
+    .ticket-edit {
+        .ticket-row {padding-left: 55px;}
+    }
 }
 .tickets-list {
     .ticket-wrapper {
@@ -49,6 +53,12 @@
         .ticket-description {
             background: #f7f8fa; padding: 0px 10px; border-radius: 5px; margin-bottom: 10px;
             .ticket-desc{border:none;}
+        }
+        .ticket-edit{
+            .ticket-description {
+                background: transparent; padding: 0px 10px; border-radius: 5px; margin-bottom: 10px;
+                .ticket-desc{border-top:1px #AAA dotted;}
+            }
         }
     }
 }
