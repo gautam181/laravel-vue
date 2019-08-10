@@ -7,6 +7,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import users from './modules/users'
 import comments from './modules/comments'
 import projects from './modules/projects'
 import tickets from './modules/tickets'
@@ -27,7 +28,8 @@ export default new Vuex.Store({
     modules: {
         comments,
         projects,
-        tickets
+        tickets,
+        users
     },
     strict: debug
 })

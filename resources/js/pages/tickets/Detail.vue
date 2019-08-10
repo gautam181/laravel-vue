@@ -13,7 +13,7 @@
                     <div class="panel-body">
                         <Ticket
                             :ticket="ticket"
-                            desc=true
+                            :desc="desc"
                         ></Ticket>
                     </div>
                 </div>
@@ -67,8 +67,8 @@
                 myRoute : {},
                 ticket_id : this.$route.params.id,
                 order_by: 'date',
-                add_comment: {comment:'', id:''}
-
+                add_comment: {comment:'', id:''},
+                desc: true
             }
         },
         computed:{

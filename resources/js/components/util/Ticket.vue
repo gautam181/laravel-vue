@@ -9,7 +9,7 @@
                 <span class="estimate">10 Hours</span>
                 <div class="ticket-heading">
                     <div class="assignedto">
-                        <span class="">{{ ticket.assigned_to.name }}</span>
+                        <span class="">{{ tmpTicket.assigned_to.name }}</span>
                     </div>
                     <div class="ticket-title">
                         <p class="ticket-name">
@@ -36,12 +36,8 @@
                     <a href="javascript:void(0);" class="delete" v-on:click="deleteTicket"><i class="fa fa-trash-alt"></i></a>
                 </div>
                 <div class="ticket-heading">
-                    <!--<div class="assignedto">
-                        <span class="">{{ ticket.assigned_to.name }}</span>
-                    </div>
-                    -->
                     <div class="ticket-title">
-                        <input type="text" class="form-control input-sm" :value="ticket.title">
+                        <input type="text" class="form-control input-sm" v-model="tmpTicket.title">
                     </div>
                 </div>
             </div>
@@ -49,11 +45,11 @@
                 <div class="ticket-desc">
                     <div class="hpanel">
                         <ul class="nav nav-tabs">
-                            <li class="nav-item"><a data-toggle="tab" :href="'#tab-'+ticket.id+'-1'" class="nav-link active" v-b-tooltip.hover title="Who & When?"><i class="fa fa-user"></i></a></li>
-                            <li class="nav-item"><a data-toggle="tab" :href="'#tab-'+ticket.id+'-2'"  class="nav-link" v-b-tooltip.hover title="Description"><i class="fa fa-align-left"></i></a></li>
+                            <li class="nav-item"><a data-toggle="tab" :href="'#tab-'+tmpTicket.id+'-1'" class="nav-link active" v-b-tooltip.hover title="Who & When?"><i class="fa fa-user"></i></a></li>
+                            <li class="nav-item"><a data-toggle="tab" :href="'#tab-'+tmpTicket.id+'-2'"  class="nav-link" v-b-tooltip.hover title="Description"><i class="fa fa-align-left"></i></a></li>
                         </ul>
                         <div class="tab-content">
-                            <div :id="'tab-'+ticket.id+'-1'" class="tab-pane active">
+                            <div :id="'tab-'+tmpTicket.id+'-1'" class="tab-pane active">
                                 <div class="panel-body">
                                     <div class="row">
                                         <div class="col-md-9 col-lg-7">
@@ -61,26 +57,24 @@
                                                 <div class="col">
                                                     <div class="form-group">
                                                         <label class="control-label">Assigned to</label>
-                                                        <input type="text" placeholder="Default input" class="form-control m-b">
+                                                        <v-select
+                                                            v-model="tmpTicket.assigned_to"
+                                                            label="name"
+                                                            :options="users"
+                                                        ></v-select>
                                                     </div>
-
-
                                                 </div>
                                                 <div class="col">
                                                     <div class="form-group">
                                                         <label class="control-label">Start Date</label>
-                                                        <input type="text" placeholder="Default input" class="form-control m-b">
+                                                        <date-picker lang="en" v-model="tmpTicket.start_date" input-class="form-control"></date-picker>
                                                     </div>
-
-
                                                 </div>
                                                 <div class="col">
                                                     <div class="form-group">
                                                         <label class="control-label">End Date</label>
-                                                        <input type="text" placeholder="Default input" class="form-control m-b">
+                                                        <date-picker lang="en" v-model="tmpTicket.end_date" input-class="form-control"></date-picker>
                                                     </div>
-
-
                                                 </div>
                                             </div>
 
@@ -89,9 +83,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div :id="'tab-'+ticket.id+'-2'" class="tab-pane">
+                            <div :id="'tab-'+tmpTicket.id+'-2'" class="tab-pane">
                                 <div class="panel-body">
-                                    <textarea name="comments" class="form-control" placeholder="Provide a detailed description for this task (optional)"> {{ ticket.description }}</textarea>
+                                    <textarea name="comments" v-model="tmpTicket.description" class="form-control" placeholder="Provide a detailed description for this task (optional)"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -122,27 +116,34 @@
                 is_list: this.list,
                 show_desc: this.desc,
                 more_desc: this.desc ? 'less': 'more',
-                view_desc: this.desc ? 'Hide': 'Show'
+                view_desc: this.desc ? 'Hide': 'Show',
+                tmpTicket: this.ticket
+            }
+        },
+        computed:{
+            users(){
+                return this.$store.getters['users/getUsersList'];
             }
         },
         watch: {
+            ticket: function(val){
+              this.tmpTicket = val;
+            },
             show_desc: function(val){
                 this.view_desc =  val ? 'Hide' : 'Show'
                 this.more_desc =  this.show_desc ? 'less' : 'more'
-            },
-            comment: function(val){
-                this.comment_body = this.comment.comment;
             }
         },
         mounted(){
+
             //console.log(this.ticket, this.author_id);
         },
         methods: {
             showDesc: function(){
                 this.show_desc = !this.show_desc;
             },
-            saveComment: function () {
-                this.$store.dispatch('comments/saveComment', {
+            saveTicket: function () {
+                this.$store.dispatch('tickets/saveTicket', {
                     id: this.comment.id,
                     body: {
                         author_id: this.author.id,
@@ -157,22 +158,23 @@
                             this.mode = 'view';
                         if (!this.comment.id)
                             this.comment_body = this.comment.comment;
-                        this.$emit('commentUpdate', response);
+                        this.$emit('ticketUpdate', response);
                     })
                     .catch(error => {
                         console.log(error);
                     });
             },
-            resetComment: function () {
-                this.activated = false;
+            resetTicket: function () {
+                this.mode = 'view';
                 if(this.edit=== false)
                     this.mode = 'view';
-                this.comment_body = this.comment.comment;
+                this.tmpTicket = this.ticket;
             },
             enableComment(){
                 this.activated = true;
             },
             editTicket(){
+                this.$store.dispatch('users/getUsersList');
                 this.mode = 'update';
                 this.activated = true;
                 console.info("Edit Called")

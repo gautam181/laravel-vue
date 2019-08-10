@@ -14,8 +14,6 @@ require('./bootstrap');
 import settings from "./config/Settings";
 import titleComponent from './components/head/Title';
 import PanelVue from "./components/util/Panel";
-import Avatar from 'vue-avatar';
-import VueSweetalert2 from 'vue-sweetalert2';
 
 import Vue from 'vue';
 
@@ -28,12 +26,20 @@ import { Plugin } from 'vue-fragment'
 import BootstrapVue from 'bootstrap-vue'
 import VueBreadcrumbs from 'vue-breadcrumbs'
 import VueLadda from 'vue-ladda'
+import DatePicker from 'vue2-datepicker'
+import Avatar from 'vue-avatar';
+import VueSweetalert2 from 'vue-sweetalert2';
+import vSelect from 'vue-select'
+
+
 
 //component
 Vue.component('vue-title', titleComponent);
 Vue.component('vue-panel', PanelVue);
 Vue.component('avatar', Avatar);
 Vue.component('vue-ladda', VueLadda);
+Vue.component('date-picker', DatePicker);
+Vue.component('v-select', vSelect)
 
 //store
 import store from './store'
@@ -48,6 +54,7 @@ Vue.use(Plugin);
 Vue.use(require('vue-moment'));
 Vue.use(BootstrapVue);
 Vue.use(VueSweetalert2);
+
 
 Vue.use(VueBreadcrumbs, {
     template: '<ol class="hbreadcrumb breadcrumb" v-if="$breadcrumbs.length"> ' +
