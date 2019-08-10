@@ -20,6 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::group(['prefix'=>'/v1', 'middleware'=>['auth:api'] ], function (){
     Route::get('tickets', ['uses'=>'TicketController@index', 'as'=>'ticket.list']);
+    Route::get('users/list', ['uses'=>'UserController@list', 'as'=>'users.list']);
     Route::get('ticket/{id}/comments', ['uses'=>'TicketController@comments', 'as'=>'ticket.comments']);
     Route::resource('ticket', 'TicketController',['except'=>['index', 'create', 'edit']]);
     Route::get('comments', ['uses'=>'CommentController@index', 'as'=>'comment.list']);
