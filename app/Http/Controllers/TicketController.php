@@ -46,8 +46,8 @@ class TicketController extends Controller
             $ticket = new Ticket();
             $ticket->title = $request->title;
             $ticket->description = $request->description;
-            $ticket->start_date = $request->start_date;
-            $ticket->end_date = $request->end_date;
+            $ticket->start_date = date('Y-m-d', strtotime($request->start_date));
+            $ticket->end_date = date('Y-m-d', strtotime($request->end_date));
             $ticket->assigned_to = $request->assigned_to;
             $ticket->created_by = $request->user()->id;
             $ticket->project_id = $request->project_id;
@@ -92,8 +92,8 @@ class TicketController extends Controller
             // store
             $ticket->title = $request->title;
             $ticket->description = $request->description;
-            $ticket->start_date = $request->start_date;
-            $ticket->end_date = $request->end_date;
+            $ticket->start_date = date('Y-m-d', strtotime($request->start_date));
+            $ticket->end_date = date('Y-m-d', strtotime($request->end_date));
             $ticket->assigned_to = $request->assigned_to;
             $ticket->project_id = $request->project_id;
             $ticket->save();
