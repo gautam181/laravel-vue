@@ -16,21 +16,22 @@ import titleComponent from './components/head/Title';
 import PanelVue from "./components/util/Panel";
 
 import Vue from 'vue';
+import moment from 'moment';
 
 
 
 //plugins
-import VueRouter from 'vue-router'
-import Datatable from 'vue2-datatable-component'
-import { Plugin } from 'vue-fragment'
-import BootstrapVue from 'bootstrap-vue'
-import VueBreadcrumbs from 'vue-breadcrumbs'
-import VueLadda from 'vue-ladda'
-import DatePicker from 'vue2-datepicker'
+import VueRouter from 'vue-router';
+import Datatable from 'vue2-datatable-component';
+import { Plugin } from 'vue-fragment';
+import BootstrapVue from 'bootstrap-vue';
+import VueBreadcrumbs from 'vue-breadcrumbs';
+import VueLadda from 'vue-ladda';
+import DatePicker from 'vue2-datepicker';
 import Avatar from 'vue-avatar';
 import VueSweetalert2 from 'vue-sweetalert2';
-import vSelect from 'vue-select'
-
+import vSelect from 'vue-select';
+//import BDatePicker from 'vue-bootstrap-datetimepicker';
 
 
 //component
@@ -39,19 +40,19 @@ Vue.component('vue-panel', PanelVue);
 Vue.component('avatar', Avatar);
 Vue.component('vue-ladda', VueLadda);
 Vue.component('date-picker', DatePicker);
-Vue.component('v-select', vSelect)
+Vue.component('v-select', vSelect);
+//Vue.component('b-date-picker', BDatePicker);
 
 //store
-import store from './store'
+import store from './store';
 
 window.Vue = require('vue');
 Vue.prototype.$user = window.user;
 Vue.prototype.$app = window.application;
 Vue.prototype.$settings = settings;
 Vue.use(Datatable);
-
 Vue.use(Plugin);
-Vue.use(require('vue-moment'));
+//Vue.use(require('vue-moment'));
 Vue.use(BootstrapVue);
 Vue.use(VueSweetalert2);
 
@@ -61,10 +62,16 @@ Vue.use(VueBreadcrumbs, {
         '<router-link class="breadcrumb-item" v-for="(crumb, key) in $breadcrumbs" :to="linkProp(crumb)" :key="key">{{ crumb | crumbText }}</router-link> ' +
         '</ol>'
 });
+
+//filters
+Vue.filter('date', (val)=> {
+    return moment(val).format('MMMM Do YYYY');
+});
+
 /**
  * Router
  */
-import routes from './config/Routes'
+import routes from './config/Routes';
 
 Vue.use(VueRouter);
 const router = new VueRouter({
@@ -79,7 +86,7 @@ router.beforeEach((to, from, next) => {
 });
 
 //Global variables
-import App from './App.vue'
+import App from './App.vue';
 
 new Vue({
     render: h => h(App),

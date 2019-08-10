@@ -31,16 +31,16 @@ const actions = {
         return new Promise((resolve, reject) => {
             axios({
                 method: id ? 'put' : 'post',
-                url: '/comment'+(id ? '/'+id : ''),
+                url: '/user'+(id ? '/'+id : ''),
                 data: data.body
             }).
-                then(function (response) {
-                    resolve(response);
-                })
-                .catch(error => {
-                    console.log(error);
-                    reject(error);
-                });
+            then(function (response) {
+                resolve(response);
+            })
+            .catch(error => {
+                console.log(error);
+                reject(error);
+            });
         });
     }
 }

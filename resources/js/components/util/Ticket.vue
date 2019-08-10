@@ -8,8 +8,8 @@
                 </div>
                 <span class="estimate">10 Hours</span>
                 <div class="ticket-heading">
-                    <div class="assignedto">
-                        <span class="">{{ tmpTicket.assigned_to.name }}</span>
+                    <div class="assignedto" v-if="ticket.assigned_to">
+                        <span class="">{{ ticket.assigned_to.name }}</span>
                     </div>
                     <div class="ticket-title">
                         <p class="ticket-name">
@@ -23,8 +23,7 @@
                 </div>
             </div>
             <div class="ticket-description" >
-                <div class="ticket-desc" v-if="show_desc">
-                    {{ ticket.description }}
+                <div class="ticket-desc" v-if="show_desc" v-html="ticket.description">
                 </div>
                 <button type="button" class="btn btn-default btn-xs" v-on:click="showDesc" v-if="!is_list">{{ view_desc }} Description ...</button>
             </div>
@@ -67,13 +66,13 @@
                                                 <div class="col">
                                                     <div class="form-group">
                                                         <label class="control-label">Start Date</label>
-                                                        <date-picker lang="en" v-model="tmpTicket.start_date" input-class="form-control"></date-picker>
+                                                        <date-picker lang="en" v-model="tmpTicket.start_date" type="date" format="YYYY-MM-DD" input-class="form-control"></date-picker>
                                                     </div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="form-group">
                                                         <label class="control-label">End Date</label>
-                                                        <date-picker lang="en" v-model="tmpTicket.end_date" input-class="form-control"></date-picker>
+                                                        <date-picker lang="en" v-model="tmpTicket.end_date" format="YYYY-MM-DD" input-class="form-control"></date-picker>
                                                     </div>
                                                 </div>
                                             </div>
@@ -107,7 +106,8 @@
             'ticket': Object,
             'view': {type: Boolean, default: true},
             'desc': {type: Boolean, default: false},
-            'list': {type: Boolean, default: false}
+            'list': {type: Boolean, default: false},
+            'add' : {type: Boolean, default: false}
         },
         data: function(){
             return {
@@ -144,20 +144,23 @@
             },
             saveTicket: function () {
                 this.$store.dispatch('tickets/saveTicket', {
-                    id: this.comment.id,
+                    id: this.tmpTicket.id,
                     body: {
-                        author_id: this.author.id,
-                        ticket_id: this.ticket.id,
-                        project_id: this.ticket.project_id,
-                        comment: this.comment_body
+                        id: this.tmpTicket.id,
+                        title: this.tmpTicket.title,
+                        description: this.tmpTicket.description,
+                        assigned_to: this.tmpTicket.assigned_to.id,
+                        start_date: this.tmpTicket.start_date,
+                        end_date: this.tmpTicket.end_date
                     }
                 })
                     .then(response => {
                         this.activated = false;
-                        if(this.edit=== false)
+                        if(this.add=== false)
                             this.mode = 'view';
-                        if (!this.comment.id)
-                            this.comment_body = this.comment.comment;
+                        else {
+                            // reset the from.
+                        }
                         this.$emit('ticketUpdate', response);
                     })
                     .catch(error => {
@@ -166,8 +169,7 @@
             },
             resetTicket: function () {
                 this.mode = 'view';
-                if(this.edit=== false)
-                    this.mode = 'view';
+
                 this.tmpTicket = this.ticket;
             },
             enableComment(){

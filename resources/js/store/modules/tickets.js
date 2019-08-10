@@ -50,6 +50,22 @@ const actions = {
                 context.commit('setTicket', response.data);
             });
     },
+    saveTicket: (context, data) => {
+        let id = data.id;
+        return new Promise((resolve, reject) => {
+            axios({
+                method: id ? 'put' : 'post',
+                url: '/ticket'+(id ? '/'+id : ''),
+                data: data.body
+            }).
+            then(function (response) {
+                resolve(response);
+            })
+            .catch(error => {
+                reject(error);
+            });
+        });
+    },
     deleteTicket: (context, id) => {
         return new Promise((resolve, reject) => {
             axios({
