@@ -16,9 +16,23 @@
                             <router-link v-bind:to="{'name': 'ticket-detail', params: {'id': ticket.id }}" v-if="is_list" active-class="" class="">{{ ticket.title }}</router-link>
                             <span v-else>{{ ticket.title }}</span>
                         </p>
-                        <span class="ticket-more" v-if="is_list">
-                        <a href="javascript:void(0);" class="btn btn-xs" v-on:click="showDesc">{{ more_desc }} ....</a>
-                    </span>
+                        <div class="ticket-options">
+                            <span class="ticket-more" v-if="is_list">
+                                <a href="javascript:void(0);" class="btn btn-xs" v-on:click="showDesc">{{ more_desc }} ....</a>
+                            </span>
+                            <span class="ticket-dates">
+                                <date-picker @update="updateValues" :dates="dateRange">
+                                    <div slot="input" slot-scope="ticket">
+                                        {{ dateRange.startDate | date }} - {{ dateRange.endDate | date }}
+                                    </div>
+                                </date-picker>
+                                (
+                                <span class="start_date" v-if="ticket.start_date">Start on: {{ ticket.start_date | date }}</span>
+                                <i class="fa fa-arrows-alt-h"></i>
+                                <span class="end_date" v-if="ticket.end_date">End on: {{ ticket.end_date | date }}</span>
+                                )
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -66,13 +80,13 @@
                                                 <div class="col">
                                                     <div class="form-group">
                                                         <label class="control-label">Start Date</label>
-                                                        <date-picker lang="en" v-model="tmpTicket.start_date" type="date" format="YYYY-MM-DD" input-class="form-control"></date-picker>
+                                                        <date-picker lang="en" v-model="tmpTicket.start_date" type="date" :format="date_format" input-class="form-control"></date-picker>
                                                     </div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="form-group">
                                                         <label class="control-label">End Date</label>
-                                                        <date-picker lang="en" v-model="tmpTicket.end_date" format="YYYY-MM-DD" input-class="form-control"></date-picker>
+                                                        <date-picker lang="en" v-model="tmpTicket.end_date" :format="date_format" input-class="form-control"></date-picker>
                                                     </div>
                                                 </div>
                                             </div>
@@ -100,6 +114,7 @@
 </template>
 
 <script>
+    import DatePicker from './DatePicker';
     export default {
         name: "Ticket",
         props: {
@@ -117,10 +132,24 @@
                 show_desc: this.desc,
                 more_desc: this.desc ? 'less': 'more',
                 view_desc: this.desc ? 'Hide': 'Show',
-                tmpTicket: this.ticket
+                tmpTicket: this.ticket,
+                date_format: this.$settings.DATEFROMAT,
+                ranges: true,
+                auto_apply: false,
+                singleDatePicker: false,
+                linkedCalendars: true
             }
         },
+        components:{
+            DatePicker
+        },
         computed:{
+            dateRange(){
+                return {
+                    startDate: this.ticket.start_date,
+                    endDate: this.ticket.end_date
+                }
+            },
             users(){
                 return this.$store.getters['users/getUsersList'];
             }
@@ -139,6 +168,10 @@
             //console.log(this.ticket, this.author_id);
         },
         methods: {
+            updateValues (values) {
+                this.$store.dispatch('tickets/updateDates', {id:this.tmpTicket.id, body: {'start_date':values.startDate, 'end_date':values.endDate }});
+                console.log('event: update', values)
+            },
             showDesc: function(){
                 this.show_desc = !this.show_desc;
             },

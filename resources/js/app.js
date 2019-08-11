@@ -31,7 +31,7 @@ import DatePicker from 'vue2-datepicker';
 import Avatar from 'vue-avatar';
 import VueSweetalert2 from 'vue-sweetalert2';
 import vSelect from 'vue-select';
-//import BDatePicker from 'vue-bootstrap-datetimepicker';
+import DateRangePicker from 'vue2-daterange-picker'
 
 
 //component
@@ -41,7 +41,7 @@ Vue.component('avatar', Avatar);
 Vue.component('vue-ladda', VueLadda);
 Vue.component('date-picker', DatePicker);
 Vue.component('v-select', vSelect);
-//Vue.component('b-date-picker', BDatePicker);
+Vue.component('date-range-picker', DateRangePicker);
 
 //store
 import store from './store';
@@ -65,7 +65,7 @@ Vue.use(VueBreadcrumbs, {
 
 //filters
 Vue.filter('date', (val)=> {
-    return moment(val).format('MMMM Do YYYY');
+    return moment(val).format(settings.DATEFROMAT);
 });
 
 /**

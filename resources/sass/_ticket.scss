@@ -11,6 +11,12 @@
                 cursor: pointer;
                 .ticket-name{display:inline-block; margin-bottom:0px;}
                 .form-control{height: 28px;padding: 2px 12px;border:0px;}
+                .ticket-options{
+                    display: inline;
+                    .ticket-dates{
+                        font-size: 12px; color: #aaacae;
+                    }
+                }
             }
             .assignedto{
                 width:140px;

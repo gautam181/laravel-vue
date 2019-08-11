@@ -66,6 +66,23 @@ const actions = {
             });
         });
     },
+    updateDates: (context, data) => {
+        let id = data.id;
+        return new Promise((resolve, reject) => {
+            axios({
+                method: 'put',
+                url: '/ticket/'+id+'/dates',
+                data: data.body
+            }).
+            then(function (response) {
+                resolve(response);
+            })
+            .catch(error => {
+                reject(error);
+            });
+        });
+    },
+
     deleteTicket: (context, id) => {
         return new Promise((resolve, reject) => {
             axios({

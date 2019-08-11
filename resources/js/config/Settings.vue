@@ -5,7 +5,8 @@
         sidebarMinified : false,
         baseURL: baseurl,
         APIVersion: apiversion,
-        APIURL: baseurl+apiversion
+        APIURL: baseurl+apiversion,
+        DATEFROMAT: 'MMMM Do YYYY'
     }
 
     export default settings
