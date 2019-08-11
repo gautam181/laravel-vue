@@ -186,8 +186,10 @@
                 })
                     .then(response => {
                         this.activated = false;
-                        if(this.add=== false)
+                        if(this.add=== false){
+                            this.$store.commit('tickets/setTicket', this.ticket_detail);
                             this.mode = 'view';
+                        }
                         else {
                             // reset the from.
                         }

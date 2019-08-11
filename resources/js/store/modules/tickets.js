@@ -59,7 +59,6 @@ const actions = {
                 data: data.body
             }).
             then(function (response) {
-                context.commit('setTicket', data.body);
                 resolve(response);
             })
             .catch(error => {
