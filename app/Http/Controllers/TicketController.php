@@ -124,4 +124,22 @@ class TicketController extends Controller
         $dir = $dir? $dir : 'asc';
         return response()->json(Comment::with(['created_by'])->where('ticket_id', $id)->orderby('updated_at', $dir)->paginate(100), 200);
     }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  Request $request
+     * @param  ticket.id  $id
+     * @return Response
+     */
+    public function updateDates(Request $request, $id)
+    {
+        Ticket::where('id', $id)->update([
+            'start_date' => date('Y-m-d', strtotime($request->start_date)),
+            'end_date' => date('Y-m-d', strtotime($request->end_date))
+        ]);
+
+        return response()->json(["message"=>"Ticket dates updated successfully", 'data'=> $request->toArray()], 202);
+
+    }
 }
