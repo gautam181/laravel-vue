@@ -7,16 +7,17 @@
         :linkedCalendars="linkedCalendars"
         v-model="dateRange"
     >
-        <!--<div slot="input" slot-scope="ticket">
-            {{ dateRange.startDate | date }} - {{ dateRange.endDate | date }}
-        </div>-->
+       <div slot="input" slot-scope="ticket">
+            <i class="glyphicon glyphicon-calendar fa fa-calendar"></i> &nbsp;
+            {{ getDateText }}
+        </div>
     </date-range-picker>
 </template>
 
 <script>
 
     export default {
-        name: "DatePicker",
+        name: "DateRange",
         props: {
             range:{ type:Boolean, default: false },
             autoapply: {type: Boolean, default: false},
@@ -43,6 +44,25 @@
                 set:function (val){
                     this.$emit('update', val);
                 }
+            },
+            getDateText: function(){
+                let txt='';
+                let start = this.dateRange.startDate;
+                let end = this.dateRange.endDate;
+                if(start){
+                    txt += 'Start ';
+                    txt += this.$options.filters.date(start) ;
+                }
+
+                if (start && end)
+                    txt += ' - ';
+
+                if(end){
+                    txt += 'End ';
+                    txt += this.$options.filters.date(end) ;
+                }
+
+                return txt;
             }
         },
         mounted() {

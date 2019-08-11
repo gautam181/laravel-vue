@@ -59,6 +59,7 @@ const actions = {
                 data: data.body
             }).
             then(function (response) {
+                context.commit('setTicket', data.body);
                 resolve(response);
             })
             .catch(error => {
@@ -115,6 +116,7 @@ const mutations = {
     setTotalRows: (state, val) => { state.totalRows = val },
     setPage: (state, val) => { state.page = val },
     setTicketComments: (state, comments) => { state.ticket_comments = comments },
+    setDates: (state, dates ) =>{ state.ticket.start_date = dates.start_date; state.ticket.end_date = dates.end_date},
     setSortBy: (state, sortby) => {
         state.sort_by = sortby;
         localStorage.setItem('ticket_comment_sort_by', sortby);

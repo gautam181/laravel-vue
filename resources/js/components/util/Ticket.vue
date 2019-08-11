@@ -18,19 +18,12 @@
                         </p>
                         <div class="ticket-options">
                             <span class="ticket-more" v-if="is_list">
-                                <a href="javascript:void(0);" class="btn btn-xs" v-on:click="showDesc">{{ more_desc }} ....</a>
+                                <a href="javascript:void(0);" class="btn w-xs btn-xs btn-link" v-on:click="showDesc">{{ more_desc }} ....</a>
                             </span>
                             <span class="ticket-dates">
-                                <date-picker @update="updateValues" :dates="dateRange">
-                                    <div slot="input" slot-scope="ticket">
-                                        {{ dateRange.startDate | date }} - {{ dateRange.endDate | date }}
-                                    </div>
-                                </date-picker>
-                                (
-                                <span class="start_date" v-if="ticket.start_date">Start on: {{ ticket.start_date | date }}</span>
-                                <i class="fa fa-arrows-alt-h"></i>
-                                <span class="end_date" v-if="ticket.end_date">End on: {{ ticket.end_date | date }}</span>
-                                )
+                                <date-range @update="updateValues" :dates="dateRange">
+
+                                </date-range>
                             </span>
                         </div>
                     </div>
@@ -50,7 +43,7 @@
                 </div>
                 <div class="ticket-heading">
                     <div class="ticket-title">
-                        <input type="text" class="form-control input-sm" v-model="tmpTicket.title">
+                        <input type="text" class="form-control input-sm" v-model="ticket_detail.title">
                     </div>
                 </div>
             </div>
@@ -58,11 +51,11 @@
                 <div class="ticket-desc">
                     <div class="hpanel">
                         <ul class="nav nav-tabs">
-                            <li class="nav-item"><a data-toggle="tab" :href="'#tab-'+tmpTicket.id+'-1'" class="nav-link active" v-b-tooltip.hover title="Who & When?"><i class="fa fa-user"></i></a></li>
-                            <li class="nav-item"><a data-toggle="tab" :href="'#tab-'+tmpTicket.id+'-2'"  class="nav-link" v-b-tooltip.hover title="Description"><i class="fa fa-align-left"></i></a></li>
+                            <li class="nav-item"><a data-toggle="tab" :href="'#tab-'+ticket_detail.id+'-1'" class="nav-link active" v-b-tooltip.hover title="Who & When?"><i class="fa fa-user"></i></a></li>
+                            <li class="nav-item"><a data-toggle="tab" :href="'#tab-'+ticket_detail.id+'-2'"  class="nav-link" v-b-tooltip.hover title="Description"><i class="fa fa-align-left"></i></a></li>
                         </ul>
                         <div class="tab-content">
-                            <div :id="'tab-'+tmpTicket.id+'-1'" class="tab-pane active">
+                            <div :id="'tab-'+ticket_detail.id+'-1'" class="tab-pane active">
                                 <div class="panel-body">
                                     <div class="row">
                                         <div class="col-md-9 col-lg-7">
@@ -71,7 +64,7 @@
                                                     <div class="form-group">
                                                         <label class="control-label">Assigned to</label>
                                                         <v-select
-                                                            v-model="tmpTicket.assigned_to"
+                                                            v-model="ticket_detail.assigned_to"
                                                             label="name"
                                                             :options="users"
                                                         ></v-select>
@@ -80,13 +73,13 @@
                                                 <div class="col">
                                                     <div class="form-group">
                                                         <label class="control-label">Start Date</label>
-                                                        <date-picker lang="en" v-model="tmpTicket.start_date" type="date" :format="date_format" input-class="form-control"></date-picker>
+                                                        <date-picker lang="en" v-model="ticket_detail.start_date" type="date" :format="date_format" input-class="form-control"></date-picker>
                                                     </div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="form-group">
                                                         <label class="control-label">End Date</label>
-                                                        <date-picker lang="en" v-model="tmpTicket.end_date" :format="date_format" input-class="form-control"></date-picker>
+                                                        <date-picker lang="en" v-model="ticket_detail.end_date" :format="date_format" input-class="form-control"></date-picker>
                                                     </div>
                                                 </div>
                                             </div>
@@ -96,9 +89,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div :id="'tab-'+tmpTicket.id+'-2'" class="tab-pane">
+                            <div :id="'tab-'+ticket_detail.id+'-2'" class="tab-pane">
                                 <div class="panel-body">
-                                    <textarea name="comments" v-model="tmpTicket.description" class="form-control" placeholder="Provide a detailed description for this task (optional)"></textarea>
+                                    <textarea name="comments" v-model="ticket_detail.description" class="form-control" placeholder="Provide a detailed description for this task (optional)"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -114,34 +107,38 @@
 </template>
 
 <script>
-    import DatePicker from './DatePicker';
+    import DateRange from './DateRange';
+    import { cloneDeep } from 'lodash'
     export default {
+        inheritAttrs: false,
         name: "Ticket",
         props: {
-            'ticket': Object,
+            'ticket': {type: Object},
             'view': {type: Boolean, default: true},
             'desc': {type: Boolean, default: false},
             'list': {type: Boolean, default: false},
             'add' : {type: Boolean, default: false}
         },
-        data: function(){
-            return {
+        data(){
+            let data = {
                 mode: this.view == true ? 'view': 'from',
                 is_deleted: false,
                 is_list: this.list,
                 show_desc: this.desc,
                 more_desc: this.desc ? 'less': 'more',
                 view_desc: this.desc ? 'Hide': 'Show',
-                tmpTicket: this.ticket,
                 date_format: this.$settings.DATEFROMAT,
                 ranges: true,
                 auto_apply: false,
                 singleDatePicker: false,
-                linkedCalendars: true
-            }
+                linkedCalendars: true,
+                is_deleted: false,
+                ticket_detail: {}
+            };
+            return data
         },
         components:{
-            DatePicker
+            DateRange
         },
         computed:{
             dateRange(){
@@ -155,21 +152,21 @@
             }
         },
         watch: {
-            ticket: function(val){
-              this.tmpTicket = val;
-            },
             show_desc: function(val){
                 this.view_desc =  val ? 'Hide' : 'Show'
                 this.more_desc =  this.show_desc ? 'less' : 'more'
             }
         },
         mounted(){
-
             //console.log(this.ticket, this.author_id);
         },
         methods: {
-            updateValues (values) {
-                this.$store.dispatch('tickets/updateDates', {id:this.tmpTicket.id, body: {'start_date':values.startDate, 'end_date':values.endDate }});
+            updateValues (values){
+                let dates = {'start_date':values.startDate, 'end_date':values.endDate };
+                this.$store.dispatch('tickets/updateDates', {id:this.ticket.id, body: dates})
+                    .then(res => {
+                        this.$store.commit('tickets/setDates', dates);
+                    });
                 console.log('event: update', values)
             },
             showDesc: function(){
@@ -177,14 +174,14 @@
             },
             saveTicket: function () {
                 this.$store.dispatch('tickets/saveTicket', {
-                    id: this.tmpTicket.id,
+                    id: this.ticket_detail.id,
                     body: {
-                        id: this.tmpTicket.id,
-                        title: this.tmpTicket.title,
-                        description: this.tmpTicket.description,
-                        assigned_to: this.tmpTicket.assigned_to.id,
-                        start_date: this.tmpTicket.start_date,
-                        end_date: this.tmpTicket.end_date
+                        id: this.ticket_detail.id,
+                        title: this.ticket_detail.title,
+                        description: this.ticket_detail.description,
+                        assigned_to: this.ticket_detail.assigned_to.id,
+                        start_date: this.ticket_detail.start_date,
+                        end_date: this.ticket_detail.end_date
                     }
                 })
                     .then(response => {
@@ -202,8 +199,7 @@
             },
             resetTicket: function () {
                 this.mode = 'view';
-
-                this.tmpTicket = this.ticket;
+                this.ticket_detail = cloneDeep(this.ticket);
             },
             enableComment(){
                 this.activated = true;
@@ -212,6 +208,7 @@
                 this.$store.dispatch('users/getUsersList');
                 this.mode = 'update';
                 this.activated = true;
+                this.ticket_detail = cloneDeep(this.ticket);
                 console.info("Edit Called")
             },
             deleteTicket(){

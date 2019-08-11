@@ -14,7 +14,7 @@
                 .ticket-options{
                     display: inline;
                     .ticket-dates{
-                        font-size: 12px; color: #aaacae;
+                        .form-control{font-size: 12px; color: #aaacae;}
                     }
                 }
             }
@@ -28,6 +28,7 @@
                 text-overflow: ellipsis;
                 white-space: nowrap;
                 overflow: hidden;
+                top: 1px;
             }
         }
         .ticket-controls{

@@ -92,8 +92,8 @@ class TicketController extends Controller
             // store
             $ticket->title = $request->title;
             $ticket->description = $request->description;
-            $ticket->start_date = date('Y-m-d', strtotime($request->start_date));
-            $ticket->end_date = date('Y-m-d', strtotime($request->end_date));
+            $ticket->start_date = $request->start_date? date('Y-m-d', strtotime($request->start_date)): null;
+            $ticket->end_date = $request->end_date? date('Y-m-d', strtotime($request->end_date)):null;
             $ticket->assigned_to = $request->assigned_to;
             $ticket->project_id = $request->project_id;
             $ticket->save();
@@ -135,8 +135,8 @@ class TicketController extends Controller
     public function updateDates(Request $request, $id)
     {
         Ticket::where('id', $id)->update([
-            'start_date' => date('Y-m-d', strtotime($request->start_date)),
-            'end_date' => date('Y-m-d', strtotime($request->end_date))
+            'start_date' => $request->start_date? date('Y-m-d', strtotime($request->start_date)): null,
+            'end_date' => $request->end_date? date('Y-m-d', strtotime($request->end_date)): null
         ]);
 
         return response()->json(["message"=>"Ticket dates updated successfully", 'data'=> $request->toArray()], 202);

@@ -37,7 +37,7 @@
                 <Comment v-on:commentUpdate="commentUpdate"
                     :author="this.$user"
                     :comment="add_comment"
-                    :ticket="ticket"
+                    v-model="ticket"
                     :edit="true"
                 ></Comment>
             </div>
