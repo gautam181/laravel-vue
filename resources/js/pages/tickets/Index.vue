@@ -21,66 +21,12 @@
                 <div class="hpanel">
                     <div class="panel-body">
                         <div v-if="$route.name == 'tickets'" class="tickets-list">
-                            <template v-for="row in tickets" >
+
+                            <template v-for="(row, index) in tickets">
                                 <Ticket
-                                    :ticket="row"
+                                    :ticket="tickets[index]"
                                     :list=ticketList
                                 ></Ticket>
-                                <!--<div class="col-md-12" :id="'ticket_'+row.id">
-                                    <div class="hpanel hgreen">
-                                        <div class="panel-body">
-                                            <div class="row" v-if="!row.edit">
-                                                <div class="col-sm-8 col-md-10">
-                                                    <h5>
-                                                        <router-link v-bind:to="{'name': 'ticket-detail', params: {'id': row.id }}" active-class="" class="">
-                                                            {{ row.title }}
-                                                        </router-link>
-                                                    </h5>
-                                                    <p>
-                                                        {{ row.description}}
-                                                    </p>
-
-                                                    <div class="row">
-                                                        <div class="col-sm-4">
-                                                            <div class="project-label">DEADLINE</div>
-                                                            <small>{{ row.end_date }}</small>
-                                                        </div>
-                                                        <div class="col-sm-4">
-                                                            <div class="project-label">Assigned To</div>
-                                                            <small v-if="row.assigned_to">{{ row.assigned_to.name }}</small>
-                                                        </div>
-                                                        <div class="col-sm-4">
-                                                            <div class="project-label">Created By</div>
-                                                            <small v-if="row.created_by">{{ row.created_by.name }}</small>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-4 col-md-2 project-info">
-                                                    <div class="project-action m-t-md">
-                                                        <div class="btn-group">
-                                                            <router-link v-bind:to="{'name': 'ticket-detail', params: {'id': row.id }}" active-class="" class="btn btn-xs btn-default">
-                                                                View
-                                                            </router-link>
-                                                            <button class="btn btn-xs btn-default" v-on:click="editTicket(row.id)"> Edit</button>
-                                                            <button class="btn btn-xs btn-default" v-on:click="deleteTicket(row.id)"> Delete</button>
-                                                        </div>
-                                                    </div>
-                                                    <div class="project-value">
-                                                        <h2 class="text-success">
-                                                            TotalHours
-                                                        </h2>
-                                                    </div>
-                                                    <div class="project-people">
-                                                        &lt;!&ndash;<img alt="logo" class="img-circle" src="images/a1.jpg">&ndash;&gt;
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row" v-if="row.edit">
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>-->
                             </template>
 
                         </div>
@@ -100,7 +46,9 @@
 </template>
 
 <script>
-    import Ticket from '../../components/util/Ticket'
+    import Ticket from '../../components/util/Ticket';
+    import { mapGetters } from 'vuex';
+    import tickets from "../../store/modules/tickets";
     export default {
         name: "ticket-index",
         data(){
@@ -115,8 +63,20 @@
         components: {
             Ticket
         },
+        watch: {
+            tickets:function (newval) {
+                console.log(newval);
+            }
+        },
         computed:{
-            tickets(){
+            ...mapGetters({
+                tickets: 'tickets/getTickets',
+                page: 'tickets/getPage',
+                perPage: 'tickets/getPerPage',
+                totalPages: 'tickets/getTotalPages',
+                totalRows: 'tickets/getTotalRows',
+            })
+            /*tickets(){
                 return this.$store.getters['tickets/getTickets'];
             },
             page(){
@@ -130,8 +90,9 @@
             },
             totalRows(){
                 return this.$store.getters['tickets/getTotalRows'];
-            }
+            }*/
         },
+
         mounted(){
             this.$emit('handle-page-header', {label:''});
             this.myRoute = this.$router.options.routes.find(route => route.name === this.$route.name);

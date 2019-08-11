@@ -112,6 +112,10 @@
     export default {
         inheritAttrs: false,
         name: "Ticket",
+        /*model: {
+            prop: 'ticket',
+            event: 'update',
+        },*/
         props: {
             'ticket': {type: Object},
             'view': {type: Boolean, default: true},
@@ -162,12 +166,11 @@
         },
         methods: {
             updateValues (values){
-                let dates = {'start_date':values.startDate, 'end_date':values.endDate };
+                let dates = {id:this.ticket.id, 'start_date':values.startDate, 'end_date':values.endDate };
                 this.$store.dispatch('tickets/updateDates', {id:this.ticket.id, body: dates})
                     .then(res => {
                         this.$store.commit('tickets/setDates', dates);
                     });
-                console.log('event: update', values)
             },
             showDesc: function(){
                 this.show_desc = !this.show_desc;
@@ -187,12 +190,12 @@
                     .then(response => {
                         this.activated = false;
                         if(this.add=== false){
-                            this.$store.commit('tickets/setTicket', this.ticket_detail);
                             this.mode = 'view';
                         }
                         else {
                             // reset the from.
                         }
+                        this.$store.commit('tickets/setTicket', this.ticket_detail);
                         this.$emit('ticketUpdate', response);
                     })
                     .catch(error => {

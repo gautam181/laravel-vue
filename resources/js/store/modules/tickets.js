@@ -11,7 +11,6 @@ import axios from 'axios';
 const state = {
     sort_by: localStorage.getItem('ticket_comment_sort_by') || 'asc',
     tickets: [],
-    ticket: {},
     ticket_comments: [],
     page: 1,
     totalPages : 0,
@@ -22,7 +21,7 @@ const state = {
 // getters
 const getters = {
     getTickets: (state) => { return state.tickets },
-    getTicket: (state) => { return state.ticket },
+    getTicket: (state, id) => { return state.tickets.find(ticket => ticket.id === id); },
     getSortBy: (state) => { return state.sort_by },
     getPage: (state) => { return state.page },
     getTotalPages: (state) => { return state.totalPages },
@@ -101,7 +100,7 @@ const actions = {
     getTicketComments: (context, id) => {
         axios.get("/ticket/"+id+'/comments?sort='+context.state.sort_by)
             .then(response => {
-                context.commit('setTicketComments', response.data.data);
+                context.commit('setTicketComments', {'id': id,  'comments':response.data.data});
             });
     }
 };
@@ -109,13 +108,28 @@ const actions = {
 // mutations
 const mutations = {
     setTickets: (state, tickets) => { state.tickets = tickets },
-    setTicket: (state, val) => { state.ticket = val },
+    setTicket: (state, val) => {
+        let id = val.id;
+        const ticket= state.tickets.find(ticket => ticket.id === id);
+        //state.tickets[tindex] = {...state.tickets[tindex], ...val};
+        ticket.title =  val.title;
+        ticket.description =  val.description;
+        ticket.start_date =  val.start_date;
+        ticket.end_date =  val.end_date;
+    },
     setPerPage: (state, val) => { state.perPage = val },
     setTotalPages: (state, val) => { state.totalPages = val },
     setTotalRows: (state, val) => { state.totalRows = val },
     setPage: (state, val) => { state.page = val },
-    setTicketComments: (state, comments) => { state.ticket_comments = comments },
-    setDates: (state, dates ) =>{ state.ticket.start_date = dates.start_date; state.ticket.end_date = dates.end_date},
+    setTicketComments: (state, val) => {
+        state.ticket_comments[val.id] = val.comments
+    },
+    setDates: (state, val ) =>{
+        let id = val.id;
+        const ticket = state.tickets.find(ticket => ticket.id === id);
+        ticket.start_date = val.start_date;
+        ticket.end_date = val.end_date
+    },
     setSortBy: (state, sortby) => {
         state.sort_by = sortby;
         localStorage.setItem('ticket_comment_sort_by', sortby);
