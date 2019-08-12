@@ -1,6 +1,6 @@
 <template>
     <div>
-        <vue-title :title="ticket.title"></vue-title>
+
         <div class="row">
             <div class="col-md-12">
                 <div class="list-options">
@@ -10,7 +10,8 @@
             </div>
             <div class="col-md-12">
                 <div class="hpanel">
-                    <div class="panel-body">
+                    <div class="panel-body" v-if="ticket">
+                        <vue-title :title="ticket.title"></vue-title>
                         <Ticket
                             :ticket="ticket"
                             :desc="desc"
@@ -60,6 +61,7 @@
 <script>
     import Comment from "../../components/util/Comment";
     import Ticket from "../../components/util/Ticket";
+    import {mapGetters} from 'vuex';
     export default {
         name: "ticket-detail",
         data(){
@@ -72,15 +74,13 @@
             }
         },
         computed:{
+            ...mapGetters({
+                comments: 'tickets/getTicketComments',
+                sort: 'tickets/getSortBy'
+            }),
             ticket(){
-                return this.$store.getters['tickets/getTicket'];
+                return this.$store.getters['tickets/getTicket'](this.ticket_id);
             },
-            comments(){
-                return this.$store.getters['tickets/getTicketComments'];
-            },
-            sort(){
-                return this.$store.getters['tickets/getSortBy']
-            }
         },
         components: {
             Comment, Ticket

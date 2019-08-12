@@ -21,7 +21,7 @@ const state = {
 // getters
 const getters = {
     getTickets: (state) => { return state.tickets },
-    getTicket: (state, id) => { return state.tickets.find(ticket => ticket.id === id); },
+    getTicket: (state)=>(id) => { return state.tickets.find(ticket => ticket.id == id); },
     getSortBy: (state) => { return state.sort_by },
     getPage: (state) => { return state.page },
     getTotalPages: (state) => { return state.totalPages },
@@ -111,19 +111,35 @@ const mutations = {
     setTicket: (state, val) => {
         let id = val.id;
         const ticket= state.tickets.find(ticket => ticket.id === id);
-        //state.tickets[tindex] = {...state.tickets[tindex], ...val};
-        ticket.title =  val.title;
-        ticket.description =  val.description;
-        ticket.start_date =  val.start_date;
-        ticket.end_date =  val.end_date;
-        ticket.assigned_to = val.assigned_to;
+        if (ticket){
+            ticket.title =  val.title;
+            ticket.description =  val.description;
+            ticket.start_date =  val.start_date;
+            ticket.end_date =  val.end_date;
+            ticket.assigned_to = val.assigned_to;
+        } else {
+            state.tickets.push(val);
+        }
+
     },
     setPerPage: (state, val) => { state.perPage = val },
     setTotalPages: (state, val) => { state.totalPages = val },
     setTotalRows: (state, val) => { state.totalRows = val },
     setPage: (state, val) => { state.page = val },
     setTicketComments: (state, val) => {
-        state.ticket_comments[val.id] = val.comments
+        const comments = state.ticket_comments[val.id];
+        if (comments != undefined){
+            const comment= state.ticket_comments[val.id].find(comment => comment.id == val.id);
+            if (comment){
+                //update comment values
+            } else {
+                state.ticket_comments[val.id].push(val.comments);
+            }
+        } else {
+            state.ticket_comments[val.id]= [];
+            state.ticket_comments[val.id].push(val.comments);
+        }
+
     },
     setDates: (state, val ) =>{
         let id = val.id;
