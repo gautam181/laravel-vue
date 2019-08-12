@@ -77,21 +77,6 @@
                 totalPages: 'tickets/getTotalPages',
                 totalRows: 'tickets/getTotalRows',
             })
-            /*tickets(){
-                return this.$store.getters['tickets/getTickets'];
-            },
-            page(){
-                return this.$store.getters['tickets/getPage'];
-            },
-            perPage(){
-                return this.$store.getters['tickets/getPerPage'];
-            },
-            totalPages(){
-                return this.$store.getters['tickets/getTotalPages'];
-            },
-            totalRows(){
-                return this.$store.getters['tickets/getTotalRows'];
-            }*/
         },
 
         mounted(){
