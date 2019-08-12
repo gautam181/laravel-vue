@@ -116,6 +116,7 @@ const mutations = {
         ticket.description =  val.description;
         ticket.start_date =  val.start_date;
         ticket.end_date =  val.end_date;
+        ticket.assigned_to = val.assigned_to;
     },
     setPerPage: (state, val) => { state.perPage = val },
     setTotalPages: (state, val) => { state.totalPages = val },

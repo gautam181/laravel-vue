@@ -20,6 +20,7 @@
             <div class="col-md-12">
                 <div class="hpanel">
                     <div class="panel-body">
+                        <!--<Ticket></Ticket>-->
                         <div v-if="$route.name == 'tickets'" class="tickets-list">
 
                             <template v-for="(row, index) in tickets">

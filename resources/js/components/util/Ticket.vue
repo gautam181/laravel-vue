@@ -18,7 +18,7 @@
                         </p>
                         <div class="ticket-options">
                             <span class="ticket-more" v-if="is_list">
-                                <a href="javascript:void(0);" class="btn w-xs btn-xs btn-link" v-on:click="showDesc">{{ more_desc }} ....</a>
+                                <a href="javascript:void(0);" class="btn btn-xs btn-link" v-on:click="showDesc">{{ more_desc }} ....</a>
                             </span>
                             <span class="ticket-dates">
                                 <date-range @update="updateValues" :dates="dateRange">
