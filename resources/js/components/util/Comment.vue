@@ -11,7 +11,8 @@
                 <div class="media-body">
                     <form action="" >
                         <div v-show="'update'===mode" v-bind:class="{active: activated}">
-                            <textarea name="comments" v-model="comment_body" v-on:click.self="enableComment()" class="form-control" placeholder="add your comments"> {{ comment_body }}</textarea>
+                            <div v-if="!activated" v-on:click.self="enableComment()" class="form-control placeholder">add your comments</div>
+                            <editor v-model="comment_body" :html="comment_formatted" mode="wysiwyg" ref="commentEditor" height="200px" v-if="activated"></editor>
                             <div v-if="activated">
                                 <div class="hr-line-dashed"></div>
                                 <button class="btn btn-primary" type="button" v-on:click="saveComment()" :disabled="comment_body.length < 1">Save Comment</button> or
@@ -19,9 +20,7 @@
                             </div>
 
                         </div>
-                        <div class="formatted-comment" v-show="'view'===mode">
-                            {{ comment_body }}
-                        </div>
+                        <div class="formatted-comment" v-show="'view'===mode" v-html="comment_body"></div>
                     </form>
                 </div>
                 <div class="media-info pull-right" v-if="'view'===mode">
@@ -41,6 +40,9 @@
 </template>
 
 <script>
+    import 'tui-editor/dist/tui-editor.css';
+    import 'tui-editor/dist/tui-editor-contents.css';
+    import 'codemirror/lib/codemirror.css';
     export default {
         name: "Comment",
         props: ['author', 'comment', 'ticket', 'edit'],
@@ -48,6 +50,7 @@
             return {
                 mode: this.edit ? 'update': 'view',
                 comment_body: this.comment.comment,
+                comment_formatted : this.comment.comment,
                 activated: false,
                 size: 40,
                 id_deleted: false
@@ -56,6 +59,9 @@
         watch: {
             comment: function(val){
                 this.comment_body = this.comment.comment;
+            },
+            comment_body: function () {
+                this.comment_formatted = this.$refs.commentEditor.invoke('getHtml');
             }
         },
         mounted(){
@@ -69,7 +75,7 @@
                         author_id: this.author.id,
                         ticket_id: this.ticket.id,
                         project_id: this.ticket.project_id,
-                        comment: this.comment_body
+                        comment: this.$refs.commentEditor.invoke('getHtml')//this.comment_body
                     }
                 })
                     .then(response => {
@@ -113,6 +119,6 @@
 </script>
 
 <style scoped>
-    textarea {height: 40px; background: #f1f3f6;}
+    .placeholder {height: 40px; background: #f1f3f6; cursor:pointer; color:#999;}
     .active textarea {height: 100px; background: transparent;}
 </style>

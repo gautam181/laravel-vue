@@ -31,8 +31,8 @@ import DatePicker from 'vue2-datepicker';
 import Avatar from 'vue-avatar';
 import VueSweetalert2 from 'vue-sweetalert2';
 import vSelect from 'vue-select';
-import DateRangePicker from 'vue2-daterange-picker'
-
+import DateRangePicker from 'vue2-daterange-picker';
+import {Editor} from '@toast-ui/vue-editor';
 
 //component
 Vue.component('vue-title', titleComponent);
@@ -42,6 +42,7 @@ Vue.component('vue-ladda', VueLadda);
 Vue.component('date-picker', DatePicker);
 Vue.component('v-select', vSelect);
 Vue.component('date-range-picker', DateRangePicker);
+Vue.component('editor', Editor);
 
 //store
 import store from './store';
@@ -52,7 +53,7 @@ Vue.prototype.$app = window.application;
 Vue.prototype.$settings = settings;
 Vue.use(Datatable);
 Vue.use(Plugin);
-//Vue.use(require('vue-moment'));
+Vue.use(require('vue-moment'));
 Vue.use(BootstrapVue);
 Vue.use(VueSweetalert2);
 

@@ -38,7 +38,7 @@
                 <Comment v-on:commentUpdate="commentUpdate"
                     :author="this.$user"
                     :comment="add_comment"
-                    v-model="ticket"
+                    :ticket="ticket"
                     :edit="true"
                 ></Comment>
             </div>
@@ -75,9 +75,11 @@
         },
         computed:{
             ...mapGetters({
-                comments: 'tickets/getTicketComments',
                 sort: 'tickets/getSortBy'
             }),
+            comments(){
+                return this.$store.getters['tickets/getTicketComments'](this.ticket_id);
+            },
             ticket(){
                 return this.$store.getters['tickets/getTicket'](this.ticket_id);
             },
@@ -86,8 +88,8 @@
             Comment, Ticket
         },
         mounted(){
-            this.getTicket();
-            this.getComments();
+            this.getTicket(this.ticket_id);
+            this.getComments(this.ticket_id);
             this.$emit('handle-page-header', {label:''});
             this.myRoute = this.$router.options.routes.find(route => route.name === this.$route.name);
         },
@@ -95,16 +97,15 @@
             handlePageHeader: function(data){
                 this.$emit('handle-page-header', data);
             },
-            getTicket: function () {
-                this.$store.dispatch('tickets/getTicket', this.ticket_id)
+            getTicket: function (val) {
+                this.$store.dispatch('tickets/getTicket', val)
             },
             changeCommentSort: function(val){
-                console.log("data changed", val);
                 this.$store.commit('tickets/setSortBy', val)
-                this.getComments();
+                this.getComments(this.ticket_id);
             },
-            getComments: function () {
-                this.$store.dispatch('tickets/getTicketComments', this.ticket_id)
+            getComments: function (val) {
+                this.$store.dispatch('tickets/getTicketComments', val)
             },
             togglePanel: function (id) {
                 $(id).find(".showhide i").toggleClass('fa-chevron-up').toggleClass('fa-chevron-down');
@@ -112,7 +113,7 @@
                 $(id).find(".panel-footr").slideToggle(200);
             },
             commentUpdate: function (val) {
-                this.getComments();
+                this.getComments(this.ticket_id);
             }
         },
         beforeRouteUpdate (to, from, next) {

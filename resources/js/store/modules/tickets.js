@@ -6,6 +6,7 @@
  */
 
 import axios from 'axios';
+import Vue from 'Vue';
 
 // initial state
 const state = {
@@ -27,7 +28,7 @@ const getters = {
     getTotalPages: (state) => { return state.totalPages },
     getPerPage: (state) => { return state.perPage },
     getTotalRows: (state) => { return state.totalRows },
-    getTicketComments: (state) => { return state.ticket_comments }
+    getTicketComments: (state) =>(id) => { const comments = state.ticket_comments.find(comment => comment.id == id); return comments ? comments.comments : []; }
 };
 
 // actions
@@ -127,19 +128,13 @@ const mutations = {
     setTotalRows: (state, val) => { state.totalRows = val },
     setPage: (state, val) => { state.page = val },
     setTicketComments: (state, val) => {
-        const comments = state.ticket_comments[val.id];
-        if (comments != undefined){
-            const comment= state.ticket_comments[val.id].find(comment => comment.id == val.id);
-            if (comment){
-                //update comment values
-            } else {
-                state.ticket_comments[val.id].push(val.comments);
-            }
-        } else {
-            state.ticket_comments[val.id]= [];
-            state.ticket_comments[val.id].push(val.comments);
-        }
-
+        let id = val.id;
+        const cmts= state.ticket_comments.find(comments => comments.id == id);
+        if(cmts){
+            //cmts.comments = {...cmts, ...val};
+            Vue.set(cmts, 'comments', [...val.comments]);
+        } else
+            state.ticket_comments.push(val)
     },
     setDates: (state, val ) =>{
         let id = val.id;
