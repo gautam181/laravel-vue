@@ -10,46 +10,39 @@ import axios from 'axios';
 // initial state
 const state = {
     sortBy: localStorage.getItem('project_sort_by') || 'asc',
-    comments: []
+    projects: [],
+    pagination: {
+        page: 1,
+        totalPages: 0,
+        totalRows: 0,
+        perPage: 0
+    }
 }
 
 // getters
 const getters = {
-    //getUser(state){return state.user}
+    getProjects: (state) => { return state.projects },
+    getPagination: (state) => { return state.pagination },
+    getPage: (state) => { return state.pagination.page },
 }
 
 // actions
 const actions = {
-    updateProfile(context, data){
-        return new Promise((resolve, reject) => {
-            axios.post('/update-profile', data)
-                .then(response => {
-                    resolve(response)
-                })
-                .catch(error => {
-                    console.log(error);
-                    reject(error);
-                })
-        })
-    }
+    getProjects: (context )=>{
+        axios.get("/projects?page="+context.state.pagination.page)
+            .then(response => {
+                let res = response.data;
+                context.commit('setProjects', res.data);
+                context.commit('setPagination', {totalPages: res.last_page, totalRows: res.total, page: res.current_page, perPage: res.per_page});
+            });
+    },
 }
 
 // mutations
 const mutations = {
-    setOauth(state, oauth) {
-        state.oauth = oauth
-    },
-    setUser(state, user) {
-        Object.assign(state.user = user)
-    },
-    setName(state, name){
-        state.user.name= name;
-    },
-    destroyToken(state) {
-        state.oauth = null;
-        state.user = {};
-    }
-
+    setProjects: (state, projects) => { state.projects = projects },
+    setPagination: (state, val) => { state.pagination = {...val} },
+    setPage: (state, val) => { state.pagination.page = val },
 }
 
 export default {

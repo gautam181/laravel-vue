@@ -1,13 +1,21 @@
 <template>
     <div>
         <router-view v-on:handle-page-header="handlePageHeader" ref="myChild"></router-view>
-        <b-pagination
-            v-model="page"
-            :total-rows="totalRows"
-            :per-page="perPage"
-            align="right"
-        ></b-pagination>
-        <div v-if="$route.name == 'projects'" class="row projects">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="list-options">
+                    <h2 class="">Projects List</h2>
+                    <b-pagination v-on:change="paginate"
+                                  :page="pagination.page"
+                                  :total-rows="pagination.totalRows"
+                                  :per-page="pagination.perPage"
+                                  align="right"
+                    ></b-pagination>
+                </div>
+
+            </div>
+        </div>
+        <div v-if="$route.name == 'projects'" class="row projects list">
             <template v-for="project in projects">
                 <div class="col-lg-4 col-md-6">
                     <div class="hpanel hgreen">
@@ -19,11 +27,9 @@
                                             {{ project.name }}
                                         </router-link>
                                     </h4>
-
-
-                                    <p>
+                                    <div class="project-details">
                                         {{ project.description}}
-                                    </p>
+                                    </div>
 
                                     <div class="row">
                                         <div class="col-sm-4">
@@ -32,7 +38,7 @@
                                         </div>
                                         <div class="col-sm-4">
                                             <div class="project-label">DEDLINE</div>
-                                            <small>{{ project.end_date }}</small>
+                                            <small>{{ project.end_date | date }}</small>
                                         </div>
                                         <div class="col-sm-4">
                                             <div class="project-label">PROGRESS</div>
@@ -46,7 +52,9 @@
                                 <div class="col-sm-4 project-info">
                                     <div class="project-action m-t-md">
                                         <div class="btn-group">
-                                            <button class="btn btn-xs btn-default"> View</button>
+                                            <router-link v-bind:to="{'name': 'project-detail', params: {'id': project.id }}" active-class="" class="btn btn-xs btn-default">
+                                                View
+                                            </router-link>
                                             <button class="btn btn-xs btn-default"> Edit</button>
                                             <button class="btn btn-xs btn-default"> Delete</button>
                                         </div>
@@ -66,54 +74,40 @@
                 </div>
             </template>
         </div>
-        <b-pagination
-            v-model="page"
-            :total-rows="totalRows"
-            :per-page="perPage"
-            align="right"
-        ></b-pagination>
     </div>
 </template>
 
 <script>
+    import { mapGetters } from 'vuex';
     export default {
         name: "project-index",
         data(){
             return {
                 myRoute : {},
-                projects : [],
-                page: 1,
-                totalPages : 0,
-                totalRows : 0,
-                perPage: 0
             }
+        },
+        computed: {
+            ...mapGetters({
+                projects: 'projects/getProjects',
+                pagination: 'projects/getPagination'
+            })
         },
         mounted(){
-            this.$emit('handle-page-header', {label:'Projects', desc:'List of projects'});
+            this.$emit('handle-page-header', {label:'', desc:'List of projects'});
             this.myRoute = this.$router.options.routes.find(route => route.name === this.$route.name);
             if(this.$route.name == 'projects')
-                this.projects = this.getProjects();
-        },
-        watch:{
-            page: function (val) {
-                this.getProjects();
-            }
+                this.projects = this.fetchProjects();
         },
         methods:{
             handlePageHeader: function(data){
                 this.$emit('handle-page-header', data);
             },
-            getProjects: function () {
-                let url = this.$settings.APIURL+"/projects?page="+this.page;
-                axios.get(url)
-                    .then(response => {
-                        let res = response.data;
-                        this.projects = res.data;
-                        this.totalPages = res.last_page;
-                        this.page = res.current_page;
-                        this.perPage = res.per_page;
-                        this.totalRows = res.total;
-                    });
+            fetchProjects: function () {
+                this.$store.dispatch('projects/getProjects');
+            },
+            paginate: function (val) {
+                this.$store.commit('projects/setPage', val);
+                this.fetchProjects();
             }
         }
     }

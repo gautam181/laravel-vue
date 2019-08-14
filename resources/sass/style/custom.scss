@@ -46,3 +46,11 @@ label{font-weight: bold;}
         }
     }
 }
+
+.projects {
+    &.list{
+        .project-details{
+            max-height: 65px; min-height: 65px; overflow: hidden;
+        }
+    }
+}

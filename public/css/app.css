@@ -19033,6 +19033,15 @@ ul.h-list li:hover a {
   border: 0px;
 }
 
+.ticket-wrapper .ticket-row .ticket-heading .ticket-title .ticket-options {
+  display: inline;
+}
+
+.ticket-wrapper .ticket-row .ticket-heading .ticket-title .ticket-options .ticket-dates .form-control {
+  font-size: 12px;
+  color: #aaacae;
+}
+
 .ticket-wrapper .ticket-row .ticket-heading .assignedto {
   width: 140px;
   position: absolute;
@@ -19043,6 +19052,7 @@ ul.h-list li:hover a {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  top: 1px;
 }
 
 .ticket-wrapper .ticket-row .ticket-controls {
@@ -19185,5 +19195,11 @@ label {
   text-align: right;
   margin-left: 10px;
   min-width: 100px;
+}
+
+.projects.list .project-details {
+  max-height: 65px;
+  min-height: 65px;
+  overflow: hidden;
 }
 

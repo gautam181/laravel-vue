@@ -23,9 +23,9 @@
                         <!--<Ticket></Ticket>-->
                         <div v-if="$route.name == 'tickets'" class="tickets-list">
 
-                            <template v-for="(row, index) in tickets">
+                            <template v-for="row in tickets">
                                 <Ticket
-                                    :ticket="tickets[index]"
+                                    :ticket="row"
                                     :list=ticketList
                                 ></Ticket>
                             </template>
@@ -64,11 +64,7 @@
         components: {
             Ticket
         },
-        watch: {
-            tickets:function (newval) {
-                console.log(newval);
-            }
-        },
+
         computed:{
             ...mapGetters({
                 tickets: 'tickets/getTickets',
