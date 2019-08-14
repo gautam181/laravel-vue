@@ -5,7 +5,7 @@
             <div class="col-md-12">
                 <vue-panel
                     id="project"
-                    :title="'Project: '+project.name"
+                    :title="project.name"
                     tools="1"
                 >{{ project.description }}</vue-panel>
             </div>
@@ -18,34 +18,14 @@
                             <a class="showhide" v-on:click="togglePanel('#tickets')"><i class="fa fa-chevron-up"></i></a>
                         </div>
                     </div>
+                    <div class="panel-body">
                     <template v-for="row in tickets">
-                        <div class="panel-body">
-                            <div class="media">
-                                <div class="media-author pull-left">
-                                    <div class="author-info">
-                                        <avatar :username="row.assigned_to.name" size="40"></avatar>
-                                        <div class="author-name" v-bind:title="row.assigned_to.name" >{{ row.assigned_to.name }} </div>
-                                        {{ row.updated_at | moment("from", "now" ) }}
-                                    </div>
-                                </div>
-                                <div class="media-body">
-
-                                    <router-link v-bind:to="{'name': 'ticket-detail', params: {'id': row.id }}" active-class="" class="">
-                                        <strong>{{ row.title }}</strong>
-                                    </router-link><br>
-                                    {{ row.description }}
-                                </div>
-                                <div class="media-info pull-right">
-                                    <span v-bind:title="row.updated_at">{{ row.updated_at | moment("from", "now") }}</span>
-                                    <button class="btn btn-default dropdown" data-toggle="dropdown" type="button" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></button>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                        <a href="" class="dropdown-item">Edit</a>
-                                        <a href="" class="dropdown-item">Delete</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <Ticket
+                            :ticket="row"
+                            :list=ticketList
+                        ></Ticket>
                     </template>
+                    </div>
                 </div>
                 <p v-else>
                     No ticket found for project <strong>{{ project.name }}</strong>
@@ -56,6 +36,8 @@
 </template>
 
 <script>
+    import Ticket from '../../components/util/Ticket';
+
     export default {
         name: "project-detail",
         data(){
@@ -63,11 +45,12 @@
                 myRoute : {},
                 project_id : this.$route.params.id,
                 project: {},
-                tickets: []
+                tickets: [],
+                ticketList: true
             }
         },
         components: {
-            //
+            Ticket
         },
         mounted(){
             this.getProject(this.project_id);
@@ -80,14 +63,14 @@
                 this.$emit('handle-page-header', data);
             },
             getProject: function (id) {
-                axios.get(this.$settings.APIURL+"/project/"+id)
+                axios.get("/project/"+id)
                     .then(response => {
                         let res = response.data;
                         this.project = res;
                     });
             },
             getTickets: function (id, data) {
-                axios.get(this.$settings.APIURL+"/project/tickets/"+id)
+                axios.get("/project/tickets/"+id)
                     .then(response => {
                         let res = response.data;
                         this.tickets = res.data;
