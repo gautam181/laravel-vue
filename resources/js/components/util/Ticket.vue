@@ -125,7 +125,7 @@
         },
         data(){
             let data = {
-                mode: this.view == true ? 'view': 'from',
+                mode: this.view == true ? 'view': 'form',
                 is_deleted: false,
                 is_list: this.list,
                 show_desc: this.desc,
@@ -137,7 +137,7 @@
                 singleDatePicker: false,
                 linkedCalendars: true,
                 is_deleted: false,
-                ticket_detail: {}
+                ticket_detail: cloneDeep(this.ticket)
             };
             return data
         },
@@ -159,6 +159,9 @@
             show_desc: function(val){
                 this.view_desc =  val ? 'Hide' : 'Show'
                 this.more_desc =  this.show_desc ? 'less' : 'more'
+            },
+            ticket:function (val) {
+                this.ticket_detail = cloneDeep(val);
             }
         },
         mounted(){
@@ -184,7 +187,8 @@
                         description: this.ticket_detail.description,
                         assigned_to: this.ticket_detail.assigned_to.id,
                         start_date: this.ticket_detail.start_date,
-                        end_date: this.ticket_detail.end_date
+                        end_date: this.ticket_detail.end_date,
+                        project_id: this.ticket_detail.project.id
                     }
                 })
                     .then(response => {

@@ -87,8 +87,12 @@
             }
         },
         computed: {
+            projects:{
+                get() { return this.$store.getters['projects/getProjects']; },
+                set(value) { this.$store.commit('projects/setProjects', value); },
+            },
             ...mapGetters({
-                projects: 'projects/getProjects',
+                //projects: 'projects/getProjects',
                 pagination: 'projects/getPagination'
             })
         },

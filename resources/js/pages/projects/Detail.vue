@@ -2,7 +2,7 @@
     <div>
         <vue-title :title="project.name"></vue-title>
         <div class="row projects">
-            <div class="col-md-12">
+            <div class="col-md-12" style="display: none;">
                 <vue-panel
                     id="project"
                     :title="project.name"
@@ -10,26 +10,37 @@
                 >{{ project.description }}</vue-panel>
             </div>
             <div class="col-md-12">
-
-                <div class="hpanel forum-box" id="tickets" v-if="tickets.length > 0">
-                    <div class="panel-heading hbuilt">
-                        Ticket List
-                        <div class="panel-tools">
-                            <a class="showhide" v-on:click="togglePanel('#tickets')"><i class="fa fa-chevron-up"></i></a>
-                        </div>
-                    </div>
-                    <div class="panel-body">
-                    <template v-for="row in tickets">
-                        <Ticket
-                            :ticket="row"
-                            :list=ticketList
-                        ></Ticket>
-                    </template>
+                <div class="list-options">
+                    <h2 class="">Tickets</h2>
+                    <div class="btn-options text-right">
+                        <button class="btn btn-md btn-primary" @click="addTicket">Add Ticket</button>
                     </div>
                 </div>
-                <p v-else>
-                    No ticket found for project <strong>{{ project.name }}</strong>
-                </p>
+
+            </div>
+            <div class="col-md-12">
+
+                <div class="hpanel forum-box" id="tickets">
+                    <div class="panel-body">
+                        <Ticket v-if="showAddTicket"
+                            :ticket="blankTicket" :view="!showAddTicket"
+                        ></Ticket>
+                        <template v-if="tickets.length > 0">
+                            <template v-for="row in tickets">
+                                <Ticket
+                                    :ticket="row"
+                                    :list=ticketList
+                                ></Ticket>
+                            </template>
+                        </template>
+                        <template v-else>
+                            <p v-if="!showAddTicket" class="text-center">
+                                <button class="btn btn-xs btn-secondary" @click="addTicket">Add Ticket</button>
+                            </p>
+                        </template>
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -46,7 +57,18 @@
                 project_id : this.$route.params.id,
                 project: {},
                 tickets: [],
-                ticketList: true
+                ticketList: true,
+                showAddTicket: false,
+                blankTicket: {
+                    project: {id:this.$route.params.id},
+                    title: '', description: '',
+                    assigned_to: {id:'', name: ''}
+                }
+            }
+        },
+        watch: {
+            project: function(val){
+                this.$emit('handle-page-header', {label:val.name, desc:' '});
             }
         },
         components: {
@@ -55,7 +77,7 @@
         mounted(){
             this.getProject(this.project_id);
             this.getTickets(this.project_id);
-            this.$emit('handle-page-header', {label:'Project', desc:'Project Detail'});
+            //this.$emit('handle-page-header', {label:project.name, desc:' '});
             this.myRoute = this.$router.options.routes.find(route => route.name === this.$route.name);
         },
         methods:{
@@ -68,6 +90,9 @@
                         let res = response.data;
                         this.project = res;
                     });
+            },
+            addTicket: function(){
+              this.showAddTicket = true;
             },
             getTickets: function (id, data) {
                 axios.get("/project/tickets/"+id)

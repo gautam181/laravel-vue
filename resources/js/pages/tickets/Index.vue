@@ -49,7 +49,6 @@
 <script>
     import Ticket from '../../components/util/Ticket';
     import { mapGetters } from 'vuex';
-    import tickets from "../../store/modules/tickets";
     export default {
         name: "ticket-index",
         data(){

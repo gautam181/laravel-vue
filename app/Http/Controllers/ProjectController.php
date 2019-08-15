@@ -131,6 +131,6 @@ class ProjectController extends Controller
     public function tickets($id, Request $request){
         $dir = $request->get('sort');
         $dir = $dir? $dir : 'asc';
-        return response()->json(Ticket::with(['assigned_to'])->where('project_id', $id)->orderby('updated_at', $dir)->paginate(100), 200);
+        return response()->json(Ticket::with(['assigned_to', 'project'])->where('project_id', $id)->orderby('updated_at', $dir)->paginate(100), 200);
     }
 }
