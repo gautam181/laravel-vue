@@ -1,10 +1,10 @@
 <template>
-    <div id="header">
-        <div id="logo" class="light-version">
+    <nav class="navbar fixed-top bg-dark top-nav">
+        <div id="logo" class="dark-version">
             <img src="../../images/vue-laravel.png" :alt="application.name" class="brand-image">
         </div>
         <nav role="navigation"  class="navbar-expand-lg">
-            <div class="header-link hide-menu" v-on:click="handleSidebarMinified"><i class="fa fa-bars"></i></div>
+            <div class="header-link hide-menu hide" v-on:click="handleSidebarMinified"><i class="fa fa-bars"></i></div>
             <div class="small-logo">
                 <span class="text-primary">{{ this.application.name }}</span>
             </div>
@@ -23,6 +23,7 @@
                     </ul>
                 </div>
             </div>
+            <top-nav></top-nav>
             <div class="navbar-right pull-right">
                 <ul class="nav navbar-nav no-borders">
                     <li class="dropdown ">
@@ -49,19 +50,25 @@
                             <li class="summary"><a href="#">See all notifications</a></li>
                         </ul>
                     </li>
-                    <li>
-                        <a href="#">
-                            <i class="fas fa-sign-out-alt"></i>
+                    <li class="nav-item dropdown dropdown-authentication show">
+                        <a class="nav-link dropdown-toggle user-nav no-caret" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <img src="../../images/profile.jpg" class="user-img rounded-circle" alt="logo">
+                            <span>Abdul Khan</span>
                         </a>
+                        <div class="dropdown-menu dropdown-menu-right" data-dropdown-in="flipInX" data-dropdown-out="flipOutX">
+                            <a class="dropdown-item" href="profile.html"><i class="fa fa-user"></i> Profile</a>
+                            <a class="dropdown-item" href="#"><i class="fa fa-power-off"></i> <span>Log out</span></a>
+                        </div>
                     </li>
                 </ul>
             </div>
         </nav>
-    </div>
+    </nav>
 </template>
 
 <script>
     import Settings from '../../config/Settings'
+    import TopNav from "./menu/TopNav";
 
     export default {
         name: "Header",
@@ -71,6 +78,9 @@
                 application: this.$app,
                 settings: Settings
             }
+        },
+        components:{
+            TopNav
         },
         methods: {
             handleSidebarMinified: function(){

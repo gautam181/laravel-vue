@@ -18,7 +18,7 @@
         <div v-if="$route.name == 'projects'" class="row projects list">
             <template v-for="project in projects">
                 <div class="col-lg-4 col-md-6">
-                    <div class="hpanel hgreen">
+                    <div class="panel green">
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-sm-8">

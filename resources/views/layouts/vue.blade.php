@@ -18,7 +18,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<body class="">
+<body class="hide-sidebar fixed-navbar">
     <div id="app">
     </div>
     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

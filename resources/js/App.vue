@@ -2,8 +2,8 @@
     <fragment>
         <!-- Header -->
         <Header></Header>
-        <Sidebar></Sidebar>
-        <div id="wrapper">
+<!--        <Sidebar></Sidebar>-->
+        <div id="page-container">
             <PageHeader :headerData="pageHeaderData"></PageHeader>
             <div class="content animate-panel">
                 <router-view v-on:handle-page-header="handlePageHeader"></router-view>

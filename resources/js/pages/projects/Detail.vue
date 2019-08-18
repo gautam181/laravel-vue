@@ -20,7 +20,7 @@
             </div>
             <div class="col-md-12">
 
-                <div class="hpanel forum-box" id="tickets">
+                <div class="panel forum-box" id="tickets">
                     <div class="panel-body">
                         <Ticket v-if="showAddTicket"
                             :ticket="blankTicket" :view="!showAddTicket"
@@ -77,7 +77,6 @@
         mounted(){
             this.getProject(this.project_id);
             this.getTickets(this.project_id);
-            //this.$emit('handle-page-header', {label:project.name, desc:' '});
             this.myRoute = this.$router.options.routes.find(route => route.name === this.$route.name);
         },
         methods:{
