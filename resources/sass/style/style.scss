@@ -5,7 +5,7 @@
 $color-navy-blue:#34495e;
 $color-violet:#9b59b6;
 $color-blue:#3498db;
-$color-green:#62cb31;
+$color-green:#00acac;
 $color-yellow:#ffb606;
 $color-orange:#e67e22;
 $color-red:#e74c3c;
@@ -19,39 +19,37 @@ $color-background-boxed: lighten($color-background, 3%);
 $border-color: #e4e5e7;
 
 // Additional variables
-$menu-width: 180px;
+$menu-width: 120px;
 $main-transition: all 0.1s ease-out 0s;
 
 
 // Import all styles
-@import "margins";
+//@import "margins";
 @import "alerts";
 @import "modal";
 @import "progress_bar";
 @import "login";
-@import "timeline";
-@import "contact";
-@import "calendar";
-@import "text_editor";
+//@import "timeline";
+//@import "contact";
+//@import "calendar";
+//@import "text_editor";
 @import "grid";
 @import "dropdown";
-@import "chat";
-@import "various";
+//@import "chat";
+@import "misc";
 @import "buttons";
-@import "fonts";
-@import "icheck";
-@import "layout";
+//@import "fonts";
+//@import "icheck";
+@import "main";
 @import "lists";
 @import "panels";
 @import "tabs";
 @import "tooltip";
 @import "projects";
-@import "social_board";
-@import "nestable_list";
-@import "tour";
-@import "blog";
-@import "mailbox";
+//@import "social_board";
+//@import "nestable_list";
+//@import "tour";
+//@import "blog";
+//@import "mailbox";
 @import "loader";
-
-// Styles for landing page
-@import "landing";
+@import "user_nav";

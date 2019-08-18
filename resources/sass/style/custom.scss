@@ -15,15 +15,19 @@
 .profile-picture {
   img.rounded-circle{max-height: 48px;}
 }
-
+#header{background-color: #2e4051;}
 #side-menu .has-sub.active > .sub-menu {
   display: block!important;
 }
 #side-menu .sub-menu {
   display: none;
 }
+.hide{display: none;}
+#logo{background-color: transparent;}
+.nav.navbar-nav > li > a{color:#fff;}
 .navbar-right, .pull-right{float: right;}
 .navbar-left, .pull-left{float: left;}
+.navbar-nav > li > a {font-size: 14px; padding: 15px}
 .list-options {display:flex; padding: 10px 0px;}
 .list-options .btn{min-width:10rem;}
 .list-options h2 {flex:1; font-size:20px; font-weight:500;}
@@ -54,3 +58,4 @@ label{font-weight: bold;}
         }
     }
 }
+

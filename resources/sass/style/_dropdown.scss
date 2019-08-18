@@ -1,15 +1,15 @@
-.dropdown-menu.hdropdown {
+.dropdown-menu {
   padding: 0;
   z-index: 1060;
 }
 
-.dropdown-menu.hdropdown .title {
+.dropdown-menu .title {
   padding: 12px 12px;
   text-align: center;
   border-bottom:1px solid $border-color ;
 }
 
-.dropdown-menu.hdropdown li {
+.dropdown-menu li {
   padding: 6px 12px;
   text-align: left;
   background: lighten($color-background, 3%);
@@ -28,23 +28,23 @@
 
 }
 
-.dropdown-menu.hdropdown.notification li {
+.dropdown-menu.notification li {
   padding: 12px 12px;
 }
 
-.dropdown-menu.hdropdown.notification li .badge{
+.dropdown-menu.notification li .badge{
   margin-right: 10px;
 }
 
-.dropdown-menu.hdropdown li > a:hover, .dropdown-menu.filedropdown li > a:hover {
+.dropdown-menu li > a:hover, .dropdown-menu.filedropdown li > a:hover {
   background: inherit;
 }
 
-.dropdown-menu.hdropdown li:hover, .dropdown-menu.filedropdown li:hover {
+.dropdown-menu li:hover, .dropdown-menu.filedropdown li:hover {
   background: $color-background;
 }
 
-.dropdown-menu.hdropdown li.summary {
+.dropdown-menu li.summary {
   padding: 6px 12px;
   text-align: center;
   background: #fff;
@@ -55,3 +55,18 @@
   background: lighten($color-background, 2%);
   border-bottom:1px solid $border-color;
 }
+.navbar-nav > li.active > a, .navbar-nav > li > a:hover, .navbar-nav > li > a:focus, .navbar-nav .open > a, .navbar-nav .open > a:hover, .navbar-nav .open > a:focus{
+    background-color: transparent; border-bottom:3px solid $color-green;
+}
+
+.dropdown-menu li.nav-item, .dropdown-menu .dropdown-item {
+    padding: 6px 12px;
+    text-align: left;
+    background: lighten($color-background, 3%);
+    border-bottom:1px solid $border-color;
+    color:#6a6c6f;
+}
+.dropdown-menu li:hover, .dropdown-menu .dropdown-item:hover {
+    background: $color-background;
+}
+.dropdown-menu li a{color:#9d9fa2!important;}

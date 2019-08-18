@@ -1,17 +1,18 @@
 /* Panels */
-.hpanel > .panel-heading {
+.panel > .panel-heading {
   color: inherit;
-  font-weight: 600;
+  font-weight: 500;
   padding: 10px 4px;
   transition: all .3s;
   border: 1px solid transparent;
+    font-size:18px;
 }
 
-.hpanel .hbuilt.panel-heading {
+.panel .built.panel-heading {
   border-bottom: none;
 }
 
-.hpanel > .panel-footer, .hpanel > .panel-section {
+.panel > .panel-footer, .panel > .panel-section {
   color: inherit;
   border: 1px solid $border-color;
   border-top: none;
@@ -20,7 +21,7 @@
   padding: 10px 15px;
 }
 
-.hpanel.panel-collapse > .panel-heading, .hpanel .hbuilt {
+.panel.panel-collapse > .panel-heading, .panel .built {
   background: #fff;
   border-color: $border-color;
   border: 1px solid $border-color;
@@ -28,7 +29,7 @@
   border-radius: 2px;
 }
 
-.hpanel .panel-body {
+.panel .panel-body {
   background: #fff;
   border: 1px solid $border-color;
   border-radius: 2px;
@@ -37,11 +38,11 @@
 }
 
 
-.hpanel.panel-group .panel-body:first-child {
+.panel.panel-group .panel-body:first-child {
   border-top: 1px solid $border-color;
 }
 
-.hpanel.panel-group .panel-body {
+.panel.panel-group .panel-body {
   border-top: none;
 }
 
@@ -49,8 +50,8 @@
   border: none;
 }
 
-.hpanel {
-  background-color: none;
+.panel {
+  background-color: transparent;
   border: none;
   box-shadow: none;
   margin-bottom: 25px;
@@ -64,7 +65,7 @@
   position: relative;
 }
 
-.hpanel .alert {
+.panel .alert {
   margin-bottom: 0;
   border-radius: 0;
   border: 1px solid $border-color;
@@ -77,81 +78,81 @@
   cursor: pointer;
 }
 
-.hpanel.hgreen .panel-body {
+.panel.green .panel-body {
   border-top: 2px solid $color-green;
 }
 
-.hpanel.hblue .panel-body {
+.panel.blue .panel-body {
   border-top: 2px solid $color-blue;
 }
 
-.hpanel.hyellow .panel-body {
+.panel.yellow .panel-body {
   border-top: 2px solid $color-yellow;
 }
 
-.hpanel.hviolet .panel-body {
+.panel.violet .panel-body {
   border-top: 2px solid $color-violet;
 }
 
-.hpanel.horange .panel-body {
+.panel.orange .panel-body {
   border-top: 2px solid $color-orange;
 }
 
-.hpanel.hred .panel-body {
+.panel.red .panel-body {
   border-top: 2px solid $color-red;
 }
 
-.hpanel.hreddeep .panel-body {
+.panel.reddeep .panel-body {
   border-top: 2px solid $color-red-deep;
 }
 
-.hpanel.hnavyblue .panel-body {
+.panel.navyblue .panel-body {
   border-top: 2px solid $color-navy-blue;
 }
 
-.hpanel.hbggreen .panel-body {
+.panel.bggreen .panel-body {
   background: $color-green;
   color: #fff;
   border:none;
 }
 
-.hpanel.hbgblue .panel-body {
+.panel.bgblue .panel-body {
   background: $color-blue;
   color: #fff;
   border:none;
 }
 
-.hpanel.hbgyellow .panel-body {
+.panel.bgyellow .panel-body {
   background: $color-yellow;
   color: #fff;
   border:none;
 }
 
-.hpanel.hbgviolet .panel-body {
+.panel.bgviolet .panel-body {
   background: $color-violet;
   color: #fff;
   border:none;
 }
 
-.hpanel.hbgorange .panel-body {
+.panel.bgorange .panel-body {
   background: $color-orange;
   color: #fff;
   border:none;
 }
 
-.hpanel.hbgred .panel-body {
+.panel.bgred .panel-body {
   background: $color-red;
   color: #fff;
   border:none;
 }
 
-.hpanel.hbgreddeep .panel-body {
+.panel.bgreddeep .panel-body {
   background: $color-red-deep;
   color: #fff;
   border:none;
 }
 
-.hpanel.hbgnavyblue .panel-body {
+.panel.bgnavyblue .panel-body {
   background: $color-navy-blue;
   color: #fff;
   border:none;
@@ -161,7 +162,15 @@
   background-color: $color-bright;
 }
 
-.small-header .hpanel {
+.small-header .panel.grey {
+    background-color: $color-bright;
+    color:#fff;
+}
+.small-header .panel.dark {
+    background-color: $color-navy-blue;
+    color:#fff;
+}
+.small-header .panel {
   margin-bottom: 0;
 }
 
@@ -179,7 +188,7 @@
 }
 
 .panel-body h5, .panel-body h4 {
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .small-header .panel-body h2 {
@@ -219,24 +228,24 @@
   padding: 10px 20px;
 }
 
-.hpanel.collapsed .panel-body, .hpanel.collapsed .panel-footer {
+.panel.collapsed .panel-body, .panel.collapsed .panel-footer {
   display: none;
 }
 
-.hpanel.collapsed .fa.fa-chevron-up:before {
+.panel.collapsed .fa.fa-chevron-up:before {
   content: "\f078";
 }
-.hpanel.collapsed .fa.fa-chevron-down:before {
+.panel.collapsed .fa.fa-chevron-down:before {
   content: "\f077";
 }
 
-.hpanel.collapsed.panel-collapse .panel-body {
+.panel.collapsed.panel-collapse .panel-body {
   border-width: 0 1px 1px 1px;
   border-color: $border-color;
   border-style: solid;
 }
 
-.hpanel.collapsed .hbuilt.panel-heading {
+.panel.collapsed .built.panel-heading {
   border-bottom: 1px solid $border-color;
 }
 
@@ -244,7 +253,7 @@ body.fullscreen-panel-mode {
   overflow-y: hidden;
 }
 
-.hpanel.fullscreen {
+.panel.fullscreen {
   z-index: 2030;
   position: fixed;
   top: 0;
@@ -255,10 +264,10 @@ body.fullscreen-panel-mode {
   margin-bottom: 0;
 }
 
-.hpanel.fullscreen .showhide {
+.panel.fullscreen .showhide {
   display: none;
 }
 
-.hpanel.fullscreen .panel-body {
+.panel.fullscreen .panel-body {
   min-height: calc(100% - 77px);
 }

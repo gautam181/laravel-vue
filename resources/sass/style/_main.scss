@@ -7,7 +7,7 @@ html {
 }
 
 body {
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Open Sans", Helvetica, Arial, sans-serif;
   background-color: #fff;
   font-size: 13px;
   color: $color-text;
@@ -16,14 +16,13 @@ body {
   height: 100%;
 }
 
-#header {
+.top-nav {
   background-color: #fff;
   display: block;
   height: 56px;
   margin: 0;
   padding: 0;
-  position: relative;
-  border-bottom: 1px solid $border-color;
+  box-shadow: 0 0 2px rgba(0,0,0,.3);
 }
 
 #menu {
@@ -49,7 +48,7 @@ body {
 }
 
 .content {
-  padding: 25px 40px 40px 40px;
+  padding: 0px 30px 40px 30px;
   min-width: 320px;
 }
 
@@ -84,27 +83,8 @@ body {
   padding: 20px 40px;
 }
 
-.color-line {
-  background: $color-bright;
-  height: 6px;
-  background-image: -webkit-linear-gradient(left, $color-navy-blue, $color-navy-blue 25%, $color-violet 25%, $color-violet 35%, $color-blue 35%, $color-blue 45%, $color-green 45%, $color-green 55%, $color-yellow 55%, $color-yellow 65%, $color-orange 65%, $color-orange 75%, $color-red 85%, $color-red 85%,$color-red-deep 85%, $color-red-deep 100%);
-  background-image: -moz-linear-gradient(left, $color-navy-blue, $color-navy-blue 25%, $color-violet 25%, $color-violet 35%, $color-blue 35%, $color-blue 45%, $color-green 45%, $color-green 55%, $color-yellow 55%, $color-yellow 65%, $color-orange 65%, $color-orange 75%, $color-red 85%, $color-red 85%,$color-red-deep 85%, $color-red-deep 100%);
-  background-image: -ms-linear-gradient(left, $color-navy-blue, $color-navy-blue 25%, $color-violet 25%, $color-violet 35%, $color-blue 35%, $color-blue 45%, $color-green 45%, $color-green 55%, $color-yellow 55%, $color-yellow 65%, $color-orange 65%, $color-orange 75%, $color-red 85%, $color-red 85%,$color-red-deep 85%, $color-red-deep 100%);
-  background-image: linear-gradient(to right, $color-navy-blue, $color-navy-blue 25%, $color-violet 25%, $color-violet 35%, $color-blue 35%, $color-blue 45%, $color-green 45%, $color-green 55%, $color-yellow 55%, $color-yellow 65%, $color-orange 65%, $color-orange 75%, $color-red 85%, $color-red 85%,$color-red-deep 85%, $color-red-deep 100%);
-  background-size: 100% 6px;
-  background-position: 50% 100%;
-  background-repeat: no-repeat;
-}
-
-.fixed-navbar #header {
-  width: 100%;
-  position: fixed;
-  z-index: 1000;
-
-}
-
-.fixed-navbar #wrapper {
-  top: 62px;
+.fixed-navbar #page-container {
+  padding-top: 56px;
 }
 
 .fixed-sidebar #menu {
