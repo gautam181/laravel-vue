@@ -67,8 +67,13 @@
             }
         },
         watch: {
-            project: function(val){
-                this.$emit('handle-page-header', {label:val.name, desc:' '});
+            project: function(val) {
+                this.$emit('handle-page-header', {label:val.name, tools:[{'icon': 'fa-pen',
+                        'event':(val)=>{
+                            this.editProjct(val);
+                        },
+                        'id': val.id
+                }]});
             }
         },
         components: {
@@ -99,6 +104,9 @@
                         let res = response.data;
                         this.tickets = res.data;
                     });
+            },
+            editProjct: function (id) {
+                console.log(id);
             }
         },
         beforeRouteUpdate (to, from, next) {
