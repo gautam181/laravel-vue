@@ -2,11 +2,11 @@
     var baseurl = '/api';
     var apiversion = '/v1';
     const settings = {
-        sidebarMinified : false,
         baseURL: baseurl,
         APIVersion: apiversion,
         APIURL: baseurl+apiversion,
-        DATEFROMAT: 'MMMM Do YYYY'
+        DATEFROMAT: 'MMMM Do YYYY',
+        sidebarMinified: localStorage.getItem('sidebar_minified') ? (localStorage.getItem('sidebar_minified') == 'true'? true: false)  : false
     }
 
     export default settings

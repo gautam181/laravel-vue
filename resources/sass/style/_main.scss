@@ -34,7 +34,6 @@ body {
   top: 56px;
   transition: all 0.4s ease 0s;
   background: #f7f8fa;
-    z-index: -1;
 }
 .small-header+#sidebar{top:107px;}
 .mini-sidebar #sidebar {
@@ -55,6 +54,7 @@ body {
 .content {
   padding: 0px 20px 20px 20px;
   min-width: 320px;
+  transition:all 0.4s ease 0s
 }
 
 .footer {

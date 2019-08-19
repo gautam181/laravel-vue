@@ -1,5 +1,5 @@
 <template>
-    <div class="fixed-navbar mini-sidebar">
+    <div :class="{'fixed-navbar':1, 'mini-sidebar':settings.sidebarMinified}">
         <!-- Header -->
         <Header></Header>
         <div id="page-container">
@@ -19,7 +19,7 @@
     import Sidebar from './components/sidebar/Sidebar.vue'
     import Header from './components/header/Header'
     import PageHeader from './components/page/Header'
-
+    import settings from "./config/Settings"
 
     export default {
         name: "app",
@@ -30,8 +30,11 @@
         },
         data(){
           return {
-              pageHeaderData: ''
+              pageHeaderData: '',
+              settings: settings
           }
+        },
+        computed:{
         },
         mounted() {
             console.log('App mounted.', this.user)
