@@ -34,6 +34,10 @@ body {
   top: 56px;
   transition: all 0.4s ease 0s;
   background: #f7f8fa;
+    .sidebar-content {
+        padding-left: 20px; padding-top: 30px;
+        max-width: $menu-width - 10;
+    }
 }
 .small-header+#sidebar{top:107px;}
 .mini-sidebar #sidebar {

@@ -131,3 +131,37 @@
   *border-left-color: #ffffff;
   z-index: 1;
 }
+
+.tabs {
+    display: flex;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+    list-style: none;
+    padding-left: 0px;
+    margin: 0px;
+    overflow: hidden;
+    position: relative;
+    li{
+        height: 35px;
+        border-bottom: 3px solid transparent;
+        flex-shrink: 0;
+        transition: border-color .5s;
+        &.active{
+            border-color: $color-green;
+        }
+    }
+    li > a{
+        padding:0px 10px;
+    }
+}
+.tabs::after {
+    position: absolute;
+    content: " ";
+    bottom: 0px;
+    background-color: #e4e5e7;
+    left: 0px;
+    right: 0px;
+    height: 3px;
+    z-index: -1;
+
+}

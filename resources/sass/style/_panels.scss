@@ -7,6 +7,7 @@
   border: 1px solid transparent;
     font-size:18px;
     .panel-tools {font-size: 14px!important;}
+
 }
 
 .panel .built.panel-heading {
@@ -37,7 +38,9 @@
   padding: 20px;
   position: relative;
 }
-
+.sidebar-content .panel .panel-body {
+    padding:5px;
+}
 
 .panel.panel-group .panel-body:first-child {
   border-top: 1px solid $border-color;

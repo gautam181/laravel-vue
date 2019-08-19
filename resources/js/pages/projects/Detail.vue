@@ -2,25 +2,45 @@
     <div>
         <vue-title :title="project.name"></vue-title>
         <div class="row projects">
-            <div class="col-md-12" style="display: none;">
-                <vue-panel
-                    id="project"
-                    :title="project.name"
-                    tools="1"
-                >{{ project.description }}</vue-panel>
-            </div>
+
             <div class="col-md-12">
-                <div class="list-options">
-                    <h2 class="">Tickets</h2>
-                    <div class="btn-options text-right">
-                        <button class="btn btn-md btn-primary" @click="addTicket">Add Ticket</button>
+                <!-- Nav tabs -->
+                <div class="">
+                <ul class="tabs" role="tablist">
+                    <li role="presentation"><a href="javascript:void(0)" aria-controls="summary" role="tab" data-toggle="tab">Summary</a></li>
+                    <li role="presentation"><a href="javascript:void(0)" aria-controls="tickets" role="tab" data-toggle="tab">Tickets</a></li>
+                    <li role="presentation" class="active"><a href="javascript:void(0)" aria-controls="time" role="tab" data-toggle="tab">Time</a></li>
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane" id="summary">
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="tickets">
+                        <div class="col-md-12" style="display: none;">
+                            <vue-panel
+                                id="project"
+                                :title="project.name"
+                                tools="1"
+                            >{{ project.description }}</vue-panel>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="list-options">
+                                <h2 class="">Tickets</h2>
+                                <div class="btn-options text-right">
+                                    <button class="btn btn-md btn-primary" @click="addTicket">Add Ticket</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="time">
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
                     </div>
                 </div>
-
             </div>
-            <div class="col-md-12">
-
-                <div class="panel forum-box" id="tickets">
+                <div class="panel forum-box">
                     <div class="panel-body">
                         <Ticket v-if="showAddTicket"
                             :ticket="blankTicket" :view="!showAddTicket"
