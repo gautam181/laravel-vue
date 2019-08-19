@@ -1,15 +1,18 @@
 <template>
-    <fragment>
+    <div class="fixed-navbar mini-sidebar">
         <!-- Header -->
         <Header></Header>
-<!--        <Sidebar></Sidebar>-->
         <div id="page-container">
-            <PageHeader :headerData="pageHeaderData"></PageHeader>
-            <div class="content animate-panel">
-                <router-view v-on:handle-page-header="handlePageHeader"></router-view>
+            <div class="content-wrapper">
+                <PageHeader :headerData="pageHeaderData"></PageHeader>
+                <Sidebar></Sidebar>
+                <div class="content animate-panel">
+                    <router-view v-on:handle-page-header="handlePageHeader"></router-view>
+                </div>
             </div>
+
         </div>
-    </fragment>
+    </div>
 </template>
 
 <script>

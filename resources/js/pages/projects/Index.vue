@@ -5,12 +5,10 @@
             <div class="col-md-12">
                 <div class="list-options">
                     <h2 class="">Projects List</h2>
-                    <b-pagination v-on:change="paginate"
-                                  :page="pagination.page"
-                                  :total-rows="pagination.totalRows"
-                                  :per-page="pagination.perPage"
-                                  align="right"
-                    ></b-pagination>
+                    <div class="btn-options text-right">
+                        <button class="btn btn-md btn-primary" >Add Project</button>
+                    </div>
+
                 </div>
 
             </div>
@@ -73,6 +71,16 @@
                     </div>
                 </div>
             </template>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <b-pagination v-on:change="paginate"
+                              :page="pagination.page"
+                              :total-rows="pagination.totalRows"
+                              :per-page="pagination.perPage"
+                              align="right"
+                ></b-pagination>
+            </div>
         </div>
     </div>
 </template>

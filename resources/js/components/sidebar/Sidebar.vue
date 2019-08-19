@@ -1,8 +1,9 @@
 <template>
-    <aside id="menu">
+    <aside id="sidebar">
+        <span id="sidebar-toggle"><i class="fa fa-angle-double-left"></i></span>
         <div id="navigation">
-            <Profile></Profile>
-            <SidebarNav></SidebarNav>
+
+
         </div>
     </aside>
 </template>
@@ -20,5 +21,5 @@
 </script>
 
 <style scoped>
-
+  #sidebar-toggle {position: absolute; right: 0px; width: 30px; cursor: pointer; text-align: right;padding-right:5px; }
 </style>

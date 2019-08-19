@@ -25,15 +25,20 @@ body {
   box-shadow: 0 0 2px rgba(0,0,0,.3);
 }
 
-#menu {
+#sidebar {
   width: $menu-width;
   bottom: 0;
   float: left;
-  left: 0;
+  left: 0px;
   position: absolute;
-  top: 62px;
+  top: 56px;
   transition: all 0.4s ease 0s;
-
+  background: #f7f8fa;
+    z-index: -1;
+}
+.small-header+#sidebar{top:107px;}
+.mini-sidebar #sidebar {
+    width: 30px;
 }
 
 
@@ -48,7 +53,7 @@ body {
 }
 
 .content {
-  padding: 0px 30px 40px 30px;
+  padding: 0px 20px 20px 20px;
   min-width: 320px;
 }
 
@@ -86,6 +91,14 @@ body {
 .fixed-navbar #page-container {
   padding-top: 56px;
 }
+.fixed-navbar .content {
+    margin-left: 300px;
+}
+.fixed-navbar.mini-sidebar .content {
+    margin-left: 30px;
+}
+
+
 
 .fixed-sidebar #menu {
   position: fixed;
