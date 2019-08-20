@@ -5,7 +5,7 @@
                 <div class="list-options">
                     <h2 class="">Projects List</h2>
                     <div class="btn-options text-right">
-                        <button class="btn btn-md btn-primary" >Add Project</button>
+                        <button class="btn btn-md btn-primary" ><i class="fa fa-plus-circle"></i> Add Project</button>
                     </div>
 
                 </div>

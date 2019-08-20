@@ -75,7 +75,7 @@
         },
 
         mounted(){
-            this.$emit('handle-page-header', {label:''});
+            this.$emit('handle-page-header', {label:'Manage your tickets'});
             this.myRoute = this.$router.options.routes.find(route => route.name === this.$route.name);
             if(this.$route.name == 'tickets')
                 this.projects = this.getTickets();

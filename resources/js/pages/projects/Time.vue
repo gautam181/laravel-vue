@@ -5,7 +5,7 @@
                 <div class="list-options">
                     <h2 class="">Time Log</h2>
                     <div class="btn-options text-right">
-                        <button class="btn btn-md btn-primary" ><i class="fa fa-plus"></i> Add</button>
+                        <button class="btn btn-md btn-outline-success" ><i class="fa fa-plus-circle"></i> Add Time</button>
                     </div>
 
                 </div>

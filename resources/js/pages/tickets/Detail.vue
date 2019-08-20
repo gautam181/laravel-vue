@@ -90,7 +90,7 @@
         mounted(){
             this.getTicket(this.ticket_id);
             this.getComments(this.ticket_id);
-            this.$emit('handle-page-header', {label:''});
+            this.$emit('handle-page-header', {label:'Ticket Project'});
             this.myRoute = this.$router.options.routes.find(route => route.name === this.$route.name);
         },
         methods:{

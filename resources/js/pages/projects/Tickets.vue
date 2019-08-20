@@ -5,7 +5,7 @@
                 <div class="list-options">
                     <h2 class="">Tickets</h2>
                     <div class="btn-options text-right">
-                        <button class="btn btn-md btn-primary" ><i class="fa fa-plus"></i> Add</button>
+                        <button class="btn btn-md btn-success" ><i class="fa fa-plus-circle"></i> Add Ticket</button>
                     </div>
 
                 </div>
@@ -62,14 +62,7 @@
             }
         },
         watch: {
-            project: function(val) {
-                this.$emit('handle-page-header', {label:val.name, tools:[{'icon': 'fa-pen',
-                        'event':(val)=>{
-                            this.editProjct(val);
-                        },
-                        'id': val.id
-                }]});
-            }
+
         },
         components: {
             Ticket

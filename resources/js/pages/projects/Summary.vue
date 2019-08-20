@@ -6,7 +6,7 @@
                 <div class="list-options">
                     <h2 class="">Summary</h2>
                     <div class="btn-options text-right">
-                        <button class="btn btn-md btn-primary" ><i class="fa fa-plus"></i> Add</button>
+
                     </div>
 
                 </div>

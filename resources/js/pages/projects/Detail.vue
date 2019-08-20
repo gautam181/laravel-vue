@@ -21,18 +21,20 @@
                 <div class="tab-content">
                     <div class="row">
                         <div class="col-md-12">
+                            <project-form :project="project" v-if="project_form"></project-form>
                             <router-view v-on:handle-page-header="handlePageHeader" ref="myChild"></router-view>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
+
     </div>
 </template>
 
 <script>
     import Ticket from '../../components/util/Ticket';
+    import ProjectForm from "./forms/Project";
 
     export default {
         name: "project-detail",
@@ -40,6 +42,7 @@
             return {
                 myRoute : {},
                 project_id : this.$route.params.id,
+                project_form: false,
                 project: {},
                 tickets: [],
                 ticketList: true,
@@ -55,19 +58,23 @@
             project: function(val) {
                 this.$emit('handle-page-header', {label:val.name, tools:[{'icon': 'fa-pen',
                         'event':(val)=>{
-                            this.editProjct(val);
+                            this.editProjectModal(val);
                         },
                         'id': val.id
                 }]});
             }
         },
         components: {
+            ProjectForm,
             Ticket
         },
         mounted(){
             this.getProject(this.project_id);
             this.myRoute = this.$router.options.routes.find(route => route.name === this.$route.name);
-            console.log("Detail component mounted")
+            this.$root.$on('bv::modal::hidden', (bvEvent, modalId) => {
+                if (modalId == 'project-form')
+                    this.project_form = false;
+            })
         },
         methods:{
             handlePageHeader: function(data){
@@ -90,8 +97,10 @@
                         this.tickets = res.data;
                     });
             },
-            editProjct: function (id) {
-                console.log(id);
+            editProjectModal: function (id) {
+                this.project_form = true;
+                //this.$refs['project-form'].show();
+                console.log(this.project_form, id);
             }
         },
         beforeRouteUpdate (to, from, next) {
