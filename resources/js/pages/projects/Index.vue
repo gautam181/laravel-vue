@@ -1,6 +1,5 @@
 <template>
     <div>
-        <router-view v-on:handle-page-header="handlePageHeader" ref="myChild"></router-view>
         <div class="row">
             <div class="col-md-12">
                 <div class="list-options">
@@ -21,7 +20,7 @@
                             <div class="row">
                                 <div class="col-sm-8">
                                     <h4>
-                                        <router-link v-bind:to="{'name': 'project-detail', params: {'id': project.id }}" active-class="" class="">
+                                        <router-link v-bind:to="{'name': 'project-tickets', params: {'id': project.id }}" active-class="" class="">
                                             {{ project.name }}
                                         </router-link>
                                     </h4>
@@ -105,7 +104,7 @@
             })
         },
         mounted(){
-            this.$emit('handle-page-header', {label:'', desc:'List of projects'});
+            this.$emit('handle-page-header', {label:'Manage your projects'});
             this.myRoute = this.$router.options.routes.find(route => route.name === this.$route.name);
             if(this.$route.name == 'projects')
                 this.projects = this.fetchProjects();

@@ -10,6 +10,9 @@ import SalesIndex from '../pages/sales/Index'
 import SalesList from '../pages/sales/sales/Index'
 import ProjectList from '../pages/projects/Index'
 import ProjectDetail from '../pages/projects/Detail'
+import ProjectSummary from '../pages/projects/Summary'
+import ProjectTickets from '../pages/projects/Tickets'
+import ProjectTime from '../pages/projects/Time'
 import TicketList from '../pages/tickets/Index'
 import TicketDetail from '../pages/tickets/Detail'
 import TicketComments from '../pages/tickets/Comments'
@@ -22,9 +25,17 @@ const routes =[
     {path: '/dashboard', name: 'dashboard', component: Dashboard, meta: {breadcrumb: 'Dashboard'}},
     {path: '/projects', name: 'projects', component: ProjectList,
         children: [],
-        meta: {breadcrumb: 'Projects', title: 'projects list'+TITLE_SEP+TITLE}
+        meta: {breadcrumb: 'Projects', title: 'Projects list'+TITLE_SEP+TITLE}
     },
-    {path: '/projects/:id/tickets', name: 'project-detail', component: ProjectDetail, meta: {breadcrumb: 'Project Detail', title: 'project detail'+TITLE_SEP+TITLE}},
+
+    {path: '/projects/:id', name: 'project-detail', component: ProjectDetail,
+        children: [
+            {path: '/projects/:id/tickets', name: 'project-tickets', component: ProjectTickets, meta: {breadcrumb: 'Project Tickets', title: 'Project tickets'+TITLE_SEP+TITLE}},
+            {path: '/projects/:id/summary', name: 'project-summary', component: ProjectSummary, meta: {breadcrumb: 'Project Summary', title: 'Project summary'+TITLE_SEP+TITLE}},
+            {path: '/projects/:id/time', name: 'project-time', component: ProjectTime, meta: {breadcrumb: 'Project Time', title: 'Project time'+TITLE_SEP+TITLE}},
+        ],
+        meta: {breadcrumb: 'Project Detail', title: 'Project detail'+TITLE_SEP+TITLE}},
+
     {path: '/tickets', name: 'tickets', component: TicketList, meta: {breadcrumb: 'Tickets', title: 'Tickets List'+TITLE_SEP+TITLE}},
     {path: '/tickets/:id', name: 'ticket-detail', component: TicketDetail, meta: {breadcrumb: 'Ticket Detail', title: 'ticket detail'+TITLE_SEP+TITLE}},
     {path: '/tickets/:id/comments', name: 'ticket-comments', component: TicketComments, meta: {breadcrumb: 'Ticket Comments', title: 'ticket comments'+TITLE_SEP+TITLE}},

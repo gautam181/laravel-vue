@@ -1,30 +1,40 @@
 <template>
     <div>
-        <vue-title :title="project.name"></vue-title>
-        <div class="row projects">
+        <div class="row">
             <div class="col-md-12">
-                <!-- Nav tabs -->
-                <ul class="tabs">
-                    <router-link v-bind:to="{'name': 'project-summary', params: {'id': project_id }}" active-class="active" class="" tag="li" >
-                        <a class="">Summary</a>
-                    </router-link>
-                    <router-link v-bind:to="{'name': 'project-tickets', params: {'id': project_id }}" active-class="active" class="" tag="li" >
-                        <a class="">Tickets</a>
-                    </router-link>
-                    <router-link v-bind:to="{'name': 'project-time', params: {'id': project_id }}" active-class="active" class="" tag="li" >
-                        <a class="">Time</a>
-                    </router-link>
-
-                </ul>
-
-                <!-- Tab panes -->
-                <div class="tab-content">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <router-view v-on:handle-page-header="handlePageHeader" ref="myChild"></router-view>
-                        </div>
+                <div class="list-options">
+                    <h2 class="">Tickets</h2>
+                    <div class="btn-options text-right">
+                        <button class="btn btn-md btn-primary" ><i class="fa fa-plus"></i> Add</button>
                     </div>
 
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="panel forum-box">
+                    <div class="panel-body">
+                        <Ticket v-if="showAddTicket"
+                                :ticket="blankTicket" :view="!showAddTicket"
+                        ></Ticket>
+                        <template v-if="tickets.length > 0">
+                            <template v-for="row in tickets">
+                                <Ticket
+                                    :ticket="row"
+                                    :list=ticketList
+                                ></Ticket>
+                            </template>
+                        </template>
+                        <template v-else>
+                            <p v-if="!showAddTicket" class="text-center">
+                                <button class="btn btn-xs btn-secondary" @click="addTicket">Add Ticket</button>
+                            </p>
+                        </template>
+
+                    </div>
                 </div>
             </div>
         </div>
@@ -35,7 +45,7 @@
     import Ticket from '../../components/util/Ticket';
 
     export default {
-        name: "project-detail",
+        name: "project-tickets",
         data(){
             return {
                 myRoute : {},
@@ -66,8 +76,8 @@
         },
         mounted(){
             this.getProject(this.project_id);
+            this.getTickets(this.project_id);
             this.myRoute = this.$router.options.routes.find(route => route.name === this.$route.name);
-            console.log("Detail component mounted")
         },
         methods:{
             handlePageHeader: function(data){
@@ -95,6 +105,8 @@
             }
         },
         beforeRouteUpdate (to, from, next) {
+            this.project_id = to.params.id;
+            this.getProject(this.project_id);
             next();
         }
     }
