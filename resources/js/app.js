@@ -33,6 +33,8 @@ import VueSweetalert2 from 'vue-sweetalert2';
 import vSelect from 'vue-select';
 import DateRangePicker from 'vue2-daterange-picker';
 import {Editor} from '@toast-ui/vue-editor';
+import VueDateTimePicker from 'vue-bootstrap-datetimepicker'
+
 
 //component
 Vue.component('vue-title', titleComponent);
@@ -55,6 +57,7 @@ Vue.use(Datatable);
 Vue.use(Plugin);
 Vue.use(require('vue-moment'));
 Vue.use(BootstrapVue);
+Vue.use(VueDateTimePicker);
 Vue.use(VueSweetalert2);
 
 
