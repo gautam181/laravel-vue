@@ -1,0 +1,68 @@
+.content.has-bg {
+    padding-bottom: 60px;
+    overflow: hidden;
+    position: relative;
+}
+.home {
+    padding: 0 !important;
+    color: #fff;
+}
+.header.navbar.navbar-transparent {
+    border-bottom: 1px solid rgba(255,255,255,.2);
+}
+.header.navbar {
+    border-bottom: none;
+    -webkit-transition: all .2s linear;
+    -moz-transition: all .2s linear;
+    transition: all .2s linear;
+}
+.content.has-bg .content-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+.content.has-bg .content-bg::before {
+    content: '';
+    background: url('../style/img/content-bg-cover.png');
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+.content.has-bg .container {
+    position: relative;
+}
+.home-content {
+    z-index: 1020;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    color: #8F8E8E;
+    margin-top: -120px;
+    padding: 0 15px;
+    text-align: center;
+}
+.home-content {
+    color: #8F8E8E;
+    text-align: center;
+}
+.content.has-bg h1, .content.has-bg h2, .content.has-bg h3, .content.has-bg h4, .content.has-bg h5, .content.has-bg h6 {
+    color: #fff;
+}
+
+.home-content h1, .home-content h2, .home-content h3, .home-content h4 {
+    color: #fff;
+    margin: 0 0 30px;
+    font-weight: 300;
+}
+.home-content h1 {
+    font-size: 64px;
+    font-weight: 600;
+}
+.home-content a:focus, .home-content a:hover {
+    color: #fff;
+}

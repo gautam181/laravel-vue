@@ -1,14 +1,19 @@
 //Landing page stylesheet
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,800,700,600);
+@import '~bootstrap/scss/bootstrap';
+// Color list
+$color-navy-blue:#34495e;
+$color-violet:#9b59b6;
+$color-blue:#3498db;
+$color-green:#00acac;
+$color-yellow:#ffb606;
+$color-orange:#e67e22;
+$color-red:#e74c3c;
+$color-red-deep:#c0392b;
 
-@import 'landing/variables';
-@import "~bootstrap/scss/functions";
-@import "~bootstrap/scss/variables";
-@import "~bootstrap/scss/mixins";
-@import "~bootstrap/scss/forms";
-@import "landing/mixins";
-@import "landing/card";
-@import "landing/auth";
+$color-text: #6a6c6f;
+
+@import "landing/welcome";
 
 html,
 body {
@@ -20,7 +25,18 @@ body {
     color: $color-text;
     overflow-x: hidden;
 }
-.form-control::placeholder {
-    font-style: italic;
-    color: #d7dde4;
+.header .navbar-nav > li > a {
+    color: #8F8E8E;
+    font-size: 12px;
+    line-height: 20px;
+    font-weight: 600;
+    padding: 25px 15px;
 }
+.header.navbar .navbar-nav > li > a:hover,
+.header.navbar.navbar-transparent .navbar-nav > li > a:hover{
+    color: $color-green;
+}
+a {
+    color: $color-green;
+}
+

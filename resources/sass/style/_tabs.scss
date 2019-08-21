@@ -1,3 +1,4 @@
+$tab-height:40px;
 .tabs {
     display: flex;
     flex-wrap: wrap;
@@ -10,7 +11,7 @@
     position: relative;
     margin-bottom: 10px;
     li{
-        height: 35px;
+        height: $tab-height;
 
         flex-shrink: 0;
         transition: border-color .5s;
@@ -22,7 +23,7 @@
     li > a{
         border-bottom: 3px solid transparent;
         padding:0px 10px;
-        height: 35px; line-height: 35px; display: block;
+        height: $tab-height; line-height: $tab-height; display: block;
         &.active , &:hover {
             border-color: $color-green;
         }
