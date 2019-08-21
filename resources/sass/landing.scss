@@ -12,8 +12,10 @@ $color-red:#e74c3c;
 $color-red-deep:#c0392b;
 
 $color-text: #6a6c6f;
-
+//fontawesome
+@import "~@fortawesome/fontawesome-free/css/all.min.css";
 @import "landing/welcome";
+@import "landing/auth";
 
 html,
 body {
@@ -24,13 +26,13 @@ body {
     font-family: 'Open Sans', sans-serif;
     color: $color-text;
     overflow-x: hidden;
+    font-size:0.85rem;
 }
 .header .navbar-nav > li > a {
     color: #8F8E8E;
     font-size: 12px;
     line-height: 20px;
     font-weight: 600;
-    padding: 25px 15px;
 }
 .header.navbar .navbar-nav > li > a:hover,
 .header.navbar.navbar-transparent .navbar-nav > li > a:hover{
@@ -39,4 +41,7 @@ body {
 a {
     color: $color-green;
 }
+.navbar-brand{padding:0px;}
+.navbar-brand img{max-height: 30px;}
+
 

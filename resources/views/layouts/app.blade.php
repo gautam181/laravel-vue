@@ -13,7 +13,42 @@
     <link href="{{ asset('css/landing.css') }}" rel="stylesheet">
 </head>
 <body>
-    <main class="auth">
+<div id="header" class="header navbar navbar-expand-md bg-dark  fixed-top">
+    <!-- begin container -->
+    <div class="container">
+        <!-- begin navbar-header -->
+        <div class="navbar-header">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a href="index.html" class="navbar-brand">
+                <img src="/images/vue-laravel.png" alt="Laravel Vue App" class="brand-image">
+                </span>
+            </a>
+        </div>
+        <!-- end navbar-header -->
+        <!-- begin navbar-collapse -->
+        <div class="collapse navbar-collapse" id="header-navbar">
+
+            <ul class="nav navbar-nav ml-md-auto">
+                @if (Route::has('login'))
+                    @auth
+                        <li class="nav-item"><a href="/app" class="nav-link" data-click="scroll-to-target">Dashboard</a></li>
+                    @else
+                        <li class="nav-item"><a href="{{ route('login') }}" class="nav-link" data-click="scroll-to-target">LOGIN</a></li>
+
+                        @if (Route::has('register'))
+                            <li class="nav-item"><a href="{{ route('register') }}" class="nav-link" data-click="scroll-to-target">REGISTER</a></li>
+                        @endif
+                    @endauth
+                @endif
+            </ul>
+        </div>
+        <!-- end navbar-collapse -->
+    </div>
+    <!-- end container -->
+</div>
+    <main>
         @yield('content')
     </main>
 </body>

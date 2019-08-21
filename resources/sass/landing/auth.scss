@@ -1,0 +1,58 @@
+.login.login-v1 {
+    height: 100vh;
+    width: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+}
+.login.login-v1 .login-container {
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+}
+.login.login-v1, .login.login-v1 .login-container .login-header {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+}
+.login.login-v1 .login-container .login-header {
+    width: 400px;
+    padding: 0;
+    margin: 0 auto 15px;
+    font-weight: 300;
+    position: relative;
+}
+.login.login-v1 .login-container .login-header .brand {
+    padding: 0;
+    font-size: 28px;
+    color: #2d353c;
+}
+.login.login-v1 .login-container .login-header .icon {
+    margin-left: auto;
+    color: rgba(45,53,60,.15);
+}
+.login.login-v1 .login-container .login-header .icon i {
+    font-size: 64px;
+}
+.login.login-v1 .login-container .login-body {
+    padding: 30px;
+    background: #2d353c;
+}
+.login.login-v1 .login-container .login-header .brand small {
+    font-size: 14px;
+    display: block;
+    color: #4e5c68;
+}
+.login.login-v1 .login-container .login-body .login-content {
+    padding: 0;
+    color: #c6ced5;
+    width: 400px;
+    margin: 0 auto;
+}
+.login.login-v1 a {
+    color: #fff;
+}
