@@ -49,7 +49,7 @@
                         </div>
 
                         <div class="login-buttons">
-                            <button type="submit" class="btn btn-success btn-block btn-md">Sign me in</button>
+                            <button type="submit" class="btn btn-primary btn-block btn-md">Sign me in</button>
                         </div>
                     </form>
                     @if (Route::has('password.request'))

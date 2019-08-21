@@ -38,10 +38,22 @@ body {
 .header.navbar.navbar-transparent .navbar-nav > li > a:hover{
     color: $color-green;
 }
+.header .nav.navbar-nav .nav-item .nav-link{padding: 1.0rem .9375rem;}
 a {
     color: $color-green;
 }
 .navbar-brand{padding:0px;}
 .navbar-brand img{max-height: 30px;}
-
-
+.col-form-label{
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+.btn-primary{background-color: $color-navy-blue;}
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open .dropdown-toggle.btn-primary,
+.btn-primary:not(:disabled):not(.disabled):active, .btn-primary:hover, .btn-primary:focus{
+    background-color: #3f5872;
+    border-color: #3f5872;
+    color: #fff;
+}
