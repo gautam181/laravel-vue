@@ -27,7 +27,7 @@ import { Plugin } from 'vue-fragment';
 import BootstrapVue from 'bootstrap-vue';
 import VueBreadcrumbs from 'vue-breadcrumbs';
 import VueLadda from 'vue-ladda';
-import DatePicker from 'vue2-datepicker';
+//import DatePicker from 'vue2-datepicker';
 import Avatar from 'vue-avatar';
 import VueSweetalert2 from 'vue-sweetalert2';
 import vSelect from 'vue-select';
@@ -41,10 +41,24 @@ Vue.component('vue-title', titleComponent);
 Vue.component('vue-panel', PanelVue);
 Vue.component('avatar', Avatar);
 Vue.component('vue-ladda', VueLadda);
-Vue.component('date-picker', DatePicker);
+//Vue.component('date-picker', DatePicker);
 Vue.component('v-select', vSelect);
 Vue.component('date-range-picker', DateRangePicker);
 Vue.component('editor', Editor);
+
+$.extend(true, $.fn.datetimepicker.defaults, {
+    icons: {
+        time: 'far fa-clock',
+        date: 'far fa-calendar',
+        up: 'fas fa-arrow-up',
+        down: 'fas fa-arrow-down',
+        previous: 'fas fa-chevron-left',
+        next: 'fas fa-chevron-right',
+        today: 'fas fa-calendar-check',
+        clear: 'far fa-trash-alt',
+        close: 'far fa-times-circle'
+    }
+});
 
 //store
 import store from './store';
@@ -70,6 +84,10 @@ Vue.use(VueBreadcrumbs, {
 //filters
 Vue.filter('date', (val)=> {
     return moment(val).format(settings.DATEFROMAT);
+});
+
+Vue.filter('formDate', (val)=> {
+    return moment(val).format(settings.FORMDATEFROMAT);
 });
 
 /**

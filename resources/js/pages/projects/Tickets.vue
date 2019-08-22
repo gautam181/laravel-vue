@@ -68,7 +68,7 @@
             Ticket
         },
         mounted(){
-            this.getProject(this.project_id);
+            //this.getProject(this.project_id);
             this.getTickets(this.project_id);
             this.myRoute = this.$router.options.routes.find(route => route.name === this.$route.name);
         },

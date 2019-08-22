@@ -34,7 +34,7 @@
 
 <script>
     import Ticket from '../../components/util/Ticket';
-    import ProjectForm from "./forms/Project";
+    import ProjectForm from "./forms/ProjectForm";
 
     export default {
         name: "project-detail",
@@ -43,7 +43,7 @@
                 myRoute : {},
                 project_id : this.$route.params.id,
                 project_form: false,
-                project: {},
+                project : {},
                 tickets: [],
                 ticketList: true,
                 showAddTicket: false,
@@ -56,13 +56,20 @@
         },
         watch: {
             project: function(val) {
-                this.$emit('handle-page-header', {label:val.name, tools:[{'icon': 'fa-pen',
+                console.log("project updated", val);
+                this.$emit('handle-page-header', {label:val.name, type:'project', id:val.id, tools:[{'icon': 'fa-pen',
                         'event':(val)=>{
                             this.editProjectModal(val);
                         },
                         'id': val.id
                 }]});
             }
+        },
+        computed: {
+            /*project(){
+                return this.$store.getters['projects/getProject'](this.project_id);
+            },*/
+
         },
         components: {
             ProjectForm,
@@ -81,21 +88,14 @@
                 this.$emit('handle-page-header', data);
             },
             getProject: function (id) {
-                axios.get("/project/"+id)
-                    .then(response => {
-                        let res = response.data;
-                        this.project = res;
+                console.log("get project "+id);
+                this.$store.dispatch('projects/getProject', id)
+                    .then(response =>{
+                        this.project = this.$store.getters['projects/getProject'](this.project_id);
                     });
             },
             addTicket: function(){
               this.showAddTicket = true;
-            },
-            getTickets: function (id, data) {
-                axios.get("/project/tickets/"+id)
-                    .then(response => {
-                        let res = response.data;
-                        this.tickets = res.data;
-                    });
             },
             editProjectModal: function (id) {
                 this.project_form = true;

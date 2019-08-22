@@ -73,7 +73,7 @@
                                                 <div class="col">
                                                     <div class="form-group">
                                                         <label class="control-label">Start Date</label>
-                                                        <date-picker lang="en" v-model="ticket_detail.start_date" type="date" :format="date_format" input-class="form-control"></date-picker>
+                                                        <date-picker lang="en" v-model="ticket_detail.start_date" :format="date_format" input-class="form-control"></date-picker>
                                                     </div>
                                                 </div>
                                                 <div class="col">
