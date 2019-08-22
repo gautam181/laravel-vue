@@ -70,7 +70,13 @@ Vue.prototype.$settings = settings;
 Vue.use(Datatable);
 Vue.use(Plugin);
 Vue.use(require('vue-moment'));
-Vue.use(BootstrapVue);
+Vue.use(BootstrapVue, {
+    BModal: {
+        titleTag: 'h4',
+        okVariant:'success',
+        cancelVariant: 'secondary mr-auto'
+    }
+});
 Vue.use(VueDateTimePicker);
 Vue.use(VueSweetalert2);
 
@@ -106,7 +112,7 @@ router.beforeEach((to, from, next) => {
     if(nearestWithTitle) document.title = nearestWithTitle.meta.title;
     return next();
 });
-
+//console.log(this.$bvModal);
 //Global variables
 import App from './App.vue';
 
