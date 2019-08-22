@@ -49,8 +49,8 @@ class ProjectController extends Controller
             $project = new Project();
             $project->name = $request->name;
             $project->description = $request->description;
-            $project->start_date = $request->start_date;
-            $project->end_date = $request->end_date;
+            $project->start_date = date('Y-m-d', strtotime($request->start_date));
+            $project->end_date = date('Y-m-d', strtotime($request->end_date));
             $project->owner = $request->owner;
             $project->created_by = $request->user()->id;
             $project->save();
@@ -95,8 +95,8 @@ class ProjectController extends Controller
             // store
             $project->name = $request->name;
             $project->description = $request->description;
-            $project->start_date = $request->start_date;
-            $project->end_date = $request->end_date;
+            $project->start_date = date('Y-m-d', strtotime($request->start_date));
+            $project->end_date = date('Y-m-d', strtotime($request->end_date));
             $project->owner = $request->owner;
             $project->save();
 
