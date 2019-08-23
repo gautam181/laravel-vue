@@ -5,7 +5,7 @@
                 <div class="list-options">
                     <h2 class="">Projects List</h2>
                     <div class="btn-options text-right">
-                        <button class="btn btn-md btn-primary" ><i class="fa fa-plus-circle"></i> Add Project</button>
+                        <button class="btn btn-md btn-primary" @click="addProject" ><i class="fa fa-plus-circle"></i> Add Project</button>
                     </div>
 
                 </div>
@@ -52,7 +52,7 @@
                                             <router-link v-bind:to="{'name': 'project-detail', params: {'id': project.id }}" active-class="" class="btn btn-xs btn-default">
                                                 View
                                             </router-link>
-                                            <button class="btn btn-xs btn-default"> Edit</button>
+                                            <button class="btn btn-xs btn-default" @click="editProject(project.id)"> Edit</button>
                                             <button class="btn btn-xs btn-default"> Delete</button>
                                         </div>
                                     </div>
@@ -71,6 +71,9 @@
                 </div>
             </template>
         </div>
+        <div v-if="showProjectForm">
+            <project-form :id="project_id" ></project-form>
+        </div>
         <div class="row">
             <div class="col-md-12">
                 <b-pagination v-on:change="paginate"
@@ -86,12 +89,18 @@
 
 <script>
     import { mapGetters } from 'vuex';
+    import ProjectForm from "./forms/ProjectForm";
     export default {
         name: "project-index",
         data(){
             return {
                 myRoute : {},
+                showProjectForm: false,
+                project_id: 0
             }
+        },
+        components:{
+            ProjectForm
         },
         computed: {
             projects:{
@@ -112,6 +121,14 @@
         methods:{
             handlePageHeader: function(data){
                 this.$emit('handle-page-header', data);
+            },
+            editProject: function(id){
+                this.project_id = id;
+                this.showProjectForm = true;
+            },
+            addProject: function(){
+                this.project_id = 0;
+                this.showProjectForm = true;
             },
             fetchProjects: function () {
                 this.$store.dispatch('projects/getProjects');

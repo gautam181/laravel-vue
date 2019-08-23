@@ -86,13 +86,17 @@
     export default {
         name: "project-form",
         props: {
-            'project': {type:Object, required: true},
+            //'project': {type:Object, required: true},
+            'id': {type: Number, default: 0},
             'add' : {type: Boolean, default: true}
         },
         data(){
             return {
                 myRoute : {},
-                project_info: cloneDeep(this.project),
+                project: {
+                    'id': '', 'name':'', 'description':'', 'owner': {}, 'start_date': '', 'end_date': ''
+                },
+                project_info: {'id': '', 'name':'', 'description':'', 'owner': {}, 'start_date': '', 'end_date': ''},
                 configs: {
                     timePicker: {
                         format: 'LT',
@@ -128,9 +132,10 @@
             btn_ok_label: function(){
                 return this.project_info.id ? 'Save Changes': 'Add Project';
             },
+
             start_date:{
                 get: function(){
-                    return this.$options.filters.formDate(this.project_info.start_date);
+                    return this.project_info.start_date? this.$options.filters.formDate(this.project_info.start_date): '';
                 },
                 set: function (val) {
                     this.project_info.start_date=  val;
@@ -138,7 +143,7 @@
             } ,
             end_date: {
                 get: function(){
-                    return this.$options.filters.formDate(this.project_info.end_date);
+                    return this.project_info.end_date? this.$options.filters.formDate(this.project_info.end_date): '';
                 },
                 set: function (val) {
                     this.project_info.end_date=  val;
@@ -152,6 +157,12 @@
 
         },
         mounted(){
+            if(this.id)
+                this.$store.dispatch('projects/getProject', this.id)
+                    .then(response => {
+                        this.project = this.$store.getters['projects/getProject'](this.id);
+                    })
+
             this.$refs['project-form'].show();
         },
         methods:{

@@ -21,7 +21,7 @@ class ProjectController extends Controller
     public function index(Request $request)
     {
 
-        $data = Project::with(['created_by', 'owner'])->orderby('id', 'asc')->paginate($request->per_page);
+        $data = Project::with(['created_by', 'owner'])->orderby('updated_at', 'desc')->paginate($request->per_page);
         return response()->json($data);
     }
 
