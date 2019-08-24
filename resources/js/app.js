@@ -89,11 +89,11 @@ Vue.use(VueBreadcrumbs, {
 
 //filters
 Vue.filter('date', (val)=> {
-    return moment(val).format(settings.DATEFROMAT);
+    return val? moment(val).format(settings.DATEFROMAT): '';
 });
 
 Vue.filter('formDate', (val)=> {
-    return moment(val).format(settings.FORMDATEFROMAT);
+    return val? moment(val).format(settings.FORMDATEFROMAT): '';
 });
 
 /**

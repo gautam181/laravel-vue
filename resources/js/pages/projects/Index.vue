@@ -71,8 +71,8 @@
                 </div>
             </template>
         </div>
-        <div v-if="showProjectForm">
-            <project-form :id="project_id" ></project-form>
+        <div >
+            <project-form :id="project_id" v-if="showProjectForm"></project-form>
         </div>
         <div class="row">
             <div class="col-md-12">
@@ -113,6 +113,10 @@
             })
         },
         mounted(){
+            this.$root.$on('bv::modal::hidden', (bvEvent, modalId) => {
+                if (modalId == 'project-form')
+                    this.showProjectForm = false;
+            })
             this.$emit('handle-page-header', {label:'Manage your projects'});
             this.myRoute = this.$router.options.routes.find(route => route.name === this.$route.name);
             if(this.$route.name == 'projects')

@@ -1,7 +1,7 @@
 <template>
     <aside id="sidebar">
         <span id="sidebar-toggle" v-on:click="toggleSideBar"><i :class="{'fa':1, 'fa-angle-double-left':!settings.sidebarMinified, 'fa-angle-double-right':settings.sidebarMinified}" ></i></span>
-        <div class="sidebar-content">
+        <div class="sidebar-content" v-if="!settings.sidebarMinified">
             <div class="projects">
                 <div class="row">
                     <div class="col-md-12">

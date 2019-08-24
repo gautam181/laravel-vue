@@ -122,7 +122,7 @@
         },
         watch:{
             project:function (val) {
-                this.project_info = cloneDeep(val);
+                this.project_info = Object.assign({}, val);
             }
         },
         computed: {
@@ -162,7 +162,7 @@
                     .then(response => {
                         this.project = this.$store.getters['projects/getProject'](this.id);
                     })
-
+            this.$store.dispatch('users/getUsersList');
             this.$refs['project-form'].show();
         },
         methods:{
