@@ -12,13 +12,13 @@
 
             </div>
         </div>
-        <div v-if="$route.name == 'projects'" class="row projects list">
+        <div v-if="$route.name == 'projects'" class="row  list">
             <template v-for="project in projects">
-                <div class="col-lg-4 col-md-6">
+                <div class="col-lg-4 col-md-6 projects">
                     <div class="panel green">
                         <div class="panel-body">
                             <div class="row">
-                                <div class="col-sm-8">
+                                <div class="col-sm-10">
                                     <h4>
                                         <router-link v-bind:to="{'name': 'project-tickets', params: {'id': project.id }}" active-class="" class="">
                                             {{ project.name }}
@@ -46,20 +46,16 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-4 project-info">
+                                <div class="col-sm-2 project-info">
                                     <div class="project-action m-t-md">
-                                        <div class="btn-group">
-                                            <router-link v-bind:to="{'name': 'project-detail', params: {'id': project.id }}" active-class="" class="btn btn-xs btn-default">
-                                                View
-                                            </router-link>
-                                            <button class="btn btn-xs btn-default" @click="editProject(project.id)"> Edit</button>
-                                            <button class="btn btn-xs btn-default"> Delete</button>
+                                        <div class="btn-group actions">
+                                            <button class="btn btn-xs" @click="editProject(project.id)"><i class="fa fa-pen"></i></button>
                                         </div>
                                     </div>
                                     <div class="project-value">
-                                        <h2 class="text-success">
-                                            TotalHours
-                                        </h2>
+                                        <h4 class="text-success">
+                                            100
+                                        </h4>
                                     </div>
                                     <div class="project-people">
                                         <img alt="logo" class="img-circle" src="images/a1.jpg">

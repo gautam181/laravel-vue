@@ -57,5 +57,12 @@ label{font-weight: 600;}
             max-height: 65px; min-height: 65px; overflow: hidden;
         }
     }
+    .panel .panel-body{padding:15px;}
+    .project-details{min-height: 60px; max-height: 60px;}
+    .actions{height: 23px;}
+    .actions .btn{display: none;}
+    &:hover{
+        .actions .btn{display: block;}
+    }
 }
 
