@@ -182,7 +182,7 @@
                         description: this.project_info.description,
                         start_date: this.project_info.start_date,
                         end_date: this.project_info.end_date,
-                        owner: this.project_info.owner.id,
+                        owner: this.project_info.owner? this.project_info.owner.id : '',
                     }
                 })
                     .then(response => {
