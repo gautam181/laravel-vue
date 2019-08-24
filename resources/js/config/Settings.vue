@@ -5,7 +5,7 @@
         baseURL: baseurl,
         APIVersion: apiversion,
         APIURL: baseurl+apiversion,
-        DATEFROMAT: 'MMMM Do YYYY',
+        DATEFROMAT: 'MMM Do YYYY',
         FORMDATEFROMAT: 'MM/DD/YYYY',
         sidebarMinified: localStorage.getItem('sidebar_minified') ? (localStorage.getItem('sidebar_minified') == 'true'? true: false)  : false
     }
