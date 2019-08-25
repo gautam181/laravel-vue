@@ -4,18 +4,28 @@
         <div class="row projects">
             <div class="col-md-12">
                 <!-- Nav tabs -->
-                <ul class="tabs">
-                    <router-link v-bind:to="{'name': 'project-summary', params: {'id': project_id }}" active-class="active" class="" tag="li" >
-                        <a class="">Summary</a>
-                    </router-link>
-                    <router-link v-bind:to="{'name': 'project-tickets', params: {'id': project_id }}" active-class="active" class="" tag="li" >
-                        <a class="">Tickets</a>
-                    </router-link>
-                    <router-link v-bind:to="{'name': 'project-time', params: {'id': project_id }}" active-class="active" class="" tag="li" >
-                        <a class="">Time</a>
-                    </router-link>
+                <div class="nav-htabs">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <router-link v-bind:to="{'name': 'project-summary', params: {'id': project_id }}" active-class="active" class="nav-link">
+                                Summary
+                            </router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link v-bind:to="{'name': 'project-tickets', params: {'id': project_id }}" active-class="active" class="nav-link">
+                                Tickets
+                            </router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link v-bind:to="{'name': 'project-time', params: {'id': project_id }}" active-class="active" class="nav-link" >
+                                Time
+                            </router-link>
+                        </li>
 
-                </ul>
+
+                    </ul>
+                </div>
+
 
                 <!-- Tab panes -->
                 <div class="tab-content">
