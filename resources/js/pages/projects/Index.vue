@@ -7,9 +7,7 @@
                     <div class="btn-options text-right">
                         <button class="btn btn-md btn-primary" @click="addProject" ><i class="fa fa-plus-circle"></i> Add Project</button>
                     </div>
-
                 </div>
-
             </div>
         </div>
         <div v-if="$route.name == 'projects'" class="row  list">

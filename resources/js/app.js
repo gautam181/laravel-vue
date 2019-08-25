@@ -70,6 +70,7 @@ Vue.prototype.$settings = settings;
 Vue.use(Datatable);
 Vue.use(Plugin);
 Vue.use(require('vue-moment'));
+//https://bootstrap-vue.js.org/docs/misc/settings/
 Vue.use(BootstrapVue, {
     BModal: {
         titleTag: 'h4',

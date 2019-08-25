@@ -8,20 +8,9 @@
                         <div class=""><input type="text" name="title" v-model="project_info.name" class="form-control form-control-sm"></div>
                     </div>
                     <div>
-                        <ul class="tabs mb-3" id="tabs-tab">
-                            <li class="">
-                                <a class="active" id="tabs-home-tab" data-toggle="pill" href="#tabs-desc" role="tab" aria-controls="tabs-home" aria-selected="true">Description</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="" id="tabs-profile-tab" data-toggle="pill" href="#tabs-dates" role="tab" aria-controls="tabs-profile" aria-selected="false">Dates</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="" id="tabs-contact-tab" data-toggle="pill" href="#tabs-owner" role="tab" aria-controls="tabs-contact" aria-selected="false">Owner</a>
-                            </li>
-                        </ul>
-                        <div class="tab-content" id="tabs-tabContent">
-                            <div class="tab-pane fade show active" id="tabs-desc" role="tabpanel" aria-labelledby="tabs-home-tab">
-                                <div cvlass="form-group">
+                        <b-tabs nav-wrapper-class="nav-htabs">
+                            <b-tab title="Description">
+                                <div class="form-group">
                                     <label  for="project_desc">
                                         Provide a Description
                                     </label>
@@ -30,9 +19,9 @@
                                         <textarea tabindex="2" v-model="project_info.description" class="form-control" id="project_desc"></textarea>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="tab-pane fade" id="tabs-dates" role="tabpanel" aria-labelledby="tabs-profile-tab">
-                                <div cvlass="form-group">
+                            </b-tab>
+                            <b-tab title="Dates">
+                                <div class="form-group">
 
                                     <div class="row">
                                         <div class="col-md-6">
@@ -61,9 +50,9 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="tab-pane fade" id="tabs-owner" role="tabpanel" aria-labelledby="tabs-contact-tab">
-                                <div cvlass="form-group">
+                            </b-tab>
+                            <b-tab title="Owner">
+                                <div class="form-group">
                                     <label>Project Owner</label>
                                     <v-select
                                         v-model="project_info.owner"
@@ -71,8 +60,8 @@
                                         :options="users"
                                     ></v-select>
                                 </div>
-                            </div>
-                        </div>
+                            </b-tab>
+                        </b-tabs>
                     </div>
                 </form>
             </div>
