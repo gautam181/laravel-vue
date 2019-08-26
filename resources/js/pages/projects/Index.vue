@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="list-options">
-                    <h2 class="">Projects List</h2>
+                    <h2 class="">Current Projects List</h2>
                     <div class="btn-options text-right">
                         <button class="btn btn-md btn-primary" @click="addProject" ><i class="fa fa-plus-circle"></i> Add Project</button>
                     </div>
@@ -17,11 +17,11 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-sm-10">
-                                    <h4>
+                                    <h5>
                                         <router-link v-bind:to="{'name': 'project-tickets', params: {'id': project.id }}" active-class="" class="">
                                             {{ project.name }}
                                         </router-link>
-                                    </h4>
+                                    </h5>
                                     <div class="project-details">
                                         {{ project.description}}
                                     </div>
@@ -29,7 +29,9 @@
                                     <div class="row">
                                         <div class="col-sm-4">
                                             <div class="project-label">OWNER</div>
-                                            <small v-if="project.owner">{{ project.owner.name }}</small>
+                                            <small v-if="project.owner">
+                                                <avatar :username="project.owner.name" :size="size" :customStyle="avatarStyle"></avatar>
+                                            </small>
                                         </div>
                                         <div class="col-sm-4">
                                             <div class="project-label">DEDLINE</div>
@@ -90,7 +92,9 @@
             return {
                 myRoute : {},
                 showProjectForm: false,
-                project_id: 0
+                project_id: 0,
+                size:25,
+                avatarStyle: {'margin-right':'5px'}
             }
         },
         components:{

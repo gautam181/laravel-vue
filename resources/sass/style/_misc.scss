@@ -18,7 +18,17 @@
   height: 1px;
   margin: 20px 0;
 }
-
+.flex{display: flex; }
+.date-range{
+    display: flex;
+    .date-range-block{
+        width: 50%;
+        padding-left: 5px; padding-right: 5px;
+        .label{font-weight: normal;margin-bottom: 0px;}
+        &:first-child{padding-left: 0px}
+        &:last-child{padding-right: 0px}
+    }
+}
 /* Mixin */
 @mixin bg-transparent($color, $alpha: 1) {
   background: rgba( red($color), green($color), blue($color), $alpha);
