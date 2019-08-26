@@ -66,7 +66,6 @@
         },
         watch: {
             project: function(val) {
-                console.log("project updated", val);
                 this.$emit('handle-page-header', {label:val.name, type:'project', id:val.id, tools:[{'icon': 'fa-pen',
                         'event':(val)=>{
                             this.editProjectModal(val);

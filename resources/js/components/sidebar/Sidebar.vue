@@ -2,7 +2,10 @@
     <aside id="sidebar" class="sidebar">
         <span id="sidebar-toggle" v-on:click="toggleSideBar"><i :class="{'fa':1, 'fa-angle-double-left':!settings.sidebarMinified, 'fa-angle-double-right':settings.sidebarMinified}" ></i></span>
         <div class="sidebar-content" v-if="!settings.sidebarMinified">
-            <div class="projects">
+            <project-summary></project-summary>
+            <project-tickets></project-tickets>
+            <project-time></project-time>
+            <div class="projects" v-if="noData">
                 <div class="sidebar-block">
                     <div class="sblock-header">
                         <h4>Project Owner</h4>
@@ -87,18 +90,25 @@
 <script>
     import SidebarNav from "./SidebarNav"
     import Profile from "./Profile"
+    import ProjectSummary from "./projects/Summary"
+    import ProjectTickets from "./projects/Tickets"
+    import ProjectTime from "./projects/Time"
     import settings from "../../config/Settings";
     export default {
         name: "Sidebar",
         components: {
             SidebarNav,
-            Profile
+            Profile,
+            ProjectSummary,
+            ProjectTickets,
+            ProjectTime,
         },
         data(){
             return {
                 settings: settings,
                 size:20,
-                avatarStyle: {'margin-right':'5px'}
+                avatarStyle: {'margin-right':'5px'},
+                noData: false
             }
         },
         watch:{
