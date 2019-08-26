@@ -12,7 +12,7 @@
         </div>
         <div v-if="$route.name == 'projects'" class="row  list">
             <template v-for="project in projects">
-                <div class="col-lg-4 col-md-6 projects">
+                <div :class="projectClasses +' projects'">
                     <div class="panel green">
                         <div class="panel-body">
                             <div class="row">
@@ -101,6 +101,9 @@
             ProjectForm
         },
         computed: {
+            projectClasses() {
+                return this.$settings.sidebarMinified? 'col-lg-4 col-md-6': 'col-lg-6 col-md-12';
+            },
             projects:{
                 get() { return this.$store.getters['projects/getProjects']; },
                 set(value) { this.$store.commit('projects/setProjects', value); },
