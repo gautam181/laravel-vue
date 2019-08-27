@@ -5,11 +5,8 @@
             <div class="col-md-12">
                 <div class="list-options">
                     <h2 class="">Summary</h2>
-                    <div class="btn-options text-right">
-
-                    </div>
-
                 </div>
+                <vue-ladda button-class="btn btn-primary" data-size="sm">Click Me!</vue-ladda>
 
             </div>
         </div>

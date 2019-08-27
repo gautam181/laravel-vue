@@ -20,14 +20,16 @@
             }
         }
     }
+    .v-select{background-color: #fff;}
 }
 .filter-block{
     padding:10px 10px;
-    border-bottom: 1px solid #eceff3;;
+    border-bottom: 1px solid #d2d6dd;;
     .filter-header{
 
     }
     .filter-body{
-
+        .v-select{background-color: #fff;}
+        .vs__clear{display: none;}
     }
 }

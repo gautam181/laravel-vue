@@ -8,6 +8,7 @@
                 <Sidebar></Sidebar>
                 <div class="content animate-panel">
                     <router-view v-on:handle-page-header="handlePageHeader"></router-view>
+                    <vue-ins-progress-bar></vue-ins-progress-bar>
                 </div>
             </div>
 
@@ -36,8 +37,19 @@
         },
         computed:{
         },
+        created(){
+            this.$insProgress.start();
+            this.$router.beforeEach((to, from, next) => {
+                this.$insProgress.start()
+                next()
+            })
+            this.$router.afterEach(() => {
+                this.$insProgress.finish()
+            })
+        },
         mounted() {
-            console.log('App mounted.', this.user)
+            this.$insProgress.finish();
+            console.log('App mounted.', this.user);
         },
         methods:{
             handlePageHeader: function(data){

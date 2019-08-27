@@ -33,7 +33,8 @@ import VueSweetalert2 from 'vue-sweetalert2';
 import vSelect from 'vue-select';
 import DateRangePicker from 'vue2-daterange-picker';
 import {Editor} from '@toast-ui/vue-editor';
-import VueDateTimePicker from 'vue-bootstrap-datetimepicker'
+import VueDateTimePicker from 'vue-bootstrap-datetimepicker';
+import VueInsProgressBar from 'vue-ins-progress-bar';
 
 
 //component
@@ -46,6 +47,7 @@ Vue.component('v-select', vSelect);
 Vue.component('date-range-picker', DateRangePicker);
 Vue.component('editor', Editor);
 
+
 $.extend(true, $.fn.datetimepicker.defaults, {
     icons: {
         time: 'far fa-clock',
@@ -57,7 +59,8 @@ $.extend(true, $.fn.datetimepicker.defaults, {
         today: 'fas fa-calendar-check',
         clear: 'far fa-trash-alt',
         close: 'far fa-times-circle'
-    }
+    },
+    format: settings.FORMDATEFROMAT,
 });
 
 //store
@@ -70,6 +73,12 @@ Vue.prototype.$settings = settings;
 Vue.use(Datatable);
 Vue.use(Plugin);
 Vue.use(require('vue-moment'));
+//https://www.npmjs.com/package/vue-ins-progress-bar
+Vue.use(VueInsProgressBar, {
+    position: 'fixed',
+    show: true,
+    height: '5px'
+});
 //https://bootstrap-vue.js.org/docs/misc/settings/
 Vue.use(BootstrapVue, {
     BModal: {
