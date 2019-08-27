@@ -9,7 +9,7 @@
                     </div>
                     <div>
                         <b-tabs nav-wrapper-class="nav-htabs">
-                            <b-tab title="Description">
+                            <b-tab title="Description" :active="tab == 'description'">
                                 <div class="form-group">
                                     <label  for="project_desc">
                                         Provide a Description
@@ -20,7 +20,7 @@
                                     </div>
                                 </div>
                             </b-tab>
-                            <b-tab title="Dates">
+                            <b-tab title="Dates"  :active="tab == 'dates'">
                                 <div class="form-group">
 
                                     <div class="row">
@@ -51,7 +51,7 @@
                                     </div>
                                 </div>
                             </b-tab>
-                            <b-tab title="Owner">
+                            <b-tab title="Owner"  :active="tab == 'owner'">
                                 <div class="form-group">
                                     <label>Project Owner</label>
                                     <v-select
@@ -77,7 +77,8 @@
         props: {
             //'project': {type:Object, required: true},
             'id': {type: Number, default: 0},
-            'add' : {type: Boolean, default: true}
+            'add' : {type: Boolean, default: true},
+            'tab': {default: 'description'}
         },
         data(){
             return {

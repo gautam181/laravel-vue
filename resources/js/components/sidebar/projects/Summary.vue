@@ -7,7 +7,10 @@
             <div class="sblock-body">
                 <div class="flex" v-if="project.owner">
                     <avatar :username="project.owner.name" :size="size" :customStyle="avatarStyle"></avatar>
-                    <a href="javascript:void(0);">{{ project.owner.name }}</a>
+                    <a href="javascript:void(0);" @click="editProject('owner')">{{ project.owner.name }}</a>
+                </div>
+                <div v-else>
+                    <a href="javascript:void(0);" @click="editProject('owner')">Owner not set</a>
                 </div>
 
             </div>
@@ -15,6 +18,7 @@
         <div class="sidebar-block">
             <div class="sblock-header">
                 <h4>Description</h4>
+                <button class="btn btn-xs" @click="editProject('description')"><i class="fa fa-pen"></i> Edit</button>
             </div>
             <div class="sblock-body">
                 {{ project.description }}
@@ -23,33 +27,61 @@
         <div class="sidebar-block">
             <div class="sblock-header">
                 <h4>Dates</h4>
+                <button class="btn btn-xs" @click="editProject('dates')"><i class="fa fa-pen"></i> Edit</button>
             </div>
             <div class="sblock-body">
                 {{ project.start_date|date }}
                 {{ project.end_date|date }}
             </div>
         </div>
-
+        <div v-if="showProjectForm.show">
+            <project-form :id="project_id" :tab="showProjectForm.tab"></project-form>
+        </div>
     </div>
 </template>
 
 <script>
+    import ProjectForm from "../../../pages/projects/forms/ProjectForm";
     export default {
         name: "project-summary",
         data(){
             return {
-                project_id : this.$route.params.id,
                 size:20,
                 avatarStyle: {'margin-right':'5px'},
+                showProjectForm: {
+                    show: false, tab: 'description'
+                },
+
             }
         },
+        mounted(){
+            this.$root.$on('bv::modal::hidden', (bvEvent, modalId) => {
+                if (modalId == 'project-form')
+                    this.showProjectForm.show = false;
+            })
+        },
+        components:{
+            ProjectForm
+        },
         computed:{
+            project_id(){
+                return this.$route.params.id;
+            },
             project(){
                 return this.$store.getters['projects/getProject'](this.project_id);
             },
             showSummary(){
                 return this.$route.name == 'project-summary'?  true : false;
             }
+        },
+        methods:{
+            editProject: function (tab) {
+                this.showProjectForm.show = true;
+                this.showProjectForm.tab = tab;
+            }
+        },
+        beforeRouteUpdate (to, from, next) {
+            next();
         }
     }
 </script>
