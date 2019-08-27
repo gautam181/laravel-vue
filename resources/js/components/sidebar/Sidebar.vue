@@ -5,6 +5,7 @@
             <project-summary></project-summary>
             <project-tickets></project-tickets>
             <project-time></project-time>
+            <project-list></project-list>
             <div class="projects" v-if="noData">
                 <div class="sidebar-block">
                     <div class="sblock-header">
@@ -88,20 +89,18 @@
 </template>
 
 <script>
-    import SidebarNav from "./SidebarNav"
-    import Profile from "./Profile"
     import ProjectSummary from "./projects/Summary"
     import ProjectTickets from "./projects/Tickets"
     import ProjectTime from "./projects/Time"
+    import ProjectList from "./projects/List"
     import settings from "../../config/Settings";
     export default {
         name: "Sidebar",
         components: {
-            SidebarNav,
-            Profile,
             ProjectSummary,
             ProjectTickets,
             ProjectTime,
+            ProjectList,
         },
         data(){
             return {
