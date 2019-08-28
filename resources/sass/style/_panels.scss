@@ -173,6 +173,8 @@
 .small-header .panel.dark {
     background-color: $color-navy-blue;
     color:#fff;
+    .panel-tools{display: none}
+    &:hover .panel-tools{display: block}
 }
 .small-header .panel {
   margin-bottom: 0;

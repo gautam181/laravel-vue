@@ -31,7 +31,7 @@
                 <div class="tab-content">
                     <div class="row">
                         <div class="col-md-12">
-                            <project-form :project="project" v-if="project_form"></project-form>
+                            <project-form :id="project_id" v-if="project_form"></project-form>
                             <router-view v-on:handle-page-header="handlePageHeader" ref="myChild"></router-view>
                         </div>
                     </div>
