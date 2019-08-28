@@ -5,7 +5,7 @@
                 <div class="list-options">
                     <h2 class="">Tickets</h2>
                     <div class="btn-options text-right">
-                        <button class="btn btn-md btn-success" ><i class="fa fa-plus-circle"></i> Add Ticket</button>
+                        <button class="btn btn-md btn-success" @click="addTicket" ><i class="fa fa-plus-circle"></i> Add Ticket</button>
                     </div>
 
                 </div>
@@ -17,7 +17,7 @@
                 <div class="panel forum-box">
                     <div class="panel-body">
                         <Ticket v-if="showAddTicket"
-                                :ticket="blankTicket" :view="!showAddTicket"
+                                :ticket="blankTicket" :view="!showAddTicket" v-on:cancel="cancelTicket"
                         ></Ticket>
                         <div class="tickets-list">
                             <template v-if="tickets.length > 0">
@@ -87,6 +87,9 @@
             },
             addTicket: function(){
               this.showAddTicket = true;
+            },
+            cancelTicket:function(){
+                this.showAddTicket = false;
             },
             getTickets: function (id, data) {
                 axios.get("/project/tickets/"+id)
