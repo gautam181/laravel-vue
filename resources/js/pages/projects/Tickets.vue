@@ -19,19 +19,22 @@
                         <Ticket v-if="showAddTicket"
                                 :ticket="blankTicket" :view="!showAddTicket"
                         ></Ticket>
-                        <template v-if="tickets.length > 0">
-                            <template v-for="row in tickets">
-                                <Ticket
-                                    :ticket="row"
-                                    :list=ticketList
-                                ></Ticket>
+                        <div class="tickets-list">
+                            <template v-if="tickets.length > 0">
+                                <template v-for="row in tickets">
+                                    <Ticket
+                                        :ticket="row"
+                                        :list=ticketList
+                                    ></Ticket>
+                                </template>
                             </template>
-                        </template>
-                        <template v-else>
-                            <p v-if="!showAddTicket" class="text-center">
-                                <button class="btn btn-xs btn-secondary" @click="addTicket">Add Ticket</button>
-                            </p>
-                        </template>
+                            <template v-else>
+                                <p v-if="!showAddTicket" class="text-center">
+                                    <button class="btn btn-xs btn-secondary" @click="addTicket">Add Ticket</button>
+                                </p>
+                            </template>
+                        </div>
+
 
                     </div>
                 </div>
