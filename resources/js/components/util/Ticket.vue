@@ -54,7 +54,7 @@
                             <li class="nav-item"><a data-toggle="tab" :href="'#tab-'+ticket_detail.id+'-1'" class="nav-link active" v-b-tooltip.hover title="Who & When?"><i class="fa fa-user"></i></a></li>
                             <li class="nav-item"><a data-toggle="tab" :href="'#tab-'+ticket_detail.id+'-2'"  class="nav-link" v-b-tooltip.hover title="Description"><i class="fa fa-align-left"></i></a></li>
                         </ul>
-                        <div class="tab-content">
+                        <div class="tab-content mb-3">
                             <div :id="'tab-'+ticket_detail.id+'-1'" class="tab-pane active">
                                 <div class="panel-body">
                                     <div class="row">
@@ -91,13 +91,14 @@
                             </div>
                             <div :id="'tab-'+ticket_detail.id+'-2'" class="tab-pane">
                                 <div class="panel-body">
+                                    <div>Project description (optional)</div>
                                     <textarea name="comments" v-model="ticket_detail.description" class="form-control" placeholder="Provide a detailed description for this task (optional)"></textarea>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <button class="btn btn-primary" type="button" v-on:click="saveTicket()" >Save Changes</button> or
-                    <button class="btn w-xs btn-link"  type="button" v-on:click="resetTicket()">Cancel</button>
+                    <button class="btn btn-primary btn-sm" type="button" v-on:click="saveTicket()" >Save Changes</button> or
+                    <button class="btn w-xs btn-link btn-sm"  type="button" v-on:click="resetTicket()">Cancel</button>
                 </div>
 
             </div>

@@ -9,8 +9,8 @@
 
             </div>
             <div class="col-md-12">
-                <div class="panel">
-                    <div class="panel-body" v-if="ticket">
+                <div class="mb-3">
+                    <div v-if="ticket">
                         <vue-title :title="ticket.title"></vue-title>
                         <Ticket
                             :ticket="ticket"
