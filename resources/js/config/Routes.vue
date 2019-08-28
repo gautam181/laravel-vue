@@ -12,6 +12,7 @@ import ProjectList from '../pages/projects/Index'
 import ProjectDetail from '../pages/projects/Detail'
 import ProjectSummary from '../pages/projects/Summary'
 import ProjectTickets from '../pages/projects/Tickets'
+import ProjectTicket from '../pages/projects/Ticket'
 import ProjectTime from '../pages/projects/Time'
 import TicketList from '../pages/tickets/Index'
 import TicketDetail from '../pages/tickets/Detail'
@@ -33,6 +34,7 @@ const routes =[
             {path: '/projects/:id/tickets', name: 'project-tickets', component: ProjectTickets, meta: {breadcrumb: 'Project Tickets', title: 'Project tickets'+TITLE_SEP+TITLE}},
             {path: '/projects/:id/summary', name: 'project-summary', component: ProjectSummary, meta: {breadcrumb: 'Project Summary', title: 'Project summary'+TITLE_SEP+TITLE}},
             {path: '/projects/:id/time', name: 'project-time', component: ProjectTime, meta: {breadcrumb: 'Project Time', title: 'Project time'+TITLE_SEP+TITLE}},
+            {path: '/ticket/:ticket_id', name: 'project-ticket', component: ProjectTicket, meta: {breadcrumb: 'Ticket Detail', title: 'Ticket detail'+TITLE_SEP+TITLE}},
         ],
         meta: {breadcrumb: 'Project Detail', title: 'Project detail'+TITLE_SEP+TITLE}},
 

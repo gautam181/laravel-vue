@@ -5,7 +5,6 @@
                 <div class="media-author pull-left">
                     <div class="author-info">
                         <avatar :username="author.name" :size="size"></avatar>
-                        <div class="author-name" v-bind:title="author.name" >{{ author.name }} </div>
                     </div>
                 </div>
                 <div class="media-body">
@@ -20,7 +19,11 @@
                             </div>
 
                         </div>
-                        <div class="formatted-comment" v-show="'view'===mode" v-html="comment_body"></div>
+                        <div v-if="'view'===mode">
+                            <div class="author-name" v-bind:title="author.name" >{{ author.name }} </div>
+                            <div class="formatted-comment" v-html="comment_body"></div>
+                        </div>
+
                     </form>
                 </div>
                 <div class="media-info pull-right" v-if="'view'===mode">
@@ -52,7 +55,7 @@
                 comment_body: this.comment.comment,
                 comment_formatted : this.comment.comment,
                 activated: false,
-                size: 40,
+                size: 38,
                 id_deleted: false
             }
         },

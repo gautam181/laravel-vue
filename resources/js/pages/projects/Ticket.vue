@@ -9,7 +9,7 @@
 
             </div>
             <div class="col-md-12">
-                <div class="panel">
+                <div class="hpanel">
                     <div class="panel-body" v-if="ticket">
                         <vue-title :title="ticket.title"></vue-title>
                         <Ticket
@@ -34,7 +34,7 @@
                 </div>
 
             </div>
-            <div class="col-md-12 mb-3">
+            <div class="col-md-12">
                 <Comment v-on:commentUpdate="commentUpdate"
                     :author="this.$user"
                     :comment="add_comment"
@@ -43,7 +43,7 @@
                 ></Comment>
             </div>
             <div class="col-md-12">
-                <div class="panel forum-box" v-if="comments.length > 0">
+                <div class="hpanel forum-box" v-if="comments.length > 0">
                     <template v-for="row in comments">
                         <Comment
                             :author="row.created_by"

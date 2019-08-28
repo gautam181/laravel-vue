@@ -6,6 +6,7 @@
             <project-tickets></project-tickets>
             <project-time></project-time>
             <project-list></project-list>
+            <project-ticket-detail></project-ticket-detail>
             <div class="projects" v-if="noData">
                 <div class="sidebar-block">
                     <div class="sblock-header">
@@ -93,6 +94,7 @@
     import ProjectTickets from "./projects/Tickets"
     import ProjectTime from "./projects/Time"
     import ProjectList from "./projects/List"
+    import ProjectTicketDetail from "./projects/TicketDetail"
     import settings from "../../config/Settings";
     export default {
         name: "Sidebar",
@@ -101,6 +103,7 @@
             ProjectTickets,
             ProjectTime,
             ProjectList,
+            ProjectTicketDetail,
         },
         data(){
             return {

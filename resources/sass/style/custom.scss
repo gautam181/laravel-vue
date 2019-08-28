@@ -37,13 +37,14 @@ label{font-weight: 600;}
 .forum-box {
     .panel-body {
         border-bottom: none;
+        padding:10px 3px; border-left: 0px; border-right: 0px;
         .media-author{
             text-align: center;
             margin-right: 10px;
-            min-width: 100px;max-width: 100px;
-            .author-name{white-space: nowrap;text-overflow: ellipsis;font-weight: bold;overflow: hidden;}
+            min-width: 45px;max-width: 45px;
             .vue-avatar--wrapper{margin:0px auto;}
         }
+        .author-name{font-weight: 600; margin-bottom: 5px;}
         .media-info{
             text-align: right;
             margin-left: 10px;

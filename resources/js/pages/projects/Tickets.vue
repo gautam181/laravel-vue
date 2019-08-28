@@ -14,7 +14,6 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-
                 <div class="panel forum-box">
                     <div class="panel-body">
                         <Ticket v-if="showAddTicket"
