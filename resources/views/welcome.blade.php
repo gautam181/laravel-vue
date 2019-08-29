@@ -60,8 +60,7 @@
                         <a href="https://www.teamwork.com" target="_blank">TeamWork</a> projects version.
                     </p>
                     <p>
-                        Theme inspired from <a href="http://webapplayers.com/homer_admin-v2.0/" target="_blank">Homer</a> and <a href="https://wrapbootstrap.com/theme/color-admin-admin-template-front-end-WB0N89JMK" target="_blank"> Color Admin</a> as per licence of these theme copy any stuff is prohibited.
-                        Please get the permission from authors
+                        Theme inspired from <a href="http://webapplayers.com/homer_admin-v2.0/" target="_blank">Homer</a> and <a href="https://wrapbootstrap.com/theme/color-admin-admin-template-front-end-WB0N89JMK" target="_blank"> Color Admin</a> please get permission from author or buy the theme for commercial use.
                     </p>
                 </div>
                 <!-- end container -->
