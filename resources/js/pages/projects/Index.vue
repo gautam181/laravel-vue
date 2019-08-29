@@ -58,7 +58,7 @@
                                         </h4>
                                     </div>
                                     <div class="project-people">
-                                        <img alt="logo" class="img-circle" src="images/a1.jpg">
+                                        <img alt="logo" class="img-circle" src="images/92-512.png">
                                     </div>
                                 </div>
                             </div>
