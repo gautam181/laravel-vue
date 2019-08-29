@@ -15,6 +15,13 @@
     export default {
         mounted() {
             console.log('Component mounted.')
+        },
+        created(){
+            this.$settings.hideSideBar = true;
+        },
+        beforeRouteLeave (to, from, next) {
+            this.$settings.hideSideBar = false;
+            next();
         }
     }
 </script>

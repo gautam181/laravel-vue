@@ -22,6 +22,10 @@
         mounted() {
             console.log('Component mounted.');
             this.$emit('handle-page-header', {})
+        },
+        beforeRouteLeave (to, from, next) {
+            this.$settings.hideSideBar = false;
+            next();
         }
     }
 </script>
