@@ -11,6 +11,19 @@ import axios from 'axios';
 const state = {
     sortBy: localStorage.getItem('project_sort_by') || 'asc',
     projects: [],
+    filters: JSON.parse(localStorage.getItem('projects_filters')) || {
+        'keyword': '',
+        'created_dates':{
+            'start_date': '',
+            'end_date': ''
+        },
+        'created_range':{id: '0', value: 'Any Time'},
+        'due_dates':{
+            'start_date': '',
+            'end_date': ''
+        },
+        'due_date_range':{id: '0', value: 'Any Time'},
+    },
     pagination: {
         page: 1,
         totalPages: 0,
@@ -22,6 +35,7 @@ const state = {
 // getters
 const getters = {
     getProjects: (state) => { return state.projects },
+    getFilters: (state) => { return state.filters },
     getProject: (state)=>(id) => { return state.projects.find(project => project.id == id); },
     getPagination: (state) => { return state.pagination },
     getPage: (state) => { return state.pagination.page },
@@ -30,7 +44,8 @@ const getters = {
 // actions
 const actions = {
     getProjects: (context )=>{
-        axios.get("/projects?page="+context.state.pagination.page)
+        let params = '';//getFilters();
+        axios.get("/projects?page="+context.state.pagination.page + "&"+params)
             .then(response => {
                 let res = response.data;
                 context.commit('setProjects', res.data);
@@ -72,6 +87,7 @@ const mutations = {
     setProjects: (state, projects) => { state.projects = projects },
     setPagination: (state, val) => { state.pagination = {...val} },
     setPage: (state, val) => { state.pagination.page = val },
+    setFilters: (state, val) => { state.filters = val; localStorage.setItem('projects_filters', JSON.stringify(val)); },
     setProject: (state, val) => {
         let id = val.id;
         const project= state.projects.find(ticket => ticket.id === id);
