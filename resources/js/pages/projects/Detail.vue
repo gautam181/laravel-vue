@@ -17,6 +17,11 @@
                             </router-link>
                         </li>
                         <li class="nav-item">
+                            <router-link v-bind:to="{'name': 'project-ticket', params: {'ticket_id': project_id }}" active-class="active" class="nav-link">
+                                Ticket
+                            </router-link>
+                        </li>
+                        <li class="nav-item">
                             <router-link v-bind:to="{'name': 'project-time', params: {'id': project_id }}" active-class="active" class="nav-link" >
                                 Time
                             </router-link>

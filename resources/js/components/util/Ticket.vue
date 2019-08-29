@@ -43,7 +43,7 @@
                 </div>
                 <div class="ticket-heading">
                     <div class="ticket-title">
-                        <input type="text" class="form-control input-sm" v-model="ticket_detail.title">
+                        <input type="text" class="form-control input-sm" v-model="ticket_detail.title" placeholder="ticket title">
                     </div>
                 </div>
             </div>
@@ -73,13 +73,25 @@
                                                 <div class="col">
                                                     <div class="form-group">
                                                         <label class="control-label">Start Date</label>
-                                                        <date-picker lang="en" v-model="ticket_detail.start_date" :format="date_format" input-class="form-control"></date-picker>
+                                                        <div class="input-group">
+                                                            <date-picker lang="en" v-model="start_date" :format="date_format" input-class="form-control"></date-picker>
+                                                            <div class="input-group-append">
+                                                                <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                                            </div>
+                                                        </div>
+
                                                     </div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="form-group">
                                                         <label class="control-label">End Date</label>
-                                                        <date-picker lang="en" v-model="ticket_detail.end_date" :format="date_format" input-class="form-control"></date-picker>
+                                                        <div class="input-group">
+                                                            <date-picker lang="en" v-model="end_date" :format="date_format" input-class="form-control"></date-picker>
+                                                            <div class="input-group-append">
+                                                                <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                                            </div>
+                                                        </div>
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -152,6 +164,22 @@
                     endDate: this.ticket.end_date
                 }
             },
+            start_date:{
+                get: function(){
+                    return this.ticket_detail.start_date? this.$options.filters.formDate(this.ticket_detail.start_date): '';
+                },
+                set: function (val) {
+                    this.ticket_detail.start_date=  val;
+                }
+            } ,
+            end_date: {
+                get: function(){
+                    return this.ticket_detail.end_date? this.$options.filters.formDate(this.ticket_detail.end_date): '';
+                },
+                set: function (val) {
+                    this.ticket_detail.end_date=  val;
+                }
+            },
             users(){
                 return this.$store.getters['users/getUsersList'];
             }
@@ -210,6 +238,7 @@
             resetTicket: function () {
                 this.mode = 'view';
                 this.ticket_detail = cloneDeep(this.ticket);
+                this.$emit('cancel');
             },
             enableComment(){
                 this.activated = true;
