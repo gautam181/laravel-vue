@@ -1,13 +1,18 @@
 <template>
-    <div class="error-container">
-        <h1><i class="fa fa-warning big-icon"></i>
-             404</h1>
-        <strong>Page Not Found</strong>
-        <p>
-            Sorry, but the page you are looking for has note been found. Try checking the URL for error, then hit the refresh button on your browser or try found something else in our app.
-
-        </p>
-        <a href="#/" class="btn btn-xs btn-success">Go back to dashboard</a>
+    <div class="error">
+        <div class="error-code mb-4">404 <i class="fa fa-warning"></i></div>
+        <div class="error-content">
+            <div class="error-message">We couldn't find it...</div>
+            <div class="error-desc mb-5">
+                The page you're looking for doesn't exist. <br>
+                Perhaps, there pages will help find what you're looking for.
+            </div>
+            <div>
+                <router-link class="btn btn-success" to="/">
+                    Go Back to dashboard
+                </router-link>
+            </div>
+        </div>
     </div>
 </template>
 
