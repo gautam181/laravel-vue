@@ -1,4 +1,4 @@
-#Laravel 5.8 Project management solution
+# Laravel 5.8 Project management solution
 This is the basic application for creating and managing the projects. I am inspired from TeamWork and try to produce the application that work in similar way. This application is purely for practicing the different scenarios.
 
 ## Features
@@ -25,7 +25,7 @@ Home page with authentication is build using the blade template.
 Projects, tickets and time log is working with APIs with VueJS, seeder are provided for generating the data.
 Major routes integrity is protected with Unit Test.
 
-###Front end is using the Vue2
+### Front end is using the Vue2
 I tried to mimic the working modal of the TeamWork project application.
 
 ## Next step
