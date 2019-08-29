@@ -1,11 +1,11 @@
 <template>
-    <div :class="{'fixed-navbar':1, 'mini-sidebar':settings.sidebarMinified}">
+    <div :class="{'fixed-navbar':1, 'mini-sidebar':settings.sidebarMinified, 'no-sidebar': settings.hideSideBar}">
         <!-- Header -->
         <Header></Header>
         <div id="page-container">
             <div class="content-wrapper">
                 <PageHeader :headerData="pageHeaderData"></PageHeader>
-                <Sidebar></Sidebar>
+                <Sidebar v-if="!settings.hideSideBar"></Sidebar>
                 <div class="content animate-panel">
                     <router-view v-on:handle-page-header="handlePageHeader"></router-view>
                     <vue-ins-progress-bar></vue-ins-progress-bar>

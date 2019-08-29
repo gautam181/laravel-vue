@@ -16,6 +16,9 @@
 
 <script>
     export default {
+        created(){
+            this.$settings.hideSideBar = true;
+        },
         mounted() {
             console.log('Component mounted.');
             this.$emit('handle-page-header', {})
