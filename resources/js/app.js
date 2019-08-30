@@ -3,6 +3,7 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
+import {isNull} from "bootstrap-vue/esm/utils/inspect";
 
 
 require('./bootstrap');
@@ -35,6 +36,7 @@ import DateRangePicker from 'vue2-daterange-picker';
 import {Editor} from '@toast-ui/vue-editor';
 import VueDateTimePicker from 'vue-bootstrap-datetimepicker';
 import VueInsProgressBar from 'vue-ins-progress-bar';
+import VueSlimScroll from 'vue-slimscroll'
 
 
 //component
@@ -46,6 +48,7 @@ Vue.component('vue-ladda', VueLadda);
 Vue.component('v-select', vSelect);
 Vue.component('date-range-picker', DateRangePicker);
 Vue.component('editor', Editor);
+Vue.use(VueSlimScroll)
 
 
 $.extend(true, $.fn.datetimepicker.defaults, {
@@ -99,10 +102,15 @@ Vue.use(VueBreadcrumbs, {
 
 //filters
 Vue.filter('date', (val)=> {
+    if (isNull(val))
+        return '';
+
     return val? moment(val).format(settings.DATEFROMAT): '';
 });
 
 Vue.filter('formDate', (val)=> {
+    if (isNull(val))
+        return '';
     return val? moment(val).format(settings.FORMDATEFROMAT): '';
 });
 

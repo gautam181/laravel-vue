@@ -20,8 +20,7 @@ class ProjectController extends Controller
      */
     public function index(Request $request)
     {
-
-        $data = Project::with(['created_by', 'owner'])->orderby('updated_at', 'desc')->paginate($request->per_page);
+        $data = Project::getProjects($request);
         return response()->json($data);
     }
 
@@ -49,8 +48,8 @@ class ProjectController extends Controller
             $project = new Project();
             $project->name = $request->name;
             $project->description = $request->description;
-            $project->start_date = date('Y-m-d', strtotime($request->start_date));
-            $project->end_date = date('Y-m-d', strtotime($request->end_date));
+            $project->start_date = strtotime($request->start_date) > 0? date('Y-m-d', strtotime($request->start_date)): null;
+            $project->end_date = strtotime($request->end_date) > 0? date('Y-m-d', strtotime($request->end_date)) : null;
             $project->owner = $request->owner;
             $project->created_by = $request->user()->id;
             $project->save();
@@ -95,8 +94,8 @@ class ProjectController extends Controller
             // store
             $project->name = $request->name;
             $project->description = $request->description;
-            $project->start_date = date('Y-m-d', strtotime($request->start_date));
-            $project->end_date = date('Y-m-d', strtotime($request->end_date));
+            $project->start_date = strtotime($request->start_date) > 0? date('Y-m-d', strtotime($request->start_date)): null;
+            $project->end_date = strtotime($request->end_date) > 0? date('Y-m-d', strtotime($request->end_date)) : null;
             $project->owner = $request->owner;
             $project->save();
 

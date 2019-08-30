@@ -6,6 +6,7 @@
  */
 
 import axios from 'axios';
+import keyGen from "vue2-datatable-component/src/_utils/keyGen";
 
 // initial state
 const state = {
@@ -13,15 +14,11 @@ const state = {
     projects: [],
     filters: JSON.parse(localStorage.getItem('projects_filters')) || {
         'keyword': '',
-        'created_dates':{
-            'start_date': '',
-            'end_date': ''
-        },
+        'start_date': '',
+        'end_date': '',
         'created_range':{id: '0', value: 'Any Time'},
-        'due_dates':{
-            'start_date': '',
-            'end_date': ''
-        },
+        'due_start_date': '',
+        'due_end_date': '',
         'due_date_range':{id: '0', value: 'Any Time'},
     },
     pagination: {
@@ -44,7 +41,14 @@ const getters = {
 // actions
 const actions = {
     getProjects: (context )=>{
-        let params = '';//getFilters();
+        let params = Object.keys(context.state.filters).map( key => {
+            let val = context.state.filters[key];
+            if (typeof(val) === 'object')
+                key  += '='+ val.id;
+            else
+                key  += '='+ val;
+            return key;
+        }).join('&');
         axios.get("/projects?page="+context.state.pagination.page + "&"+params)
             .then(response => {
                 let res = response.data;
@@ -87,7 +91,7 @@ const mutations = {
     setProjects: (state, projects) => { state.projects = projects },
     setPagination: (state, val) => { state.pagination = {...val} },
     setPage: (state, val) => { state.pagination.page = val },
-    setFilters: (state, val) => { state.filters = val; localStorage.setItem('projects_filters', JSON.stringify(val)); },
+    setFilters: (state, val) => { state.filters = {...val}; localStorage.setItem('projects_filters', JSON.stringify(val)); },
     setProject: (state, val) => {
         let id = val.id;
         const project= state.projects.find(ticket => ticket.id === id);
