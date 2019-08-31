@@ -1,5 +1,5 @@
 <template>
-    <div class="project-list" v-if="showWidget">
+    <div class="project-filter-list" v-if="showWidget">
         <form action="">
             <div class="filter-block">
                 <div class="filter-header">
@@ -45,6 +45,7 @@
                     Due Date
                 </div>
                 <div class="filter-body">
+                    <!--<date-picker :config="dateOptions" value="" ref="inlineDate" placeholder="Start Date"></date-picker>-->
                     <v-select
                         v-model="filter.due_date_range"
                         label="value"
@@ -97,8 +98,13 @@
         data(){
             return {
                 size:20,
+                inline:true,
                 avatarStyle: {'margin-right':'5px'},
                 filter: {},
+                dateOptions: {
+                    inline: true
+                },
+
                 due_options: [
                     {id: '0', value: 'Any Time'},
                     {id: '1', value: 'No Due Date'},

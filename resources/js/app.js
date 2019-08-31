@@ -64,6 +64,8 @@ $.extend(true, $.fn.datetimepicker.defaults, {
         close: 'far fa-times-circle'
     },
     format: settings.FORMDATEFROMAT,
+    showClear: true,
+    showClose: true,
 });
 
 //store
