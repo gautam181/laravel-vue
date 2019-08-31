@@ -140,5 +140,5 @@
 
 <style scoped>
   #sidebar-toggle {position: absolute;top: 5px; right: 0px; width: 30px; cursor: pointer; text-align: right;padding-right:5px; z-index: 10;}
-    #sidebar{/*position: fixed;*/z-index: 2;}
+    #sidebar{position: fixed;z-index: 2;}
 </style>
