@@ -20,6 +20,7 @@ const state = {
         'due_start_date': '',
         'due_end_date': '',
         'due_date_range':{id: '0', value: 'Any Time'},
+        'owner':{id: '0', value: 'Any'},
     },
     pagination: {
         page: 1,

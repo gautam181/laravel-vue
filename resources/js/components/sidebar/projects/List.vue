@@ -72,6 +72,19 @@
 
                 </div>
             </div>
+
+            <div class="filter-block">
+                <div class="filter-header">
+                    Project Owner
+                </div>
+                <div class="filter-body">
+                    <v-select
+                        v-model="filter.owner"
+                        label="name"
+                        :options="users"
+                    ></v-select>
+                </div>
+            </div>
             <div class="filter-block">
                 <div class="filter-body">
                     <button @click="resetFilter"  class="btn btn-default btn-sm"><i class="fa fa-retweet"></i> Reset Filter</button>
@@ -92,6 +105,7 @@
         'due_start_date': '',
         'due_end_date': '',
         'due_date_range':{id: '0', value: 'Any Time'},
+        'owner':{id: '0', value: 'Any'},
     };
     export default {
         name: "project-list",
@@ -120,13 +134,20 @@
         },
         created(){
             this.filter = cloneDeep(this.$store.getters['projects/getFilters']);
+            this.$store.dispatch('users/getUsersList');
         },
         computed:{
             showWidget(){
                 return this.$route.name == 'projects'?  true : false;
+            },
+            users(){
+                return this.$store.getters['users/getUsersList'];
             }
         },
         methods:{
+            getUsers: function(){
+                this.$store.dispatch('projects/getProjects');
+            },
             getProjects: function(){
                 this.$store.dispatch('projects/getProjects');
             },

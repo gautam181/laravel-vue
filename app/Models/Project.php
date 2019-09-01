@@ -54,6 +54,10 @@ class Project extends Model
                 }
             }
         }
+        $owner = $params->get('owner');
+        if($owner){
+            $projects->where('owner', $owner);
+        }
         $projects->orderby('updated_at', 'desc');
         return $projects->paginate(30);
     }
