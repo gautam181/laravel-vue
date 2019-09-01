@@ -56,7 +56,7 @@ class Project extends Model
         }
         $owner = $params->get('owner');
         if($owner){
-            $projects->where('owner', $owner);
+            $projects->whereIn('owner', explode(',', $owner));
         }
         $projects->orderby('updated_at', 'desc');
         return $projects->paginate(30);

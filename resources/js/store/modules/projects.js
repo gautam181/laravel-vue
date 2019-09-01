@@ -6,6 +6,7 @@
  */
 
 import axios from 'axios';
+import { cloneDeep, get  } from 'lodash';
 import keyGen from "vue2-datatable-component/src/_utils/keyGen";
 
 // initial state
@@ -20,7 +21,7 @@ const state = {
         'due_start_date': '',
         'due_end_date': '',
         'due_date_range':{id: '0', value: 'Any Time'},
-        'owner':{id: '0', value: 'Any'},
+        'owner':[],
     },
     pagination: {
         page: 1,
@@ -44,8 +45,19 @@ const actions = {
     getProjects: (context )=>{
         let params = Object.keys(context.state.filters).map( key => {
             let val = context.state.filters[key];
-            if (typeof(val) === 'object')
+            if (Array.isArray(val)){
+                let owners = Object.keys(val).map(i => {
+                    if (i > 0)
+                        return val[i].id;
+                    return val[i].id;
+                } );
+                key += '='+owners;
+            }
+            else if (typeof(val) === 'object')
                 key  += '='+ val.id;
+            else if (typeof(val) === 'array'){
+
+            }
             else
                 key  += '='+ val;
             return key;

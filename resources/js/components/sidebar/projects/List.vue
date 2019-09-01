@@ -14,7 +14,7 @@
                     Created Date
                 </div>
                 <div class="filter-body">
-                    <v-select
+                    <v-select :clearable="clearable"
                         v-model="filter.created_range"
                         label="value"
                         :options="created_options"
@@ -46,7 +46,7 @@
                 </div>
                 <div class="filter-body">
                     <!--<date-picker :config="dateOptions" value="" ref="inlineDate" placeholder="Start Date"></date-picker>-->
-                    <v-select
+                    <v-select :clearable="clearable"
                         v-model="filter.due_date_range"
                         label="value"
                         :options="due_options"
@@ -78,7 +78,7 @@
                     Project Owner
                 </div>
                 <div class="filter-body">
-                    <v-select
+                    <v-select :clearable="clearable" :taggable="taggable" :multiple="true"
                         v-model="filter.owner"
                         label="name"
                         :options="users"
@@ -105,7 +105,7 @@
         'due_start_date': '',
         'due_end_date': '',
         'due_date_range':{id: '0', value: 'Any Time'},
-        'owner':{id: '0', value: 'Any'},
+        'owner':[],
     };
     export default {
         name: "project-list",
@@ -118,7 +118,8 @@
                 dateOptions: {
                     inline: true
                 },
-
+                clearable: false,
+                taggable: true,
                 due_options: [
                     {id: '0', value: 'Any Time'},
                     {id: '1', value: 'No Due Date'},
@@ -141,7 +142,7 @@
                 return this.$route.name == 'projects'?  true : false;
             },
             users(){
-                return this.$store.getters['users/getUsersList'];
+                return cloneDeep(this.$store.getters['users/getUsersList']);
             }
         },
         methods:{
