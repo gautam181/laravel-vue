@@ -3,15 +3,15 @@
   background-color: $color-navy-blue;
 }
 
-.tooltip.top .tooltip-arrow {
+.tooltip.bs-tooltip-top .arrow::before {
   border-top-color: $color-navy-blue;
 }
-.tooltip.right .tooltip-arrow {
+.tooltip.bs-tooltip-right .arrow::before {
   border-right-color: $color-navy-blue;
 }
-.tooltip.bottom .tooltip-arrow {
+.tooltip.bs-tooltip-bottom .arrow::before {
   border-bottom-color: $color-navy-blue;
 }
-.tooltip.left .tooltip-arrow {
+.tooltip.bs-tooltip-left .arrow::before {
   border-left-color: $color-navy-blue;
 }

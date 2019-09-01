@@ -29,8 +29,8 @@
                                     <div class="row">
                                         <div class="col-sm-4">
                                             <div class="project-label">OWNER</div>
-                                            <small v-if="project.owner">
-                                                <avatar :username="project.owner.name" :size="size" :customStyle="avatarStyle"></avatar>
+                                            <small v-if="project.owner" >
+                                                <avatar :username="project.owner.name" :size="size" :customStyle="avatarStyle" v-b-tooltip.hover.rightbottom :title="project.owner.name"></avatar>
                                             </small>
                                         </div>
                                         <div class="col-sm-4">
