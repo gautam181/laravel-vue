@@ -6,8 +6,6 @@
                 <div class="list-options">
                     <h2 class="">Summary</h2>
                 </div>
-                <!--<vue-ladda button-class="btn btn-primary" data-size="sm">Click Me!</vue-ladda>
--->
             </div>
         </div>
     </div>
@@ -15,6 +13,7 @@
 
 <script>
     import Ticket from '../../components/util/Ticket';
+    import DetailTabs from "./DetailTabs";
 
     export default {
         name: "project-summary",
@@ -37,7 +36,8 @@
 
         },
         components: {
-            Ticket
+            Ticket,
+            DetailTabs
         },
         mounted(){
 

@@ -28,14 +28,12 @@
 
                     </ul>
                 </div>
-
-
                 <!-- Tab panes -->
                 <div class="tab-content">
                     <div class="row">
                         <div class="col-md-12">
                             <project-form :id="project_id" v-if="project_form"></project-form>
-                            <router-view v-on:handle-page-header="handlePageHeader" ref="myChild"></router-view>
+                            <router-view v-on:handle-page-header="handlePageHeader" v-on: ref="myChild"></router-view>
                         </div>
                     </div>
                 </div>
@@ -81,10 +79,6 @@
             project_id(){
                 return this.$route.params.id? this.$route.params.id: this.$route.params.ticket_id;
             }
-            /*project(){
-                return this.$store.getters['projects/getProject'](this.project_id);
-            },*/
-
         },
         components: {
             ProjectForm,

@@ -53,7 +53,7 @@
                 myRoute : {},
                 project_id : this.$route.params.id,
                 project: {},
-                tickets: [],
+                //tickets: [],
                 ticketList: true,
                 showAddTicket: false,
                 blankTicket: {
@@ -63,27 +63,27 @@
                 }
             }
         },
+        computed:{
+            tickets: function () {
+                return this.$store.getters['tickets/getTickets'];
+            }
+        },
         watch: {
 
         },
         components: {
             Ticket
         },
+        created(){
+            this.$store.commit('tickets/setProjectId', this.project_id);
+        },
         mounted(){
-            //this.getProject(this.project_id);
-            this.getTickets(this.project_id);
+            this.getTickets();
             this.myRoute = this.$router.options.routes.find(route => route.name === this.$route.name);
         },
         methods:{
             handlePageHeader: function(data){
                 this.$emit('handle-page-header', data);
-            },
-            getProject: function (id) {
-                axios.get("/project/"+id)
-                    .then(response => {
-                        let res = response.data;
-                        this.project = res;
-                    });
             },
             addTicket: function(){
               this.showAddTicket = true;
@@ -91,16 +91,9 @@
             cancelTicket:function(){
                 this.showAddTicket = false;
             },
-            getTickets: function (id, data) {
-                axios.get("/project/tickets/"+id)
-                    .then(response => {
-                        let res = response.data;
-                        this.tickets = res.data;
-                    });
+            getTickets: function () {
+                this.$store.dispatch('tickets/getTickets');
             },
-            editProjct: function (id) {
-                console.log(id);
-            }
         },
         beforeRouteUpdate (to, from, next) {
             this.project_id = to.params.id;

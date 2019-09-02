@@ -13,6 +13,17 @@ const state = {
     sort_by: localStorage.getItem('ticket_comment_sort_by') || 'asc',
     tickets: [],
     ticket_comments: [],
+    filters: JSON.parse(localStorage.getItem('tickets_filters')) || {
+        'keyword': '',
+        'start_date': '',
+        'end_date': '',
+        'created_range':{id: '0', value: 'Any Time'},
+        'due_start_date': '',
+        'due_end_date': '',
+        'due_date_range':{id: '0', value: 'Any Time'},
+        'assigned_to':[],
+    },
+    project_id: 0,
     page: 1,
     totalPages : 0,
     totalRows : 0,
@@ -22,7 +33,9 @@ const state = {
 // getters
 const getters = {
     getTickets: (state) => { return state.tickets },
+    getProjectId: (state) => { return state.project_id },
     getTicket: (state)=>(id) => { return state.tickets.find(ticket => ticket.id == id); },
+    getFilters: (state) => { return state.filters },
     getSortBy: (state) => { return state.sort_by },
     getPage: (state) => { return state.page },
     getTotalPages: (state) => { return state.totalPages },
@@ -34,7 +47,30 @@ const getters = {
 // actions
 const actions = {
     getTickets: (context )=>{
-        axios.get("/tickets?page="+context.state.page)
+        let params = Object.keys(context.state.filters).map( key => {
+            let val = context.state.filters[key];
+            if (Array.isArray(val)){
+                let owners = Object.keys(val).map(i => {
+                    if (i > 0)
+                        return val[i].id;
+                    return val[i].id;
+                } );
+                key += '='+owners;
+            }
+            else if (typeof(val) === 'object')
+                key  += '='+ val.id;
+            else if (typeof(val) === 'array'){
+
+            }
+            else
+                key  += '='+ val;
+            return key;
+        }).join('&');
+        let url = '/tickets';
+        if(context.state.project_id)
+            url = '/project/tickets/'+context.state.project_id;
+
+        axios.get(url+"?page="+context.state.page+ "&"+params)
             .then(response => {
                 let res = response.data;
                 context.commit('setTickets', res.data);
@@ -109,6 +145,7 @@ const actions = {
 // mutations
 const mutations = {
     setTickets: (state, tickets) => { state.tickets = tickets },
+    setProjectId: (state, id) => { state.project_id = id },
     setTicket: (state, val) => {
         let id = val.id;
         const ticket= state.tickets.find(ticket => ticket.id === id);
@@ -123,6 +160,7 @@ const mutations = {
         }
 
     },
+    setFilters: (state, val) => { state.filters = {...val}; localStorage.setItem('tickets_filters', JSON.stringify(val)); },
     setPerPage: (state, val) => { state.perPage = val },
     setTotalPages: (state, val) => { state.totalPages = val },
     setTotalRows: (state, val) => { state.totalRows = val },
