@@ -14,6 +14,7 @@
             </div>
             <div class="filter-body">
                 <v-select
+                    :clearable="clearable"
                     v-model="created_range"
                     label="value"
                     :options="created_options"
@@ -45,6 +46,7 @@
             </div>
             <div class="filter-body">
                 <v-select
+                    :clearable="clearable"
                     v-model="due_range"
                     label="value"
                     :options="due_options"
@@ -92,6 +94,7 @@
                 end_date:'',
                 due_start:'',
                 due_end:'',
+                clearable: false,
                 due_range: {id: '0', value: 'Any Time'},
                 created_range: {id: '0', value: 'Any Time'},
                 due_options: [

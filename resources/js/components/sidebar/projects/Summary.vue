@@ -30,8 +30,13 @@
                 <button class="btn btn-xs" @click="editProject('dates')"><i class="fa fa-pen"></i> Edit</button>
             </div>
             <div class="sblock-body">
-                {{ project.start_date|date }}
-                {{ project.end_date|date }}
+                <div v-if="hasDates">
+                    {{ project.start_date|date }} - {{ project.end_date|date }}
+                </div>
+                <div v-else>
+                    No start or end date
+                </div>
+
             </div>
         </div>
         <div v-if="showProjectForm.show">
@@ -72,6 +77,9 @@
             },
             showSummary(){
                 return this.$route.name == 'project-summary'?  true : false;
+            },
+            hasDates(){
+                return this.project.start_date && this.project.end_date;
             }
         },
         methods:{
