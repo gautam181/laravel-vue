@@ -5,7 +5,7 @@
                 Keyword
             </div>
             <div class="filter-body">
-                <input type="text" class="form-control form-control-sm" placeholder="project tile or description">
+                <input type="text" class="form-control form-control-sm" placeholder="ticket tile or description">
             </div>
         </div>
         <div class="filter-block">
@@ -73,6 +73,18 @@
             </div>
         </div>
         <div class="filter-block">
+            <div class="filter-header">
+                Assigned To
+            </div>
+            <div class="filter-body">
+                <v-select :clearable="clearable" :taggable="taggable" :multiple="true"
+                          v-model="assigned_to"
+                          label="name"
+                          :options="users"
+                ></v-select>
+            </div>
+        </div>
+        <div class="filter-block">
             <div class="filter-body">
                 <a href="javascript:void(0)" class="btn btn-default btn-sm"><i class="fa fa-retweet"></i> Reset Filter</a>
                 <a href="javascript:void(0)" class="btn btn-primary pull-right btn-sm"><i class="fa fa-filter"></i> Apply Filter</a>
@@ -83,6 +95,7 @@
 </template>
 
 <script>
+    import { cloneDeep } from 'lodash'
     export default {
         name: "project-tickets",
         data(){
@@ -94,7 +107,8 @@
                 end_date:'',
                 due_start:'',
                 due_end:'',
-                clearable: false,
+                assigned_to: '',
+                clearable: false, taggable: true,
                 due_range: {id: '0', value: 'Any Time'},
                 created_range: {id: '0', value: 'Any Time'},
                 due_options: [
@@ -110,12 +124,26 @@
                 ]
             }
         },
+        created(){
+            this.$store.dispatch('users/getUsersList');
+        },
         computed:{
             project(){
                 return this.$store.getters['projects/getProject'](this.project_id);
             },
             showWidget(){
                 return this.$route.name == 'project-tickets'?  true : false;
+            },
+            users(){
+                return cloneDeep(this.$store.getters['users/getUsersList']);
+            }
+        },
+        methods:{
+            applyFilter: function () {
+
+            },
+            resetFilter: function () {
+
             }
         }
     }

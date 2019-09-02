@@ -67,7 +67,7 @@
         data(){
             return {
                 myRoute : {},
-                ticket_id : this.$route.params.id,
+                ticket_id : this.$route.params.ticket_id,
                 order_by: 'date',
                 add_comment: {comment:'', id:''},
                 desc: true

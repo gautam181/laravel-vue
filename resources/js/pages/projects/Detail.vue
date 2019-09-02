@@ -12,13 +12,11 @@
                             </router-link>
                         </li>
                         <li class="nav-item">
-                            <router-link v-bind:to="{'name': 'project-tickets', params: {'id': project_id }}" active-class="active" class="nav-link">
+                            <router-link v-bind:to="{'name': 'project-tickets', params: {'id': project_id }}" active-class="active" v-bind:class="{
+                                'nav-link': true,
+                                'active': $route.name == 'project-ticket'
+                                }">
                                 Tickets
-                            </router-link>
-                        </li>
-                        <li class="nav-item">
-                            <router-link v-bind:to="{'name': 'project-ticket', params: {'ticket_id': project_id }}" active-class="active" class="nav-link">
-                                Ticket
                             </router-link>
                         </li>
                         <li class="nav-item">
@@ -56,7 +54,7 @@
         data(){
             return {
                 myRoute : {},
-                project_id : this.$route.params.id,
+                //project_id : this.$route.params.id,
                 project_form: false,
                 project : {},
                 tickets: [],
@@ -80,6 +78,9 @@
             }
         },
         computed: {
+            project_id(){
+                return this.$route.params.id? this.$route.params.id: this.$route.params.ticket_id;
+            }
             /*project(){
                 return this.$store.getters['projects/getProject'](this.project_id);
             },*/

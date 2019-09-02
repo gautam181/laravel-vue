@@ -13,7 +13,7 @@
                     </div>
                     <div class="ticket-title">
                         <p class="ticket-name">
-                            <router-link v-bind:to="{'name': 'ticket-detail', params: {'id': ticket.id }}" v-if="is_list" active-class="" class="">{{ ticket.title }}</router-link>
+                            <router-link v-bind:to="{'name': 'project-ticket', params: {'ticket_id': ticket.id }}" v-if="is_list" active-class="" class="">{{ ticket.title }}</router-link>
                             <span v-else>{{ ticket.title }}</span>
                         </p>
                         <div class="ticket-options">
