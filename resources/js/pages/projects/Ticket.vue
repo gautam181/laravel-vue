@@ -10,8 +10,9 @@
             </div>
             <div class="col-md-12">
                 <div class="hpanel">
-                    <div class="panel-body" v-if="ticket">
+                    <div class="panel-body pb-3" v-if="ticket">
                         <vue-title :title="ticket.title"></vue-title>
+
                         <Ticket
                             :ticket="ticket"
                             :desc="desc"
