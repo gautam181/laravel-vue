@@ -62,9 +62,10 @@ label{font-weight: 600;}
     .panel .panel-body{padding:15px;}
     .project-details{min-height: 60px; max-height: 60px;overflow: hidden;}
     .actions{height: 23px;}
-    .actions .btn{display: none;}
+    .actions .btn{display: none; color:#21252987;}
     &:hover{
         .actions .btn{display: block;}
+        .actions:hover .btn{color:#212529;}
     }
 }
 
