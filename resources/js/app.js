@@ -109,13 +109,13 @@ Vue.filter('date', (val)=> {
     if (isNull(val))
         return '';
 
-    return val? moment(val).format(settings.DATEFROMAT): '';
+    return val? moment(val,'YYYY-MM-DD').format(settings.DATEFROMAT): '';
 });
 
 Vue.filter('formDate', (val)=> {
     if (isNull(val))
         return '';
-    return val? moment(val).format(settings.FORMDATEFROMAT): '';
+    return val? moment(val, 'YYYY-MM-DD').format(settings.FORMDATEFROMAT): '';
 });
 
 /**
