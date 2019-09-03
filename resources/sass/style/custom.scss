@@ -52,7 +52,14 @@ label{font-weight: 600;}
         }
     }
 }
-
+.vue-notification{
+    border-radius: 5px;
+    &.success {
+        background: #dff0d8!important;
+        border-left-color: #42a85f;
+        color:#3c763d;
+    }
+}
 .projects {
     &.list{
         .project-details{
