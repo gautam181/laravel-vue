@@ -69,16 +69,24 @@ const actions = {
         let url = '/tickets';
         if(context.state.project_id)
             url = '/project/tickets/'+context.state.project_id;
+        return new Promise(
+            (resolve, reject)=>{
+                axios.get(url+"?page="+context.state.page+ "&"+params)
+                    .then(response => {
+                        let res = response.data;
+                        context.commit('setTickets', res.data);
+                        context.commit('setTotalPages', res.last_page);
+                        context.commit('setTotalRows', res.total);
+                        context.commit('setPage', res.current_page);
+                        context.commit('setPerPage', res.per_page);
+                        resolve(true);
+                    })
+                    .catch(error => {
+                        reject(error);
+                    });
+            }
+        );
 
-        axios.get(url+"?page="+context.state.page+ "&"+params)
-            .then(response => {
-                let res = response.data;
-                context.commit('setTickets', res.data);
-                context.commit('setTotalPages', res.last_page);
-                context.commit('setTotalRows', res.total);
-                context.commit('setPage', res.current_page);
-                context.commit('setPerPage', res.per_page);
-            });
     },
     getTicket: (context, id) => {
         axios.get("/ticket/"+id)

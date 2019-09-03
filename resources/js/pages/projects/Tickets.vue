@@ -1,45 +1,48 @@
 <template>
     <div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="list-options">
-                    <h2 class="">Tickets</h2>
-                    <div class="btn-options text-right">
-                        <button class="btn btn-md btn-success" @click="addTicket" ><i class="fa fa-plus-circle"></i> Add Ticket</button>
-                    </div>
-
-                </div>
-
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="panel forum-box">
-                    <div class="panel-body">
-                        <Ticket v-if="showAddTicket"
-                                :ticket="blankTicket" :view="!showAddTicket" v-on:cancel="cancelTicket"
-                        ></Ticket>
-                        <div class="tickets-list">
-                            <template v-if="tickets.length > 0">
-                                <template v-for="row in tickets">
-                                    <Ticket
-                                        :ticket="row"
-                                        :list=ticketList
-                                    ></Ticket>
-                                </template>
-                            </template>
-                            <template v-else>
-                                <p v-if="!showAddTicket" class="text-center">
-                                    <button class="btn btn-xs btn-secondary" @click="addTicket">Add Ticket</button>
-                                </p>
-                            </template>
+        <div v-if="loaded">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="list-options">
+                        <h2 class="">Tickets</h2>
+                        <div class="btn-options text-right">
+                            <button class="btn btn-md btn-success" @click="addTicket" ><i class="fa fa-plus-circle"></i> Add Ticket</button>
                         </div>
 
+                    </div>
 
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel forum-box">
+                        <div class="panel-body">
+                            <Ticket v-if="showAddTicket"
+                                    :ticket="blankTicket" :view="!showAddTicket" v-on:cancel="cancelTicket"
+                            ></Ticket>
+                            <div class="tickets-list">
+                                <template v-if="tickets.length > 0">
+                                    <template v-for="row in tickets">
+                                        <Ticket
+                                            :ticket="row"
+                                            :list=ticketList
+                                        ></Ticket>
+                                    </template>
+                                </template>
+                                <template v-else>
+                                    <p v-if="!showAddTicket" class="text-center">
+                                        <button class="btn btn-xs btn-secondary" @click="addTicket">Add Ticket</button>
+                                    </p>
+                                </template>
+                            </div>
+
+
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <loading-spinner label="Loading tickets" :show="loading"></loading-spinner>
     </div>
 </template>
 
@@ -54,6 +57,8 @@
                 project_id : this.$route.params.id,
                 project: {},
                 //tickets: [],
+                loaded: false,
+                loading: false,
                 ticketList: true,
                 showAddTicket: false,
                 blankTicket: {
@@ -92,7 +97,12 @@
                 this.showAddTicket = false;
             },
             getTickets: function () {
-                this.$store.dispatch('tickets/getTickets');
+                this.loading = true;
+                this.$store.dispatch('tickets/getTickets')
+                    .then(res => {
+                        this.loaded = true;
+                        this.loading = false;
+                    });
             },
         },
         beforeRouteUpdate (to, from, next) {

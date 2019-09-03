@@ -15,6 +15,7 @@ require('./bootstrap');
 import settings from "./config/Settings";
 import titleComponent from './components/head/Title';
 import PanelVue from "./components/util/Panel";
+import LoadingSpinner from "./components/page/LoadingSpinner";
 
 import Vue from 'vue';
 import moment from 'moment';
@@ -43,6 +44,7 @@ import VueSlimScroll from 'vue-slimscroll'
 //component
 Vue.component('vue-title', titleComponent);
 Vue.component('vue-panel', PanelVue);
+Vue.component('loading-spinner', LoadingSpinner);
 Vue.component('avatar', Avatar);
 Vue.component('vue-ladda', VueLadda);
 //Vue.component('date-picker', DatePicker);
@@ -109,13 +111,18 @@ Vue.filter('date', (val)=> {
     if (isNull(val))
         return '';
 
-    return val? moment(val,'YYYY-MM-DD').format(settings.DATEFROMAT): '';
+    return val? moment(val).format(settings.DATEFROMAT): '';
 });
 
 Vue.filter('formDate', (val)=> {
     if (isNull(val))
         return '';
     return val? moment(val, 'YYYY-MM-DD').format(settings.FORMDATEFROMAT): '';
+});
+Vue.filter('sqlDate', (val)=> {
+    if (isNull(val))
+        return '';
+    return val? moment(val, settings.FORMDATEFROMAT).format('YYYY-MM-DD'): '';
 });
 
 /**

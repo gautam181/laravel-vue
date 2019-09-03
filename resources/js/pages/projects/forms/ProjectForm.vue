@@ -128,7 +128,7 @@
                     return this.project_info.start_date? this.$options.filters.formDate(this.project_info.start_date): '';
                 },
                 set: function (val) {
-                    this.project_info.start_date=  val;
+                    this.project_info.start_date=  val? this.$options.filters.sqlDate(val): '';
                 }
             } ,
             end_date: {
@@ -136,7 +136,7 @@
                     return this.project_info.end_date? this.$options.filters.formDate(this.project_info.end_date): '';
                 },
                 set: function (val) {
-                    this.project_info.end_date=  val;
+                    this.project_info.end_date=  val? this.$options.filters.sqlDate(val): '';
                 }
             },
             users(){
@@ -178,8 +178,20 @@
                     .then(response => {
                         this.$store.commit('projects/setProject', this.project_info);
                         this.$emit('projectUpdate', this.project_info);
+                        this.$notify({
+                            group: 'form',
+                            type: 'success',
+                            title:'Success',
+                            text: 'Project updated successfully'
+                        })
                     })
                     .catch(error => {
+                        this.$notify({
+                            group: 'form',
+                            type: 'error',
+                            title:'Error',
+                            text: 'Something went wrong please contact admin'
+                        })
                         console.log(error);
                     });
             }
