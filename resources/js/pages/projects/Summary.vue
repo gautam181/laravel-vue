@@ -13,8 +13,6 @@
 
 <script>
     import Ticket from '../../components/util/Ticket';
-    import DetailTabs from "./DetailTabs";
-
     export default {
         name: "project-summary",
         data(){
@@ -36,8 +34,7 @@
 
         },
         components: {
-            Ticket,
-            DetailTabs
+            Ticket
         },
         mounted(){
 
