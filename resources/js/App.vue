@@ -11,8 +11,8 @@
                     <vue-ins-progress-bar></vue-ins-progress-bar>
                 </div>
             </div>
-
         </div>
+        <notifications group="form" position="bottom right" :max="3" />
     </div>
 </template>
 
