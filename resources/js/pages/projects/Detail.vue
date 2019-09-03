@@ -85,6 +85,7 @@
             Ticket
         },
         mounted(){
+            this.$emit('handle-page-header', {label:'Manage project'});
             this.getProject(this.project_id);
             this.myRoute = this.$router.options.routes.find(route => route.name === this.$route.name);
             this.$root.$on('bv::modal::hidden', (bvEvent, modalId) => {
