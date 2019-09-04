@@ -1,7 +1,7 @@
 <template>
     <div>
         <vue-title :title="project.name"></vue-title>
-        <div class="row projects">
+        <div class="row projects" >
             <div class="col-md-12">
                 <!-- Nav tabs -->
                 <div class="nav-htabs">
@@ -33,7 +33,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <project-form :id="project_id" v-if="project_form"></project-form>
-                            <router-view v-on:handle-page-header="handlePageHeader" v-on: ref="myChild"></router-view>
+                            <router-view ref="myChild"></router-view>
                         </div>
                     </div>
                 </div>
@@ -52,7 +52,7 @@
         data(){
             return {
                 myRoute : {},
-                //project_id : this.$route.params.id,
+                project_id : 0,
                 project_form: false,
                 project : {},
                 tickets: [],
@@ -66,27 +66,27 @@
             }
         },
         watch: {
-            project: function(val) {
-                this.$emit('handle-page-header', {label:val.name, type:'project', id:val.id, tools:[{'icon': 'fa-pen',
+        },
+        computed: {
+
+        },
+        created(){
+            this.$eventBus.$on('project-info', val=>{
+                this.project_id = val.id;
+                this.$eventBus.$emit('header-update', {label:val.name, type:'project', id:val.id, tools:[{'icon': 'fa-pen',
                         'event':(val)=>{
                             this.editProjectModal(val);
                         },
                         'id': val.id
-                }]});
-            }
-        },
-        computed: {
-            project_id(){
-                return this.$route.params.id? this.$route.params.id: this.$route.params.ticket_id;
-            }
+                    }]});
+            });
         },
         components: {
             ProjectForm,
             Ticket
         },
         mounted(){
-            this.$emit('handle-page-header', {label:'Manage project'});
-            this.getProject(this.project_id);
+            this.$eventBus.$emit('header-update', {label:'Manage project ...'});
             this.myRoute = this.$router.options.routes.find(route => route.name === this.$route.name);
             this.$root.$on('bv::modal::hidden', (bvEvent, modalId) => {
                 if (modalId == 'project-form')
@@ -94,23 +94,11 @@
             })
         },
         methods:{
-            handlePageHeader: function(data){
-                this.$emit('handle-page-header', data);
-            },
-            getProject: function (id) {
-                console.log("get project "+id);
-                this.$store.dispatch('projects/getProject', id)
-                    .then(response =>{
-                        this.project = this.$store.getters['projects/getProject'](this.project_id);
-                    });
-            },
             addTicket: function(){
               this.showAddTicket = true;
             },
             editProjectModal: function (id) {
                 this.project_form = true;
-                //this.$refs['project-form'].show();
-                console.log(this.project_form, id);
             }
         },
         beforeRouteUpdate (to, from, next) {
