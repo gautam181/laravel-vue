@@ -47,6 +47,7 @@ Vue.component('vue-panel', PanelVue);
 Vue.component('loading-spinner', LoadingSpinner);
 Vue.component('avatar', Avatar);
 Vue.component('vue-ladda', VueLadda);
+import VueIziToast from 'vue-izitoast';
 //Vue.component('date-picker', DatePicker);
 Vue.component('v-select', vSelect);
 Vue.component('date-range-picker', DateRangePicker);
@@ -82,6 +83,8 @@ Vue.use(Datatable);
 Vue.use(Plugin);
 Vue.use(Notifications);
 Vue.use(require('vue-moment'));
+//https://www.npmjs.com/package/vue-izitoast
+Vue.use(VueIziToast);
 //https://www.npmjs.com/package/vue-ins-progress-bar
 Vue.use(VueInsProgressBar, {
     position: 'fixed',

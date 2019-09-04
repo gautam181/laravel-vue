@@ -178,12 +178,10 @@
                     .then(response => {
                         this.$store.commit('projects/setProject', this.project_info);
                         this.$emit('projectUpdate', this.project_info);
-                        this.$notify({
-                            group: 'form',
-                            type: 'success',
-                            title:'Success',
-                            text: 'Project updated successfully'
-                        })
+                        this.$toast.success('Project updated successfully', "Success", {
+                            timout: 3000,
+                            position: 'bottomRight'
+                        });
                     })
                     .catch(error => {
                         this.$notify({
