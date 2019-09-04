@@ -133,13 +133,18 @@
                 ]
             }
         },
+
         created(){
             this.filter = cloneDeep(this.$store.getters['projects/getFilters']);
-            this.$store.dispatch('users/getUsersList');
         },
         computed:{
             showWidget(){
-                return this.$route.name == 'projects'?  true : false;
+
+                if (this.$route.name == 'projects'){
+                    this.$store.dispatch('users/getUsersList');
+                    return true;
+                } else
+                    return false;
             },
             users(){
                 return cloneDeep(this.$store.getters['users/getUsersList']);

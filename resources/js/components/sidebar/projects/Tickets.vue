@@ -133,9 +133,12 @@
                 ]
             }
         },
+        mounted(){
+            this.$store.dispatch('users/getUsersList');
+        },
         created(){
             this.filter = cloneDeep(this.$store.getters['tickets/getFilters']);
-            this.$store.dispatch('users/getUsersList');
+
         },
         computed:{
             showWidget(){
