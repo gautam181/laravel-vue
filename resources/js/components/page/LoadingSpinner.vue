@@ -17,7 +17,7 @@
     export default {
         name: "LoadingSpinner",
         props: {
-            'label': {type: Text, default: 'Loading ...'},
+            'label': {type: String, default: 'Loading ...'},
             'show': {type: Boolean, default: false, required: true},
         },
         methods: {},

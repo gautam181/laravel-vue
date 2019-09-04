@@ -3,7 +3,7 @@
         <!-- Header -->
         <Header></Header>
         <div id="page-container">
-            <div class="content-wrapper">
+            <div class="content-wrapper" :style="{minHeight: height+'px'}">
                 <PageHeader :headerData="pageHeaderData"></PageHeader>
                 <Sidebar v-if="!settings.hideSideBar"></Sidebar>
                 <div class="content animate-panel">
@@ -12,7 +12,6 @@
                 </div>
             </div>
         </div>
-        <notifications group="form" position="bottom right" :max="3" />
     </div>
 </template>
 
@@ -32,7 +31,9 @@
         data(){
           return {
               pageHeaderData: '',
-              settings: settings
+              settings: settings,
+              height: 500,
+              width:500,
           }
         },
         computed:{
@@ -46,6 +47,8 @@
             this.$router.afterEach(() => {
                 this.$insProgress.finish()
             })
+            window.addEventListener('resize', this.handleResize)
+            this.handleResize();
         },
         mounted() {
             this.$insProgress.finish();
@@ -54,6 +57,10 @@
         methods:{
             handlePageHeader: function(data){
                 this.pageHeaderData = data
+            },
+            handleResize() {
+                this.width = window.innerWidth;
+                this.height = window.innerHeight- (58);
             }
         }
     }
