@@ -1,47 +1,50 @@
 <template>
     <div class="project-summary" v-if="showSummary">
-        <div class="sidebar-block">
-            <div class="sblock-header">
-                <h4>Project Owner</h4>
-            </div>
-            <div class="sblock-body">
-                <div class="flex" v-if="project.owner">
-                    <avatar :username="project.owner.name" :size="size" :customStyle="avatarStyle"></avatar>
-                    <a href="javascript:void(0);" @click="editProject('owner')">{{ project.owner.name }}</a>
+        <div v-if="project">
+            <div class="sidebar-block">
+                <div class="sblock-header">
+                    <h4>Project Owner</h4>
                 </div>
-                <div v-else>
-                    <a href="javascript:void(0);" @click="editProject('owner')">Owner not set</a>
-                </div>
+                <div class="sblock-body">
+                    <div class="flex" v-if="project.owner">
+                        <avatar :username="project.owner.name" :size="size" :customStyle="avatarStyle"></avatar>
+                        <a href="javascript:void(0);" @click="editProject('owner')">{{ project.owner.name }}</a>
+                    </div>
+                    <div v-else>
+                        <a href="javascript:void(0);" @click="editProject('owner')">Owner not set</a>
+                    </div>
 
-            </div>
-        </div>
-        <div class="sidebar-block">
-            <div class="sblock-header">
-                <h4>Description</h4>
-                <button class="btn btn-xs" @click="editProject('description')"><i class="fa fa-pen"></i> Edit</button>
-            </div>
-            <div class="sblock-body">
-                {{ project.description }}
-            </div>
-        </div>
-        <div class="sidebar-block">
-            <div class="sblock-header">
-                <h4>Dates</h4>
-                <button class="btn btn-xs" @click="editProject('dates')"><i class="fa fa-pen"></i> Edit</button>
-            </div>
-            <div class="sblock-body">
-                <div v-if="hasDates">
-                    {{ project.start_date|date }} - {{ project.end_date|date }}
                 </div>
-                <div v-else>
-                    No start or end date
+            </div>
+            <div class="sidebar-block">
+                <div class="sblock-header">
+                    <h4>Description</h4>
+                    <button class="btn btn-xs" @click="editProject('description')"><i class="fa fa-pen"></i> Edit</button>
                 </div>
+                <div class="sblock-body">
+                    {{ project.description }}
+                </div>
+            </div>
+            <div class="sidebar-block">
+                <div class="sblock-header">
+                    <h4>Dates</h4>
+                    <button class="btn btn-xs" @click="editProject('dates')"><i class="fa fa-pen"></i> Edit</button>
+                </div>
+                <div class="sblock-body">
+                    <div v-if="hasDates">
+                        {{ project.start_date|date }} - {{ project.end_date|date }}
+                    </div>
+                    <div v-else>
+                        No start or end date
+                    </div>
 
+                </div>
+            </div>
+            <div v-if="showProjectForm.show">
+                <project-form :id="project_id" :tab="showProjectForm.tab"></project-form>
             </div>
         </div>
-        <div v-if="showProjectForm.show">
-            <project-form :id="project_id" :tab="showProjectForm.tab"></project-form>
-        </div>
+
     </div>
 </template>
 
