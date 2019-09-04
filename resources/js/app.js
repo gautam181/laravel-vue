@@ -7,6 +7,7 @@ import {isNull} from "bootstrap-vue/esm/utils/inspect";
 
 
 require('./bootstrap');
+require('./filters');
 
 
 
@@ -106,25 +107,6 @@ Vue.use(VueBreadcrumbs, {
     template: '<ol class="hbreadcrumb breadcrumb" v-if="$breadcrumbs.length"> ' +
         '<router-link class="breadcrumb-item" v-for="(crumb, key) in $breadcrumbs" :to="linkProp(crumb)" :key="key">{{ crumb | crumbText }}</router-link> ' +
         '</ol>'
-});
-
-//filters
-Vue.filter('date', (val)=> {
-    if (isNull(val))
-        return '';
-
-    return val? moment(val).format(settings.DATEFROMAT): '';
-});
-
-Vue.filter('formDate', (val)=> {
-    if (isNull(val))
-        return '';
-    return val? moment(val, 'YYYY-MM-DD').format(settings.FORMDATEFROMAT): '';
-});
-Vue.filter('sqlDate', (val)=> {
-    if (isNull(val))
-        return '';
-    return val? moment(val, settings.FORMDATEFROMAT).format('YYYY-MM-DD'): '';
 });
 
 /**

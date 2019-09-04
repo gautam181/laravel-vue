@@ -75,7 +75,7 @@
             }
         },
         created(){
-            this.$eventBus.$emit('header-update', {label:'ticket detail ...'});
+            //this.$eventBus.$emit('header-update', {label:'ticket detail ...'});
             //this.$eventBus.$emit('project-info', this.project_id);
         },
         computed:{
@@ -95,7 +95,6 @@
         mounted(){
             this.getTicket(this.ticket_id);
             this.getComments(this.ticket_id);
-            this.$emit('handle-page-header', {label:'Ticket Project'});
             this.myRoute = this.$router.options.routes.find(route => route.name === this.$route.name);
         },
         methods:{
@@ -105,7 +104,6 @@
             getTicket: function (val) {
                 this.$store.dispatch('tickets/getTicket', val)
                     .then(res => {
-                        console.log(res);
                         this.$eventBus.$emit('project-info', res.project_id);
                     })
             },

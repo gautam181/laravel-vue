@@ -1,22 +1,68 @@
 <template>
     <div class="ticket-summary" v-if="showSummary">
-        <div class="sidebar-block">
-            <div class="sblock-header">
-                <h4>Description</h4>
-                <button class="btn btn-xs" @click="editProject('description')"><i class="fa fa-pen"></i> Edit</button>
+        <div v-if="ticket">
+            <div class="sidebar-block">
+                <div class="sblock-header">
+                    <h4>Assigned to</h4>
+                </div>
+                <div class="sblock-body">
+                    <div class="flex" v-if="ticket.assigned_to">
+                        <avatar :username="ticket.assigned_to.name" :size="size" :customStyle="avatarStyle"></avatar>
+                        <a href="javascript:void(0);" @click="editProject('owner')">{{ ticket.assigned_to.name }}</a>
+                    </div>
+                    <div v-else>
+                        <a href="javascript:void(0);" @click="editProject('owner')">Owner not set</a>
+                    </div>
+
+                </div>
             </div>
-            <div class="sblock-body">
-                description settings
+            <div class="sidebar-block">
+                <div class="sblock-header">
+                    <h4>Estimated Time</h4>
+                </div>
+                <div class="sblock-body">
+                    10 hours
+                </div>
+            </div>
+            <div class="sidebar-block">
+                <div class="sblock-header">
+                    <h4>Start Date</h4>
+                </div>
+                <div class="sblock-body">
+                    {{ ticket.start_date | date }}
+                </div>
+            </div>
+            <div class="sidebar-block">
+                <div class="sblock-header">
+                    <h4>End Date</h4>
+                </div>
+                <div class="sblock-body">
+                    {{ ticket.end_date | date }}
+                </div>
+            </div>
+            <div class="sidebar-block">
+                <div class="sblock-header">
+                    <h4>Created By</h4>
+                </div>
+                <div class="sblock-body">
+                    <div class="flex" v-if="ticket.created_by">
+                        <avatar :username="ticket.created_by.name" :size="size" :customStyle="avatarStyle"></avatar>
+                        <a href="javascript:void(0);">{{ ticket.created_by.name }}</a>
+                    </div>
+                    <div v-else>
+                        <a href="javascript:void(0);">Created by not found</a>
+                    </div>
+                    <div>
+                        {{ ticket.created_at | fulldate }}
+                    </div>
+                </div>
             </div>
         </div>
-        <div v-if="showProjectForm.show">
-            <project-form :id="ticket_id" :tab="showProjectForm.tab"></project-form>
-        </div>
+
     </div>
 </template>
 
 <script>
-    import ProjectForm from "../../../pages/projects/forms/ProjectForm";
     export default {
         name: "project-ticket-detail",
         data(){
@@ -36,7 +82,7 @@
             })
         },
         components:{
-            ProjectForm
+
         },
         computed:{
             ticket_id(){
