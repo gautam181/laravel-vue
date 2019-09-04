@@ -74,6 +74,10 @@
                 desc: true
             }
         },
+        created(){
+            this.$eventBus.$emit('header-update', {label:'ticket detail ...'});
+            //this.$eventBus.$emit('project-info', this.project_id);
+        },
         computed:{
             ...mapGetters({
                 sort: 'tickets/getSortBy'
@@ -100,6 +104,10 @@
             },
             getTicket: function (val) {
                 this.$store.dispatch('tickets/getTicket', val)
+                    .then(res => {
+                        console.log(res);
+                        this.$eventBus.$emit('project-info', res.project_id);
+                    })
             },
             changeCommentSort: function(val){
                 this.$store.commit('tickets/setSortBy', val)

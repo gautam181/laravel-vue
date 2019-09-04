@@ -89,10 +89,19 @@ const actions = {
 
     },
     getTicket: (context, id) => {
-        axios.get("/ticket/"+id)
-            .then(response => {
-                context.commit('setTicket', response.data);
-            });
+        return new Promise(
+            (resolve, reject) => {
+                axios.get("/ticket/"+id)
+                    .then(response => {
+                        context.commit('setTicket', response.data);
+                        resolve(response.data);
+                    })
+                    .catch(error => {
+                        reject(error);
+                    });
+            }
+        );
+
     },
     saveTicket: (context, data) => {
         let id = data.id;

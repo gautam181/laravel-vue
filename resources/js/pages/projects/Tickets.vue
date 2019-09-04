@@ -80,6 +80,7 @@
             Ticket
         },
         created(){
+            this.$eventBus.$emit('project-info', this.project_id);
             this.$store.commit('tickets/setProjectId', this.project_id);
             this.$eventBus.$on('project-tickets-loading', val => {
                 this.loading = val;

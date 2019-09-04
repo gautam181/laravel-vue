@@ -71,14 +71,12 @@
 
         },
         created(){
-            this.$eventBus.$on('project-info', val=>{
-                this.project_id = val.id;
-                this.$eventBus.$emit('header-update', {label:val.name, type:'project', id:val.id, tools:[{'icon': 'fa-pen',
-                        'event':(val)=>{
-                            this.editProjectModal(val);
-                        },
-                        'id': val.id
-                    }]});
+            this.$eventBus.$on('project-info', id=>{
+                if (this.project_id != id){
+                    this.project_id = id;
+                    this.getProject(this.project_id)
+                }
+
             });
         },
         components: {
@@ -86,7 +84,7 @@
             Ticket
         },
         mounted(){
-            this.$eventBus.$emit('header-update', {label:'Manage project ...'});
+            this.$eventBus.$emit('header-update', {label:'project detail ...'});
             this.myRoute = this.$router.options.routes.find(route => route.name === this.$route.name);
             this.$root.$on('bv::modal::hidden', (bvEvent, modalId) => {
                 if (modalId == 'project-form')
@@ -94,6 +92,18 @@
             })
         },
         methods:{
+            getProject: function (id) {
+                this.$store.dispatch('projects/getProject', id)
+                    .then(response =>{
+                        let val = this.$store.getters['projects/getProject'](this.project_id);
+                        this.$eventBus.$emit('header-update', {label:val.name, type:'project', id:val.id, tools:[{'icon': 'fa-pen',
+                                'event':(val)=>{
+                                    this.editProjectModal(val);
+                                },
+                                'id': val.id
+                        }]});
+                    });
+            },
             addTicket: function(){
               this.showAddTicket = true;
             },
