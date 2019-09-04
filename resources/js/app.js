@@ -78,6 +78,7 @@ window.Vue = require('vue');
 Vue.prototype.$user = window.user;
 Vue.prototype.$app = window.application;
 Vue.prototype.$settings = settings;
+Vue.prototype.$eventBus = new Vue(); // Global event bus
 Vue.use(Datatable);
 Vue.use(Plugin);
 Vue.use(require('vue-moment'));

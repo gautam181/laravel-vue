@@ -81,6 +81,9 @@
         },
         created(){
             this.$store.commit('tickets/setProjectId', this.project_id);
+            this.$eventBus.$on('project-tickets-loading', val => {
+                this.loading = val;
+            });
         },
         mounted(){
             this.getTickets();
@@ -97,7 +100,7 @@
                 this.showAddTicket = false;
             },
             getTickets: function () {
-                this.loading = true;
+                this.$eventBus.$emit('project-tickets-loading', true);
                 this.$store.dispatch('tickets/getTickets')
                     .then(res => {
                         this.loaded = true;

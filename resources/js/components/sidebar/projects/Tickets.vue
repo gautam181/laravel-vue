@@ -6,7 +6,7 @@
                     Keyword
                 </div>
                 <div class="filter-body">
-                    <input type="text" v-model="filter.keyword" class="form-control form-control-sm" placeholder="ticket tile or description">
+                    <input type="text" v-model="filter.keyword" class="form-control form-control-sm" placeholder="ticket title or description">
                 </div>
             </div>
             <div class="filter-block">
@@ -147,10 +147,15 @@
         },
         methods:{
             getTickets: function(){
-                this.$store.dispatch('tickets/getTickets');
+                this.$eventBus.$emit('project-tickets-loading', true);
+                this.$store.dispatch('tickets/getTickets')
+                    .then(res => {
+                        this.$eventBus.$emit('project-tickets-loading', false);
+                });;
             },
             applyFilter: function () {
                 this.$store.commit('tickets/setFilters', this.filter);
+
                 this.getTickets();
             },
             resetFilter: function () {
