@@ -31,7 +31,7 @@
             }
         },
         created(){
-            this.getProject(this.project_id);
+            this.$eventBus.$emit('project-info', this.project_id);
         },
         watch: {
 
@@ -43,14 +43,6 @@
 
         },
         methods:{
-            getProject: function (id) {
-                this.$store.dispatch('projects/getProject', id)
-                    .then(response =>{
-                        this.project = this.$store.getters['projects/getProject'](this.project_id);
-                        console.log("event triggered");
-                        this.$eventBus.$emit('project-info', this.project);
-                    });
-            },
             handlePageHeader: function(data){
                 this.$emit('handle-page-header', data);
             },
