@@ -29,12 +29,10 @@ axios.interceptors.response.use(function (response) {
     return response;
 }, function (error) {
     if (500 < error.response.status) {
-        Vue.notify({
-            group: 'form',
-            type: 'error',
-            title:'Internal Server Error',
-            text: 'Server error occurred, please contact administrator '
-        })
+        Vue.toast.error('Server error occurred, please contact administrator', "Internal Server Error", {
+            timout: 3000,
+            position: 'bottomRight'
+        });
     } else {
         return Promise.reject(error);
     }

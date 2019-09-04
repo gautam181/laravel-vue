@@ -30,7 +30,6 @@ import BootstrapVue from 'bootstrap-vue';
 import VueBreadcrumbs from 'vue-breadcrumbs';
 import VueLadda from 'vue-ladda';
 //import DatePicker from 'vue2-datepicker';
-import Notifications from 'vue-notification';
 import Avatar from 'vue-avatar';
 import VueSweetalert2 from 'vue-sweetalert2';
 import vSelect from 'vue-select';
@@ -81,7 +80,6 @@ Vue.prototype.$app = window.application;
 Vue.prototype.$settings = settings;
 Vue.use(Datatable);
 Vue.use(Plugin);
-Vue.use(Notifications);
 Vue.use(require('vue-moment'));
 //https://www.npmjs.com/package/vue-izitoast
 Vue.use(VueIziToast);
