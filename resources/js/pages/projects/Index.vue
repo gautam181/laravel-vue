@@ -118,7 +118,7 @@
                 if (modalId == 'project-form')
                     this.showProjectForm = false;
             })
-            this.$emit('handle-page-header', {label:'Manage your projects'});
+            this.$eventBus.$emit('header-update', {label:'Manage your projects'});
             this.myRoute = this.$router.options.routes.find(route => route.name === this.$route.name);
             if(this.$route.name == 'projects')
                 this.projects = this.fetchProjects();
