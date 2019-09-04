@@ -31,7 +31,7 @@ body {
   float: left;
   left: 0px;
   position: absolute;
-  top: 56px;
+  top: 51px;
   transition: all 0.4s ease 0s;
   background: #f7f8fa;
     .sidebar-content {
@@ -39,7 +39,6 @@ body {
         max-width: $menu-width - 10;
     }
 }
-.small-header+#sidebar{top:107px;}
 .mini-sidebar #sidebar {
     width: 30px;
 }
@@ -104,7 +103,7 @@ body {
 .fixed-navbar.no-sidebar .content {
     margin-left: 0px!important;
 }
-
+.content-wrapper{position: relative;}
 
 
 .fixed-sidebar #menu {
