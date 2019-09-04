@@ -151,12 +151,14 @@
                 this.$store.dispatch('tickets/getTickets')
                     .then(res => {
                         this.$eventBus.$emit('project-tickets-loading', false);
-                });;
+                });
             },
             applyFilter: function () {
-                this.$store.commit('tickets/setFilters', this.filter);
+                if (!_.isEqual(this.filter, this.$store.getters['tickets/getFilters'])) {
+                    this.$store.commit('tickets/setFilters', this.filter);
+                    this.getTickets();
+                }
 
-                this.getTickets();
             },
             resetFilter: function () {
                 this.filter = {...default_filter};
