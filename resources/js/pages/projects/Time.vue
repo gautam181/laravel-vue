@@ -7,9 +7,26 @@
                     <div class="btn-options text-right">
                         <button class="btn btn-md btn-outline-success" ><i class="fa fa-plus-circle"></i> Add Time</button>
                     </div>
-
                 </div>
+            </div>
+            <div class="col-md-12">
+                <div class="alert alert-filter">
+                    <i class="fa fa-bolt"></i> Showing xxx filtered results <button  class="btn btn-default btn-sm"><i class="fa fa-retweet"></i> Clear Filter</button>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="list-options">
+                    <div>xxx results</div>
+                    <div class="btn-options text-right">
+                        <b-dropdown variant="default" size="sm">
+                            <template slot="button-content">
+                                <strong>Sort By: </strong> Project Name
+                            </template>
 
+                        </b-dropdown>
+                        <button class="btn btn-default btn-sm"><i class="fa fa-arrow-down"></i></button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -10,8 +10,12 @@
                         </div>
 
                     </div>
-
                 </div>
+                <div class="col-md-12">
+                        <div class="alert alert-filter">
+                            <i class="fa fa-bolt"></i> Showing xx filtered results <button  class="btn btn-default btn-sm"><i class="fa fa-retweet"></i> Clear Filter</button>
+                        </div>
+                    </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
