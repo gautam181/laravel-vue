@@ -8,21 +8,12 @@
 import axios from 'axios';
 import { cloneDeep, get  } from 'lodash';
 import keyGen from "vue2-datatable-component/src/_utils/keyGen";
-
+import filters from "../../config/Filters";
 // initial state
 const state = {
     sortBy: localStorage.getItem('project_sort_by') || 'asc',
     projects: [],
-    filters: JSON.parse(localStorage.getItem('projects_filters')) || {
-        'keyword': '',
-        'start_date': '',
-        'end_date': '',
-        'created_range':{id: '0', value: 'Any Time'},
-        'due_start_date': '',
-        'due_end_date': '',
-        'due_date_range':{id: '0', value: 'Any Time'},
-        'owner':[],
-    },
+    filters: JSON.parse(localStorage.getItem('projects_filters')) || filters.project_list,
     pagination: {
         page: 1,
         totalPages: 0,
