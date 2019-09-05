@@ -158,8 +158,11 @@
                 this.$store.dispatch('projects/getProjects');
             },
             applyFilter: function () {
-                this.$store.commit('projects/setFilters', this.filter);
-                this.getProjects();
+                if (!_.isEqual(this.filter, this.$store.getters['projects/getFilters'])) {
+                    this.$store.commit('projects/setFilters', this.filter);
+                    this.getProjects();
+                }
+
             },
             resetFilter: function () {
                 this.filter = {...default_filter};
