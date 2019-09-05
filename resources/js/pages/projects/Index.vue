@@ -29,7 +29,7 @@
                 </div>
                 <div class="tab-content">
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-12" v-if="!showFilters">
                             <div class="alert alert-filter">
                                 <i class="fa fa-bolt"></i> Showing {{ pagination.totalRows}} filtered results <button  class="btn btn-default btn-sm"><i class="fa fa-retweet"></i> Clear Filter</button>
                             </div>
@@ -40,9 +40,13 @@
                                 <div class="btn-options text-right">
                                     <b-dropdown variant="default" size="sm">
                                         <template slot="button-content">
-                                            <strong>Sort By: </strong> Project Name
+                                            <strong>Sort By: </strong> Updated Date
                                         </template>
-
+                                        <b-dropdown-item-button>Second Action</b-dropdown-item-button>
+                                        <b-dropdown-item-button>Second Action</b-dropdown-item-button>
+                                        <b-dropdown-item>Second Action</b-dropdown-item>
+                                        <b-dropdown-item>Second Action</b-dropdown-item>
+                                        <b-dropdown-item>Second Action</b-dropdown-item>
                                     </b-dropdown>
                                     <button class="btn btn-default btn-sm"><i class="fa fa-arrow-down"></i></button>
                                 </div>
@@ -136,6 +140,7 @@
                 showProjectForm: false,
                 project_id: 0,
                 size:25,
+                sort: '',
                 avatarStyle: {'margin-right':'5px'}
             }
         },
@@ -150,9 +155,13 @@
                 get() { return this.$store.getters['projects/getProjects']; },
                 set(value) { this.$store.commit('projects/setProjects', value); },
             },
+            showFilters: function(){
+              return _.isEqual(this.$filters.project_list, this.filters);
+            },
             ...mapGetters({
                 //projects: 'projects/getProjects',
-                pagination: 'projects/getPagination'
+                pagination: 'projects/getPagination',
+                filters: 'projects/getFilters'
             })
         },
         mounted(){

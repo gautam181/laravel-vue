@@ -14,6 +14,7 @@ require('./filters');
 
 //import configuration
 import settings from "./config/Settings";
+import searchFilters from "./config/Filters";
 import titleComponent from './components/head/Title';
 import PanelVue from "./components/util/Panel";
 import LoadingSpinner from "./components/page/LoadingSpinner";
@@ -79,6 +80,7 @@ window.Vue = require('vue');
 Vue.prototype.$user = window.user;
 Vue.prototype.$app = window.application;
 Vue.prototype.$settings = settings;
+Vue.prototype.$filters = searchFilters;
 Vue.prototype.$eventBus = new Vue(); // Global event bus
 Vue.use(Datatable);
 Vue.use(Plugin);
