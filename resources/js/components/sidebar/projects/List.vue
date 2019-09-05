@@ -97,16 +97,6 @@
 
 <script>
     import { cloneDeep } from 'lodash'
-    let default_filter = {
-        'keyword': '',
-        'start_date': '',
-        'end_date': '',
-        'created_range':{id: '0', value: 'Any Time'},
-        'due_start_date': '',
-        'due_end_date': '',
-        'due_date_range':{id: '0', value: 'Any Time'},
-        'owner':[],
-    };
     export default {
         name: "project-list",
         data(){
@@ -165,7 +155,7 @@
 
             },
             resetFilter: function () {
-                this.filter = {...default_filter};
+                this.filter = {...this.$filters.project_list};
                 this.$store.commit('projects/setFilters', this.filter);
                 this.getProjects();
             }

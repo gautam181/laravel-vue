@@ -22,6 +22,15 @@
 #side-menu .sub-menu {
   display: none;
 }
+.load-more{
+    padding: 5px 15px; background-color: #fafafa; font-weight: 600; margin-top: 40px; display: block;
+    border: 1px solid #e1e1e1;border-radius: 4px; width: 100%; text-decoration: none;
+    &:hover{
+        color: #333;
+        background-color: #f4f4f4;
+        border-color: #cfcfcf;
+    }
+}
 .hide{display: none;}
 #logo{background-color: transparent;}
 .nav.navbar-nav > li > a{color:#fff;}

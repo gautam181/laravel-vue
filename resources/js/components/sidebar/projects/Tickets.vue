@@ -96,17 +96,6 @@
 </template>
 
 <script>
-    import { cloneDeep } from 'lodash'
-    let default_filter = {
-        'keyword': '',
-        'start_date': '',
-        'end_date': '',
-        'created_range':{id: '0', value: 'Any Time'},
-        'due_start_date': '',
-        'due_end_date': '',
-        'due_date_range':{id: '0', value: 'Any Time'},
-        'assigned_to':[],
-    };
     export default {
         name: "project-tickets",
         data(){
@@ -137,7 +126,7 @@
             this.$store.dispatch('users/getUsersList');
         },
         created(){
-            this.filter = cloneDeep(this.$store.getters['tickets/getFilters']);
+            this.filter = _.cloneDeep(this.$store.getters['tickets/getFilters']);
 
         },
         computed:{
@@ -145,7 +134,7 @@
                 return this.$route.name == 'project-tickets'?  true : false;
             },
             users(){
-                return cloneDeep(this.$store.getters['users/getUsersList']);
+                return _.cloneDeep(this.$store.getters['users/getUsersList']);
             }
         },
         methods:{
@@ -164,7 +153,7 @@
 
             },
             resetFilter: function () {
-                this.filter = {...default_filter};
+                this.filter = {...this.$filters.project_tickets};
                 this.$store.commit('tickets/setFilters', this.filter);
                 this.getTickets();
             }

@@ -7,22 +7,16 @@
 
 import axios from 'axios';
 import Vue from 'Vue';
+import filters from "../../config/Filters";
+import {validateDateRange} from "vue2-daterange-picker/src/components/util";
 
 // initial state
 const state = {
     sort_by: localStorage.getItem('ticket_comment_sort_by') || 'asc',
     tickets: [],
+    append: false,
     ticket_comments: [],
-    filters: JSON.parse(localStorage.getItem('tickets_filters')) || {
-        'keyword': '',
-        'start_date': '',
-        'end_date': '',
-        'created_range':{id: '0', value: 'Any Time'},
-        'due_start_date': '',
-        'due_end_date': '',
-        'due_date_range':{id: '0', value: 'Any Time'},
-        'assigned_to':[],
-    },
+    filters: JSON.parse(localStorage.getItem('tickets_filters')) || filters.project_tickets,
     project_id: 0,
     page: 1,
     totalPages : 0,
@@ -46,7 +40,7 @@ const getters = {
 
 // actions
 const actions = {
-    getTickets: (context )=>{
+    getTickets: (context, mode )=>{
         let params = Object.keys(context.state.filters).map( key => {
             let val = context.state.filters[key];
             if (Array.isArray(val)){
@@ -74,11 +68,13 @@ const actions = {
                 axios.get(url+"?page="+context.state.page+ "&"+params)
                     .then(response => {
                         let res = response.data;
+                        context.commit('setAppend', mode);
                         context.commit('setTickets', res.data);
                         context.commit('setTotalPages', res.last_page);
                         context.commit('setTotalRows', res.total);
                         context.commit('setPage', res.current_page);
                         context.commit('setPerPage', res.per_page);
+                        //context.commit('setAppend', false);
                         resolve(true);
                     })
                     .catch(error => {
@@ -161,8 +157,17 @@ const actions = {
 
 // mutations
 const mutations = {
-    setTickets: (state, tickets) => { state.tickets = tickets },
+    setTickets: (state, tickets) => {
+        if (state.append == true){
+            tickets.map((val) => {
+               state.tickets.push(val);
+            });
+        }
+        else
+        state.tickets = tickets
+    },
     setProjectId: (state, id) => { state.project_id = id },
+    setAppend: (state, val) => { state.append = val },
     setTicket: (state, val) => {
         let id = val.id;
         const ticket= state.tickets.find(ticket => ticket.id === id);

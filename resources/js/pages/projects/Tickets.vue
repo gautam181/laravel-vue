@@ -11,11 +11,11 @@
 
                     </div>
                 </div>
-                <div class="col-md-12">
-                        <div class="alert alert-filter">
-                            <i class="fa fa-bolt"></i> Showing xx filtered results <button  class="btn btn-default btn-sm"><i class="fa fa-retweet"></i> Clear Filter</button>
-                        </div>
+                <div class="col-md-12" v-if="!showFilters">
+                    <div class="alert alert-filter">
+                        <i class="fa fa-bolt"></i> Showing {{ totalTickets }} filtered results <button  class="btn btn-default btn-sm"><i class="fa fa-retweet"></i> Clear Filter</button>
                     </div>
+                </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
@@ -39,8 +39,10 @@
                                     </p>
                                 </template>
                             </div>
-
-
+                            <a class="load-more" v-if="totalPages > 1" href="javascript:void(0);" @click="loadMore">
+                                <i class="fa fa-ellipsis-h fa-lg"></i>
+                                Load {{ perPage }} more from the next {{ remaining}}
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -51,7 +53,9 @@
 </template>
 
 <script>
+    import { mapGetters } from 'vuex';
     import Ticket from '../../components/util/Ticket';
+    import tickets from "../../store/modules/tickets";
 
     export default {
         name: "project-tickets",
@@ -60,7 +64,6 @@
                 myRoute : {},
                 project_id : this.$route.params.id,
                 project: {},
-                //tickets: [],
                 loaded: false,
                 loading: false,
                 ticketList: true,
@@ -75,7 +78,20 @@
         computed:{
             tickets: function () {
                 return this.$store.getters['tickets/getTickets'];
-            }
+            },
+            showFilters: function () {
+                return _.isEqual(this.$filters.project_tickets, this.filters);
+            },
+            remaining: function () {
+                return this.totalTickets - (this.perPage*this.currentPage);
+            },
+            ...mapGetters({
+                filters: 'tickets/getFilters',
+                totalTickets: 'tickets/getTotalRows',
+                totalPages: 'tickets/getTotalPages',
+                currentPage: 'tickets/getPage',
+                perPage: 'tickets/getPerPage',
+            })
         },
         watch: {
 
@@ -104,11 +120,19 @@
             cancelTicket:function(){
                 this.showAddTicket = false;
             },
-            getTickets: function () {
+            loadMore: function(){
+                this.$store.commit('tickets/setPage', this.currentPage+1);
+                this.getTickets(true);
+            },
+            getTickets: function (val) {
+                let mode = val != undefined ? val : false;
                 this.$eventBus.$emit('project-tickets-loading', true);
-                this.$store.dispatch('tickets/getTickets')
+                this.$store.dispatch('tickets/getTickets', mode)
                     .then(res => {
                         this.loaded = true;
+                        this.loading = false;
+                    })
+                    .catch(e => {
                         this.loading = false;
                     });
             },
