@@ -3,9 +3,51 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="list-options">
-                    <h2 class="">Current Projects List</h2>
+                    <h2 class="">Current Projects</h2>
                     <div class="btn-options text-right">
-                        <button class="btn btn-md btn-primary" @click="addProject" ><i class="fa fa-plus-circle"></i> Add Project</button>
+                        <button class="btn btn-md btn-primary w-10" @click="addProject" ><i class="fa fa-plus-circle"></i> Add Project</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="nav-htabs">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <router-link v-bind:to="{'name': 'projects'}" active-class="active" class="nav-link">
+                                Active
+                            </router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link v-bind:to="{'name': 'project-tickets', params: {'id': 5 }}" active-class="active" v-bind:class="{
+                                'nav-link': true,
+                                'active': $route.name == 'project-ticket'
+                                }">
+                                Completed
+                            </router-link>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tab-content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="alert alert-filter">
+                                <i class="fa fa-bolt"></i> Showing {{ pagination.totalRows}} filtered results <button  class="btn btn-default btn-sm"><i class="fa fa-retweet"></i> Clear Filter</button>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="list-options">
+                                <div>{{ pagination.totalRows}} results</div>
+                                <div class="btn-options text-right">
+                                    <b-dropdown variant="default" size="sm">
+                                        <template slot="button-content">
+                                            <strong>Sort By: </strong> Project Name
+                                        </template>
+
+                                    </b-dropdown>
+                                    <button class="btn btn-default btn-sm"><i class="fa fa-arrow-down"></i></button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
