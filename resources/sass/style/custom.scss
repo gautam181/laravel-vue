@@ -22,6 +22,16 @@
 #side-menu .sub-menu {
   display: none;
 }
+.sort-filter {
+    .dropdown-menu li{padding: 0px;}
+    .dropdown-menu .dropdown-item{
+        background: transparent; border: none; padding: 3px auto;
+        &.active{
+            color: white;
+            background-color: #337ab7;
+        }
+    }
+}
 .load-more{
     padding: 5px 15px; background-color: #fafafa; font-weight: 600; margin-top: 40px; display: block;
     border: 1px solid #e1e1e1;border-radius: 4px; width: 100%; text-decoration: none;

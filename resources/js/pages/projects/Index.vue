@@ -38,17 +38,7 @@
                             <div class="list-options">
                                 <div>{{ pagination.totalRows}} results</div>
                                 <div class="btn-options text-right">
-                                    <b-dropdown variant="default" size="sm">
-                                        <template slot="button-content">
-                                            <strong>Sort By: </strong> Updated Date
-                                        </template>
-                                        <b-dropdown-item-button>Second Action</b-dropdown-item-button>
-                                        <b-dropdown-item-button>Second Action</b-dropdown-item-button>
-                                        <b-dropdown-item>Second Action</b-dropdown-item>
-                                        <b-dropdown-item>Second Action</b-dropdown-item>
-                                        <b-dropdown-item>Second Action</b-dropdown-item>
-                                    </b-dropdown>
-                                    <button class="btn btn-default btn-sm"><i class="fa fa-arrow-down"></i></button>
+                                    <sort-filter :order="sortOrder" :selected="sortOption" v-on:update-sort="handleSort"  v-on:update-order="handleSortOrder" :options="sortOptions"></sort-filter>
                                 </div>
                             </div>
                         </div>
@@ -132,6 +122,8 @@
 <script>
     import { mapGetters } from 'vuex';
     import ProjectForm from "./forms/ProjectForm";
+    import SortFilter from "../../components/ui/SortFilter";
+
     export default {
         name: "project-index",
         data(){
@@ -140,12 +132,20 @@
                 showProjectForm: false,
                 project_id: 0,
                 size:25,
-                sort: '',
+                sortOrder: 'desc',
+                sortOption: 'name',
+                sortOptions: [
+                    {id: 'id', 'label': 'Default'},
+                    {id: 'name', 'label': 'Project Name'},
+                    {id: 'update_date', 'label': 'Updated Date'},
+                    {id: 'created_date', 'label': 'Created Date'},
+                    {id: 'due_date', 'label': 'Due Date'},
+                ],
                 avatarStyle: {'margin-right':'5px'}
             }
         },
         components:{
-            ProjectForm
+            ProjectForm, SortFilter
         },
         computed: {
             projectClasses() {
@@ -177,6 +177,13 @@
         methods:{
             handlePageHeader: function(data){
                 this.$emit('handle-page-header', data);
+            },
+            handleSortOrder: function(val){
+              this.sortOrder = val
+            },
+
+            handleSort: function(val){
+              this.sortOption = val
             },
             editProject: function(id){
                 this.project_id = id;
