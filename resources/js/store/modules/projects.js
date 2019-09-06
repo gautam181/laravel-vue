@@ -11,7 +11,8 @@ import keyGen from "vue2-datatable-component/src/_utils/keyGen";
 import filters from "../../config/Filters";
 // initial state
 const state = {
-    sortBy: localStorage.getItem('project_sort_by') || 'asc',
+    sortBy: localStorage.getItem('project_sort_by') || 'id',
+    orderBy: localStorage.getItem('project_order_by') || 'asc',
     projects: [],
     filters: JSON.parse(localStorage.getItem('projects_filters')) || filters.project_list,
     pagination: {
@@ -25,6 +26,8 @@ const state = {
 // getters
 const getters = {
     getProjects: (state) => { return state.projects },
+    getSortBy: (state) => { return state.sortBy },
+    getOrderBy: (state) => { return state.orderBy },
     getFilters: (state) => { return state.filters },
     getProject: (state)=>(id) => { return state.projects.find(project => project.id == id); },
     getPagination: (state) => { return state.pagination },
@@ -53,7 +56,7 @@ const actions = {
                 key  += '='+ val;
             return key;
         }).join('&');
-        axios.get("/projects?page="+context.state.pagination.page + "&"+params)
+        axios.get("/projects?page="+context.state.pagination.page + "&orderby="+context.state.orderBy+"&sortby="+context.state.sortBy + "&"+params)
             .then(response => {
                 let res = response.data;
                 context.commit('setProjects', res.data);
@@ -94,7 +97,9 @@ const actions = {
 const mutations = {
     setProjects: (state, projects) => { state.projects = projects },
     setPagination: (state, val) => { state.pagination = {...val} },
-    setPage: (state, val) => { state.pagination.page = val },
+    setPage: (state, val) => { state.pagination.page = val;},
+    setSortBy: (state, val) => { state.sortBy = val; localStorage.setItem('project_sort_by', val); },
+    setOrderBy: (state, val) => { state.orderBy = val;localStorage.setItem('project_order_by', val); },
     setFilters: (state, val) => { state.filters = {...val}; localStorage.setItem('projects_filters', JSON.stringify(val)); },
     setProject: (state, val) => {
         let id = val.id;

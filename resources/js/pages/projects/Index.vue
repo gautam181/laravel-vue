@@ -132,8 +132,6 @@
                 showProjectForm: false,
                 project_id: 0,
                 size:25,
-                sortOrder: 'desc',
-                sortOption: 'name',
                 sortOptions: [
                     {id: 'id', 'label': 'Default'},
                     {id: 'name', 'label': 'Project Name'},
@@ -161,7 +159,9 @@
             ...mapGetters({
                 //projects: 'projects/getProjects',
                 pagination: 'projects/getPagination',
-                filters: 'projects/getFilters'
+                filters: 'projects/getFilters',
+                sortOrder: 'projects/getOrderBy',
+                sortOption: 'projects/getSortBy'
             })
         },
         mounted(){
@@ -179,11 +179,13 @@
                 this.$emit('handle-page-header', data);
             },
             handleSortOrder: function(val){
-              this.sortOrder = val
+                this.$store.commit('projects/setOrderBy', val);
+                this.fetchProjects();
             },
 
             handleSort: function(val){
-              this.sortOption = val
+                this.$store.commit('projects/setSortBy', val);
+                this.fetchProjects();
             },
             editProject: function(id){
                 this.project_id = id;

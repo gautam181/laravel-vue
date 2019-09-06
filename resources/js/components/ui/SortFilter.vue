@@ -1,6 +1,6 @@
 <template>
     <div class="sort-filter">
-        <b-dropdown variant="default" size="sm">
+        <b-dropdown variant="default" right size="sm">
             <template slot="button-content">
                 <strong>Sort By: </strong> {{selected_option}}
             </template>

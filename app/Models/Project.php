@@ -10,7 +10,18 @@ use DB;
 class Project extends Model
 {
     //
+    private static $sort_options = [
+        'id' => 'id', 'name'=>'name', 'created_date'=>'created_at',
+        'due_date'=>'end_date', 'start_date'=>'start_date', 'update_date'=>'updated_at'
+        ];
 
+    public static function getSortBy($val ='')
+    {
+        $sort = 'updated_at';
+        if(isset(self::$sort_options[$val]))
+            $sort = self::$sort_options[$val];
+        return $sort;
+    }
     public function created_by(){
         return $this->belongsTo(User::class, 'created_by');
     }
@@ -58,7 +69,9 @@ class Project extends Model
         if($owner){
             $projects->whereIn('owner', explode(',', $owner));
         }
-        $projects->orderby('updated_at', 'desc');
+        $sort_by = strtolower($params->get('sortby'));
+        $order_by = strtolower($params->get('orderby'));
+        $projects->orderby(self::getSortBy($sort_by), $order_by == 'asc'? 'asc': 'desc');
         return $projects->paginate(30);
     }
 }
