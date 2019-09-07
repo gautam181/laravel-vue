@@ -139,6 +139,7 @@
         },
         methods:{
             getTickets: function(){
+                this.$store.commit('tickets/setPage', 1);
                 this.$eventBus.$emit('project-tickets-loading', true);
                 this.$store.dispatch('tickets/getTickets')
                     .then(res => {

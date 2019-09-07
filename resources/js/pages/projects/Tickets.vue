@@ -125,6 +125,7 @@
                 this.getTickets(true);
             },
             getTickets: function (val) {
+                this.$store.commit('projects/setPage', 1);
                 let mode = val != undefined ? val : false;
                 this.$eventBus.$emit('project-tickets-loading', true);
                 this.$store.dispatch('tickets/getTickets', mode)

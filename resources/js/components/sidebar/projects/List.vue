@@ -6,7 +6,7 @@
                     Keyword
                 </div>
                 <div class="filter-body">
-                    <input type="text" v-model="filter.keyword" class="form-control form-control-sm" placeholder="project tile or description">
+                    <input type="text" v-model="filter.keyword" class="form-control form-control-sm" placeholder="project title or description">
                 </div>
             </div>
             <div class="filter-block">
@@ -145,7 +145,11 @@
                 this.$store.dispatch('projects/getProjects');
             },
             getProjects: function(){
-                this.$store.dispatch('projects/getProjects');
+                this.$store.commit('projects/setPage', 1);
+                this.$eventBus.$emit('project-list-loading', true);
+                this.$store.dispatch('projects/getProjects').finally(res => {
+                    this.$eventBus.$emit('project-list-loading', false);
+                });
             },
             applyFilter: function () {
                 if (!_.isEqual(this.filter, this.$store.getters['projects/getFilters'])) {

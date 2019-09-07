@@ -17,7 +17,7 @@ import settings from "./config/Settings";
 import searchFilters from "./config/Filters";
 import titleComponent from './components/head/Title';
 import PanelVue from "./components/util/Panel";
-import LoadingSpinner from "./components/page/LoadingSpinner";
+import LoadingSpinner from "./components/ui/LoadingSpinner";
 
 import Vue from 'vue';
 import moment from 'moment';

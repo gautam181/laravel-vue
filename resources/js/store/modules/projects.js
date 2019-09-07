@@ -56,12 +56,24 @@ const actions = {
                 key  += '='+ val;
             return key;
         }).join('&');
-        axios.get("/projects?page="+context.state.pagination.page + "&orderby="+context.state.orderBy+"&sortby="+context.state.sortBy + "&"+params)
-            .then(response => {
-                let res = response.data;
-                context.commit('setProjects', res.data);
-                context.commit('setPagination', {totalPages: res.last_page, totalRows: res.total, page: res.current_page, perPage: res.per_page});
-            });
+        return new Promise(
+        (resolve, reject)=> {
+            axios.get("/projects?page=" + context.state.pagination.page + "&orderby=" + context.state.orderBy + "&sortby=" + context.state.sortBy + "&" + params)
+                .then(response => {
+                    let res = response.data;
+                    context.commit('setProjects', res.data);
+                    context.commit('setPagination', {
+                        totalPages: res.last_page,
+                        totalRows: res.total,
+                        page: res.current_page,
+                        perPage: res.per_page
+                    });
+                    resolve(true);
+                })
+                .catch(error => {
+                    reject(error);
+                });
+        });
     },
     getProject: (context, id) => {
         return new Promise((resolve, reject) => {
