@@ -14,6 +14,7 @@ const state = {
     sortBy: localStorage.getItem('project_sort_by') || 'id',
     orderBy: localStorage.getItem('project_order_by') || 'asc',
     projects: [],
+    append: false,
     filters: JSON.parse(localStorage.getItem('projects_filters')) || filters.project_list,
     completed: 0,
     pagination: {
@@ -38,7 +39,7 @@ const getters = {
 
 // actions
 const actions = {
-    getProjects: (context )=>{
+    getProjects: (context, mode )=>{
         let params = Object.keys(context.state.filters).map( key => {
             let val = context.state.filters[key];
             if (Array.isArray(val)){
@@ -63,6 +64,7 @@ const actions = {
             axios.get("/projects?completed="+context.state.completed+"&page=" + context.state.pagination.page + "&orderby=" + context.state.orderBy + "&sortby=" + context.state.sortBy + "&" + params)
                 .then(response => {
                     let res = response.data;
+                    context.commit('setAppend', mode);
                     context.commit('setProjects', res.data);
                     context.commit('setPagination', {
                         totalPages: res.last_page,
@@ -109,8 +111,17 @@ const actions = {
 
 // mutations
 const mutations = {
-    setProjects: (state, projects) => { state.projects = projects },
+    setProjects: (state, projects) => {
+        if (state.append == true){
+            projects.map((val) => {
+                state.projects.push(val);
+            });
+        }
+        else
+            state.projects = projects
+    },
     setPagination: (state, val) => { state.pagination = {...val} },
+    setAppend: (state, val) => { state.append = val },
     setPage: (state, val) => { state.pagination.page = val;},
     setCompleted: (state, val) => { state.completed = val;},
     setSortBy: (state, val) => { state.sortBy = val; localStorage.setItem('project_sort_by', val); },

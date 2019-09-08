@@ -133,6 +133,7 @@
             })
         },
         mounted(){
+            this.$store.commit('projects/setPage', 1);
             this.$store.commit('projects/setCompleted', this.completed);
             this.$eventBus.$emit('header-update', {label:'Manage your projects'});
             this.projects = this.fetchProjects();
