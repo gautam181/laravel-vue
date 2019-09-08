@@ -176,7 +176,13 @@
                     }
                 })
                     .then(response => {
-                        this.$store.commit('projects/setProject', this.project_info);
+                        console.log(response);
+                        if (this.add){
+                            let project = response.data;
+                            this.$router.push({'name': 'project-detail', params: {'id': project.id }});
+                        } else {
+                            this.$store.commit('projects/setProject', this.project_info);
+                        }
                         this.$emit('projectUpdate', this.project_info);
                         this.$toast.success('Project updated successfully', "Success", {
                             timout: 3000,

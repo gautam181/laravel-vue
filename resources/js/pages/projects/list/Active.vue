@@ -46,10 +46,9 @@
                                             </div>
                                             <div class="col-sm-4 col">
                                                 <div class="project-label">PROGRESS</div>
-                                                <div class="progress m-t-xs full progress-small">
-                                                    <div :style="{'width': project.progress+'%'}" aria-valuemax="100" aria-valuemin="0" :aria-valuenow="project.progress" role="progressbar" class=" progress-bar progress-bar-success">
-                                                    </div>
-                                                </div>
+                                                <b-progress  max="100" variant="success" class="m-t-xs full"  show-progress>
+                                                    <b-progress-bar :value="project.progress" :label="project.progress+'%'"></b-progress-bar>
+                                                </b-progress>
                                             </div>
                                             <div class="col-sm-2 col">
                                                 <div class="project-label">ACTIONS</div>

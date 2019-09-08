@@ -98,7 +98,7 @@ const actions = {
                 data: data.body
             }).
             then(function (response) {
-                resolve(response);
+                resolve(response.data);
             })
                 .catch(error => {
                     reject(error);
