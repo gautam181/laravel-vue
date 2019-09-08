@@ -45,6 +45,7 @@
                             </div>
                         </div>
                         <div v-if="$route.name == 'projects'" class="row  list">
+
                             <template v-for="project in projects">
                                 <div :class="projectClasses +' projects'">
                                     <div class="panel green">
@@ -92,10 +93,7 @@
                                 </div>
                             </template>
                             <div class="col-md-12">
-                                <a class="load-more" v-if="pagination.totalPages > 1" href="javascript:void(0);" @click="loadMore">
-                                    <i class="fa fa-ellipsis-h fa-lg"></i>
-                                    Load {{ pagination.perPage }} more from the next {{ remaining}}
-                                </a>
+                                <load-more :pagination="pagination" v-on:load-more="loadMore"></load-more>
                             </div>
 
                         </div>
@@ -121,6 +119,7 @@
     import { mapGetters } from 'vuex';
     import ProjectForm from "./forms/ProjectForm";
     import SortFilter from "../../components/ui/SortFilter";
+    import LoadMore from "../../components/ui/LoadMore";
 
     export default {
         name: "project-index",
@@ -144,7 +143,7 @@
             }
         },
         components:{
-            ProjectForm, SortFilter
+            ProjectForm, SortFilter, LoadMore
         },
         created(){
             this.$eventBus.$on('project-list-loading', val => {
@@ -154,9 +153,6 @@
         computed: {
             projectClasses() {
                 return this.$settings.sidebarMinified? 'col-lg-4 col-md-6': 'col-lg-4 col-md-12';
-            },
-            remaining: function () {
-                return this.pagination.totalRows - (this.pagination.perPage*this.pagination.page);
             },
             projects:{
                 get() { return this.$store.getters['projects/getProjects']; },
