@@ -15,6 +15,7 @@ const state = {
     orderBy: localStorage.getItem('project_order_by') || 'asc',
     projects: [],
     filters: JSON.parse(localStorage.getItem('projects_filters')) || filters.project_list,
+    completed: 0,
     pagination: {
         page: 1,
         totalPages: 0,
@@ -27,6 +28,7 @@ const state = {
 const getters = {
     getProjects: (state) => { return state.projects },
     getSortBy: (state) => { return state.sortBy },
+    getCompleted: (state) => { return state.completed },
     getOrderBy: (state) => { return state.orderBy },
     getFilters: (state) => { return state.filters },
     getProject: (state)=>(id) => { return state.projects.find(project => project.id == id); },
@@ -58,7 +60,7 @@ const actions = {
         }).join('&');
         return new Promise(
         (resolve, reject)=> {
-            axios.get("/projects?page=" + context.state.pagination.page + "&orderby=" + context.state.orderBy + "&sortby=" + context.state.sortBy + "&" + params)
+            axios.get("/projects?completed="+context.state.completed+"&page=" + context.state.pagination.page + "&orderby=" + context.state.orderBy + "&sortby=" + context.state.sortBy + "&" + params)
                 .then(response => {
                     let res = response.data;
                     context.commit('setProjects', res.data);
@@ -110,6 +112,7 @@ const mutations = {
     setProjects: (state, projects) => { state.projects = projects },
     setPagination: (state, val) => { state.pagination = {...val} },
     setPage: (state, val) => { state.pagination.page = val;},
+    setCompleted: (state, val) => { state.completed = val;},
     setSortBy: (state, val) => { state.sortBy = val; localStorage.setItem('project_sort_by', val); },
     setOrderBy: (state, val) => { state.orderBy = val;localStorage.setItem('project_order_by', val); },
     setFilters: (state, val) => { state.filters = {...val}; localStorage.setItem('projects_filters', JSON.stringify(val)); },

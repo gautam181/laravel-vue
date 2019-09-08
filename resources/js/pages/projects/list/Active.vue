@@ -47,7 +47,7 @@
                                             <div class="col-sm-4 col">
                                                 <div class="project-label">PROGRESS</div>
                                                 <div class="progress m-t-xs full progress-small">
-                                                    <div :style="{'width': progress+'%'}" aria-valuemax="100" aria-valuemin="0" :aria-valuenow="progress" role="progressbar" class=" progress-bar progress-bar-success">
+                                                    <div :style="{'width': project.progress+'%'}" aria-valuemax="100" aria-valuemin="0" :aria-valuenow="project.progress" role="progressbar" class=" progress-bar progress-bar-success">
                                                     </div>
                                                 </div>
                                             </div>
@@ -82,7 +82,6 @@
 
 <script>
     import { mapGetters } from 'vuex';
-    import ProjectForm from "../forms/ProjectForm";
     import SortFilter from "../../../components/ui/SortFilter";
     import LoadMore from "../../../components/ui/LoadMore";
 
@@ -94,6 +93,7 @@
                 showProjectForm: false,
                 project_id: 0,
                 loaded: false,
+                completed: this.$route.name == 'projects-active' ? 0:  1,
                 loading: false,
                 size:25,
                 popoverShow: false,
@@ -108,7 +108,7 @@
             }
         },
         components:{
-            ProjectForm, SortFilter, LoadMore
+            SortFilter, LoadMore
         },
         created(){
             this.$eventBus.$on('project-list-loading', val => {
@@ -126,9 +126,6 @@
             showFilters: function(){
               return _.isEqual(this.$filters.project_list, this.filters);
             },
-            progress: function () {
-                return Math.floor(Math.random()*(100-1+1)+1);
-            },
             ...mapGetters({
                 pagination: 'projects/getPagination',
                 filters: 'projects/getFilters',
@@ -137,9 +134,9 @@
             })
         },
         mounted(){
+            this.$store.commit('projects/setCompleted', this.completed);
             this.$eventBus.$emit('header-update', {label:'Manage your projects'});
-            if(this.$route.name == 'projects-active')
-                this.projects = this.fetchProjects();
+            this.projects = this.fetchProjects();
         },
         methods:{
             handlePageHeader: function(data){

@@ -27,6 +27,17 @@
             </div>
             <div class="sidebar-block">
                 <div class="sblock-header">
+                    <h4>Progress</h4>
+                    <button class="btn btn-xs" @click="editProject('description')"><i class="fa fa-pen"></i> Edit</button>
+                </div>
+                <div class="sblock-body">
+                    <b-progress  max="100" variant="success"  show-progress>
+                        <b-progress-bar :value="project.progress" :label="project.progress+'%'"></b-progress-bar>
+                    </b-progress>
+                </div>
+            </div>
+            <div class="sidebar-block">
+                <div class="sblock-header">
                     <h4>Dates</h4>
                     <button class="btn btn-xs" @click="editProject('dates')"><i class="fa fa-pen"></i> Edit</button>
                 </div>

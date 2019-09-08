@@ -26,7 +26,7 @@
                         </ul>
                     </div>
                     <div class="tab-content">
-                        <router-view ref="myChild"></router-view>
+                        <router-view :key="$route.fullPath" ></router-view>
                         <div >
                             <project-form :id="project_id" v-if="showProjectForm"></project-form>
                         </div>
@@ -98,6 +98,9 @@
             handleSort: function(val){
                 this.$store.commit('projects/setSortBy', val);
             },
+        },
+        beforeRouteUpdate (to, from, next) {
+            next();
         }
     }
 </script>
