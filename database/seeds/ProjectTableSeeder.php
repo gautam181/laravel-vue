@@ -15,8 +15,8 @@ class ProjectTableSeeder extends Seeder
     {
         for($i=0; $i< 20; $i++){
             factory(Project::class, rand(3, 10))->create([
-                'owner'=> User::getRandomUser(),
-                'created_by'=> User::getRandomUser(),
+                'owner'=> function() { User::getRandomUser(); },
+                'created_by'=> function() { User::getRandomUser(); },
             ]);
         }
 
