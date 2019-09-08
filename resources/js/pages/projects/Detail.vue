@@ -73,7 +73,7 @@
         created(){
             this.$eventBus.$on('project-info', id=>{
                 if (this.project_id != id){
-                    this.project_id = id;
+                    this.project_id = parseInt(id);
                     this.getProject(this.project_id)
                 }
 

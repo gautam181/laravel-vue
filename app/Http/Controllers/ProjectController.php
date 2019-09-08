@@ -51,6 +51,7 @@ class ProjectController extends Controller
             $project->start_date = strtotime($request->start_date) > 0? date('Y-m-d', strtotime($request->start_date)): null;
             $project->end_date = strtotime($request->end_date) > 0? date('Y-m-d', strtotime($request->end_date)) : null;
             $project->owner = $request->owner;
+            $project->progress = $request->progress;
             $project->created_by = $request->user()->id;
             $project->save();
 
@@ -97,6 +98,7 @@ class ProjectController extends Controller
             $project->start_date = strtotime($request->start_date) > 0? date('Y-m-d', strtotime($request->start_date)): null;
             $project->end_date = strtotime($request->end_date) > 0? date('Y-m-d', strtotime($request->end_date)) : null;
             $project->owner = $request->owner;
+            $project->progress = $request->progress;
             $project->save();
 
             return response()->json(["message"=>"Project updated successfully", 'data'=> $project->toArray()], 202);

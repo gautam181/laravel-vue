@@ -31,7 +31,7 @@
                     <button class="btn btn-xs" @click="editProject('description')"><i class="fa fa-pen"></i> Edit</button>
                 </div>
                 <div class="sblock-body">
-                    <b-progress  max="100" variant="success" class="m-t-xs full"  show-progress>
+                    <b-progress  :max="100" variant="success" class="m-t-xs full"  show-progress>
                         <b-progress-bar :value="project.progress" :label="project.progress+'%'"></b-progress-bar>
                     </b-progress>
                 </div>

@@ -39,7 +39,8 @@ import DateRangePicker from 'vue2-daterange-picker';
 import {Editor} from '@toast-ui/vue-editor';
 import VueDateTimePicker from 'vue-bootstrap-datetimepicker';
 import VueInsProgressBar from 'vue-ins-progress-bar';
-import VueSlimScroll from 'vue-slimscroll'
+import VueSlimScroll from 'vue-slimscroll';
+import VueSlider from 'vue-slider-component';
 
 
 //component
@@ -53,6 +54,7 @@ import VueIziToast from 'vue-izitoast';
 Vue.component('v-select', vSelect);
 Vue.component('date-range-picker', DateRangePicker);
 Vue.component('editor', Editor);
+Vue.component('VueSlider', VueSlider);
 Vue.use(VueSlimScroll)
 
 

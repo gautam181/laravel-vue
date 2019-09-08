@@ -61,6 +61,12 @@
                                     ></v-select>
                                 </div>
                             </b-tab>
+                            <b-tab title="Progress"  :active="tab == 'progress'">
+                                <div class="form-group">
+                                    <label>Project Progress</label>
+                                    <vue-slider v-model="project_info.progress" :interval="5" :height="'6px'" :tooltip="'focus'" :marks="true"></vue-slider>
+                                </div>
+                            </b-tab>
                         </b-tabs>
                     </div>
                 </form>
@@ -173,11 +179,12 @@
                         start_date: this.project_info.start_date,
                         end_date: this.project_info.end_date,
                         owner: this.project_info.owner? this.project_info.owner.id : '',
+                        progress: this.project_info.progress? this.project_info.progress : 0,
                     }
                 })
                     .then(response => {
                         console.log(response);
-                        if (this.add){
+                        if (this.id < 1){
                             let project = response.data;
                             this.$router.push({'name': 'project-detail', params: {'id': project.id }});
                         } else {
