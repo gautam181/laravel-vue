@@ -85,10 +85,14 @@ label{font-weight: 600;}
     }
 }
 .projects {
+    min-width: 400px;
     &.list{
         .project-details{
             max-height: 65px; min-height: 65px; overflow: hidden;
         }
+    }
+    .project-actions{
+        .col{padding-left: 5px; padding-right: 5px;}
     }
     .progress{margin-top: 7px; margin-bottom: 0px;}
     .panel .panel-body{padding:15px;}
@@ -98,6 +102,25 @@ label{font-weight: 600;}
     &:hover{
         .actions .btn{display: block;}
         .actions:hover .btn{color:#212529;}
+    }
+}
+.popover-actions{
+    text-align: center;
+    a {
+        width: 80px;
+        padding: 5px;
+        text-align: center;
+        font-size: 11px;
+        border-radius: 5px;
+        color: $color-text;
+        display: block;
+        i {
+            font-size: 25px;
+            display: block;
+        }
+        &:hover{
+            background-color: #eee;
+        }
     }
 }
 

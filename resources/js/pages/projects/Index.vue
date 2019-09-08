@@ -55,34 +55,34 @@
                                                         <router-link v-bind:to="{'name': 'project-tickets', params: {'id': project.id }}" active-class="" class="">
                                                             {{ project.name }}
                                                         </router-link>
-                                                        <div class="project-action m-t-md pull-right">
-                                                            <div class="btn-group actions">
-                                                                <button class="btn btn-xs" @click="editProject(project.id)"><i class="fa fa-pen"></i></button>
-
-                                                            </div>
-                                                        </div>
                                                     </h5>
                                                     <div class="project-details">
                                                         {{ project.description}}
                                                     </div>
 
-                                                    <div class="row">
-                                                        <div class="col-sm-4">
+                                                    <div class="row project-actions">
+                                                        <div class="col-sm-2 col">
                                                             <div class="project-label">OWNER</div>
                                                             <small v-if="project.owner" >
                                                                 <avatar :username="project.owner.name" :size="size" :customStyle="avatarStyle" v-b-tooltip.hover.rightbottom :title="project.owner.name"></avatar>
                                                             </small>
                                                         </div>
-                                                        <div class="col-sm-4">
-                                                            <div class="project-label">DEDLINE</div>
+                                                        <div class="col-sm-4 col">
+                                                            <div class="project-label">DEADLINE</div>
                                                             <small>{{ project.end_date | date }}</small>
                                                         </div>
-                                                        <div class="col-sm-4">
+                                                        <div class="col-sm-4 col">
                                                             <div class="project-label">PROGRESS</div>
                                                             <div class="progress m-t-xs full progress-small">
                                                                 <div style="width: 12%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="12" role="progressbar" class=" progress-bar progress-bar-success">
                                                                 </div>
                                                             </div>
+                                                        </div>
+                                                        <div class="col-sm-2 col">
+                                                            <div class="project-label">ACTIONS</div>
+                                                            <a href="javascript:void(0);" class="btn btn-sm btn-circle btn-default" v-b-popover.click.left="popoverConfig(project.id)">
+                                                                <i class="fa fa-ellipsis-v"></i>
+                                                            </a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -132,6 +132,7 @@
                 loaded: false,
                 loading: false,
                 size:25,
+                popoverShow: false,
                 sortOptions: [
                     {id: 'id', 'label': 'Default'},
                     {id: 'name', 'label': 'Project Name'},
@@ -152,7 +153,7 @@
         },
         computed: {
             projectClasses() {
-                return this.$settings.sidebarMinified? 'col-lg-3 col-md-6': 'col-lg-4 col-md-12';
+                return this.$settings.sidebarMinified? 'col-lg-4 col-md-6': 'col-lg-4 col-md-12';
             },
             remaining: function () {
                 return this.pagination.totalRows - (this.pagination.perPage*this.pagination.page);
@@ -186,6 +187,10 @@
             handlePageHeader: function(data){
                 this.$emit('handle-page-header', data);
             },
+            projectActions: function(id){
+                let html = "";
+                return html;
+            },
             handleSortOrder: function(val){
                 this.$store.commit('projects/setOrderBy', val);
                 this.fetchProjects();
@@ -196,6 +201,7 @@
                 this.fetchProjects();
             },
             editProject: function(id){
+                console.log(id);
                 this.project_id = id;
                 this.showProjectForm = true;
             },
@@ -219,6 +225,29 @@
                     .catch(e => {
                         this.loading = false;
                     });
+            },
+            popoverConfig:function(id){
+                return {
+                    html: true,
+                    content: () => {
+                        // Note this is called only when the popover is opened
+                        let html = '<div class="popover-actions">';
+                        html += '<a href="javascript:void(0);">' +
+                            '   <i class="fa fa-times"></i>' +
+                            '   Delete' +
+                            '</a>';
+                        html += "<a href=\"javascript:void(0);\" v-on:click=\"editProject("+id+")\">" +
+                            '                            <i class="fa fa-pen"></i>\n' +
+                            '                        Edit\n' +
+                            '                        </a>';
+                        html += '<a href="javascript:void(0);">\n' +
+                            '                            <i class="fa fa-check"></i>\n' +
+                            '                        Complete\n' +
+                            '                        </a>';
+                        html +='</div>';
+                        return html
+                    }
+                }
             },
             paginate: function (val) {
                 this.$store.commit('projects/setPage', val);
