@@ -3,6 +3,8 @@ import Dashboard from '../pages/Dashboard'
 import Error404 from '../pages/NotFound'
 
 import ProjectList from '../pages/projects/Index'
+import ProjectListActive from '../pages/projects/list/Active'
+import ProjectListCompleted from '../pages/projects/list/Active'
 import ProjectDetail from '../pages/projects/Detail'
 import ProjectSummary from '../pages/projects/Summary'
 import ProjectTickets from '../pages/projects/Tickets'
@@ -18,8 +20,11 @@ const TITLE_SEP = ' - ';
 const routes =[
     {path: '/', redirect:'/dashboard', meta:{breadcrumb: 'Dashboard'}},
     {path: '/dashboard', name: 'dashboard', component: Dashboard, meta: {breadcrumb: 'Dashboard'}},
-    {path: '/projects', name: 'projects', component: ProjectList,
-        children: [],
+    {path: '/projects', name: 'projects', component: ProjectList, redirect: {name: 'projects-active'},
+        children: [
+            {path: '/projects/active', name: 'projects-active', component: ProjectListActive, meta: {breadcrumb: 'Active Projects', title: 'Active Projects'+TITLE_SEP+TITLE}},
+            {path: '/projects/completed', name: 'projects-completed', component: ProjectListCompleted, meta: {breadcrumb: 'Completed Projects', title: 'Completed Projects'+TITLE_SEP+TITLE}},
+        ],
         meta: {breadcrumb: 'Projects', title: 'Projects list'+TITLE_SEP+TITLE}
     },
 

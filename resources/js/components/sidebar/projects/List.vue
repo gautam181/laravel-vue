@@ -130,7 +130,7 @@
         computed:{
             showWidget(){
 
-                if (this.$route.name == 'projects'){
+                if (this.$route.name == 'projects-active' || this.$route.name == 'projects-completed'){
                     this.$store.dispatch('users/getUsersList');
                     return true;
                 } else
