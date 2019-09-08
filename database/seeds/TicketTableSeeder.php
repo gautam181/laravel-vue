@@ -16,8 +16,8 @@ class TicketTableSeeder extends Seeder
     {
         for($i=0; $i < 20; $i++){
             factory(Ticket::class, rand(10, 20))->create([
-                'created_by' => function() {User::getRandomUser(); },
-                'assigned_to' => function() {User::getRandomUser(); },
+                'created_by' => function() { return User::getRandomUser(); },
+                'assigned_to' => function() {return User::getRandomUser(); },
                 'project_id' => $this->getRandomProject(),
             ]);
         }

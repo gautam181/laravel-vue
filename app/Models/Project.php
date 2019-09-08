@@ -34,6 +34,9 @@ class Project extends Model
     {
         DB::enableQueryLog();
         $projects = self::with(['created_by', 'owner']);
+        if($params->has('completed')) {
+            $projects->where('status', $params->get('completed'));
+        }
         if($params->get('keyword')){
             $projects->where('name', 'like', '%'.$params->keyword.'%');
             $projects->orwhere('description', 'like', '%'.$params->keyword.'%');
