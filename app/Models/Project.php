@@ -38,8 +38,11 @@ class Project extends Model
             $projects->where('status', $params->get('completed'));
         }
         if($params->get('keyword')){
-            $projects->where('name', 'like', '%'.$params->keyword.'%');
-            $projects->orwhere('description', 'like', '%'.$params->keyword.'%');
+            $projects->where(function ($q) use ($params){
+                $q->where('name', 'like', '%'.$params->keyword.'%')
+                  ->orwhere('description', 'like', '%'.$params->keyword.'%');
+            });
+            //$projects->where('name', 'like', '%'.$params->keyword.'%')->orwhere('description', 'like', '%'.$params->keyword.'%');
         }
         if($params->has('created_range') && $params->has('start_date') && $params->has('end_date')){
             if($params->created_range == 1 && $params->start_date && $params->end_date){
