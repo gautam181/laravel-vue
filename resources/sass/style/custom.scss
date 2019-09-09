@@ -107,7 +107,7 @@ label{font-weight: 600;}
 .popover-actions{
     text-align: center;
     a {
-        width: 80px;
+        width: 90px;
         padding: 5px;
         text-align: center;
         font-size: 11px;
@@ -115,7 +115,7 @@ label{font-weight: 600;}
         color: $color-text;
         display: block;
         i {
-            font-size: 25px;
+            font-size: 20px; padding: 8px 5px;
             display: block;
         }
         &:hover{
