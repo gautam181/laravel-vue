@@ -71,6 +71,14 @@
 
         },
         created(){
+            this.$eventBus.$on('projectUpdate', val => {
+                this.$eventBus.$emit('header-update', {label:val.name, type:'project', id:val.id, tools:[{'icon': 'fa-pen',
+                        'event':(val)=>{
+                            this.editProjectModal(val);
+                        },
+                        'id': val.id
+                    }]});
+            });
             this.$eventBus.$on('project-info', id=>{
                 if (this.project_id != id){
                     this.project_id = parseInt(id);

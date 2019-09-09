@@ -190,20 +190,17 @@
                         } else {
                             this.$store.commit('projects/setProject', this.project_info);
                         }
-                        this.$emit('projectUpdate', this.project_info);
+                        this.$eventBus.$emit('projectUpdate', this.project_info);
                         this.$toast.success('Project updated successfully', "Success", {
                             timout: 3000,
                             position: 'bottomRight'
                         });
                     })
                     .catch(error => {
-                        this.$notify({
-                            group: 'form',
-                            type: 'error',
-                            title:'Error',
-                            text: 'Something went wrong please contact admin'
-                        })
-                        console.log(error);
+                        this.$toast.warning('Error while updating the data!', "Warning", {
+                            timout: 3000,
+                            position: 'bottomRight'
+                        });
                     });
             }
         },
