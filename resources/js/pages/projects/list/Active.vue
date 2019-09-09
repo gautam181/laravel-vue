@@ -15,7 +15,7 @@
                 </div>
             </div>
             <div class="row  list">
-
+                <loading-spinner label="Loading projects" :show="loading"></loading-spinner>
                 <template v-for="project in projects">
                     <div :class="projectClasses +' projects'" v-if="showProject(project.progress)">
                         <div class="panel green">
@@ -73,12 +73,6 @@
                     <load-more :pagination="pagination" v-on:load-more="loadMore"></load-more>
                 </div>
 
-            </div>
-
-            <div class="row">
-                <div class="col-sm-12">
-                    <loading-spinner label="Loading projects" :show="loading"></loading-spinner>
-                </div>
             </div>
         </div>
 
