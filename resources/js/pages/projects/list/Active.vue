@@ -48,8 +48,8 @@
                                                     <b-progress-bar :value="project.progress" :label="project.progress+'%'"></b-progress-bar>
                                                 </b-progress>
                                             </div>
-                                            <div class="col-sm-2 col">
-                                                <div class="project-label">ACTIONS</div>
+                                            <div class="col-sm-2 col text-right">
+                                                <div class="project-label">&nbsp;</div>
                                                 <a href="javascript:void(0);" class="btn btn-sm btn-circle btn-default" :id="'project-'+project.id" >
                                                     <i class="fa fa-ellipsis-v"></i>
                                                 </a>
