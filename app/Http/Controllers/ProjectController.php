@@ -130,11 +130,23 @@ class ProjectController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function tickets($id, Request $request){
-        /*$dir = $request->get('sort');
-        $dir = $dir? $dir : 'asc';
-        return response()->json(Ticket::with(['assigned_to', 'project'])->where('project_id', $id)->orderby('updated_at', $dir)->paginate(100), 200);*/
-
         $data = Ticket::getTickets($id, $request);
         return response()->json($data);
+    }
+
+    /**
+     * @param $id project id
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+
+    public function completed($id)
+    {
+        $project = Project::with(['created_by', 'owner'])->findOrFail($id);
+        $project->progress = 100;
+        $project->status = 1;
+        $project->save();
+
+        return response()->json(["message"=>"Project completed successfully", 'data'=> $project->toArray()], 202);
     }
 }
