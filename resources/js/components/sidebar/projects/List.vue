@@ -125,6 +125,10 @@
         },
 
         created(){
+            this.$eventBus.$on('filter-bar::clear', (val) => {
+                if (val.id == 'project-list')
+                    this.resetFilter();
+            })
             this.filter = cloneDeep(this.$store.getters['projects/getFilters']);
         },
         computed:{

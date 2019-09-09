@@ -2,10 +2,8 @@
     <div>
         <div v-if="loaded">
             <div class="row">
-                <div class="col-md-12" v-if="!showFilters">
-                    <div class="alert alert-filter">
-                        <i class="fa fa-bolt"></i> Showing {{ pagination.totalRows}} filtered results <button  class="btn btn-default btn-sm"><i class="fa fa-retweet"></i> Clear Filter</button>
-                    </div>
+                <div class="col-md-12">
+                    <filter-alert :total="pagination.totalRows" :show="!showFilters" id="project-list"></filter-alert>
                 </div>
                 <div class="col-md-12">
                     <div class="list-options">
@@ -83,6 +81,8 @@
     import { mapGetters } from 'vuex';
     import SortFilter from "../../../components/ui/SortFilter";
     import LoadMore from "../../../components/ui/LoadMore";
+    import FilterAlert from "../../../components/ui/FilterAlert";
+
 
     export default {
         name: "project-active",
@@ -107,7 +107,7 @@
             }
         },
         components:{
-            SortFilter, LoadMore
+            SortFilter, LoadMore, FilterAlert
         },
         created(){
             this.$eventBus.$on('project-list-loading', val => {
