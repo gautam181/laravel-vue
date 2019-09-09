@@ -50,9 +50,16 @@
                                             </div>
                                             <div class="col-sm-2 col">
                                                 <div class="project-label">ACTIONS</div>
-                                                <a href="javascript:void(0);" class="btn btn-sm btn-circle btn-default" v-b-popover.click.left="popoverConfig(project.id)">
+                                                <a href="javascript:void(0);" class="btn btn-sm btn-circle btn-default" :id="'project-'+project.id" >
                                                     <i class="fa fa-ellipsis-v"></i>
                                                 </a>
+                                                <b-popover :target="'project-'+project.id" triggers="focus" placement="left">
+                                                    <template v-slot:title></template>
+                                                    <div class="popover-actions"><a href="javascript:void(0);">   <i class="fa fa-times"></i>   Delete</a>
+                                                        <a href="javascript:void(0);" @click="editProject(project.id)"><i class="fa fa-pen"></i>Edit</a>
+                                                        <a href="javascript:void(0);"><i class="fa fa-check"></i> Complete</a>
+                                                    </div>
+                                                </b-popover>
                                             </div>
                                         </div>
                                     </div>
