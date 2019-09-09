@@ -46,7 +46,7 @@
                                             </div>
                                             <div class="col-sm-4 col">
                                                 <div class="project-label">PROGRESS</div>
-                                                <b-progress  max="100" variant="success" class="m-t-xs full"  show-progress>
+                                                <b-progress  :max="100" variant="success" class="m-t-xs full"  show-progress>
                                                     <b-progress-bar :value="project.progress" :label="project.progress+'%'"></b-progress-bar>
                                                 </b-progress>
                                             </div>

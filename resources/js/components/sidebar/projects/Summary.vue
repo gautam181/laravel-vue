@@ -28,7 +28,7 @@
             <div class="sidebar-block">
                 <div class="sblock-header">
                     <h4>Progress</h4>
-                    <button class="btn btn-xs" @click="editProject('description')"><i class="fa fa-pen"></i> Edit</button>
+                    <button class="btn btn-xs" @click="editProject('progress')"><i class="fa fa-pen"></i> Edit</button>
                 </div>
                 <div class="sblock-body">
                     <b-progress  :max="100" variant="success" class="m-t-xs full"  show-progress>
