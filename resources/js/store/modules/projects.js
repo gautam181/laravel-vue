@@ -107,6 +107,36 @@ const actions = {
                 });
         });
     },
+    completeProject: (context, id) => {
+        return new Promise((resolve, reject) => {
+            axios({
+                method: 'put',
+                url: '/project/'+id+'/complete'
+            }).
+            then(function (response) {
+                context.commit('setProject', response.data.data);
+                resolve(response);
+            })
+            .catch(error => {
+                reject(error);
+            });
+        });
+    },
+    deleteProject: (context, id) => {
+        return new Promise((resolve, reject) => {
+            axios({
+                method: 'delete',
+                url: '/project/'+id
+            }).
+            then(function (response) {
+                context.commit('setDelete', id);
+                resolve(response);
+            })
+            .catch(error => {
+                reject(error);
+            });
+        });
+    },
 }
 
 // mutations
@@ -127,15 +157,20 @@ const mutations = {
     setSortBy: (state, val) => { state.sortBy = val; localStorage.setItem('project_sort_by', val); },
     setOrderBy: (state, val) => { state.orderBy = val;localStorage.setItem('project_order_by', val); },
     setFilters: (state, val) => { state.filters = {...val}; localStorage.setItem('projects_filters', JSON.stringify(val)); },
+    setDelete: (state, id)=> {
+        const project= state.projects.find(project => project.id === id);
+        project.deleted = true;
+    },
     setProject: (state, val) => {
         let id = val.id;
-        const project= state.projects.find(ticket => ticket.id === id);
+        const project= state.projects.find(project => project.id === id);
         if (project){
             project.name =  val.name;
             project.description =  val.description;
             project.start_date =  val.start_date;
             project.end_date =  val.end_date;
             project.owner = val.owner;
+            project.progress = val.progress;
         } else {
             state.projects.push(val);
         }

@@ -17,7 +17,7 @@
             <div class="row  list">
 
                 <template v-for="project in projects">
-                    <div :class="projectClasses +' projects'">
+                    <div :class="projectClasses +' projects'" v-if="showProject(project.progress)">
                         <div class="panel green">
                             <div class="panel-body">
                                 <div class="row">
@@ -55,9 +55,10 @@
                                                 </a>
                                                 <b-popover :target="'project-'+project.id" triggers="focus" placement="left">
                                                     <template v-slot:title></template>
-                                                    <div class="popover-actions"><a href="javascript:void(0);">   <i class="fa fa-times"></i>   Delete</a>
+                                                    <div class="popover-actions">
+                                                        <a href="javascript:void(0);" v-if="!completed" @click="deleteProject(project.id)"><i class="fa fa-times"></i>Delete</a>
                                                         <a href="javascript:void(0);" @click="editProject(project.id)"><i class="fa fa-pen"></i>Edit</a>
-                                                        <a href="javascript:void(0);"><i class="fa fa-check"></i> Complete</a>
+                                                        <a href="javascript:void(0);" v-if="!completed" @click="completeProject(project.id)"><i class="fa fa-check"></i> Complete</a>
                                                     </div>
                                                 </b-popover>
                                             </div>
@@ -146,6 +147,15 @@
             this.projects = this.fetchProjects();
         },
         methods:{
+            showProject(val){
+                return true;
+                if (this.completed){
+                    return val == 100 ? true : false;
+                } else {
+                    return val != 100 ? true : false;
+                }
+
+            },
             handlePageHeader: function(data){
                 this.$emit('handle-page-header', data);
             },
@@ -181,6 +191,44 @@
                     .catch(e => {
                         this.loading = false;
                     });
+            },
+            completeProject: function(id){
+                this.$store.dispatch('projects/completeProject', id)
+                    .then(res=>{
+                        this.$toast.success('Project completed successfully', "Success", {
+                            timout: 1000,
+                            position: 'bottomRight'
+                        });
+                    })
+                    .catch(exp=>{
+                        this.$emit('handle-exception', exp);
+                    })
+            },
+            deleteProject: function(id){
+                this.$swal(
+                    {
+                        title: 'Are you sure?',
+                        text: "You won't be able to revert this!",
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                        if (result.value) {
+                            this.$store.dispatch('projects/deleteProject', id)
+                                .then(res=>{
+                                    this.$toast.success('Project deleted successfully', "Success", {
+                                        timout: 1000,
+                                        position: 'bottomRight'
+                                    });
+                                })
+                                .catch(exp=>{
+                                    this.$emit('handle-exception', exp);
+                                })
+                        }
+                    }
+                );
             },
             popoverConfig:function(id){
                 return {
