@@ -53,7 +53,7 @@
                     <li class="nav-item dropdown dropdown-authentication show">
                         <a class="nav-link dropdown-toggle user-nav no-caret" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                             <img src="../../images/profile.jpg" class="user-img rounded-circle" alt="logo">
-                            <span>Abdul Khan</span>
+                            <span>{{ this.$user.name }}</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" data-dropdown-in="flipInX" data-dropdown-out="flipOutX">
                             <a class="dropdown-item" href="profile.html"><i class="fa fa-user"></i> Profile</a>
