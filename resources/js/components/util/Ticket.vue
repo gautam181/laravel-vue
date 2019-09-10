@@ -9,7 +9,10 @@
                 <span class="estimate">10 Hours</span>
                 <div class="ticket-heading">
                     <div class="assignedto" v-if="ticket.assigned_to">
-                        <span class="">{{ ticket.assigned_to.name }}</span>
+                        <span class="">{{ ticket.assigned_to.name ?  ticket.assigned_to.name : 'Any one'}}</span>
+                    </div>
+                    <div class="assignedto" v-else="">
+                        <span class="">Any one</span>
                     </div>
                     <div class="ticket-title">
                         <p class="ticket-name">
@@ -228,8 +231,11 @@
                         else {
                             // reset the from.
                         }
-                        this.$store.commit('tickets/setTicket', this.ticket_detail);
+                        this.$store.commit('tickets/setTicket', response);
                         this.$emit('ticketUpdate', response);
+                        if(this.list=== false){
+                            this.resetTicket();
+                        }
                     })
                     .catch(error => {
                         console.log(error);
@@ -265,6 +271,10 @@
                             this.$store.dispatch('tickets/deleteTicket', this.ticket.id)
                                 .then(res=>{
                                     this.is_deleted = true;
+                                    this.$toast.success('Ticket deleted successfully', "Success", {
+                                        timout: 1000,
+                                        position: 'bottomRight'
+                                    });
                                     if (!this.is_list) //redirect to ticket list
                                         this.$router.push({ name: 'tickets', query: { } });
                                 })

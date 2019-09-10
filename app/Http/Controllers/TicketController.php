@@ -52,8 +52,8 @@ class TicketController extends Controller
             $ticket->created_by = $request->user()->id;
             $ticket->project_id = $request->project_id;
             $ticket->save();
-
-            return response()->json(["message"=>"Ticket created successfully", 'data'=>$ticket->toArray()], 201);
+            $data = Ticket::with(['created_by', 'assigned_to', 'project'])->findOrFail($ticket->id);
+            return response()->json(["message"=>"Ticket created successfully", 'data'=>$data], 201);
         }
     }
 
@@ -97,8 +97,8 @@ class TicketController extends Controller
             $ticket->assigned_to = $request->assigned_to;
             $ticket->project_id = $request->project_id;
             $ticket->save();
-
-            return response()->json(["message"=>"Ticket updated successfully", 'data'=> $ticket->toArray()], 202);
+            $data = Ticket::with(['created_by', 'assigned_to', 'project'])->findOrFail($ticket->id);
+            return response()->json(["message"=>"Ticket updated successfully", 'data'=> $data], 202);
         }
     }
 

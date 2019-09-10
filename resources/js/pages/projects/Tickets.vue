@@ -39,10 +39,7 @@
                                     </p>
                                 </template>
                             </div>
-                            <a class="load-more" v-if="totalPages > 1" href="javascript:void(0);" @click="loadMore">
-                                <i class="fa fa-ellipsis-h fa-lg"></i>
-                                Load {{ perPage }} more from the next {{ remaining}}
-                            </a>
+                            <load-more :pagination="pagination" v-on:load-more="loadMore"></load-more>
                         </div>
                     </div>
                 </div>
@@ -55,7 +52,7 @@
 <script>
     import { mapGetters } from 'vuex';
     import Ticket from '../../components/util/Ticket';
-    import tickets from "../../store/modules/tickets";
+    import LoadMore from "../../components/ui/LoadMore";
 
     export default {
         name: "project-tickets",
@@ -82,8 +79,13 @@
             showFilters: function () {
                 return _.isEqual(this.$filters.project_tickets, this.filters);
             },
-            remaining: function () {
-                return this.totalTickets - (this.perPage*this.currentPage);
+            pagination: function () {
+              return {
+                  page: this.currentPage,
+                  totalPages: this.totalPages,
+                  totalRows: this.totalTickets,
+                  perPage: this.perPage
+              };
             },
             ...mapGetters({
                 filters: 'tickets/getFilters',
@@ -97,7 +99,7 @@
 
         },
         components: {
-            Ticket
+            Ticket, LoadMore
         },
         created(){
             this.$eventBus.$emit('project-info', this.project_id);
