@@ -36,9 +36,13 @@
                                     <blank-slate name="project-tickets-list"></blank-slate>
                                 </template>
                                 <template v-else>
-                                    <p v-if="!showAddTicket" class="text-center">
-                                        <button class="btn btn-xs btn-secondary" @click="addTicket">Add Ticket</button>
-                                    </p>
+                                    <blank-slate name="project-tickets" v-if="!showAddTicket">
+                                        <template slot="body">
+                                            <h3>No Tickets</h3>
+                                            <p>Hey {{ this.$user.name }}, you don't have any ticket on this project. Click the button below to create a ticket.</p>
+                                            <button class="btn btn-lg btn-primary" @click="addTicket"> <i class="fa fa-plus-circle"></i> Create a new ticket</button>
+                                        </template>
+                                    </blank-slate>
                                 </template>
                             </div>
                             <load-more :pagination="pagination" v-on:load-more="loadMore"></load-more>
