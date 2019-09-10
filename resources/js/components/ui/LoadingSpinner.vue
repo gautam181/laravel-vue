@@ -55,7 +55,7 @@
 }
 .spinner-container{
     position: absolute;
-    top: 300px;
+    top: 200px;
     left: 50%;
     margin: -40px -100px;
     text-align: center;

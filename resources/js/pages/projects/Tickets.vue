@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-if="loaded">
+        <div >
             <div class="row">
                 <div class="col-md-12">
                     <div class="list-options">
@@ -21,10 +21,11 @@
                 <div class="col-md-12">
                     <div class="panel forum-box">
                         <div class="panel-body">
+                            <loading-spinner label="Loading tickets" :show="loading"></loading-spinner>
                             <Ticket v-if="showAddTicket"
                                     :ticket="blankTicket" :view="!showAddTicket" v-on:cancel="cancelTicket"
                             ></Ticket>
-                            <div class="tickets-list">
+                            <div class="tickets-list" v-if="loaded">
                                 <template v-if="tickets.length > 0">
                                     <template v-for="row in tickets">
                                         <Ticket
@@ -45,7 +46,7 @@
                 </div>
             </div>
         </div>
-        <loading-spinner label="Loading tickets" :show="loading"></loading-spinner>
+
     </div>
 </template>
 
