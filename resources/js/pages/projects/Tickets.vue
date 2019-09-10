@@ -11,10 +11,8 @@
 
                     </div>
                 </div>
-                <div class="col-md-12" v-if="!showFilters">
-                    <div class="alert alert-filter">
-                        <i class="fa fa-bolt"></i> Showing {{ totalTickets }} filtered results <button  class="btn btn-default btn-sm"><i class="fa fa-retweet"></i> Clear Filter</button>
-                    </div>
+                <div class="col-md-12" >
+                    <filter-alert :total="pagination.totalRows" :show="!showFilters" id="project-tickets-list"></filter-alert>
                 </div>
             </div>
             <div class="row">
@@ -54,6 +52,7 @@
     import { mapGetters } from 'vuex';
     import Ticket from '../../components/util/Ticket';
     import LoadMore from "../../components/ui/LoadMore";
+    import FilterAlert from "../../components/ui/FilterAlert";
 
     export default {
         name: "project-tickets",
@@ -100,7 +99,7 @@
 
         },
         components: {
-            Ticket, LoadMore
+            Ticket, LoadMore, FilterAlert
         },
         created(){
             this.$eventBus.$emit('project-info', this.project_id);

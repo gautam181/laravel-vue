@@ -127,7 +127,10 @@
         },
         created(){
             this.filter = _.cloneDeep(this.$store.getters['tickets/getFilters']);
-
+            this.$eventBus.$on('filter-bar::clear', (val) => {
+                if (val.id == 'project-tickets-list')
+                    this.resetFilter();
+            })
         },
         computed:{
             showWidget(){
