@@ -87,8 +87,8 @@
             </div>
             <div class="filter-block">
                 <div class="filter-body">
-                    <button @click="resetFilter"  class="btn btn-default btn-sm"><i class="fa fa-retweet"></i> Reset Filter</button>
                     <button @click="applyFilter" type="submit" class="btn btn-primary pull-right btn-sm"><i class="fa fa-filter"></i> Apply Filter</button>
+                    <button @click="resetFilter"  class="btn btn-default btn-sm"><i class="fa fa-retweet"></i> Reset Filter</button>
                 </div>
             </div>
         </form>
