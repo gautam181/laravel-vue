@@ -130,6 +130,10 @@
             this.$eventBus.$on('filter-bar::clear', (val) => {
                 if (val.id == 'project-tickets-list')
                     this.resetFilter();
+            });
+            this.$eventBus.$on('filter-slate::clear', (val) => {
+                if (val.name == 'project-tickets-list')
+                    this.resetFilter();
             })
         },
         computed:{

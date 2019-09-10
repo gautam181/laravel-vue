@@ -32,6 +32,9 @@
                                         ></Ticket>
                                     </template>
                                 </template>
+                                <template v-else-if="!showFilters">
+                                    <blank-slate name="project-tickets-list"></blank-slate>
+                                </template>
                                 <template v-else>
                                     <p v-if="!showAddTicket" class="text-center">
                                         <button class="btn btn-xs btn-secondary" @click="addTicket">Add Ticket</button>
@@ -53,6 +56,7 @@
     import Ticket from '../../components/util/Ticket';
     import LoadMore from "../../components/ui/LoadMore";
     import FilterAlert from "../../components/ui/FilterAlert";
+    import BlankSlate from "../../components/ui/BlankSlate";
 
     export default {
         name: "project-tickets",
@@ -99,7 +103,7 @@
 
         },
         components: {
-            Ticket, LoadMore, FilterAlert
+            Ticket, LoadMore, FilterAlert, BlankSlate
         },
         created(){
             this.$eventBus.$emit('project-info', this.project_id);
