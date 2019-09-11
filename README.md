@@ -1,5 +1,5 @@
 # Laravel 5.8 Project management solution
-This is the basic application for creating and managing the projects. I am inspired from TeamWork and try to produce the application that work in similar way. This application is purely for practicing the different scenarios.
+This is the basic application for creating and managing the projects. This application is purely for practicing the different aspects for laravel and VueJS.
 
 ## Features
 #### Backend

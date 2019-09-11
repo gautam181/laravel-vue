@@ -56,8 +56,7 @@
                     <h1>Welcome to LaraVue</h1>
                     <h3>A study application</h3>
                     <p>
-                        This project is only for the study purpose, integration of Laravel with VUE. Test application is inspired from
-                        <a href="https://www.teamwork.com" target="_blank">TeamWork</a> projects version.
+                        This project is only for the study purpose, integration of Laravel with VUE. This application is purely for practicing the different aspects for laravel and VueJS.
                     </p>
                     <p>
                         Theme inspired from <a href="http://webapplayers.com/homer_admin-v2.0/" target="_blank">Homer</a> and <a href="https://wrapbootstrap.com/theme/color-admin-admin-template-front-end-WB0N89JMK" target="_blank"> Color Admin</a> please get permission from author or buy the theme for commercial use.
