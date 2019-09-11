@@ -58,6 +58,37 @@ label{font-weight: 600;}
     border-radius: 5px 0px 0px 5px;
     border-left: 5px solid #e2f0fb; margin-bottom: 10px; padding: 5px 15px;
 }
+.date-input{width: 90px!important;}
+.time-input{width: 75px!important;}
+.hour-input, .minute-input{width: 50px!important;}
+.who-select{width: 200px;}
+.flex-row{
+    display: flex;
+    flex-direction: row;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    .form-content{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        width: auto;
+        .form-group{
+            margin-right: 5px;
+        }
+    }
+    .form-control{
+        display: flex;
+        flex-direction: column;
+        label{
+            display: block;
+        }
+    }
+    > div{
+        padding-right: 5px;
+    }
+}
 .forum-box {
     .panel-body {
         border-bottom: none;

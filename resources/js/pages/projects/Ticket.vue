@@ -22,6 +22,33 @@
             </div>
             <div class="col-md-12">
                 <div class="list-options">
+                    <h2 class="">Files</h2>
+                </div>
+
+            </div>
+            <div class="col-md-12">
+                <div class="hpanel">
+                    <div class="panel-body pb-3">
+                        <p>file list</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="list-options">
+                    <h2 class="">Time Log</h2>
+                </div>
+
+            </div>
+            <div class="col-md-12">
+                <div class="hpanel">
+                    <div class="panel-body pb-3">
+                        <p>No time have been logged against this ticket - <a href="javascript:void(0);" @click="addTime">Log time</a></p>
+                        <time-form :id="ticket.id" v-if="time_form" :ticket="ticket"></time-form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="list-options">
                     <h2 class="">Comments</h2>
                     <div class="btn-options text-right">
                         <b-dropdown variant="default" >
@@ -63,6 +90,7 @@
     import Comment from "../../components/util/Comment";
     import Ticket from "../../components/util/Ticket";
     import {mapGetters} from 'vuex';
+    import TimeForm from "./forms/TimeForm";
     export default {
         name: "ticket-detail",
         data(){
@@ -71,7 +99,8 @@
                 ticket_id : this.$route.params.ticket_id,
                 order_by: 'date',
                 add_comment: {comment:'', id:''},
-                desc: true
+                desc: true,
+                time_form: false
             }
         },
         created(){
@@ -90,14 +119,21 @@
             },
         },
         components: {
-            Comment, Ticket
+            Comment, Ticket,  TimeForm
         },
         mounted(){
             this.getTicket(this.ticket_id);
             this.getComments(this.ticket_id);
             this.myRoute = this.$router.options.routes.find(route => route.name === this.$route.name);
+            this.$root.$on('bv::modal::hidden', (bvEvent, modalId) => {
+                if (modalId == 'time-form')
+                    this.time_form = false;
+            })
         },
         methods:{
+            addTime: function(){
+                this.time_form = true;
+            },
             handlePageHeader: function(data){
                 this.$emit('handle-page-header', data);
             },
