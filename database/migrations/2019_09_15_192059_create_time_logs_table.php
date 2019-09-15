@@ -13,13 +13,14 @@ class CreateTimeLogsTable extends Migration
      */
     public function up()
     {
-        Schema::create('time_log', function (Blueprint $table) {
+        Schema::create('time_logs', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('project_id');
             $table->unsignedBigInteger('ticket_id');
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('user');
-            $table->date('when')->nullable(false);
+            $table->date('date')->nullable(false);
+            $table->time('time')->nullable(false);
             $table->longText('description')->nullable();
             $table->integer('hours')->nullable(false)->default(0);
             $table->integer('minutes')->nullable(false)->default(0);
