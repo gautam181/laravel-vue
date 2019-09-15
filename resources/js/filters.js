@@ -17,6 +17,13 @@ Vue.filter('date', (val)=> {
     return val? moment(val).format(settings.DATEFROMAT): '';
 });
 
+Vue.filter('time', (val)=> {
+    if (isNull(val))
+        return '';
+
+    return val? moment(val, 'HH:mm:ss').format(settings.TIMEFROMAT): '';
+});
+
 Vue.filter('formDate', (val)=> {
     if (isNull(val))
         return '';

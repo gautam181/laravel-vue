@@ -16,6 +16,8 @@ const state = {
     tickets: [],
     append: false,
     ticket_comments: [],
+    ticket_times: [],
+    ticket_files: [],
     filters: JSON.parse(localStorage.getItem('tickets_filters')) || filters.project_tickets,
     project_id: 0,
     page: 1,
@@ -35,7 +37,9 @@ const getters = {
     getTotalPages: (state) => { return state.totalPages },
     getPerPage: (state) => { return state.perPage },
     getTotalRows: (state) => { return state.totalRows },
-    getTicketComments: (state) =>(id) => { const comments = state.ticket_comments.find(comment => comment.id == id); return comments ? comments.comments : []; }
+    getTicketComments: (state) =>(id) => { const data = state.ticket_comments.find(comment => comment.id == id); return data ? data.comments : []; },
+    getTicketFiles: (state) =>(id) => { const data = state.ticket_files.find(file => file.id == id); return data ? data.files : []; },
+    getTicketTimes: (state) =>(id) => { const data = state.ticket_times.find(t => t.id == id); return data ? data.times : []; }
 };
 
 // actions
@@ -152,6 +156,12 @@ const actions = {
             .then(response => {
                 context.commit('setTicketComments', {'id': id,  'comments':response.data.data});
             });
+    },
+    getTicketTimes: (context, id) => {
+        axios.get("/ticket/"+id+'/time-entries?sort='+context.state.sort_by)
+            .then(response => {
+                context.commit('setTicketTimes', {'id': id,  'times':response.data.data});
+            });
     }
 };
 
@@ -195,6 +205,15 @@ const mutations = {
             Vue.set(cmts, 'comments', [...val.comments]);
         } else
             state.ticket_comments.push(val)
+    },
+    setTicketTimes: (state, val) => {
+        let id = val.id;
+        const rows= state.ticket_times.find(t => t.id == id);
+        if(rows){
+            //cmts.comments = {...cmts, ...val};
+            Vue.set(rows, 'times', [...val.times]);
+        } else
+            state.ticket_times.push(val)
     },
     setDates: (state, val ) =>{
         let id = val.id;
