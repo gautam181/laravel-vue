@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\TicketRequest;
 use App\Models\Comment;
 use App\Models\Ticket;
+use App\Models\TimeLog;
 use Illuminate\Http\Request;
 
 class TicketController extends Controller
@@ -140,6 +141,23 @@ class TicketController extends Controller
         ]);
 
         return response()->json(["message"=>"Ticket dates updated successfully", 'data'=> $request->toArray()], 202);
+
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  Request $request
+     * @param  ticket.id  $id
+     * @return Response
+     */
+    public function timeEntries(Request $request, $id)
+    {
+        $data = TimeLog::with(['created_by', 'user', 'ticket', 'project'])
+            ->where('ticket_id', $id)
+            ->orderby('id', 'asc')->paginate(100);
+
+        return response()->json($data);
 
     }
 }
