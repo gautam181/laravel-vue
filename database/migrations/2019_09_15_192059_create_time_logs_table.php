@@ -18,7 +18,7 @@ class CreateTimeLogsTable extends Migration
             $table->unsignedBigInteger('project_id');
             $table->unsignedBigInteger('ticket_id');
             $table->unsignedBigInteger('created_by');
-            $table->unsignedBigInteger('user');
+            $table->unsignedBigInteger('user_id');
             $table->date('date')->nullable(false);
             $table->time('time')->nullable(false);
             $table->longText('description')->nullable();
@@ -27,7 +27,7 @@ class CreateTimeLogsTable extends Migration
             $table->foreign('ticket_id')->references('id')->on('tickets');
             $table->foreign('project_id')->references('id')->on('projects');
             $table->foreign('created_by')->references('id')->on('users');
-            $table->foreign('user')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

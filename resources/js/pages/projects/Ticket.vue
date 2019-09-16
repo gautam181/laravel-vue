@@ -99,7 +99,7 @@
 
                         </div>
                         <p v-else>No time have been logged against this ticket - <a href="javascript:void(0);" @click="addTime">Log time</a></p>
-                        <time-form :id="ticket.id" v-if="time_form" :ticket="ticket"></time-form>
+                        <time-form :id="ticket.id" v-if="time_form" :project_id="ticket.project.id" :ticket="ticket"></time-form>
                     </div>
                 </div>
             </div>

@@ -11,6 +11,7 @@ import users from './modules/users'
 import comments from './modules/comments'
 import projects from './modules/projects'
 import tickets from './modules/tickets'
+import timelog from './modules/timelog'
 import config  from '../config/Settings'
 
 Vue.use(Vuex);
@@ -29,6 +30,7 @@ export default new Vuex.Store({
         comments,
         projects,
         tickets,
+        timelog,
         users
     },
     strict: debug

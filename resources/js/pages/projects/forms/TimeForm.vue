@@ -1,5 +1,5 @@
 <template>
-    <b-modal id="time-form" size="lg" top  ref="time-form" :ok-title="btn_ok_label" :title="modal_title" @ok="saveProject">
+    <b-modal id="time-form" size="lg" top  ref="time-form" :ok-title="btn_ok_label" :title="modal_title" @ok="saveTimeLog">
         <div class="modal-info-bar" v-if="ticket">
             <span class="modal-info-bar-label">Ticket</span>
             <span class="modal-info-bar-content">{{ ticket.title }}</span>
@@ -80,19 +80,18 @@
                         <b-tabs nav-wrapper-class="nav-htabs">
                             <b-tab title="Description" :active="tab == 'description'">
                                 <div class="form-group">
-                                    <label  for="project_desc">
+                                    <label  for="timelog_desc">
                                         Provide a Description
                                     </label>
 
                                     <div class="">
-                                        <textarea tabindex="2" v-model="project_info.description" class="form-control" id="project_desc"></textarea>
+                                        <textarea tabindex="2" v-model="timeEntry.description" class="form-control" id="timelog_desc"></textarea>
                                     </div>
                                 </div>
                             </b-tab>
                             <b-tab title="Progress"  :active="tab == 'progress'">
                                 <div class="form-group">
                                     <label>Project Progress</label>
-                                    <vue-slider v-model="project_info.progress" :interval="5" :height="'6px'" :tooltip="'focus'" :marks="true"></vue-slider>
                                 </div>
                             </b-tab>
                         </b-tabs>
@@ -112,6 +111,7 @@
         name: "time-form",
         props: {
             'ticket': {type:Object, default: {}},
+            'project_id': {type:Number, required: true},
             'id': {type: Number, default: 0},
             'add' : {type: Boolean, default: true},
             'tab': {default: 'description'}
@@ -128,8 +128,9 @@
                     start_time: this.$moment().format(this.$settings.TIMEFROMAT),
                     hours: 0,
                     minutes: 0,
+                    description: '',
+                    id: 0
                 },
-                project_info: {'id': '', 'name':'', 'description':'', 'owner': {}, 'start_date': '', 'end_date': ''},
                 configs: {
                     timePicker: {
                         format: 'LT',
@@ -167,17 +168,14 @@
             },
             end_time: function(){
 
-            },
-            project:function (val) {
-                this.project_info = Object.assign({}, val);
             }
         },
         computed: {
             modal_title: function(){
-                return this.project_info.id ? 'Edit Logged Time': 'Log Time';
+                return this.id ? 'Edit Logged Time': 'Log Time';
             },
             btn_ok_label: function(){
-                return this.project_info.id ? 'Save Changes': 'Add Project';
+                return this.id ? 'Save Changes': 'Log Time';
             },
             show_end_date: function(){
                 let s_date = this.$moment(this.start_date, this.$settings.FORMDATEFROMAT);
@@ -295,30 +293,25 @@
                 });
 
             },
-            saveProject:function () {
-                //bvModalEvt.preventDefault();
-                this.$store.dispatch('projects/saveProject', {
-                    id: this.project_info.id,
+            saveTimeLog:function () {
+                this.$store.dispatch('timelog/saveTime', {
+                    id: this.timeEntry.id,
                     body: {
-                        id: this.project_info.id,
-                        name: this.project_info.name,
-                        description: this.project_info.description,
-                        start_date: this.project_info.start_date,
-                        end_date: this.project_info.end_date,
-                        owner: this.project_info.owner? this.project_info.owner.id : '',
-                        progress: this.project_info.progress? this.project_info.progress : 0,
+                        id: this.timeEntry.id,
+                        description: this.timeEntry.description,
+                        date: this.timeEntry.start_date,
+                        time: this.timeEntry.start_time,
+                        hours: this.timeEntry.hours,
+                        minutes: this.timeEntry.minutes,
+                        ticket_id: this.id,
+                        project_id: this.project_id,
+                        user_id: this.timeEntry.user? this.timeEntry.user.id : '',
                     }
                 })
                     .then(response => {
-                        console.log(response);
-                        if (this.id < 1){
-                            let project = response.data;
-                            this.$router.push({'name': 'project-detail', params: {'id': project.id }});
-                        } else {
-                            this.$store.commit('projects/setProject', this.project_info);
-                        }
-                        this.$eventBus.$emit('projectUpdate', this.project_info);
-                        this.$toast.success('Project updated successfully', "Success", {
+
+                        this.$eventBus.$emit('timeUpdate', this.timeEntry);
+                        this.$toast.success('Time Log updated successfully', "Success", {
                             timout: 3000,
                             position: 'bottomRight'
                         });
