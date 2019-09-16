@@ -1,6 +1,6 @@
 <template>
     <div>
-        <vue-title :title="ticket.title+ ' - '+ ticket.project.name"></vue-title>
+        <vue-title v-if="ticket" :title="ticket.title+ ' - '+ ticket.project.name"></vue-title>
         <div class="row">
             <div class="col-md-12">
                 <div class="list-options">
@@ -58,45 +58,10 @@
                                     <span>10 hours (10.00)</span>
                                 </div>
                                 <div class="action-btns">
-                                    <buttton name="add-time" class="btn btn-sm btn-success" @click="addTime"> <i class="fa fa-plus"></i> Add More Time</buttton>
+                                    <button name="add-time" class="btn btn-sm btn-success" @click="addTime"> <i class="fa fa-plus"></i> Add More Time</button>
                                 </div>
                             </div>
-                            <div class="table-responsive">
-                                <table class="table table-condensed table-bordered table-striped table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th width="80">Date</th>
-                                        <th width="130">Person</th>
-                                        <th>Description</th>
-                                        <th width="80">Start</th>
-                                        <th width="80">End</th>
-                                        <th width="120">Time</th>
-                                        <th width="40">Hours</th>
-                                        <th width="30"></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <template v-for="row in time_entries">
-                                        <tr>
-                                            <td>{{ row.date | formDate }}</td>
-                                            <td>{{ row.user.name }}</td>
-                                            <td>{{ row.description }}</td>
-                                            <td>{{ row.time | time }}</td>
-                                            <td>{{ getEndTime(row.time, row.hours,  row.minutes) }}</td>
-                                            <td>
-                                                <span v-if="row.hours">{{ row.hours }} hrs</span>
-                                                <span v-if="row.minutes">{{ row.minutes }} mins</span>
-                                            </td>
-                                            <td>{{ getHours(row.hours,  row.minutes) }}</td>
-                                            <td class="actions"><i class="fa fa-pen"></i></td>
-                                        </tr>
-                                    </template>
-                                    </tbody>
-
-                                </table>
-
-                            </div>
-
+                            <time-list :time_entries="time_entries"></time-list>
                         </div>
                         <p v-else>No time have been logged against this ticket - <a href="javascript:void(0);" @click="addTime">Log time</a></p>
                         <time-form :id="ticket.id" v-if="time_form" :project_id="ticket.project.id" :ticket="ticket"></time-form>
@@ -148,6 +113,8 @@
     import {mapGetters} from 'vuex';
     import TimeForm from "./forms/TimeForm";
     import FileList from "../../components/ui/FileList";
+    import TimeList from "../../components/ui/TimeList";
+
 
     export default {
         name: "ticket-detail",
@@ -180,7 +147,7 @@
             },
         },
         components: {
-            Comment, Ticket,  TimeForm, FileList
+            Comment, Ticket,  TimeForm, FileList, TimeList
         },
         mounted(){
             this.getTicket(this.ticket_id);
@@ -215,9 +182,7 @@
             getTimes: function (val) {
                 this.$store.dispatch('tickets/getTicketTimes', val)
             },
-            getEndTime: function(t, h, m){
-                return this.$moment(t,  'HH:mm:ss').add(h,  'hours').add(m,  'minutes').format(this.$settings.TIMEFROMAT);
-            },
+
             getHours: function(h, m){
                 return ((h*60 + m)/60).toFixed(2);
             },
