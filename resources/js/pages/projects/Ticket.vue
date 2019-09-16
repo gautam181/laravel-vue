@@ -29,27 +29,7 @@
             <div class="col-md-12">
                 <div class="hpanel">
                     <div class="panel-body pb-3">
-                        <div class="file-row">
-                            <div class="thumbnail">
-                                <img src="../../images/thumb_projectFile.png" alt="thumbnail">
-                            </div>
-                            <div class="file-detail">
-                                <div class="file-info">
-                                    <div class="file-name">
-                                        team-access.png
-                                    </div>
-                                    <div class="file-meta text-muted">
-                                        by abdul khan, 40 minutes ago - 120 KB
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="file-actions">
-                                <button class="btn btn-sm btn-default"><i class="fa fa-search"></i> Preview</button>
-                                <button class="btn btn-sm btn-default"><i class="fa fa-pen"></i> Edit</button>
-                                <button class="btn btn-sm btn-default"><i class="fa fa-cloud-download"></i> Download</button>
-                            </div>
-                        </div>
+                        <file-list></file-list>
                     </div>
                 </div>
             </div>
@@ -165,6 +145,8 @@
     import Ticket from "../../components/util/Ticket";
     import {mapGetters} from 'vuex';
     import TimeForm from "./forms/TimeForm";
+    import FileList from "../../components/ui/FileList";
+
     export default {
         name: "ticket-detail",
         data(){
@@ -196,7 +178,7 @@
             },
         },
         components: {
-            Comment, Ticket,  TimeForm
+            Comment, Ticket,  TimeForm, FileList
         },
         mounted(){
             this.getTicket(this.ticket_id);
