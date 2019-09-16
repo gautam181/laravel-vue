@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProjectRequest;
 use App\Http\Requests\TimeLogRequest;
 use App\Models\TimeLog;
 use Illuminate\Http\Request;
@@ -83,14 +84,27 @@ class TimeLogController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
+     * @param TimeLogRequest $request
      * @param  \App\TimeLog  $timeLog
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, TimeLog $timeLog)
+    public function update(TimeLogRequest $request, TimeLog $timeLog)
     {
-        //
+        if( $request->validated()) {
+            // store
+            $timeLog->ticket_id = $request->ticket_id;
+            $timeLog->project_id = $request->project_id;
+            $timeLog->user_id = $request->user_id;
+            $timeLog->created_by = $request->user()->id;
+            $timeLog->description = $request->description;
+            $timeLog->date = strtotime($request->date) > 0? date('Y-m-d', strtotime($request->date)): null;
+            $timeLog->time = strtotime($request->time) > 0? date('H:i:s', strtotime($request->time)): null;
+            $timeLog->hours = $request->hours;
+            $timeLog->minutes = $request->minutes;
+            $timeLog->save();
+            return response()->json(["message"=>"Time log updated successfully", 'data'=> $timeLog->toArray()], 202);
+        }
     }
 
     /**
@@ -101,6 +115,11 @@ class TimeLogController extends Controller
      */
     public function destroy(TimeLog $timeLog)
     {
-        //
+        $status = $timeLog->delete();
+
+        return response()->json([
+            'status' => $status,
+            'message' => $status ? 'Time Log Deleted!' : 'Error Deleting Time Log'
+        ], 200);
     }
 }
