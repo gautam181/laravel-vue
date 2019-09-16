@@ -1,6 +1,6 @@
 <template>
     <div>
-
+        <vue-title :title="ticket.title+ ' - '+ ticket.project.name"></vue-title>
         <div class="row">
             <div class="col-md-12">
                 <div class="list-options">
@@ -11,8 +11,6 @@
             <div class="col-md-12">
                 <div class="hpanel">
                     <div class="panel-body pb-3" v-if="ticket">
-                        <vue-title :title="ticket.title"></vue-title>
-
                         <Ticket
                             :ticket="ticket"
                             :desc="desc"
@@ -30,6 +28,10 @@
                 <div class="hpanel">
                     <div class="panel-body pb-3">
                         <file-list></file-list>
+                        <div>
+                            <br>
+                            <a href="javascript:void(0);"> Manage Attachments</a>
+                        </div>
                     </div>
                 </div>
             </div>
