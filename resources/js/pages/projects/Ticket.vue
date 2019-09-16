@@ -29,7 +29,27 @@
             <div class="col-md-12">
                 <div class="hpanel">
                     <div class="panel-body pb-3">
-                        <p>file list</p>
+                        <div class="file-row">
+                            <div class="thumbnail">
+                                <img src="../../images/thumb_projectFile.png" alt="thumbnail">
+                            </div>
+                            <div class="file-detail">
+                                <div class="file-info">
+                                    <div class="file-name">
+                                        team-access.png
+                                    </div>
+                                    <div class="file-meta text-muted">
+                                        by abdul khan, 40 minutes ago - 120 KB
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="file-actions">
+                                <button class="btn btn-sm btn-default"><i class="fa fa-search"></i> Preview</button>
+                                <button class="btn btn-sm btn-default"><i class="fa fa-pen"></i> Edit</button>
+                                <button class="btn btn-sm btn-default"><i class="fa fa-cloud-download"></i> Download</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
