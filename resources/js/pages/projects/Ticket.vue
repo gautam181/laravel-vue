@@ -22,7 +22,6 @@
                 <div class="list-options">
                     <h2 class="">Files</h2>
                 </div>
-
             </div>
             <div class="col-md-12">
                 <div class="hpanel">
@@ -154,6 +153,10 @@
             this.getComments(this.ticket_id);
             this.getTimes(this.ticket_id);
             this.myRoute = this.$router.options.routes.find(route => route.name === this.$route.name);
+            this.$eventBus.$on('timeUpdate', (data)=> {
+                console.log(data);
+                this.getTimes(this.ticket_id);
+            });
             this.$root.$on('bv::modal::hidden', (bvEvent, modalId) => {
                 if (modalId == 'time-form')
                     this.time_form = false;

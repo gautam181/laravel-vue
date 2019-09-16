@@ -110,11 +110,12 @@
     export default {
         name: "time-form",
         props: {
-            'ticket': {type:Object, default: {}},
+            'ticket': {type:Object, default: () => {}},
             'project_id': {type:Number, required: true},
             'id': {type: Number, default: 0},
             'add' : {type: Boolean, default: true},
-            'tab': {default: 'description'}
+            'tab': {default: 'description'},
+            'time_log': {type: Object}
         },
         data(){
             return {
@@ -122,7 +123,7 @@
                 project: {
                     'id': '', 'name':'', 'description':'', 'owner': {}, 'start_date': '', 'end_date': ''
                 },
-                timeEntry: {
+                /*timeEntry: {
                     user : {'id': this.$user.id, 'name': this.$user.name},
                     start_date: this.$moment().format(this.$settings.FORMDATEFROMAT),
                     start_time: this.$moment().format(this.$settings.TIMEFROMAT),
@@ -130,7 +131,7 @@
                     minutes: 0,
                     description: '',
                     id: 0
-                },
+                },*/
                 configs: {
                     timePicker: {
                         format: 'LT',
@@ -171,6 +172,19 @@
             }
         },
         computed: {
+            timeEntry: function(){
+                let data = {
+                    user : {'id': this.$user.id, 'name': this.$user.name},
+                    start_date: this.$moment().format(this.$settings.FORMDATEFROMAT),
+                    start_time: this.$moment().format(this.$settings.TIMEFROMAT),
+                    hours: 0,
+                    minutes: 0,
+                    description: '',
+                    id: 0
+                };
+
+                return this.time_log ? Object.assign({}, this.time_log) : data;
+            },
             modal_title: function(){
                 return this.id ? 'Edit Logged Time': 'Log Time';
             },

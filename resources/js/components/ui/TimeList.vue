@@ -27,23 +27,27 @@
                             <span v-if="row.minutes">{{ row.minutes }} mins</span>
                         </td>
                         <td>{{ getHours(row.hours,  row.minutes) }}</td>
-                        <td class="actions"><i class="fa fa-pen"></i></td>
+                        <td class="actions"><a href="javascript:void(0);" @click="editTimeLog(row)"><i class="fa fa-pen"></i></a></td>
                     </tr>
                 </template>
                 </tbody>
-
             </table>
+            <time-form :id="ticket_id" v-if="time_form" :project_id="project_id" :ticket="ticket" :time_log="time_log"></time-form>
         </div>
     </div>
 </template>
 
 <script>
+    import TimeForm from "../../pages/projects/forms/TimeForm";
+
     export default {
         name: "TimeList",
         props: {
             time_entries: {type: Array, required: true},
-            ticket_id: {type: Number},
-            project_id: {type: Number}
+            ticket: {type: Object}
+        },
+        components: {
+            TimeForm
         },
         methods: {
             getEndTime: function(t, h, m){
@@ -52,11 +56,30 @@
             getHours: function(h, m){
                 return ((h*60 + m)/60).toFixed(2);
             },
+            editTimeLog: function (data) {
+                this.time_form = true;
+                this.project_id = data.project_id;
+                this.ticket_id = data.ticket_id;
+                data.start_time = this.$moment(data.time, 'HH:mm:ss').format(this.$settings.TIMEFROMAT);
+                data.start_date = this.$moment(data.date, 'YYYY-MM-DD').format(this.$settings.FORMDATEFROMAT);
+                this.time_log = data;
+            }
         },
         data() {
-            return {}
+            return {
+                time_form: false,
+                ticket_id: 0,
+                project_id: 0,
+                time_log: {}
+            }
         },
         mounted() {
+            this.$root.$on('bv::modal::hidden', (bvEvent, modalId) => {
+                if (modalId == 'time-form'){
+                    this.time_form = false;
+                    time_log: {}
+                }
+            })
         },
         watch: {}
     }
