@@ -1,6 +1,6 @@
 <template>
     <b-modal id="time-form" size="lg" top  ref="time_form" :ok-title="btn_ok_label" :title="modal_title">
-        <template slot="modal-footer">
+        <template v-slot:modal-footer="{ ok, cancel, hide }">
             <button type="button" class="btn btn-secondary mr-auto" @click="cancel()">Cancel</button>
             <button type="button" class="btn btn-danger mr-auto" v-if="time_log" @click="deleteTimeLog"><i class="fa fa-times"></i> Delete time Entry</button>
             <button type="button" class="btn btn-success" @click="saveTimeLog">{{btn_ok_label}}</button>

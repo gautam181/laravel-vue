@@ -159,7 +159,7 @@
                 this.getTimes(this.ticket_id);
             });
             this.$root.$on('bv::modal::hidden', (bvEvent, modalId) => {
-                if (modalId == 'time_form')
+                if (modalId == 'time-form')
                     this.time_form = false;
             })
         },
