@@ -40,6 +40,7 @@ import {Editor} from '@toast-ui/vue-editor';
 import VueDateTimePicker from 'vue-bootstrap-datetimepicker';
 import VueInsProgressBar from 'vue-ins-progress-bar';
 import VueSlider from 'vue-slider-component';
+import UFileUpload from 'vue-upload-component';
 
 
 //component
@@ -54,6 +55,7 @@ Vue.component('v-select', vSelect);
 Vue.component('date-range-picker', DateRangePicker);
 Vue.component('editor', Editor);
 Vue.component('VueSlider', VueSlider);
+Vue.component('file-upload', UFileUpload);
 
 $.extend(true, $.fn.datetimepicker.defaults, {
     icons: {
