@@ -1,7 +1,7 @@
 <template>
     <div class="file-row">
         <div class="thumbnail">
-            <img src="../../images/thumb_projectFile.png" alt="thumbnail">
+            <img src="../../images/document.svg" alt="thumbnail">
         </div>
         <div class="file-detail">
             <div class="file-info">

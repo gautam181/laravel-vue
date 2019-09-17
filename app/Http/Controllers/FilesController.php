@@ -35,7 +35,9 @@ class FilesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $path = $request->file('file')->storeAs('files', $request->file('file')->getClientOriginalName());
+        return $path;
     }
 
     /**

@@ -26,10 +26,38 @@
             <div class="col-md-12">
                 <div class="hpanel">
                     <div class="panel-body pb-3">
+                        <template v-for="file in files">
+                            <div class="file-upload-row">
+                                <a href="#" class="upload-cancel" @click.prevent="file.active ? $refs.upload.update(file, {error: 'cancel'}) : false"><i class="fa fa-times text-danger fa-2x"></i></a>
+                                <div class="filename">
+                                    {{file.name}}
+                                </div>
+                                <div class="progress" v-if="file.active || file.progress !== '0.00'">
+                                    <div :class="{'progress-bar': true, 'progress-bar-striped': true, 'bg-danger': file.error, 'progress-bar-animated': file.active}" role="progressbar" :style="{width: file.progress + '%'}">{{file.progress}}%</div>
+                                </div>
+                            </div>
+
+                        </template>
                         <file-list></file-list>
                         <div>
                             <br>
                             <a href="javascript:void(0);" class="text-green"> Manage Attachments</a>
+                        </div>
+                        <file-upload
+                            class="btn btn-primary d-none"
+                            :post-action="upload_url"
+                            :multiple="true"
+                            :drop="true"
+                            :headers="headers"
+                            :drop-directory="false"
+                            v-model="files"
+                            :data="{'ticket_id': ticket_id, 'project_id': ticket.project_id}"
+                            @input="inputUpdate"
+                            @input-file="inputFile"
+                            ref="upload">
+                        </file-upload>
+                        <div v-show="$refs.upload && $refs.upload.dropActive" class="drop-active">
+                            <h3>Drop files to upload</h3>
                         </div>
                     </div>
                 </div>
@@ -125,7 +153,10 @@
                 order_by: 'date',
                 add_comment: {comment:'', id:''},
                 desc: true,
-                time_form: false
+                time_form: false,
+                upload_url: this.$settings.APIURL+'/files',
+                files: [],
+                headers: this.$ajaxHeader
             }
         },
         created(){
@@ -164,6 +195,27 @@
             })
         },
         methods:{
+            inputUpdate(newFile) {
+                this.$refs.upload.active = true;
+                if (newFile.xhr) {
+                    //  Get the response status code
+                    console.log('status', newFile.xhr.status)
+                }
+            },
+            inputFile: function (newFile, oldFile) {
+                if (newFile && oldFile && !newFile.active && oldFile.active) {
+                    // Get response data
+                    console.log('response', newFile.response)
+                    if (newFile.xhr) {
+                        //  Get the response status code
+                        console.log('status', newFile.xhr.status)
+                        if (newFile.xhr.status == 200){
+                            this.$refs.upload.remove(newFile);
+                        }
+
+                    }
+                }
+            },
             addTime: function(){
                 this.time_form = true;
             },
@@ -225,5 +277,29 @@
 </script>
 
 <style scoped>
-
+    .drop-active {
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        position: absolute;
+        z-index: 9999;
+        opacity: .6;
+        text-align: center;
+        background: rgba(0,0,0,0.25);
+        border-radius: 5px;
+    }
+    .drop-active h3 {
+        margin: -.5em 0 0;
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+        font-size: 40px;
+        color: #505050;
+        padding: 0;
+    }
 </style>
