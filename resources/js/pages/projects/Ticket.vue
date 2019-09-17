@@ -29,7 +29,7 @@
                         <file-list></file-list>
                         <div>
                             <br>
-                            <a href="javascript:void(0);"> Manage Attachments</a>
+                            <a href="javascript:void(0);" class="text-green"> Manage Attachments</a>
                         </div>
                     </div>
                 </div>
@@ -61,6 +61,7 @@
                                 </div>
                             </div>
                             <time-list :time_entries="time_entries"></time-list>
+                            <a href="javascript:void(0);" class="text-green" @click="addTime">Add more time</a>
                         </div>
                         <p v-else>No time have been logged against this ticket - <a href="javascript:void(0);" @click="addTime">Log time</a></p>
                         <time-form :id="ticket.id" v-if="time_form" :project_id="ticket.project.id" :ticket="ticket"></time-form>
@@ -158,7 +159,7 @@
                 this.getTimes(this.ticket_id);
             });
             this.$root.$on('bv::modal::hidden', (bvEvent, modalId) => {
-                if (modalId == 'time-form')
+                if (modalId == 'time_form')
                     this.time_form = false;
             })
         },

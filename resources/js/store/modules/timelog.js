@@ -22,29 +22,12 @@ const getters = {
 const actions = {
     getTime: (context, id) => {
         let comment = {};
-        axios.get("/comment/"+id)
+        axios.get("/time-log/"+id)
             .then(response => {
                 comment = response.data;
             });
 
         return comment;
-    },
-    getTicketTime: (context, data)=>{
-        let id = data.id;
-        return new Promise((resolve, reject) => {
-            axios({
-                method: id ? 'put' : 'post',
-                url: '/comment'+(id ? '/'+id : ''),
-                data: data.body
-            }).
-            then(function (response) {
-                resolve(response);
-            })
-                .catch(error => {
-                    console.log(error);
-                    reject(error);
-                });
-        });
     },
     saveTime: (context, data) => {
         let id = data.id;
@@ -67,7 +50,7 @@ const actions = {
         return new Promise((resolve, reject) => {
             axios({
                 method: 'delete',
-                url: '/comment/'+id
+                url: '/time-log/'+id
             }).
             then(function (response) {
                 resolve(response);

@@ -169,12 +169,16 @@ label{font-weight: 600;}
         }
     }
 }
+.text-green{color:#00acac;}
 .btn{cursor: pointer;}
 /* filters */
 .text-muted {
     color: #6c757dcf !important;
 }
 .table{color:inherit;}
+.modal-open {overflow: visible; padding-right: 0px !important;
+    .navbar.top-nav{padding-right: 0px!important;}
+}
 .table-hover tbody tr:hover{color:inherit;}
 .total-filter{
     display: flex;

@@ -1,5 +1,10 @@
 <template>
-    <b-modal id="time-form" size="lg" top  ref="time-form" :ok-title="btn_ok_label" :title="modal_title" @ok="saveTimeLog">
+    <b-modal id="time-form" size="lg" top  ref="time_form" :ok-title="btn_ok_label" :title="modal_title">
+        <template slot="modal-footer">
+            <button type="button" class="btn btn-secondary mr-auto" @click="cancel()">Cancel</button>
+            <button type="button" class="btn btn-danger mr-auto" v-if="time_log" @click="deleteTimeLog"><i class="fa fa-times"></i> Delete time Entry</button>
+            <button type="button" class="btn btn-success" @click="saveTimeLog">{{btn_ok_label}}</button>
+        </template>
         <div class="modal-info-bar" v-if="ticket">
             <span class="modal-info-bar-label">Ticket</span>
             <span class="modal-info-bar-content">{{ ticket.title }}</span>
@@ -89,10 +94,8 @@
                                     </div>
                                 </div>
                             </b-tab>
-                            <b-tab title="Progress"  :active="tab == 'progress'">
-                                <div class="form-group">
-                                    <label>Project Progress</label>
-                                </div>
+                            <b-tab title="Task"  :active="tab == 'task'">
+
                             </b-tab>
                         </b-tabs>
                     </div>
@@ -113,9 +116,9 @@
             'ticket': {type:Object, default: () => {}},
             'project_id': {type:Number, required: true},
             'id': {type: Number, default: 0},
-            'add' : {type: Boolean, default: true},
+            'add' : {type: Boolean, default: false},
             'tab': {default: 'description'},
-            'time_log': {type: Object}
+            'time_log': {type: Object, default: () => {}}
         },
         data(){
             return {
@@ -123,7 +126,7 @@
                 project: {
                     'id': '', 'name':'', 'description':'', 'owner': {}, 'start_date': '', 'end_date': ''
                 },
-                /*timeEntry: {
+                timeEntry: {
                     user : {'id': this.$user.id, 'name': this.$user.name},
                     start_date: this.$moment().format(this.$settings.FORMDATEFROMAT),
                     start_time: this.$moment().format(this.$settings.TIMEFROMAT),
@@ -131,7 +134,7 @@
                     minutes: 0,
                     description: '',
                     id: 0
-                },*/
+                },
                 configs: {
                     timePicker: {
                         format: 'LT',
@@ -172,24 +175,11 @@
             }
         },
         computed: {
-            timeEntry: function(){
-                let data = {
-                    user : {'id': this.$user.id, 'name': this.$user.name},
-                    start_date: this.$moment().format(this.$settings.FORMDATEFROMAT),
-                    start_time: this.$moment().format(this.$settings.TIMEFROMAT),
-                    hours: 0,
-                    minutes: 0,
-                    description: '',
-                    id: 0
-                };
-
-                return this.time_log ? Object.assign({}, this.time_log) : data;
-            },
             modal_title: function(){
-                return this.id ? 'Edit Logged Time': 'Log Time';
+                return this.time_log ? 'Edit Logged Time': 'Log Time';
             },
             btn_ok_label: function(){
-                return this.id ? 'Save Changes': 'Log Time';
+                return this.time_log ? 'Save Changes': 'Log Time';
             },
             show_end_date: function(){
                 let s_date = this.$moment(this.start_date, this.$settings.FORMDATEFROMAT);
@@ -257,9 +247,12 @@
                     .then(response => {
                         this.project = this.$store.getters['projects/getProject'](this.id);
                     })*/
+            if(this.time_log){
+                this.timeEntry = Object.assign({}, this.time_log);
+            }
             this.timeEntry.end_date = this.timeEntry.start_date;
             this.$store.dispatch('users/getUsersList');
-            this.$refs['time-form'].show();
+            this.$refs['time_form'].show();
         },
         methods:{
             onStartChange(e) {
@@ -286,8 +279,9 @@
             },
             startTimeUpdate: function(e){
                 let val = e.date.format(this.$settings.TIMEFROMAT);
-                console.log('s time update', val);
+                console.log('start time update', val);
                 this.getDuration(this.get_start_date(this.start_date, val), this.get_end_date(this.end_date,  this.end_time)).then(res => {
+                    console.log(res);
                     this.hours = res.hours;
                     this.minutes = res.minutes;
                     this.timeEntry.start_time = val;
@@ -329,13 +323,45 @@
                             timout: 3000,
                             position: 'bottomRight'
                         });
+                        this.$refs.time_form.hide();
                     })
                     .catch(error => {
+                        console.error(error);
                         this.$toast.warning('Error while updating the data!', "Warning", {
                             timout: 3000,
                             position: 'bottomRight'
                         });
                     });
+            },
+            deleteTimeLog: function () {
+                this.$swal(
+                    {
+                        title: 'Are you sure?',
+                        text: "You won't be able to revert this!",
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                        if (result.value) {
+                            this.$store.dispatch('timelog/deleteTime', this.time_log.id)
+                                .then(res=>{
+                                    this.$eventBus.$emit('timeUpdate', this.timeEntry);
+                                    this.$toast.success('Time log deleted successfully', "Success", {
+                                        timout: 1000,
+                                        position: 'bottomRight'
+                                    });
+                                    this.$nextTick(() => {
+                                        this.$refs.time_form.hide();
+                                    })
+                                })
+                                .catch(exp=>{
+                                    this.$emit('handle-exception', exp);
+                                })
+                        }
+                    }
+                );
             }
         },
         beforeRouteUpdate (to, from, next) {

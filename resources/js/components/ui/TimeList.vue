@@ -75,7 +75,7 @@
         },
         mounted() {
             this.$root.$on('bv::modal::hidden', (bvEvent, modalId) => {
-                if (modalId == 'time-form'){
+                if (modalId == 'time_form'){
                     this.time_form = false;
                     time_log: {}
                 }
