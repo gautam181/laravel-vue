@@ -212,9 +212,17 @@ label{font-weight: 600;}
         flex: 0 0 40px;
         display: inline-flex;
         position: relative;
-        img {
+        img.img {
             width: 40px;
             height: 40px;
+            border-radius: 4px;
+            margin: 0px auto;
+            /*border: 1px solid #e1e1e1;
+            background-color: rgba(225, 225, 225, 0.47);*/
+        }
+        img.icon {
+            width: auto;
+            max-height: 40px;
             border-radius: 4px;
             /*border: 1px solid #e1e1e1;
             background-color: rgba(225, 225, 225, 0.47);*/

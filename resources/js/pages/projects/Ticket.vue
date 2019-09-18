@@ -38,7 +38,7 @@
                             </div>
 
                         </template>
-                        <file-list></file-list>
+                        <file-list :file="file"></file-list>
                         <div>
                             <br>
                             <a href="javascript:void(0);" class="text-green"> Manage Attachments</a>
@@ -156,7 +156,17 @@
                 time_form: false,
                 upload_url: this.$settings.APIURL+'/files',
                 files: [],
-                headers: this.$ajaxHeader
+                headers: this.$ajaxHeader,
+                file: {
+                    id: 1,
+                    thumbnail: '',
+                    name: 'team-access.png',
+                    updated_at: new Date(),
+                    size: 120*1024,
+                    uploaded_by: {
+                        name: 'Abdul Khan'
+                    }
+                }
             }
         },
         created(){

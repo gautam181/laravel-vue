@@ -1,15 +1,15 @@
 <template>
     <div class="file-row">
         <div class="thumbnail">
-            <img src="../../images/document.svg" alt="thumbnail">
+            <img class="icon" src="../../images/document.svg" alt="thumbnail">
         </div>
         <div class="file-detail">
             <div class="file-info">
                 <div class="file-name">
-                    team-access.png
+                    {{ file.name }}
                 </div>
                 <div class="file-meta text-muted">
-                    by abdul khan, 40 minutes ago - 120 KB
+                    by {{ file.uploaded_by.name }}, {{ file.updated_at | moment("from", "now") }} - {{ file.size | prettyBytes }}
                 </div>
             </div>
 
@@ -26,7 +26,8 @@
     export default {
         name: "FileList",
         props: {
-            'name': {type: String}
+            name: {type: String},
+            file: {type: Object, required: true}
         },
         methods: {
 
