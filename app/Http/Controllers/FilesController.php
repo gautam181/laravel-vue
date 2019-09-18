@@ -35,8 +35,18 @@ class FilesController extends Controller
      */
     public function store(Request $request)
     {
+        $inputfile = $request->file('file');
+        $path = $request->file('file')->store('files/'.$request->project_id);
+        $file = new Files();
+        $file->filename = $path;
+        $file->project_id= $request->project_id;
+        $file->ticket_id = $request->ticket_id;
+        $file->knownas = $inputfile->getClientOriginalName();
+        $file->size = $inputfile->getSize();
+        $file->description = $request->description;
+        $file->uploaded_by = $request->user()->id;
+        $file->save();
 
-        $path = $request->file('file')->storeAs('files', $request->file('file')->getClientOriginalName());
         return $path;
     }
 
