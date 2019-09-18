@@ -23,7 +23,18 @@
                     </ul>
                 </div>
             </div>
-            <top-nav></top-nav>
+            <ul class="nav navbar-nav navbar-left">
+                <router-link v-bind:to="{'name': 'dashboard'}" active-class="active" class="nav-item" tag="li" >
+                    <a class="">Dashboard</a>
+                </router-link>
+                <router-link v-bind:to="{'name': 'projects'}"  :class="{
+                'nav-item': true,
+                'active': subIsActive('/projects'),
+                'active': subIsActive('/ticket')
+                }" tag="li" >
+                    <a class="">Projects</a>
+                </router-link>
+            </ul>
             <div class="navbar-right pull-right">
                 <ul class="nav navbar-nav no-borders">
                     <li class="dropdown ">
@@ -89,6 +100,13 @@
                     document.body.classList.add('hide-sidebar');
                 else
                     document.body.classList.remove('hide-sidebar');
+            },
+            subIsActive(path) {
+                const paths = Array.isArray(path) ? path : [path]
+                return paths.some(path => {
+                    console.log(this.$route.path.indexOf(path));
+                    return this.$route.path.indexOf(path) === 0
+                })
             }
         }
     }
