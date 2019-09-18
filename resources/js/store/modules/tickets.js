@@ -162,6 +162,12 @@ const actions = {
             .then(response => {
                 context.commit('setTicketTimes', {'id': id,  'times':response.data.data});
             });
+    },
+    getTicketFiles: (context, id) => {
+        axios.get("/ticket/"+id+'/files?sort='+context.state.sort_by)
+            .then(response => {
+                context.commit('setTicketFiles', {'id': id,  'files':response.data.data});
+            });
     }
 };
 
@@ -214,6 +220,15 @@ const mutations = {
             Vue.set(rows, 'times', [...val.times]);
         } else
             state.ticket_times.push(val)
+    },
+    setTicketFiles: (state, val) => {
+        let id = val.id;
+        const rows= state.ticket_files.find(t => t.id == id);
+        if(rows){
+            //cmts.comments = {...cmts, ...val};
+            Vue.set(rows, 'files', [...val.files]);
+        } else
+            state.ticket_files.push(val)
     },
     setDates: (state, val ) =>{
         let id = val.id;

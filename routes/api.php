@@ -26,6 +26,7 @@ Route::group(['prefix'=>'/v1', 'middleware'=>['auth:api'] ], function (){
     Route::resource('ticket', 'TicketController',['except'=>['index', 'create', 'edit']]);
     Route::put('ticket/{id}/dates', ['uses'=>'TicketController@updateDates', 'as'=>'ticket.update.dates']);
     Route::get('ticket/{id}/time-entries', ['uses'=>'TicketController@timeEntries', 'as'=>'ticket.time-entries']);
+    Route::get('ticket/{id}/files', ['uses'=>'TicketController@files', 'as'=>'ticket.files']);
 
     Route::get('comments', ['uses'=>'CommentController@index', 'as'=>'comment.list']);
     Route::resource('comment', 'CommentController',['except'=>['index', 'create', 'edit']]);

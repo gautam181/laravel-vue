@@ -6,10 +6,10 @@
         <div class="file-detail">
             <div class="file-info">
                 <div class="file-name">
-                    {{ file.name }}
+                    {{ file.knownas }}
                 </div>
                 <div class="file-meta text-muted">
-                    by {{ file.uploaded_by.name }}, {{ file.updated_at | moment("from", "now") }} - {{ file.size | prettyBytes }}
+                    by {{ file.user.name }}, {{ file.updated_at | moment("from", "now") }} - {{ file.size | prettyBytes }}
                 </div>
             </div>
 
@@ -26,7 +26,7 @@
     export default {
         name: "FileList",
         props: {
-            name: {type: String},
+            name: {type: String, default(){return 'fileList'}},
             file: {type: Object, required: true}
         },
         methods: {

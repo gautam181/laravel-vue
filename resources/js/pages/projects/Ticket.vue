@@ -38,7 +38,10 @@
                             </div>
 
                         </template>
-                        <file-list :file="file"></file-list>
+                        <template v-for="file in ticketFiles">
+                            <file-list :file="file"></file-list>
+                        </template>
+
                         <div>
                             <br>
                             <a href="javascript:void(0);" class="text-green"> Manage Attachments</a>
@@ -51,7 +54,7 @@
                             :headers="headers"
                             :drop-directory="false"
                             v-model="files"
-                            :data="{'ticket_id': ticket_id, 'project_id': ticket.project_id}"
+                            :data="{'ticket_id': ticket_id, 'project_id': ticket.project_id, 'description': ''}"
                             @input="inputUpdate"
                             @input-file="inputFile"
                             ref="upload">
@@ -157,16 +160,28 @@
                 upload_url: this.$settings.APIURL+'/files',
                 files: [],
                 headers: this.$ajaxHeader,
-                file: {
-                    id: 1,
-                    thumbnail: '',
-                    name: 'team-access.png',
-                    updated_at: new Date(),
-                    size: 120*1024,
-                    uploaded_by: {
-                        name: 'Abdul Khan'
+                /*ticketFiles: [
+                    {
+                        id: 1,
+                        thumbnail: '',
+                        name: 'team-access.png',
+                        updated_at: new Date(),
+                        size: 120*1024,
+                        uploaded_by: {
+                            name: 'Abdul Khan'
+                        }
+                    },
+                    {
+                        id: 2,
+                        thumbnail: '',
+                        name: 'team-access-2.png',
+                        updated_at: new Date(),
+                        size: 120*3*1024,
+                        uploaded_by: {
+                            name: 'Abdul Khan'
+                        }
                     }
-                }
+                ]*/
             }
         },
         created(){
@@ -175,8 +190,11 @@
         },
         computed:{
             ...mapGetters({
-                sort: 'tickets/getSortBy'
+                sort: 'tickets/getSortBy',
             }),
+            ticketFiles(){
+                return this.$store.getters['tickets/getTicketFiles'](this.ticket_id);
+            },
             comments(){
                 return this.$store.getters['tickets/getTicketComments'](this.ticket_id);
             },
@@ -194,6 +212,7 @@
             this.getTicket(this.ticket_id);
             this.getComments(this.ticket_id);
             this.getTimes(this.ticket_id);
+            this.getFiles(this.ticket_id);
             this.myRoute = this.$router.options.routes.find(route => route.name === this.$route.name);
             this.$eventBus.$on('timeUpdate', (data)=> {
                 console.log(data);
@@ -221,6 +240,7 @@
                         console.log('status', newFile.xhr.status)
                         if (newFile.xhr.status == 200){
                             this.$refs.upload.remove(newFile);
+                            this.getFiles(this.ticket_id);
                         }
 
                     }
@@ -244,6 +264,9 @@
             },
             getComments: function (val) {
                 this.$store.dispatch('tickets/getTicketComments', val)
+            },
+            getFiles: function (val) {
+                this.$store.dispatch('tickets/getTicketFiles', val)
             },
             getTimes: function (val) {
                 this.$store.dispatch('tickets/getTicketTimes', val)
