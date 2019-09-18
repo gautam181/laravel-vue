@@ -91,7 +91,7 @@
             }
         },
         components:{
-            TopNav
+            //TopNav
         },
         methods: {
             handleSidebarMinified: function(){
