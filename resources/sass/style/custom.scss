@@ -237,6 +237,16 @@ label{font-weight: 600;}
                 display: flex;
                 font-size: 15px;
                 font-weight: 600;
+                .base-name{
+                    display: inline-block;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    max-width: 35vw;
+                }
+                .extension{
+
+                }
             }
             .file-meta{
 

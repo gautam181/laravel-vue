@@ -94,4 +94,14 @@ class FilesController extends Controller
     {
         //
     }
+
+    public function detail(Request $request, $id)
+    {
+        Files::where('id', $id)->update([
+            'knownas' => $request->knownas,
+            'description' => $request->description
+        ]);
+
+        return response()->json(["message"=>"File details updated successfully", 'data'=> $request->toArray()], 202);
+    }
 }

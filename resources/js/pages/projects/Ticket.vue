@@ -38,10 +38,7 @@
                             </div>
 
                         </template>
-                        <template v-for="file in ticketFiles">
-                            <file-list :file="file"></file-list>
-                        </template>
-
+                        <file-list :files="ticketFiles" @edit-file="fileEdit"></file-list>
                         <div>
                             <br>
                             <a href="javascript:void(0);" class="text-green"> Manage Attachments</a>
@@ -146,7 +143,6 @@
     import FileList from "../../components/ui/FileList";
     import TimeList from "../../components/ui/TimeList";
 
-
     export default {
         name: "ticket-detail",
         data(){
@@ -157,6 +153,7 @@
                 add_comment: {comment:'', id:''},
                 desc: true,
                 time_form: false,
+                file_form: false,
                 upload_url: this.$settings.APIURL+'/files',
                 files: [],
                 headers: this.$ajaxHeader,
@@ -218,12 +215,21 @@
                 console.log(data);
                 this.getTimes(this.ticket_id);
             });
+            this.$eventBus.$on('fileUpdate', (data)=> {
+                console.log(data);
+                this.getFiles(this.ticket_id);
+            });
             this.$root.$on('bv::modal::hidden', (bvEvent, modalId) => {
                 if (modalId == 'time-form')
                     this.time_form = false;
+                if (modalId == 'file-form')
+                    this.file_form = false;
             })
         },
         methods:{
+            fileEdit: function(file){
+                console.log(file);
+            },
             inputUpdate(newFile) {
                 this.$refs.upload.active = true;
                 if (newFile.xhr) {
