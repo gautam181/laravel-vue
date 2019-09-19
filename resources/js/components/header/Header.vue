@@ -29,8 +29,7 @@
                 </router-link>
                 <router-link v-bind:to="{'name': 'projects'}"  :class="{
                 'nav-item': true,
-                'active': subIsActive('/projects'),
-                'active': subIsActive('/ticket')
+                'active': subIsActive('/projects') || subIsActive('/ticket')
                 }" tag="li" >
                     <a class="">Projects</a>
                 </router-link>
@@ -104,7 +103,7 @@
             subIsActive(path) {
                 const paths = Array.isArray(path) ? path : [path]
                 return paths.some(path => {
-                    console.log(this.$route.path.indexOf(path));
+                    console.log(this.$route.path.indexOf(path), path);
                     return this.$route.path.indexOf(path) === 0
                 })
             }
