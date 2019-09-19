@@ -32,6 +32,7 @@ Route::group(['prefix'=>'/v1', 'middleware'=>['auth:api'] ], function (){
     Route::resource('comment', 'CommentController',['except'=>['index', 'create', 'edit']]);
     Route::get('projects', ['uses'=>'ProjectController@index', 'as'=>'project.list']);
     Route::get('project/tickets/{id}', ['uses'=>'ProjectController@tickets', 'as'=>'project.ticket']);
+    Route::get('project/{id}/time', ['uses'=>'ProjectController@timeLog', 'as'=>'project.time']);
     Route::put('project/{id}/complete', ['uses'=>'ProjectController@completed', 'as'=>'project.completed']);
     Route::resource('project', 'ProjectController',['except'=>['index', 'create', 'edit']]);
 

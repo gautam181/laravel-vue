@@ -40,11 +40,10 @@
                         </template>
                         <file-list :files="ticketFiles" @edit-file="fileEdit"></file-list>
                         <div>
-                            <br>
-                            <a href="javascript:void(0);" class="text-green"> Manage Attachments</a>
+
                         </div>
                         <file-upload
-                            class="btn btn-primary d-none"
+                            class="text-green btn"
                             :post-action="upload_url"
                             :multiple="true"
                             :drop="true"
@@ -54,7 +53,7 @@
                             :data="{'ticket_id': ticket_id, 'project_id': ticket.project_id, 'description': ''}"
                             @input="inputUpdate"
                             @input-file="inputFile"
-                            ref="upload">
+                            ref="upload">Add More or Drop files
                         </file-upload>
                         <div v-show="$refs.upload && $refs.upload.dropActive" class="drop-active">
                             <h3>Drop files to upload</h3>
@@ -156,6 +155,7 @@
                 file_form: false,
                 upload_url: this.$settings.APIURL+'/files',
                 files: [],
+                upload_files: false,
                 headers: this.$ajaxHeader,
                 /*ticketFiles: [
                     {

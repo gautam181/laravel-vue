@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProjectRequest;
 use App\Models\Ticket;
+use App\Models\TimeLog;
 use Validator;
 use DB;
 use App\Models\Project;
@@ -134,6 +135,10 @@ class ProjectController extends Controller
         return response()->json($data);
     }
 
+    public function timeLog($id, Request $request){
+        $data = TimeLog::getTimesLog($id, $request);
+        return response()->json($data);
+    }
     /**
      * @param $id project id
      *

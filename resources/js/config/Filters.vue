@@ -19,6 +19,13 @@
             'due_end_date': '',
             'due_date_range':{id: '0', value: 'Any Time'},
             'assigned_to':[],
+        },
+        project_time: {
+            'keyword': '',
+            'start_date': '',
+            'end_date': '',
+            'created_range':{id: '0', value: 'Any Time'},
+            'logged_by':[],
         }
     }
 
