@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Files;
+use App\Models\File;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
-class FilesController extends Controller
+class FileController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -36,8 +37,8 @@ class FilesController extends Controller
     public function store(Request $request)
     {
         $inputfile = $request->file('file');
-        $path = $request->file('file')->store('files/'.$request->project_id);
-        $file = new Files();
+        $path = $request->file('file')->store('files/'.$request->project_id.'-'.$request->ticket_id);
+        $file = new File();
         $file->filename = $path;
         $file->project_id= $request->project_id;
         $file->ticket_id = $request->ticket_id;
@@ -53,10 +54,11 @@ class FilesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Files  $files
+     * @param  \App\Models\File $file
+     *
      * @return \Illuminate\Http\Response
      */
-    public function show(Files $files)
+    public function show(File $file)
     {
         //
     }
@@ -64,10 +66,11 @@ class FilesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Files  $files
+     * @param  \App\Models\File  $files
+     *
      * @return \Illuminate\Http\Response
      */
-    public function edit(Files $files)
+    public function edit(File $files)
     {
         //
     }
@@ -76,10 +79,11 @@ class FilesController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Files  $files
+     * @param \App\Models\File  $file
+     *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Files $files)
+    public function update(Request $request, File $file)
     {
         //
     }
@@ -87,17 +91,24 @@ class FilesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Files  $files
+     * @param \App\Models\File  $file
+     *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Files $files)
+    public function destroy(File $file)
     {
-        //
+        Storage::delete($file->filename);
+        $status = $file->delete();
+
+        return response()->json([
+            'status' => $status,
+            'message' => $status ? 'File Deleted!' : 'Error Deleting File'
+        ], 200);
     }
 
     public function detail(Request $request, $id)
     {
-        Files::where('id', $id)->update([
+        File::where('id', $id)->update([
             'knownas' => $request->knownas,
             'description' => $request->description
         ]);

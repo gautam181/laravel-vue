@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TicketRequest;
 use App\Models\Comment;
-use App\Models\Files;
+use App\Models\File;
 use App\Models\Ticket;
 use App\Models\TimeLog;
 use Illuminate\Http\Request;
@@ -171,9 +171,9 @@ class TicketController extends Controller
      */
     public function files(Request $request, $id)
     {
-        $data = Files::with(['user', 'ticket', 'project'])
-                       ->where('ticket_id', $id)
-                       ->orderby('id', 'asc')->paginate(100);
+        $data = File::with(['user', 'ticket', 'project'])
+                    ->where('ticket_id', $id)
+                    ->orderby('id', 'asc')->paginate(100);
 
         return response()->json($data);
 

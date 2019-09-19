@@ -7,7 +7,7 @@
 
         <div class="row">
             <div class="col-md-12" v-if="file_info">
-                <form method="get" class="form-horizontal">
+                <form method="get" class="form-horizontal" @submit="saveFileDetails">
                     <div class="form-group">
                         <label class="control-label">File name:</label>
                         <div class=""><input type="text" name="name" v-model="file_info.knownas" class="form-control form-control-sm">

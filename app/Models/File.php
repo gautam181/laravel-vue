@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Models\Auth\User;
 use Illuminate\Database\Eloquent\Model;
 
-class Files extends Model
+class File extends Model
 {
     public function user(){
         return $this->belongsTo(User::class, 'uploaded_by');

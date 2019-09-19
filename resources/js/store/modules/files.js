@@ -52,7 +52,7 @@ const actions = {
         return new Promise((resolve, reject) => {
             axios({
                 method: 'delete',
-                url: '/file/'+id
+                url: '/files/'+id
             }).
             then(function (response) {
                 resolve(response);

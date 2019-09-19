@@ -17,9 +17,9 @@
 
                 </div>
                 <div class="file-actions">
-                    <button class="btn btn-sm btn-default" @click="previewFile(file)"><i class="fas fa-search"></i> Preview</button>
+                    <button class="btn btn-sm btn-default" @click="previewFile(file.filename)"><i class="fas fa-search"></i> Preview</button>
                     <button class="btn btn-sm btn-default" @click="editFile(file)"><i class="fas fa-pencil-alt"></i> Edit</button>
-                    <button class="btn btn-sm btn-default" @click="downloadFile(file.id)"><i class="fas fa-cloud-download-alt"></i> Download</button>
+                    <!--<button class="btn btn-sm btn-default" @click="downloadFile(file.id)"><i class="fas fa-cloud-download-alt"></i> Download</button>-->
                     <button class="btn btn-sm btn-outline btn-danger" @click="deleteFile(file.id)"><i class="fas fa-trash"></i></button>
                 </div>
             </div>
@@ -49,10 +49,34 @@
 
             },
             previewFile: function (file) {
-
+                window.open('/storage/'+file);
             },
             deleteFile: function (id) {
-                this.$emit('delete-file', id);
+                this.$swal(
+                    {
+                        title: 'Are you sure?',
+                        text: "You won't be able to revert this!",
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                        if (result.value) {
+                            this.$store.dispatch('files/deleteFile', id)
+                                .then(res=>{
+                                    this.$eventBus.$emit('fileUpdate', {});
+                                    this.$toast.success('File deleted successfully', "Success", {
+                                        timout: 1000,
+                                        position: 'bottomRight'
+                                    });
+                                })
+                                .catch(exp=>{
+                                    this.$eventBus.$emit('handle-exception', exp);
+                                })
+                        }
+                    }
+                );
             }
         },
         data() {

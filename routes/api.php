@@ -38,8 +38,8 @@ Route::group(['prefix'=>'/v1', 'middleware'=>['auth:api'] ], function (){
     Route::get('time-log', ['uses'=>'TimeLogController@index', 'as'=>'time-log.list']);
     Route::resource('time-log', 'TimeLogController',['except'=>['index', 'create', 'edit']]);
 
-    Route::get('files', ['uses'=>'FilesController@index', 'as'=>'file.list']);
-    Route::put('file/{id}/details', ['uses'=>'FilesController@detail', 'as'=>'file.detail']);
-    Route::resource('files', 'FilesController',['except'=>['index', 'create', 'edit']]);
+    Route::get('files', ['uses'=>'FileController@index', 'as'=>'file.list']);
+    Route::put('file/{id}/details', ['uses'=>'FileController@detail', 'as'=>'file.detail']);
+    Route::resource('files', 'FileController',['except'=>['index', 'create', 'edit']]);
 
 });

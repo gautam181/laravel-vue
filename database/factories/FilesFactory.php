@@ -2,10 +2,10 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Models\Files;
+use App\Models\File;
 use Faker\Generator as Faker;
 
-$factory->define(Files::class, function (Faker $faker) {
+$factory->define(File::class, function (Faker $faker) {
     return [
         'filename' => 'dummy-image.png',
         'knownas' => $faker->name,
