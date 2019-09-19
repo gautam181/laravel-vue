@@ -56,7 +56,7 @@
   border-bottom:1px solid $border-color;
 }
 .navbar-nav > li.active > a, .navbar-nav > li > a:hover, .navbar-nav > li > a:focus, .navbar-nav .open > a, .navbar-nav .open > a:hover, .navbar-nav .open > a:focus{
-    background-color: transparent; border-bottom:3px solid $color-green;
+    background-color: transparent; border-bottom:3px solid transparent;color:#fff!important;
 }
 
 .dropdown-menu li.nav-item, .dropdown-menu .dropdown-item {
