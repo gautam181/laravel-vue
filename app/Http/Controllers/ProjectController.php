@@ -136,7 +136,9 @@ class ProjectController extends Controller
     }
 
     public function timeLog($id, Request $request){
+        //DB::enableQueryLog();
         $data = TimeLog::getTimesLog($id, $request);
+        //print_r(DB::getQueryLog());
         return response()->json($data);
     }
     /**

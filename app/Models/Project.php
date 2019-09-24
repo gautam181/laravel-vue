@@ -80,4 +80,9 @@ class Project extends Model
         $projects->orderby(self::getSortBy($sort_by), $order_by == 'asc'? 'asc': 'desc');
         return $projects->paginate(30);
     }
+
+    public static function getColumns()
+    {
+        return ['projects.name as project_name', 'projects.status as project_status'];
+    }
 }

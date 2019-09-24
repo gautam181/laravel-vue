@@ -18,4 +18,9 @@ class File extends Model
     public function ticket(){
         return $this->belongsTo(Ticket::class, 'Ticket_id');
     }
+
+    public static function getColumns()
+    {
+        return ['files.knownas as file_name','files.filename as file_path', 'files.size as file_size'];
+    }
 }

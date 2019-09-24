@@ -24,8 +24,24 @@
             </div>
             <div class="row  list">
                 <loading-spinner label="Loading Time Log" :show="loading"></loading-spinner>
+
                 <div class="col-md-12">
-                    <time-list :time_entries="time_entries"></time-list>
+                    <div class="total-filter">
+                        <div class="section">
+                            <strong>Time Totals: </strong>
+                        </div>
+                        <div class="section">
+                            <span class="text-muted">Logged:</span>
+                            <span>6 hours 50 minutes (6.83)</span>
+                        </div>
+                    </div>
+
+                    <template v-for="row in group_entries">
+                        <div class="group-sub-heading">
+                            {{ row.label }}
+                        </div>
+                        <time-list :time_entries="row.data"></time-list>
+                    </template>
                 </div>
 
                 <div class="col-md-12">
@@ -55,9 +71,9 @@
                 loaded: false,
                 loading: false,
                 sortOptions: [
-                    {id: 'logged_by', 'label': 'Who logged time'},
+                    {id: 'user_name', 'label': 'Who logged time'},
                     {id: 'date', 'label': 'Date'},
-                    {id: 'ticket_id', 'label': 'Ticket'}
+                    {id: 'ticket_name', 'label': 'Ticket'}
                 ],
                 size:25,
             }
@@ -79,6 +95,21 @@
             },
             showFilters: function(){
                 return _.isEqual(this.$filters.project_time, this.filters);
+            },
+            group_entries: function () {
+                let id = this.sortOption;
+                if (this.sortOption == 'ticket_name')
+                    id = 'ticket_id';
+                if (this.sortOption == 'user_name')
+                    id = 'user_id';
+              return _.chain(this.time_entries)
+                  .groupBy(id)
+                  .map((val, key)=> ({
+                      id: key,
+                      label: this.sortOption == 'date' ? val[0][this.sortOption]: val[0][this.sortOption],
+                      data: val
+                      })
+                  ).value();
             },
             ...mapGetters({
                 pagination: 'timelog/getPagination',

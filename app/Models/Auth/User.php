@@ -42,4 +42,9 @@ class User extends Authenticatable
     {
         return self::inRandomOrder()->first()->id;
     }
+
+    public static function getColumns()
+    {
+        return ['users.name as user_name', 'users.email as user_email'];
+    }
 }

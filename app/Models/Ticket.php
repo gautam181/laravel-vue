@@ -63,4 +63,9 @@ class Ticket extends Model
         $tickets->orderby('updated_at', 'desc');
         return $tickets->paginate(100);
     }
+
+    public static function getColumns()
+    {
+        return ['tickets.title as ticket_name'];
+    }
 }

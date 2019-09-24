@@ -6,13 +6,18 @@ use App\Models\Auth\User;
 use App\Models\Project;
 use App\Models\Ticket;
 use Illuminate\Database\Eloquent\Model;
+use DB;
 
 class TimeLog extends Model
 {
     private static $sort_options = [
-        'logged_by'=>'user_id',
-        'ticket'=>'ticket_id',
-        'date'=>'date'
+        'user_name'=>['users.name'],
+        'ticket_name'=>['tickets.title'],
+        'date'=>['time_logs.date', 'time_logs.time']
+    ];
+
+    public static $columns= [
+        'time_logs.*',
     ];
 
     public function created_by(){
@@ -33,7 +38,7 @@ class TimeLog extends Model
 
     public static function getSortBy($val ='')
     {
-        $sort = 'updated_at';
+        $sort = 'time_logs.date';
         if(isset(self::$sort_options[$val]))
             $sort = self::$sort_options[$val];
         return $sort;
@@ -43,16 +48,17 @@ class TimeLog extends Model
     {
         $sort_by = strtolower($params->get('sortby'));
         $order_by = strtolower($params->get('orderby'));
-        $order = true;
-        if($sort_by == 'name'){
-            $timeslog = self::with(['ticket', 'user'=>function($query){
-                $query->orderBy('name', 'asc');
-            }]);
-            $order= false;
-        } else
-            $timeslog = self::with(['ticket', 'user']);
+
+        $timeslog = DB::table('time_logs')
+            ->select(
+                array_merge(['time_logs.*'], User::getColumns(), Project::getColumns(), Ticket::getColumns())
+            )
+            ->join('users', 'users.id', '=', 'time_logs.user_id')
+            ->join('tickets', 'tickets.id', '=', 'time_logs.ticket_id');
+            $timeslog->join('projects', 'projects.id', '=', 'time_logs.project_id');
+        //$timeslog = self::with(['ticket', 'user']);
         if($project_id){
-            $timeslog->where('project_id', $project_id);
+            $timeslog->where('time_logs.project_id', $project_id);
         }
         if($params->get('keyword')){
             $timeslog->where('title', 'like', '%'.$params->keyword.'%');
@@ -89,8 +95,9 @@ class TimeLog extends Model
         if($assigned_to){
             $timeslog->whereIn('assigned_to', explode(',', $assigned_to));
         }
-        if($order)
-            $timeslog->orderby(self::getSortBy($sort_by), $order_by == 'asc'? 'asc': 'desc');
+        foreach(self::getSortBy($sort_by) as $sort_val)
+            $timeslog->orderby($sort_val, $order_by == 'asc'? 'asc': 'desc');
+
         return $timeslog->paginate(100);
     }
 }

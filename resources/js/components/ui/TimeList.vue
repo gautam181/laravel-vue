@@ -18,7 +18,7 @@
                 <template v-for="row in time_entries">
                     <tr>
                         <td>{{ row.date | formDate }}</td>
-                        <td>{{ row.user.name }}</td>
+                        <td>{{ getUserName(row) }}</td>
                         <td>{{ row.description }}</td>
                         <td>{{ row.time | time }}</td>
                         <td>{{ getEndTime(row.time, row.hours,  row.minutes) }}</td>
@@ -55,6 +55,12 @@
             },
             getHours: function(h, m){
                 return ((h*60 + m)/60).toFixed(2);
+            },
+            getUserName: function(row){
+                if (row.user_name != undefined)
+                    return row.user_name
+                else
+                    return row.user.name
             },
             editTimeLog: function (data) {
                 this.time_form = true;
