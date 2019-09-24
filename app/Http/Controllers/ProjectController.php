@@ -135,6 +135,12 @@ class ProjectController extends Controller
         return response()->json($data);
     }
 
+    /**
+     * @param $id Project id
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function timeLog($id, Request $request){
         //DB::enableQueryLog();
         $data = TimeLog::getTimesLog($id, $request);
@@ -155,5 +161,22 @@ class ProjectController extends Controller
         $project->save();
 
         return response()->json(["message"=>"Project completed successfully", 'data'=> $project->toArray()], 202);
+    }
+
+    /**
+     * get sum of all time log for a project
+     * @param $id Project id
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     *
+     */
+    public function timeSummary($id, Request $request)
+    {
+
+        //DB::enableQueryLog();
+        $data = TimeLog::getTimeSummary($id, $request);
+        //print_r(DB::getQueryLog());
+        return response()->json(['data'=>$data]);
     }
 }

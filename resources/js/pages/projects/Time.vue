@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="list-options">
-                        <h2 class="">Current Projects</h2>
+                        <h2 class="">Project Time Log</h2>
                         <div class="btn-options text-right">
                             <button class="btn btn-md btn-success w-10" @click="addTime" ><i class="fa fa-plus-circle"></i> Add Time</button>
                         </div>
@@ -121,6 +121,7 @@
         mounted(){
             this.$store.commit('timelog/setPage', 1);
             this.fetchTime();
+            this.fetchTimeSummary();
         },
         methods:{
             showTime(val){
@@ -165,6 +166,16 @@
                     .catch(e => {
                         this.loading = false;
                     });
+            },
+            fetchTimeSummary: function () {
+                return true;
+                /*this.$store.dispatch('timelog/getTimeLogSummary')
+                    .then(res => {
+                        // all ok
+                    })
+                    .catch(e => {
+                        console.log(e);
+                    });*/
             },
             paginate: function (val) {
                 this.$store.commit('timelog/setPage', val);
