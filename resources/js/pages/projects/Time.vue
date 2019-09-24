@@ -30,9 +30,13 @@
                         <div class="section">
                             <strong>Time Totals: </strong>
                         </div>
-                        <div class="section">
+                        <div class="section" v-if="showSummary">
                             <span class="text-muted">Logged:</span>
-                            <span>6 hours 50 minutes (6.83)</span>
+                            <span>{{ getTotalHours(summary.loggedHours, summary.loggedMinutes) }}</span>
+                        </div>
+                        <div class="section" v-if="showSummary">
+                            <span class="text-muted">Estimated:</span>
+                            <span>{{ getTotalHours(summary.estimatedHours, summary.estimatedMinutes) }}</span>
                         </div>
                     </div>
 
@@ -70,6 +74,7 @@
                 project_id : this.$route.params.id,
                 loaded: false,
                 loading: false,
+                showSummary: false,
                 sortOptions: [
                     {id: 'user_name', 'label': 'Who logged time'},
                     {id: 'date', 'label': 'Date'},
@@ -106,7 +111,7 @@
                   .groupBy(id)
                   .map((val, key)=> ({
                       id: key,
-                      label: this.sortOption == 'date' ? val[0][this.sortOption]: val[0][this.sortOption],
+                      label: this.sortOption == 'date' ? this.$options.filters.date(val[0][this.sortOption]): val[0][this.sortOption],
                       data: val
                       })
                   ).value();
@@ -114,6 +119,7 @@
             ...mapGetters({
                 pagination: 'timelog/getPagination',
                 filters: 'timelog/getFilters',
+                summary: 'timelog/getSummary',
                 sortOrder: 'timelog/getOrderBy',
                 sortOption: 'timelog/getSortBy'
             })
@@ -124,15 +130,6 @@
             this.fetchTimeSummary();
         },
         methods:{
-            showTime(val){
-                return true;
-                if (this.completed){
-                    return val == 100 ? true : false;
-                } else {
-                    return val != 100 ? true : false;
-                }
-
-            },
             handlePageHeader: function(data){
                 this.$emit('handle-page-header', data);
             },
@@ -164,23 +161,38 @@
                         this.loading = false;
                     })
                     .catch(e => {
+                        this.loaded = true;
                         this.loading = false;
                     });
             },
             fetchTimeSummary: function () {
-                return true;
-                /*this.$store.dispatch('timelog/getTimeLogSummary')
+                this.$store.dispatch('timelog/getTimeSummary')
                     .then(res => {
-                        // all ok
+                        this.showSummary = true;
                     })
                     .catch(e => {
                         console.log(e);
-                    });*/
+                    });
             },
             paginate: function (val) {
                 this.$store.commit('timelog/setPage', val);
                 this.fetchTime();
-            }
+            },
+            getTotalHours: function(hours, minutes){
+                let sum = parseInt(hours*60) + parseInt(minutes);
+
+                let hrs = (sum/60).toFixed(2);
+                let m = (sum%60);
+                let h = ((sum-m)/60).toFixed(0);
+                let ts = '';
+                if (h > 0)
+                    ts += h + ' hours ';
+                if (m > 0)
+                    ts += m + ' minutes ';
+
+                ts += ' ('+hrs+')';
+                return ts;
+            },
         }
     }
 </script>

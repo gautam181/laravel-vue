@@ -15,6 +15,7 @@ const state = {
     filters: JSON.parse(localStorage.getItem('time_filters')) || filters.project_time,
     timeLog: [],
     timeLogs: [],
+    summary: [],
     append: false,
     project_id: 0,
     pagination: {
@@ -28,6 +29,7 @@ const state = {
 // getters
 const getters = {
     getTime: (state) => { return state.timeLog },
+    getSummary: (state) => { return state.summary },
     getTimeLog: (state) => { return state.timeLogs },
     getOrderBy: (state) => { return state.orderBy },
     getFilters: (state) => { return state.filters },
@@ -74,6 +76,42 @@ const actions = {
                             page: res.current_page,
                             perPage: res.per_page
                         });
+                        resolve(true);
+                    })
+                    .catch(error => {
+                        reject(error);
+                    });
+            });
+    },
+    getTimeSummary: (context)=>{
+        let params = Object.keys(context.state.filters).map( key => {
+            let val = context.state.filters[key];
+            if (Array.isArray(val)){
+                let owners = Object.keys(val).map(i => {
+                    if (i > 0)
+                        return val[i].id;
+                    return val[i].id;
+                } );
+                key += '='+owners;
+            }
+            else if (typeof(val) === 'object')
+                key  += '='+ val.id;
+            else if (typeof(val) === 'array'){
+
+            }
+            else
+                key  += '='+ val;
+            return key;
+        }).join('&');
+        let url = '/time-summary';
+        if(context.state.project_id)
+            url = '/project/'+context.state.project_id+"/time-summary";
+        return new Promise(
+            (resolve, reject)=> {
+                axios.get(url+"?page=" + context.state.pagination.page + "&orderby=" + context.state.orderBy + "&sortby=" + context.state.sortBy + "&" + params)
+                    .then(response => {
+                        let res = response.data;
+                        context.commit('setSummary', res.data);
                         resolve(true);
                     })
                     .catch(error => {
@@ -137,6 +175,7 @@ const mutations = {
             state.timeLogs = rows
     },
     setTime: (state, data) => { state.timeLog = data },
+    setSummary: (state, data) => { state.summary = data },
     setAppend: (state, val) => { state.append = val },
     setProjectId: (state, id) => { state.project_id = id },
     setPagination: (state, val) => { state.pagination = {...val} },

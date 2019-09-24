@@ -19,7 +19,12 @@
                     <tr>
                         <td>{{ row.date | formDate }}</td>
                         <td>{{ getUserName(row) }}</td>
-                        <td>{{ row.description }}</td>
+                        <td>
+                            <div v-if="ticket_link">
+                                <router-link v-bind:to="{'name': 'project-ticket', params: {'ticket_id': row.ticket_id }}" active-class="" class="text-green">{{ row.ticket_name }}</router-link>
+                            </div>
+                            {{ row.description }}
+                        </td>
                         <td>{{ row.time | time }}</td>
                         <td>{{ getEndTime(row.time, row.hours,  row.minutes) }}</td>
                         <td>
@@ -34,6 +39,18 @@
             </table>
             <time-form :id="ticket_id" v-if="time_form" :project_id="project_id" :ticket="ticket" :time_log="time_log"></time-form>
         </div>
+        <div class="row" v-if="show_sum">
+            <div class="col-md-4 offset-md-8">
+                <table class="table table-striped text-right table-condensed">
+                    <tbody>
+                    <tr>
+                        <td><strong>Total :</strong></td>
+                        <td v-html="getTotalHours()"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -44,12 +61,30 @@
         name: "TimeList",
         props: {
             time_entries: {type: Array, required: true},
-            ticket: {type: Object}
+            ticket: {type: Object},
+            ticket_link:{type: Boolean, default: true},
+            show_sum:{type: Boolean, default: true}
         },
         components: {
             TimeForm
         },
         methods: {
+            getTotalHours: function(){
+                let ts = '';
+                let sum = this.time_entries.reduce((s, f) => {
+                    return s + (f.hours*60) + f.minutes;
+                }, 0);
+                let hrs = (sum/60).toFixed(2);
+                let m = (sum%60);
+                let h = ((sum-m)/60).toFixed(0);
+                if (h > 0)
+                    ts += h + ' hours ';
+                if (m > 0)
+                    ts += m + ' minutes ';
+
+                ts += ''+hrs+'';
+                return ts;//{'hours': hrs, 'time': { 'hours': h, 'minutes': m}};
+            },
             getEndTime: function(t, h, m){
                 return this.$moment(t,  'HH:mm:ss').add(h,  'hours').add(m,  'minutes').format(this.$settings.TIMEFROMAT);
             },
@@ -76,6 +111,8 @@
                 time_form: false,
                 ticket_id: 0,
                 project_id: 0,
+                total_hours : 0,
+                total_minutes: 0,
                 time_log: {}
             }
         },

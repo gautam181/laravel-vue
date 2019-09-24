@@ -87,7 +87,7 @@
                                     <button name="add-time" class="btn btn-sm btn-success" @click="addTime"> <i class="fa fa-plus"></i> Add More Time</button>
                                 </div>
                             </div>
-                            <time-list :time_entries="time_entries"></time-list>
+                            <time-list :time_entries="time_entries" :show_sum="false" :ticket_link="false" ></time-list>
                             <a href="javascript:void(0);" class="text-green" @click="addTime">Add more time</a>
                         </div>
                         <p v-else>No time have been logged against this ticket - <a href="javascript:void(0);" @click="addTime">Log time</a></p>

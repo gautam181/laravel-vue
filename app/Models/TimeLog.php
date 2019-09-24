@@ -166,6 +166,6 @@ class TimeLog extends Model
         }
         $timeslog->groupBy('time_logs.project_id');
 
-        return $timeslog->get();
+        return $timeslog->first();
     }
 }

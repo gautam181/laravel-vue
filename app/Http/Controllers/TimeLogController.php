@@ -122,4 +122,9 @@ class TimeLogController extends Controller
             'message' => $status ? 'Time Log Deleted!' : 'Error Deleting Time Log'
         ], 200);
     }
+
+    public function summary($id, Request $request)
+    {
+
+    }
 }
