@@ -249,6 +249,9 @@
                     })*/
             if(this.time_log){
                 this.timeEntry = Object.assign({}, this.time_log);
+                if(typeof this.timeEntry.user == "undefined"){
+                  this.timeEntry.user = { id : this.time_log.user_id, name : this.time_log.user_name }
+                }
             }
             this.timeEntry.end_date = this.timeEntry.start_date;
             this.$store.dispatch('users/getUsersList');
@@ -318,7 +321,7 @@
                 })
                     .then(response => {
 
-                        this.$eventBus.$emit('timeUpdate', this.timeEntry);
+                        this.$eventBus.$emit('timeUpdate', response);
                         this.$toast.success('Time Log updated successfully', "Success", {
                             timout: 3000,
                             position: 'bottomRight'

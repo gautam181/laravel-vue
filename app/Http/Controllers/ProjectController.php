@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProjectRequest;
+use App\Models\File;
 use App\Models\Ticket;
 use App\Models\TimeLog;
 use Validator;
@@ -147,6 +148,20 @@ class ProjectController extends Controller
         //print_r(DB::getQueryLog());
         return response()->json($data);
     }
+
+    /**
+     * @param $id project_id
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function files($id, Request $request){
+        //DB::enableQueryLog();
+        $data = File::getFiles($id, $request);
+        //print_r(DB::getQueryLog());
+        return response()->json($data);
+    }
+
     /**
      * @param $id project id
      *

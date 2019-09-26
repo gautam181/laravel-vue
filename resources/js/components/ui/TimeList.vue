@@ -41,10 +41,10 @@
         </div>
         <div class="row" v-if="show_sum">
             <div class="col-md-4 offset-md-8">
-                <table class="table table-striped text-right table-condensed">
+                <table class="table table-striped text-right table-condensed table-auto ml-auto">
                     <tbody>
                     <tr>
-                        <td><strong>Total :</strong></td>
+                        <td width="120"><strong>Total :</strong></td>
                         <td v-html="getTotalHours()"></td>
                     </tr>
                     </tbody>
@@ -82,7 +82,7 @@
                 if (m > 0)
                     ts += m + ' minutes ';
 
-                ts += ''+hrs+'';
+                ts += '&nbsp;&nbsp;&nbsp;'+hrs+'';
                 return ts;//{'hours': hrs, 'time': { 'hours': h, 'minutes': m}};
             },
             getEndTime: function(t, h, m){
@@ -129,5 +129,5 @@
 </script>
 
 <style scoped>
-
+.table-auto{width: auto; min-width: 300px;}
 </style>

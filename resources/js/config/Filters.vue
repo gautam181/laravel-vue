@@ -26,6 +26,13 @@
             'end_date': '',
             'created_range':{id: '0', value: 'Any Time'},
             'logged_by':[],
+        },
+        project_files: {
+            'keyword': '',
+            'start_date': '',
+            'end_date': '',
+            'created_range':{id: '0', value: 'Any Time'},
+            'uploaded_by':[],
         }
     }
 

@@ -4,9 +4,9 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="list-options">
-                        <h2 class="">Time Log</h2>
+                        <h2 class="">Files</h2>
                         <div class="btn-options text-right">
-<!--                            <button class="btn btn-md btn-success w-10" @click="addTime" ><i class="fa fa-plus-circle"></i> Add Time</button>-->
+<!--                            <button class="btn btn-md btn-success w-10" @click="addTime" ><i class="fa fa-plus-circle"></i> Add Files</button>-->
                         </div>
                     </div>
                 </div>
@@ -26,25 +26,11 @@
                 <loading-spinner label="Loading Time Log" :show="loading"></loading-spinner>
 
                 <div class="col-md-12">
-                    <div class="total-filter">
-                        <div class="section">
-                            <strong>Time Totals: </strong>
-                        </div>
-                        <div class="section" v-if="showSummary">
-                            <span class="text-muted">Logged:</span>
-                            <span>{{ getTotalHours(summary.loggedHours, summary.loggedMinutes) }}</span>
-                        </div>
-                        <div class="section" v-if="showSummary">
-                            <span class="text-muted">Estimated:</span>
-                            <span>{{ getTotalHours(summary.estimatedHours, summary.estimatedMinutes) }}</span>
-                        </div>
-                    </div>
-
-                    <template v-for="row in group_entries">
-                        <div class="group-sub-heading">
+                    <template v-for="row in group_files">
+                        <div class="group-sub-heading" v-if="row.label">
                             {{ row.label }}
                         </div>
-                        <time-list :time_entries="row.data"></time-list>
+                        <files-list :files="row.data"></files-list>
                     </template>
                 </div>
 
@@ -63,10 +49,10 @@
     import SortFilter from "../../components/ui/SortFilter";
     import LoadMore from "../../components/ui/LoadMore";
     import FilterAlert from "../../components/ui/FilterAlert";
-    import TimeList from "../../components/ui/TimeList";
+    import FilesList from "../../components/ui/FileList";
 
     export default {
-        name: "project-time",
+        name: "project-files",
         data(){
             return {
                 myRoute : {},
@@ -76,90 +62,88 @@
                 loading: false,
                 showSummary: false,
                 sortOptions: [
-                    {id: 'user_name', 'label': 'Who logged time'},
-                    {id: 'date', 'label': 'Date'},
-                    {id: 'ticket_name', 'label': 'Ticket'}
+                    {id: 'name', 'label': 'File Name'},
+                    {id: 'updated', 'label': 'Updated on'},
+                    {id: 'size', 'label': 'Size'}
                 ],
                 size:25,
             }
         },
         components:{
-            SortFilter, LoadMore, FilterAlert, TimeList
+            SortFilter, LoadMore, FilterAlert, FilesList
         },
         created(){
             this.$eventBus.$emit('project-info', this.project_id);
-            this.$store.commit('timelog/setProjectId', this.project_id);
-            this.$eventBus.$on('project-time-loading', val => {
+            this.$store.commit('files/setProjectId', this.project_id);
+            this.$eventBus.$on('project-files-loading', val => {
                 this.loading = val;
             });
             this.$eventBus.$on('timeUpdate', val => {
                 this.fetchTime();
-                this.fetchTimeSummary();
             });
         },
         computed: {
-            time_entries:{
-                get() { return this.$store.getters['timelog/getTimeLog']; },
-                set(value) { this.$store.commit('timelog/setTimeLog', value); },
+            files:{
+                get() { return this.$store.getters['files/getFiles']; },
+                set(value) { this.$store.commit('files/setFiles', value); },
             },
             showFilters: function(){
-                return _.isEqual(this.$filters.project_time, this.filters);
+                return _.isEqual(this.$filters.project_files, this.filters);
             },
-            group_entries: function () {
-                let id = this.sortOption;
-                if (this.sortOption == 'ticket_name')
-                    id = 'ticket_id';
-                if (this.sortOption == 'user_name')
-                    id = 'user_id';
-              return _.chain(this.time_entries)
-                  .groupBy(id)
+            group_files: function () {
+
+                if (this.sortOption != 'updated')
+                    return [{ id: '', data: this.files, label: ''}];
+
+                return _.chain(this.files)
+                  .groupBy((val)=>{
+                      return this.$options.filters.date(val.updated_at);
+                  })
                   .map((val, key)=> ({
                       id: key,
-                      label: this.sortOption == 'date' ? this.$options.filters.date(val[0][this.sortOption]): val[0][this.sortOption],
+                      label: this.$options.filters.date(val[0]['updated_at']),
                       data: val
                       })
                   ).value();
             },
             ...mapGetters({
-                pagination: 'timelog/getPagination',
-                filters: 'timelog/getFilters',
-                summary: 'timelog/getSummary',
-                sortOrder: 'timelog/getOrderBy',
-                sortOption: 'timelog/getSortBy'
+                pagination: 'files/getPagination',
+                filters: 'files/getFilters',
+                sortOrder: 'files/getOrderBy',
+                sortOption: 'files/getSortBy'
             })
         },
         mounted(){
-            this.$store.commit('timelog/setPage', 1);
-            this.fetchTime();
-            this.fetchTimeSummary();
+            this.$store.commit('files/setPage', 1);
+            this.fetchFiles();
         },
         methods:{
             handlePageHeader: function(data){
                 this.$emit('handle-page-header', data);
             },
             handleSortOrder: function(val){
-                this.$store.commit('timelog/setOrderBy', val);
-                this.fetchTime();
+                this.$store.commit('files/setOrderBy', val);
+                this.fetchFiles();
             },
             addTime: function(){
                 //
             },
             handleSort: function(val){
-                this.$store.commit('timelog/setSortBy', val);
-                this.fetchTime();
+                this.$store.commit('files/setSortBy', val);
+                this.fetchFiles();
             },
             editProject: function(id){
                 this.$eventBus.$emit('project-time', id);
             },
             loadMore: function(){
-                this.$store.commit('timelog/setPage', this.pagination.page + 1);
-                this.fetchTime(true);
+                this.$store.commit('files/setPage', this.pagination.page + 1);
+                this.fetchFiles(true);
             },
-            fetchTime: function (val) {
+            fetchFiles: function (val) {
                 let mode = val != undefined ? val : false;
                 if(!mode)
                     this.$eventBus.$emit('project-time-loading', true);
-                this.$store.dispatch('timelog/getTimeLog', mode)
+                this.$store.dispatch('files/getFiles', mode)
                     .then(res => {
                         this.loaded = true;
                         this.loading = false;
@@ -167,20 +151,11 @@
                     .catch(e => {
                         this.loaded = true;
                         this.loading = false;
-                    });
-            },
-            fetchTimeSummary: function () {
-                this.$store.dispatch('timelog/getTimeSummary')
-                    .then(res => {
-                        this.showSummary = true;
-                    })
-                    .catch(e => {
-                        console.log(e);
                     });
             },
             paginate: function (val) {
-                this.$store.commit('timelog/setPage', val);
-                this.fetchTime();
+                this.$store.commit('files/setPage', val);
+                this.fetchFiles();
             },
             getTotalHours: function(hours, minutes){
                 let sum = parseInt(hours*60) + parseInt(minutes);
