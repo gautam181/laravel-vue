@@ -23,7 +23,7 @@
             }
         },
         created(){
-            this.$eventBus.$on('header-update', val =>{ this.headerData = val});
+            this.$root.$on('header-update', val =>{ this.headerData = val});
         }
     }
 </script>

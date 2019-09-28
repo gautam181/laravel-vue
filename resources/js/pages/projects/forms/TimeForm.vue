@@ -321,7 +321,7 @@
                 })
                     .then(response => {
 
-                        this.$eventBus.$emit('timeUpdate', response);
+                        this.$root.$emit('timeUpdate', response);
                         this.$toast.success('Time Log updated successfully', "Success", {
                             timout: 3000,
                             position: 'bottomRight'
@@ -350,7 +350,7 @@
                         if (result.value) {
                             this.$store.dispatch('timelog/deleteTime', this.time_log.id)
                                 .then(res=>{
-                                    this.$eventBus.$emit('timeUpdate', this.timeEntry);
+                                    this.$root.$emit('timeUpdate', this.timeEntry);
                                     this.$toast.success('Time log deleted successfully', "Success", {
                                         timout: 1000,
                                         position: 'bottomRight'

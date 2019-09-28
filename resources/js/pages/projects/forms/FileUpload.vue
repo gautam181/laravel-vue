@@ -68,7 +68,7 @@
                 })
                     .then(response => {
                         //this.$store.commit('projects/setProject', this.project_info);
-                        this.$eventBus.$emit('fileUpdate', this.file_info);
+                        this.$root.$emit('fileUpdate', this.file_info);
                         this.$toast.success('File updated successfully', "Success", {
                             timout: 3000,
                             position: 'bottomRight'

@@ -21,7 +21,7 @@
         },
         mounted() {
             console.log('Component mounted.');
-            this.$eventBus.$emit('header-update', {})
+            this.$root.$emit('header-update', {})
         },
         beforeRouteLeave (to, from, next) {
             this.$settings.hideSideBar = false;

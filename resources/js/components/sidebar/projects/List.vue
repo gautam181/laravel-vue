@@ -125,7 +125,7 @@
         },
 
         created(){
-            this.$eventBus.$on('filter-bar::clear', (val) => {
+            this.$root.$on('filter-bar::clear', (val) => {
                 if (val.id == 'project-list')
                     this.resetFilter();
             });
@@ -150,9 +150,9 @@
             },
             getProjects: function(){
                 this.$store.commit('projects/setPage', 1);
-                this.$eventBus.$emit('project-list-loading', true);
+                this.$root.$emit('project-list-loading', true);
                 this.$store.dispatch('projects/getProjects').finally(res => {
-                    this.$eventBus.$emit('project-list-loading', false);
+                    this.$root.$emit('project-list-loading', false);
                 });
             },
             applyFilter: function () {

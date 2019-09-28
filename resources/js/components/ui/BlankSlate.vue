@@ -26,7 +26,7 @@
         },
         methods: {
             clearFilter: function () {
-                this.$eventBus.$emit('filter-slate::clear', {'name': this.name});
+                this.$root.$emit('filter-slate::clear', {'name': this.name});
             }
         },
         data() {

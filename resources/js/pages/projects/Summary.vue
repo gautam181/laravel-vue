@@ -31,7 +31,7 @@
             }
         },
         created(){
-            this.$eventBus.$emit('project-info', this.project_id);
+            this.$root.$emit('project-info', this.project_id);
         },
         watch: {
 

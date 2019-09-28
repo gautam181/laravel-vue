@@ -65,14 +65,14 @@
                         if (result.value) {
                             this.$store.dispatch('files/deleteFile', id)
                                 .then(res=>{
-                                    this.$eventBus.$emit('fileUpdate', {});
+                                    this.$root.$emit('fileUpdate', {});
                                     this.$toast.success('File deleted successfully', "Success", {
                                         timout: 1000,
                                         position: 'bottomRight'
                                     });
                                 })
                                 .catch(exp=>{
-                                    this.$eventBus.$emit('handle-exception', exp);
+                                    this.$root.$emit('handle-exception', exp);
                                 })
                         }
                     }

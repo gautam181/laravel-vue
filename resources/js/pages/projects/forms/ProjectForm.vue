@@ -190,7 +190,7 @@
                         } else {
                             this.$store.commit('projects/setProject', this.project_info);
                         }
-                        this.$eventBus.$emit('projectUpdate', this.project_info);
+                        this.$root.$emit('projectUpdate', this.project_info);
                         this.$toast.success('Project updated successfully', "Success", {
                             timout: 3000,
                             position: 'bottomRight'

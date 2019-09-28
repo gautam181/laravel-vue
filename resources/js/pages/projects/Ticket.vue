@@ -182,8 +182,8 @@
             }
         },
         created(){
-            //this.$eventBus.$emit('header-update', {label:'ticket detail ...'});
-            //this.$eventBus.$emit('project-info', this.project_id);
+            //this.$root.$emit('header-update', {label:'ticket detail ...'});
+            //this.$root.$emit('project-info', this.project_id);
         },
         computed:{
             ...mapGetters({
@@ -211,11 +211,11 @@
             this.getTimes(this.ticket_id);
             this.getFiles(this.ticket_id);
             this.myRoute = this.$router.options.routes.find(route => route.name === this.$route.name);
-            this.$eventBus.$on('timeUpdate', (data)=> {
+            this.$root.$on('timeUpdate', (data)=> {
                 console.log(data);
                 this.getTimes(this.ticket_id);
             });
-            this.$eventBus.$on('fileUpdate', (data)=> {
+            this.$root.$on('fileUpdate', (data)=> {
                 console.log(data);
                 this.getFiles(this.ticket_id);
             });
@@ -261,7 +261,7 @@
             getTicket: function (val) {
                 this.$store.dispatch('tickets/getTicket', val)
                     .then(res => {
-                        this.$eventBus.$emit('project-info', res.project_id);
+                        this.$root.$emit('project-info', res.project_id);
                     })
             },
             changeCommentSort: function(val){

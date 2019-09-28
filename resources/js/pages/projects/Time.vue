@@ -87,12 +87,12 @@
             SortFilter, LoadMore, FilterAlert, TimeList
         },
         created(){
-            this.$eventBus.$emit('project-info', this.project_id);
+            this.$root.$emit('project-info', this.project_id);
             this.$store.commit('timelog/setProjectId', this.project_id);
-            this.$eventBus.$on('project-time-loading', val => {
+            this.$root.$on('project-time-loading', val => {
                 this.loading = val;
             });
-            this.$eventBus.$on('timeUpdate', val => {
+            this.$root.$on('timeUpdate', val => {
                 this.fetchTime();
                 this.fetchTimeSummary();
             });
@@ -149,7 +149,7 @@
                 this.fetchTime();
             },
             editProject: function(id){
-                this.$eventBus.$emit('project-time', id);
+                this.$root.$emit('project-time', id);
             },
             loadMore: function(){
                 this.$store.commit('timelog/setPage', this.pagination.page + 1);
@@ -158,7 +158,7 @@
             fetchTime: function (val) {
                 let mode = val != undefined ? val : false;
                 if(!mode)
-                    this.$eventBus.$emit('project-time-loading', true);
+                    this.$root.$emit('project-time-loading', true);
                 this.$store.dispatch('timelog/getTimeLog', mode)
                     .then(res => {
                         this.loaded = true;

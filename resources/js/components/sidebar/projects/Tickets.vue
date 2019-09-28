@@ -127,11 +127,11 @@
         },
         created(){
             this.filter = _.cloneDeep(this.$store.getters['tickets/getFilters']);
-            this.$eventBus.$on('filter-bar::clear', (val) => {
+            this.$root.$on('filter-bar::clear', (val) => {
                 if (val.id == 'project-tickets-list')
                     this.resetFilter();
             });
-            this.$eventBus.$on('filter-slate::clear', (val) => {
+            this.$root.$on('filter-slate::clear', (val) => {
                 if (val.name == 'project-tickets-list')
                     this.resetFilter();
             })
@@ -147,10 +147,10 @@
         methods:{
             getTickets: function(){
                 this.$store.commit('tickets/setPage', 1);
-                this.$eventBus.$emit('project-tickets-loading', true);
+                this.$root.$emit('project-tickets-loading', true);
                 this.$store.dispatch('tickets/getTickets')
                     .then(res => {
-                        this.$eventBus.$emit('project-tickets-loading', false);
+                        this.$root.$emit('project-tickets-loading', false);
                 });
             },
             applyFilter: function () {

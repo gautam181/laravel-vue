@@ -112,7 +112,7 @@
             SortFilter, LoadMore, FilterAlert
         },
         created(){
-            this.$eventBus.$on('project-list-loading', val => {
+            this.$root.$on('project-list-loading', val => {
                 this.loading = val;
             });
         },
@@ -137,7 +137,7 @@
         mounted(){
             this.$store.commit('projects/setPage', 1);
             this.$store.commit('projects/setCompleted', this.completed);
-            this.$eventBus.$emit('header-update', {label:'Manage your projects'});
+            this.$root.$emit('header-update', {label:'Manage your projects'});
             this.projects = this.fetchProjects();
         },
         methods:{
@@ -167,7 +167,7 @@
                 this.fetchProjects();
             },
             editProject: function(id){
-                this.$eventBus.$emit('project-form', id);
+                this.$root.$emit('project-form', id);
             },
             loadMore: function(){
                 this.$store.commit('projects/setPage', this.pagination.page + 1);
@@ -176,7 +176,7 @@
             fetchProjects: function (val) {
                 let mode = val != undefined ? val : false;
                 if(!mode)
-                    this.$eventBus.$emit('project-list-loading', true);
+                    this.$root.$emit('project-list-loading', true);
                 this.$store.dispatch('projects/getProjects', mode)
                     .then(res => {
                         this.loaded = true;

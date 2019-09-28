@@ -83,7 +83,6 @@ Vue.prototype.$app = window.application;
 Vue.prototype.$settings = settings;
 Vue.prototype.$filters = searchFilters;
 Vue.prototype.$ajaxHeader = window.ajaxHeaders;
-Vue.prototype.$eventBus = new Vue(); // Global event bus
 Vue.use(Datatable);
 Vue.use(Plugin);
 Vue.use(require('vue-moment'));

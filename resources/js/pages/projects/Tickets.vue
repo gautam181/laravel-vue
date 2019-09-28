@@ -110,9 +110,9 @@
             Ticket, LoadMore, FilterAlert, BlankSlate
         },
         created(){
-            this.$eventBus.$emit('project-info', this.project_id);
+            this.$root.$emit('project-info', this.project_id);
             this.$store.commit('tickets/setProjectId', this.project_id);
-            this.$eventBus.$on('project-tickets-loading', val => {
+            this.$root.$on('project-tickets-loading', val => {
                 this.loading = val;
             });
         },
@@ -137,7 +137,7 @@
             getTickets: function (val) {
                 this.$store.commit('projects/setPage', 1);
                 let mode = val != undefined ? val : false;
-                this.$eventBus.$emit('project-tickets-loading', true);
+                this.$root.$emit('project-tickets-loading', true);
                 this.$store.dispatch('tickets/getTickets', mode)
                     .then(res => {
                         this.loaded = true;

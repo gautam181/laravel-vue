@@ -73,12 +73,12 @@
             SortFilter, LoadMore, FilterAlert, FilesList
         },
         created(){
-            this.$eventBus.$emit('project-info', this.project_id);
+            this.$root.$emit('project-info', this.project_id);
             this.$store.commit('files/setProjectId', this.project_id);
-            this.$eventBus.$on('project-files-loading', val => {
+            this.$root.$on('project-files-loading', val => {
                 this.loading = val;
             });
-            this.$eventBus.$on('timeUpdate', val => {
+            this.$root.$on('timeUpdate', val => {
                 this.fetchTime();
             });
         },
@@ -133,7 +133,7 @@
                 this.fetchFiles();
             },
             editProject: function(id){
-                this.$eventBus.$emit('project-time', id);
+                this.$root.$emit('project-time', id);
             },
             loadMore: function(){
                 this.$store.commit('files/setPage', this.pagination.page + 1);
@@ -142,7 +142,7 @@
             fetchFiles: function (val) {
                 let mode = val != undefined ? val : false;
                 if(!mode)
-                    this.$eventBus.$emit('project-time-loading', true);
+                    this.$root.$emit('project-time-loading', true);
                 this.$store.dispatch('files/getFiles', mode)
                     .then(res => {
                         this.loaded = true;

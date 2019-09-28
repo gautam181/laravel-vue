@@ -64,11 +64,11 @@
             ProjectForm, SortFilter, LoadMore
         },
         created(){
-            this.$eventBus.$on('project-form', val => {
+            this.$root.$on('project-form', val => {
                 this.project_id = val;
                 this.showProjectForm = true;
             });
-            this.$eventBus.$on('project-form-hide', () => {
+            this.$root.$on('project-form-hide', () => {
                 this.project_id = 0;
                 this.showProjectForm = false;
             });
@@ -81,7 +81,7 @@
                 if (modalId == 'project-form')
                     this.showProjectForm = false;
             })
-            this.$eventBus.$emit('header-update', {label:'Manage your projects'});
+            this.$root.$emit('header-update', {label:'Manage your projects'});
             this.myRoute = this.$router.options.routes.find(route => route.name === this.$route.name);
         },
         methods:{

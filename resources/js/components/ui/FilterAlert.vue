@@ -28,7 +28,7 @@
         watch: {},
         methods: {
             hideAlert: function () {
-                this.$eventBus.$emit('filter-bar::clear', {'id': this.id});
+                this.$root.$emit('filter-bar::clear', {'id': this.id});
             }
         }
     }
