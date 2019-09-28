@@ -11,7 +11,7 @@
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <filter-alert :total="pagination.totalRows" :show="!showFilters" id="time-list"></filter-alert>
+                    <filter-alert :total="pagination.totalRows" :show="!showFilters" id="project-files-list"></filter-alert>
                 </div>
                 <div class="col-md-12">
                     <div class="list-options">
@@ -78,8 +78,13 @@
             this.$root.$on('project-files-loading', val => {
                 this.loading = val;
             });
-            this.$root.$on('timeUpdate', val => {
-                this.fetchTime();
+            this.$root.$on('filter-bar::clear', (val) => {
+                if (val.id == 'project-files-list')
+                    this.resetFilter();
+            });
+
+            this.$root.$on('fileUpdate', val => {
+                this.fetchFiles();
             });
         },
         computed: {
@@ -133,7 +138,7 @@
                 this.fetchFiles();
             },
             editProject: function(id){
-                this.$root.$emit('project-time', id);
+                this.$root.$emit('project-file', id);
             },
             loadMore: function(){
                 this.$store.commit('files/setPage', this.pagination.page + 1);
@@ -142,7 +147,7 @@
             fetchFiles: function (val) {
                 let mode = val != undefined ? val : false;
                 if(!mode)
-                    this.$root.$emit('project-time-loading', true);
+                    this.$root.$emit('project-files-loading', true);
                 this.$store.dispatch('files/getFiles', mode)
                     .then(res => {
                         this.loaded = true;
@@ -172,6 +177,11 @@
                 ts += ' ('+hrs+')';
                 return ts;
             },
+            resetFilter: function () {
+                this.filter = {...this.$filters.project_files};
+                this.$store.commit('files/setFilters', this.filter);
+                this.getFiles();
+            }
         }
     }
 </script>

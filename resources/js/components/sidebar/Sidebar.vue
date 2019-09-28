@@ -5,6 +5,7 @@
             <div v-if="!settings.sidebarMinified">
                 <project-summary></project-summary>
                 <project-tickets></project-tickets>
+                <project-files></project-files>
                 <project-time></project-time>
                 <project-list></project-list>
                 <project-ticket-detail></project-ticket-detail>
@@ -18,6 +19,7 @@
 <script>
     import ProjectSummary from "./projects/Summary"
     import ProjectTickets from "./projects/Tickets"
+    import ProjectFiles from "./projects/Files"
     import ProjectTime from "./projects/Time"
     import ProjectList from "./projects/List"
     import ProjectTicketDetail from "./projects/TicketDetail"
@@ -27,6 +29,7 @@
         components: {
             ProjectSummary,
             ProjectTickets,
+            ProjectFiles,
             ProjectTime,
             ProjectList,
             ProjectTicketDetail,
