@@ -42,7 +42,7 @@ class File extends Model
             $files->where('project_id', $project_id);
         }
         if($params->get('keyword')){
-            $files->where('name', 'like', '%'.$params->keyword.'%');
+            $files->where('knownas', 'like', '%'.$params->keyword.'%');
             $files->orwhere('description', 'like', '%'.$params->keyword.'%');
         }
         if($params->has('created_range') && $params->has('start_date') && $params->has('end_date')){
@@ -54,7 +54,7 @@ class File extends Model
 
         }
 
-        $assigned_to = $params->get('created_by');
+        $assigned_to = $params->get('uploaded_by');
         if($assigned_to){
             $files->whereIn('uploaded_by', explode(',', $assigned_to));
         }
