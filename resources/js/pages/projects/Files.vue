@@ -89,7 +89,7 @@
         },
         computed: {
             files:{
-                get() { return this.$store.getters['files/getFiles']; },
+                get() { return this.$store.getters['files/getTime']; },
                 set(value) { this.$store.commit('files/setFiles', value); },
             },
             showFilters: function(){
@@ -148,7 +148,7 @@
                 let mode = val != undefined ? val : false;
                 if(!mode)
                     this.$root.$emit('project-files-loading', true);
-                this.$store.dispatch('files/getFiles', mode)
+                this.$store.dispatch('files/getTime', mode)
                     .then(res => {
                         this.loaded = true;
                         this.loading = false;

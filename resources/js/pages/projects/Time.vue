@@ -11,7 +11,7 @@
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <filter-alert :total="pagination.totalRows" :show="!showFilters" id="time-list"></filter-alert>
+                    <filter-alert :total="pagination.totalRows" :show="!showFilters" id="project-time-list"></filter-alert>
                 </div>
                 <div class="col-md-12">
                     <div class="list-options">

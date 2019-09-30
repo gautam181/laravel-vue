@@ -98,9 +98,9 @@ class TimeLog extends Model
                 }
             }
         }
-        $assigned_to = $params->get('assigned_to');
+        $assigned_to = $params->get('logged_by');
         if($assigned_to){
-            $timeslog->whereIn('assigned_to', explode(',', $assigned_to));
+            $timeslog->whereIn('user_id', explode(',', $assigned_to));
         }
         foreach(self::getSortBy($sort_by) as $sort_val)
             $timeslog->orderby($sort_val, $order_by == 'asc'? 'asc': 'desc');
@@ -160,9 +160,9 @@ class TimeLog extends Model
                 }
             }
         }
-        $assigned_to = $params->get('assigned_to');
+        $assigned_to = $params->get('logged_by');
         if($assigned_to){
-            $timeslog->whereIn('assigned_to', explode(',', $assigned_to));
+            $timeslog->whereIn('user_id', explode(',', $assigned_to));
         }
         $timeslog->groupBy('time_logs.project_id');
 
