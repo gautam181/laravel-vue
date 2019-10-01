@@ -68,8 +68,7 @@ class TimeLog extends Model
             $timeslog->where('time_logs.project_id', $project_id);
         }
         if($params->get('keyword')){
-            $timeslog->where('title', 'like', '%'.$params->keyword.'%');
-            $timeslog->orwhere('description', 'like', '%'.$params->keyword.'%');
+            $timeslog->where('time_logs.description', 'like', '%'.$params->keyword.'%');
         }
         if($params->has('created_range') && $params->has('start_date') && $params->has('end_date')){
             if($params->created_range == 1 && $params->start_date && $params->end_date){
