@@ -116,7 +116,7 @@
             getFiles: function(){
                 this.$store.commit('files/setPage', 1);
                 this.$root.$emit('project-files-loading', true);
-                this.$store.dispatch('files/getTime')
+                this.$store.dispatch('files/getFiles')
                     .then(res => {
                         this.$root.$emit('project-files-loading', false);
                 });

@@ -23,7 +23,7 @@
                 </div>
             </div>
             <div class="row  list">
-                <loading-spinner label="Loading Time Log" :show="loading"></loading-spinner>
+                <loading-spinner label="Loading Files" :show="loading"></loading-spinner>
 
                 <div class="col-md-12">
                     <template v-for="row in group_files">
@@ -89,7 +89,7 @@
         },
         computed: {
             files:{
-                get() { return this.$store.getters['files/getTime']; },
+                get() { return this.$store.getters['files/getFiles']; },
                 set(value) { this.$store.commit('files/setFiles', value); },
             },
             showFilters: function(){
@@ -148,7 +148,7 @@
                 let mode = val != undefined ? val : false;
                 if(!mode)
                     this.$root.$emit('project-files-loading', true);
-                this.$store.dispatch('files/getTime', mode)
+                this.$store.dispatch('files/getFiles', mode)
                     .then(res => {
                         this.loaded = true;
                         this.loading = false;
