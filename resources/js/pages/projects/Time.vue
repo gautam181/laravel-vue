@@ -16,7 +16,7 @@
                 <div class="col-md-12">
                     <div class="list-options">
                         <div>{{ pagination.totalRows}} results</div>
-                        <div class="btn-options text-right">
+                        <div class="btn-options text-right" v-if="group_entries.length > 0">
                             <sort-filter :order="sortOrder" :selected="sortOption" v-on:update-sort="handleSort"  v-on:update-order="handleSortOrder" :options="sortOptions"></sort-filter>
                         </div>
                     </div>
@@ -26,7 +26,7 @@
                 <loading-spinner label="Loading Time Log" :show="loading"></loading-spinner>
 
                 <div class="col-md-12">
-                    <div class="total-filter">
+                    <div class="total-filter" v-if="group_entries.length > 0">
                         <div class="section">
                             <strong>Time Totals: </strong>
                         </div>
@@ -39,13 +39,26 @@
                             <span>{{ getTotalHours(summary.estimatedHours, summary.estimatedMinutes) }}</span>
                         </div>
                     </div>
-
-                    <template v-for="row in group_entries">
-                        <div class="group-sub-heading">
-                            {{ row.label }}
-                        </div>
-                        <time-list :time_entries="row.data"></time-list>
+                    <template v-if="group_entries.length > 0">
+                        <template v-for="row in group_entries">
+                            <div class="group-sub-heading">
+                                {{ row.label }}
+                            </div>
+                            <time-list :time_entries="row.data"></time-list>
+                        </template>
                     </template>
+                    <template v-else-if="!showFilters">
+                        <blank-slate name="project-time-list"></blank-slate>
+                    </template>
+                    <template v-else>
+                        <blank-slate name="project-tim">
+                            <template slot="body">
+                                <h3>No Time Entries Yet</h3>
+                                <p>Hey {{ this.$user.name }}, you don't have any time log on this project.</p>
+                            </template>
+                        </blank-slate>
+                    </template>
+
                 </div>
 
                 <div class="col-md-12">
@@ -64,6 +77,7 @@
     import LoadMore from "../../components/ui/LoadMore";
     import FilterAlert from "../../components/ui/FilterAlert";
     import TimeList from "../../components/ui/TimeList";
+    import BlankSlate from "../../components/ui/BlankSlate";
 
     export default {
         name: "project-time",
@@ -84,7 +98,7 @@
             }
         },
         components:{
-            SortFilter, LoadMore, FilterAlert, TimeList
+            SortFilter, LoadMore, FilterAlert, TimeList, BlankSlate
         },
         created(){
             this.$root.$emit('project-info', this.project_id);

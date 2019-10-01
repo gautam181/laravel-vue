@@ -124,7 +124,8 @@ const actions = {
         axios.get("/time-log/"+id)
             .then(response => {
                 comment = response.data;
-            });
+            })
+            .catch();
 
         return comment;
     },

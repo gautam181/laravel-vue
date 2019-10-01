@@ -16,7 +16,7 @@
                 <div class="col-md-12">
                     <div class="list-options">
                         <div>{{ pagination.totalRows}} results</div>
-                        <div class="btn-options text-right">
+                        <div class="btn-options text-right" v-if="group_files.length > 0">
                             <sort-filter :order="sortOrder" :selected="sortOption" v-on:update-sort="handleSort"  v-on:update-order="handleSortOrder" :options="sortOptions"></sort-filter>
                         </div>
                     </div>
@@ -26,12 +26,26 @@
                 <loading-spinner label="Loading Files" :show="loading"></loading-spinner>
 
                 <div class="col-md-12">
-                    <template v-for="row in group_files">
-                        <div class="group-sub-heading" v-if="row.label">
-                            {{ row.label }}
-                        </div>
-                        <files-list :files="row.data"></files-list>
+                    <template v-if="group_files.length > 0">
+                        <template v-for="row in group_files">
+                            <div class="group-sub-heading" v-if="row.label">
+                                {{ row.label }}
+                            </div>
+                            <files-list :files="row.data"></files-list>
+                        </template>
                     </template>
+                    <template v-else-if="!showFilters">
+                        <blank-slate name="project-files-list"></blank-slate>
+                    </template>
+                    <template v-else>
+                        <blank-slate name="project-tim">
+                            <template slot="body">
+                                <h3>No Files </h3>
+                                <p>Hey {{ this.$user.name }}, you don't have any file on this project.</p>
+                            </template>
+                        </blank-slate>
+                    </template>
+
                 </div>
 
                 <div class="col-md-12">
@@ -50,6 +64,7 @@
     import LoadMore from "../../components/ui/LoadMore";
     import FilterAlert from "../../components/ui/FilterAlert";
     import FilesList from "../../components/ui/FileList";
+    import BlankSlate from "../../components/ui/BlankSlate";
 
     export default {
         name: "project-files",
@@ -70,7 +85,7 @@
             }
         },
         components:{
-            SortFilter, LoadMore, FilterAlert, FilesList
+            SortFilter, LoadMore, FilterAlert, FilesList, BlankSlate
         },
         created(){
             this.$root.$emit('project-info', this.project_id);
@@ -97,7 +112,7 @@
             },
             group_files: function () {
 
-                if (this.sortOption != 'updated')
+                if (this.sortOption != 'updated' && this.files.length > 0)
                     return [{ id: '', data: this.files, label: ''}];
 
                 return _.chain(this.files)
