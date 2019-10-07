@@ -194,4 +194,17 @@ class ProjectController extends Controller
         //print_r(DB::getQueryLog());
         return response()->json(['data'=>$data]);
     }
+
+    /**
+     * @param $id
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function summary($id, Request $request)
+    {
+        $data['tickets'] = Ticket::getSummaryByProject($id, $request);
+        $data['time'] = TimeLog::getSummaryByProject($id, $request);
+        return response()->json(['data'=>$data]);
+    }
 }

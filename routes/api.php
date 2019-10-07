@@ -33,6 +33,7 @@ Route::group(['prefix'=>'/v1', 'middleware'=>['auth:api'] ], function (){
     Route::get('projects', ['uses'=>'ProjectController@index', 'as'=>'project.list']);
     Route::get('project/tickets/{id}', ['uses'=>'ProjectController@tickets', 'as'=>'project.ticket']);
     Route::get('project/{id}/time', ['uses'=>'ProjectController@timeLog', 'as'=>'project.time']);
+    Route::get('project/{id}/summary', ['uses'=>'ProjectController@summary', 'as'=>'project.summary']);
     Route::get('project/{id}/files', ['uses'=>'ProjectController@files', 'as'=>'project.files']);
     Route::get('project/{id}/time-summary', ['uses'=>'ProjectController@timeSummary', 'as'=>'project.time.summary']);
     Route::put('project/{id}/complete', ['uses'=>'ProjectController@completed', 'as'=>'project.completed']);
