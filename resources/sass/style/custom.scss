@@ -292,3 +292,66 @@ label{font-weight: 600;}
     }
 }
 
+/*summary*/
+.summary-row h3 {
+    padding: 5px;
+    padding-left: 5px;
+    margin: 5px 0 10px 0;
+    font-size: 18px;
+    font-weight: 600;
+    padding-left: 10px;
+    float: left;
+    width: 100%;
+}
+.summary-row .summary-col h4 {
+    font-size: 14px;
+    font-weight: normal;
+    padding-left: 11px;
+    color: #888;
+    margin-bottom: 10px;
+    margin-top: 0px;
+}
+.summary-row .chart-legend li {
+    cursor: pointer;
+    font-size: 12px;
+    padding: 5px;
+    border-bottom: 1px solid #f6f6f6;
+    width: 100%;
+}
+.summary-row .chart-legend li span {
+    color: #888;
+    margin-left: auto;
+}
+.summary-row .chart-legend {
+    list-style: none;
+    padding: 0;
+    padding-left: 0px;
+    margin: 0;
+    margin-bottom: 0px;
+    padding-left: 10px;
+    min-width: 120px;
+    margin-bottom: 10px;
+}
+.chart-legend li {
+    display: inline-flex;
+}
+.summary-row .chart-legend li i{
+    display: flex;align-items: center;margin-right: 4px;
+}
+.summary-row label {
+    margin-bottom: 0;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: normal;
+}
+.summary-row .chart-legend li.late i {color: #D9534F;}
+.summary-row .chart-legend li.started i {color: #009688;}
+.summary-row .chart-legend li.today i {color: #8cc1f8;}
+.summary-row .chart-legend li.upcoming i {color: #ECB94C;}
+.summary-row .chart-legend li.nodate i {color: #cccccc;}
+.summary-row .chart-legend li.mine i {color: #2196F3;}
+.summary-row .chart-legend li.others i {color: #3FBB68;}
+.summary-row .chart-legend li.empty {color: #ddd;}
+.summary-row .chart-legend li.empty span {color: #ddd;}
+
