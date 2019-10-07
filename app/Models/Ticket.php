@@ -4,6 +4,8 @@ namespace App\Models;
 
 use App\Models\Auth\User;
 use Illuminate\Database\Eloquent\Model;
+use DB;
+use Illuminate\Support\Facades\Auth;
 
 class Ticket extends Model
 {
@@ -67,5 +69,36 @@ class Ticket extends Model
     public static function getColumns()
     {
         return ['tickets.title as ticket_name'];
+    }
+
+    public static function getSummaryByProject($id, $request)
+    {
+        //DB::enableQueryLog();
+        $today = date('Y-m-d');
+        $user_id = Auth::user()->id;
+        $default =  [
+            'late' => 0,
+            'today' => 0,
+            'upcoming' => 0,
+            'nodate' => 0,
+        ];
+        $data = [
+            'mine'=> $default,
+            'everyone'=> $default,
+        ];
+        $tickets = self::select([
+            DB::raw('SUM(CASE WHEN end_date < "'.$today.'" THEN 1 ELSE 0 END) as late'),
+            DB::raw('SUM(CASE WHEN end_date = "'.$today.'" THEN 1 ELSE 0 END) as today'),
+            DB::raw('SUM(CASE WHEN end_date > "'.$today.'" THEN 1 ELSE 0 END) as upcoming'),
+            DB::raw('SUM(CASE WHEN end_date is null THEN 1 ELSE 0 END) as nodate'),
+        ]);
+
+        $mine = $tickets->where('project_id', $id)->where('assigned_to', $user_id)->groupBy('project_id')->first();
+        $all = $tickets->where('project_id', $id)->groupBy('project_id')->first();
+        if($all)
+            $data['everyone'] = $all;
+        if($mine)
+            $data['mine'] = $mine;
+        return $data;
     }
 }

@@ -8,6 +8,7 @@ use App\Models\Ticket;
 use http\Env\Request;
 use Illuminate\Database\Eloquent\Model;
 use DB;
+use Illuminate\Support\Facades\Auth;
 
 class TimeLog extends Model
 {
@@ -166,5 +167,38 @@ class TimeLog extends Model
         $timeslog->groupBy('time_logs.project_id');
 
         return $timeslog->first();
+    }
+
+    public static function getSummaryByProject($id, $request)
+    {
+        $user_id = Auth::user()->id;
+        $default =  [
+            'mine' => 0,
+            'everyone' => 0
+        ];
+        $data = [
+            'logged'=> $default,
+            'breakdown'=> [],
+        ];
+        //DB::enableQueryLog();
+        $time_log = self::select([
+            DB::raw('SUM(hours*60 + minutes) as everyone'),
+            DB::raw('SUM(CASE WHEN user_id = "'.$user_id.'" THEN hours*60 + minutes ELSE 0 END) as mine')
+        ])->where('project_id', $id)->groupby('project_id')->get();
+
+        if($time_log)
+            $data['logged'] = $time_log;
+
+        $breakdown = self::with(['user'])->select([
+            DB::raw('SUM(hours*60 + minutes) as minutes'),
+            'user_id'
+        ])->where('project_id', $id)->groupby('user_id')->get();
+
+        if($breakdown)
+            $data['breakdown'] = $breakdown;
+
+        //print_r(DB::getQueryLog());
+
+        return $data;
     }
 }
