@@ -6,8 +6,6 @@
  */
 
 import axios from 'axios';
-import { cloneDeep, get  } from 'lodash';
-import keyGen from "vue2-datatable-component/src/_utils/keyGen";
 import filters from "../../config/Filters";
 // initial state
 const state = {
@@ -15,6 +13,7 @@ const state = {
     orderBy: localStorage.getItem('project_order_by') || 'asc',
     projects: [],
     append: false,
+    summary: {},
     filters: JSON.parse(localStorage.getItem('projects_filters')) || filters.project_list,
     completed: 0,
     pagination: {
@@ -31,6 +30,7 @@ const getters = {
     getSortBy: (state) => { return state.sortBy },
     getCompleted: (state) => { return state.completed },
     getOrderBy: (state) => { return state.orderBy },
+    getSummary: (state) => { return state.summary },
     getFilters: (state) => { return state.filters },
     getProject: (state)=>(id) => { return state.projects.find(project => project.id == id); },
     getPagination: (state) => { return state.pagination },
@@ -84,6 +84,18 @@ const actions = {
             axios.get("/project/" + id)
                 .then(response => {
                     context.commit('setProject', response.data);
+                    resolve(response);
+                })
+                .catch(error => {
+                    reject(error);
+                });
+        });
+    },
+    getSummary: (context, id) => {
+        return new Promise((resolve, reject) => {
+            axios.get("/project/" + id+ "/summary")
+                .then(response => {
+                    context.commit('setSummary', response.data.data);
                     resolve(response);
                 })
                 .catch(error => {
@@ -153,6 +165,7 @@ const mutations = {
     setPagination: (state, val) => { state.pagination = {...val} },
     setAppend: (state, val) => { state.append = val },
     setPage: (state, val) => { state.pagination.page = val;},
+    setSummary: (state, val) => { state.summary = val;},
     setCompleted: (state, val) => { state.completed = val;},
     setSortBy: (state, val) => { state.sortBy = val; localStorage.setItem('project_sort_by', val); },
     setOrderBy: (state, val) => { state.orderBy = val;localStorage.setItem('project_order_by', val); },

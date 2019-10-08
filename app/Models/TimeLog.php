@@ -184,7 +184,7 @@ class TimeLog extends Model
         $time_log = self::select([
             DB::raw('SUM(hours*60 + minutes) as everyone'),
             DB::raw('SUM(CASE WHEN user_id = "'.$user_id.'" THEN hours*60 + minutes ELSE 0 END) as mine')
-        ])->where('project_id', $id)->groupby('project_id')->get();
+        ])->where('project_id', $id)->groupby('project_id')->first();
 
         if($time_log)
             $data['logged'] = $time_log;

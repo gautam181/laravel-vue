@@ -34,6 +34,17 @@ Vue.filter('sqlDate', (val)=> {
         return '';
     return val? moment(val, settings.FORMDATEFROMAT).format('YYYY-MM-DD'): '';
 });
+Vue.filter('min2hours', (mins)=>{
+    let str = '';
+    let minutes = mins%60;
+    let hours = (mins-minutes)/60;
+    if (hours)
+        str += hours+' hour' + (hours > 1 ? 's ': ' ');
+    if (minutes)
+        str += minutes+' minute'+ (minutes > 1 ? 's ': ' ');
+
+    return str;
+});
 Vue.filter('prettyBytes', function (num) {
     // jacked from: https://github.com/sindresorhus/pretty-bytes
     if (typeof num !== 'number' || isNaN(num)) {

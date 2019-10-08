@@ -93,8 +93,10 @@ class Ticket extends Model
             DB::raw('SUM(CASE WHEN end_date is null THEN 1 ELSE 0 END) as nodate'),
         ]);
 
-        $mine = $tickets->where('project_id', $id)->where('assigned_to', $user_id)->groupBy('project_id')->first();
         $all = $tickets->where('project_id', $id)->groupBy('project_id')->first();
+
+        $mine = $tickets->where('project_id', $id)->where('assigned_to', $user_id)->groupBy('project_id')->first();
+        //print_r(DB::getQueryLog());
         if($all)
             $data['everyone'] = $all;
         if($mine)

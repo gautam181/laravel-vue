@@ -7,7 +7,7 @@
                     <h2 class="">Summary</h2>
                 </div>
             </div>
-            <div class="col-md-6 summary-row">
+            <div class="col-md-6 summary-row" v-if="summary.tickets">
                 <div class="row">
                     <div class="col-sm-12">
                         <h3>Tasks</h3>
@@ -15,69 +15,33 @@
 
                 </div>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-6" v-if="my_tasks">
                         <div class="summary-col section-holder has-settings tasks">
                             <div class="summary-col mini-chart" style="">
-                                <h4 data-bind="click: function(){OnQuickView('tasks','anytime',selectedUser.id())}" style="cursor:pointer;">
-                                    Mine
-                                </h4>
+                                <h4>Mine</h4>
 
                                 <ul class="lhs chart-legend">
-                                    <li class="late empty" data-bind="click: function(){OnQuickView('tasks','late',selectedUser.id())}, css:{'empty':summaryStats().tasks.mine.late()==0}">
-                                        <i class="fa fa-circle"></i>
-                                        <label><!--ko text:app.tl('Late')-->Late<!--/ko--></label> <span>(<!--ko text:summaryStats().tasks.mine.late-->0<!--/ko-->)</span>
-                                    </li>
-                                    <!-- ko if: showStartedTasks() -->
-                                    <li class="started empty" data-bind="click: function(){OnQuickView('tasks','started',selectedUser.id())}, css:{'empty':summaryStats().tasks.mine.started()==0}">
-                                        <i class="fa fa-circle"></i>
-                                        <label><!--ko text:app.tl('Started')-->Started<!--/ko--></label> <span>(<!--ko text:summaryStats().tasks.mine.started-->0<!--/ko-->)</span>
-                                    </li>
-                                    <!-- /ko -->
-                                    <li class="today empty" data-bind="click: function(){OnQuickView('tasks','today',selectedUser.id())}, css:{'empty':summaryStats().tasks.mine.today()==0}">
-                                        <i class="fa fa-circle"></i>
-                                        <label><!--ko text:app.tl('Today')-->Today<!--/ko--></label> <span>(<!--ko text:summaryStats().tasks.mine.today-->0<!--/ko-->)</span>
-                                    </li>
-                                    <li class="upcoming empty" data-bind="click: function(){OnQuickView('tasks','upcoming',selectedUser.id())}, css:{'empty':summaryStats().tasks.mine.upcoming()==0}">
-                                        <i class="fa fa-circle"></i>
-                                        <label><!--ko text:app.tl('Upcoming')-->Upcoming<!--/ko--></label> <span>(<!--ko text:summaryStats().tasks.mine.upcoming-->0<!--/ko-->)</span>
-                                    </li>
-                                    <li class="nodate empty" data-bind="click: function(){OnQuickView('tasks','nodate',selectedUser.id())}, css:{'empty':summaryStats().tasks.mine.nodate()==0}">
-                                        <i class="fa fa-circle"></i>
-                                        <label><!--ko text:app.tl('No date')-->No date<!--/ko--></label> <span>(<!--ko text:summaryStats().tasks.mine.nodate-->0<!--/ko-->)</span>
-                                    </li>
+                                    <summary-legend label="Late" color="late" :value="my_tasks.late"></summary-legend>
+<!--                                    <summary-legend label="Started" class="started" :value="my_tasks.started"></summary-legend>-->
+                                    <summary-legend label="Today" color="today" :value="my_tasks.today"></summary-legend>
+                                    <summary-legend label="Upcoming" color="upcoming" :value="my_tasks.upcoming"></summary-legend>
+                                    <summary-legend label="Nodate" color="nodate" :value="my_tasks.nodate"></summary-legend>
                                 </ul>
                             </div>
                             <!-- /ko -->
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6" v-if="all_tasks">
                         <div class="summary-col section-holder has-settings tasks">
                             <div class="summary-col mini-chart" style="">
                                 <h4>All</h4>
 
                                 <ul class="lhs chart-legend">
-                                    <li class="late empty" data-bind="click: function(){OnQuickView('tasks','late',selectedUser.id())}, css:{'empty':summaryStats().tasks.mine.late()==0}">
-                                        <i class="fa fa-circle"></i>
-                                        <label><!--ko text:app.tl('Late')-->Late<!--/ko--></label> <span>(<!--ko text:summaryStats().tasks.mine.late-->0<!--/ko-->)</span>
-                                    </li>
-                                    <!-- ko if: showStartedTasks() -->
-                                    <li class="started empty" data-bind="click: function(){OnQuickView('tasks','started',selectedUser.id())}, css:{'empty':summaryStats().tasks.mine.started()==0}">
-                                        <i class="fa fa-circle"></i>
-                                        <label><!--ko text:app.tl('Started')-->Started<!--/ko--></label> <span>(<!--ko text:summaryStats().tasks.mine.started-->0<!--/ko-->)</span>
-                                    </li>
-                                    <!-- /ko -->
-                                    <li class="today empty" data-bind="click: function(){OnQuickView('tasks','today',selectedUser.id())}, css:{'empty':summaryStats().tasks.mine.today()==0}">
-                                        <i class="fa fa-circle"></i>
-                                        <label><!--ko text:app.tl('Today')-->Today<!--/ko--></label> <span>(<!--ko text:summaryStats().tasks.mine.today-->0<!--/ko-->)</span>
-                                    </li>
-                                    <li class="upcoming empty" data-bind="click: function(){OnQuickView('tasks','upcoming',selectedUser.id())}, css:{'empty':summaryStats().tasks.mine.upcoming()==0}">
-                                        <i class="fa fa-circle"></i>
-                                        <label><!--ko text:app.tl('Upcoming')-->Upcoming<!--/ko--></label> <span>(<!--ko text:summaryStats().tasks.mine.upcoming-->0<!--/ko-->)</span>
-                                    </li>
-                                    <li class="nodate empty" data-bind="click: function(){OnQuickView('tasks','nodate',selectedUser.id())}, css:{'empty':summaryStats().tasks.mine.nodate()==0}">
-                                        <i class="fa fa-circle"></i>
-                                        <label><!--ko text:app.tl('No date')-->No date<!--/ko--></label> <span>(<!--ko text:summaryStats().tasks.mine.nodate-->0<!--/ko-->)</span>
-                                    </li>
+                                    <summary-legend label="Late" color="late" :value="all_tasks.late"></summary-legend>
+                                    <!--                                    <summary-legend label="Started" class="started" :value="my_tasks.started"></summary-legend>-->
+                                    <summary-legend label="Today" color="today" :value="all_tasks.today"></summary-legend>
+                                    <summary-legend label="Upcoming" color="upcoming" :value="all_tasks.upcoming"></summary-legend>
+                                    <summary-legend label="Nodate" color="nodate" :value="all_tasks.nodate"></summary-legend>
                                 </ul>
                             </div>
                             <!-- /ko -->
@@ -86,7 +50,7 @@
                 </div>
 
             </div>
-            <div class="col-md-6 summary-row">
+            <div class="col-md-6 summary-row" v-if="summary.time">
                 <div class="row">
                     <div class="col-sm-12">
                         <h3>Time</h3>
@@ -94,38 +58,40 @@
 
                 </div>
                 <div class="row">
-                    <div class="col-md-6">
-                        <div class="summary-col section-holder has-settings tasks">
+                    <div class="col-md-6" v-if="time.logged">
+                        <div class="summary-col">
                             <div class="summary-col mini-chart" style="">
-                                <h4 data-bind="click: function(){OnQuickView('tasks','anytime',selectedUser.id())}" style="cursor:pointer;">
+                                <h4>
                                     Logged Time
                                 </h4>
 
                                 <ul class="lhs chart-legend">
-                                    <li class="mine empty" data-bind="click: function(){OnQuickView('tasks','late',selectedUser.id())}, css:{'empty':summaryStats().tasks.mine.late()==0}">
+                                    <li :class="{'mine': true,  'empty': time.logged.mine == 0}" >
                                         <i class="fa fa-square"></i>
-                                        <label>Mine</label> <span>(0)</span>
+                                        <label>Mine</label> <span>{{ time.logged.mine | min2hours }}</span>
                                     </li>
-                                    <!-- ko if: showStartedTasks() -->
-                                    <li class="others empty" data-bind="click: function(){OnQuickView('tasks','started',selectedUser.id())}, css:{'empty':summaryStats().tasks.mine.started()==0}">
+                                    <li :class="{'others': true, 'empty': time.logged.everyone == 0 }">
                                         <i class="fa fa-circle"></i>
-                                        <label>All Others</label> <span>(0)</span>
+                                        <label>Total</label> <span>{{ time.logged.everyone | min2hours }}</span>
                                     </li>
                                 </ul>
                             </div>
                             <!-- /ko -->
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="summary-col section-holder has-settings tasks">
+                    <div class="col-md-6" v-if="time.breakdown">
+                        <div class="summary-col">
                             <div class="summary-col mini-chart" style="">
                                 <h4>BreakDown</h4>
 
                                 <ul class="lhs chart-legend">
-                                    <li class="empty">
-                                        <i class="fa fa-check-circle"></i>
-                                        <label>Abdul Khan</label> <span>(0)</span>
-                                    </li>
+                                    <template v-for="row in time.breakdown">
+                                        <li class="">
+                                            <i class="fa fa-check-circle"></i>
+                                            <label>{{ row.user.name }}</label> <span>{{ row.minutes | min2hours }}</span>
+                                        </li>
+                                    </template>
+
                                 </ul>
                             </div>
                             <!-- /ko -->
@@ -139,7 +105,8 @@
 </template>
 
 <script>
-    import Ticket from '../../components/util/Ticket';
+    import SummaryLegend from "../../components/ui/SummaryLegend";
+
     export default {
         name: "project-summary",
         data(){
@@ -159,12 +126,25 @@
         },
         created(){
             this.$root.$emit('project-info', this.project_id);
+            this.getSummary();
         },
-        watch: {
-
+        computed: {
+            summary:{
+                get() { return this.$store.getters['projects/getSummary']; },
+                set(value) { this.$store.commit('projects/setSummary', value); },
+            },
+            time() {
+                return this.summary.time;
+            },
+            my_tasks() {
+                return this.summary.tickets.mine;
+            },
+            all_tasks() {
+                return this.summary.tickets.everyone;
+            }
         },
         components: {
-            Ticket
+            SummaryLegend
         },
         mounted(){
 
@@ -173,6 +153,12 @@
             handlePageHeader: function(data){
                 this.$emit('handle-page-header', data);
             },
+            getSummary(){
+                this.$store.dispatch('projects/getSummary', this.project_id)
+                    .then(response =>{
+
+                    });
+            }
         },
         beforeRouteUpdate (to, from, next) {
             next();
