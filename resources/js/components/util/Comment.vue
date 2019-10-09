@@ -30,7 +30,7 @@
                     <span v-bind:title="comment.updated_at">{{ comment.updated_at | moment("from", "now") }}</span>
                     <b-dropdown right variant="default" no-caret>
                         <template slot="button-content">
-                            <i class="fas fa-ellipsis-v"></i>
+                            <i class="fa fa-ellipsis-v"></i>
                         </template>
                         <b-dropdown-item href="javascript:void(0);" @click="editComment()" >Edit</b-dropdown-item>
                         <b-dropdown-item href="javascript:void(0);" @click="deleteComment()">Delete</b-dropdown-item>

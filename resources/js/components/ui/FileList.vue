@@ -17,10 +17,10 @@
 
                 </div>
                 <div class="file-actions">
-                    <button class="btn btn-sm btn-default" @click="previewFile(file.filename)"><i class="fas fa-search"></i> Preview</button>
-                    <button class="btn btn-sm btn-default" @click="editFile(file)"><i class="fas fa-pencil-alt"></i> Edit</button>
+                    <button class="btn btn-sm btn-default" @click="previewFile(file.filename)"><i class="fa fa-search"></i> Preview</button>
+                    <button class="btn btn-sm btn-default" @click="editFile(file)"><i class="fa fa-pencil-alt"></i> Edit</button>
                     <!--<button class="btn btn-sm btn-default" @click="downloadFile(file.id)"><i class="fas fa-cloud-download-alt"></i> Download</button>-->
-                    <button class="btn btn-sm btn-outline btn-danger" @click="deleteFile(file.id)"><i class="fas fa-trash"></i></button>
+                    <button class="btn btn-sm btn-outline btn-danger" @click="deleteFile(file.id)"><i class="fa fa-trash"></i></button>
                 </div>
             </div>
         </template>
