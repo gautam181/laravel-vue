@@ -77,7 +77,7 @@
                                                     <div class="form-group">
                                                         <label class="control-label">Start Date</label>
                                                         <div class="input-group">
-                                                            <date-picker lang="en" v-model="start_date" :format="date_format" input-class="form-control"></date-picker>
+                                                            <date-picker  v-model="start_date" ref="start_date"  input-class="form-control"></date-picker>
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                                                             </div>
@@ -89,7 +89,7 @@
                                                     <div class="form-group">
                                                         <label class="control-label">End Date</label>
                                                         <div class="input-group">
-                                                            <date-picker lang="en" v-model="end_date" :format="date_format" input-class="form-control"></date-picker>
+                                                            <date-picker v-model="end_date" ref="end_date" input-class="form-control"></date-picker>
                                                             <div class="input-group-append">
                                                                 <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                                                             </div>
@@ -115,7 +115,6 @@
                     <button class="btn btn-primary btn-sm" type="button" v-on:click="saveTicket()" >Save Changes</button> or
                     <button class="btn w-xs btn-link btn-sm"  type="button" v-on:click="resetTicket()">Cancel</button>
                 </div>
-
             </div>
         </div>
 
@@ -147,7 +146,6 @@
                 show_desc: this.desc,
                 more_desc: this.desc ? 'less': 'more',
                 view_desc: this.desc ? 'Hide': 'Show',
-                date_format: this.$settings.DATEFROMAT,
                 ranges: true,
                 auto_apply: false,
                 singleDatePicker: false,
@@ -172,7 +170,7 @@
                     return this.ticket_detail.start_date? this.$options.filters.formDate(this.ticket_detail.start_date): '';
                 },
                 set: function (val) {
-                    this.ticket_detail.start_date=  val;
+                    this.ticket_detail.start_date=  this.$options.filters.sqlDate(val);
                 }
             } ,
             end_date: {
@@ -180,7 +178,7 @@
                     return this.ticket_detail.end_date? this.$options.filters.formDate(this.ticket_detail.end_date): '';
                 },
                 set: function (val) {
-                    this.ticket_detail.end_date=  val;
+                    this.ticket_detail.end_date=  this.$options.filters.sqlDate(val);
                 }
             },
             users(){

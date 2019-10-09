@@ -8,7 +8,7 @@
         v-model="dateRange"
     >
        <div slot="input" slot-scope="ticket">
-            <i class="glyphicon glyphicon-calendar fa fa-calendar"></i> &nbsp;
+            <i class="fa fa-calendar"></i> &nbsp;
             {{ getDateText }}
         </div>
     </date-range-picker>
