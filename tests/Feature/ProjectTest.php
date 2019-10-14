@@ -54,7 +54,7 @@ class ProjectTest extends TestCase
      */
     public function createProjects()
     {
-        $this->actingAs(factory(User::class)->create(), 'api');
+        $this->getActingAsUser();
 
         $response = $this->json('POST', route('project.store'), $this->data() );
         $this->assertCount(1, Project::all());
@@ -68,7 +68,7 @@ class ProjectTest extends TestCase
      */
     public function viewProjectsList()
     {
-        $this->actingAs(factory(User::class)->create(), 'api');
+        $this->getActingAsUser();
         $this->addProjects(2, ['owner'=>1]);
         $response = $this->json('GET', route('project.list'));
         $response->assertStatus(200);
@@ -97,7 +97,7 @@ class ProjectTest extends TestCase
      */
     public function viewProjectsWithOwnerList()
     {
-        $this->actingAs(factory(User::class)->create(), 'api');
+        $this->getActingAsUser();
         $this->addProjects(2, ['owner'=> null]);
         $response = $this->json('GET', route('project.list'));
         $response->assertStatus(200);
@@ -111,7 +111,7 @@ class ProjectTest extends TestCase
      */
     public function nameIsRequiredForProject()
     {
-        $this->actingAs(factory(User::class)->create(), 'api');
+        $this->getActingAsUser();
 
         $response = $this->json('POST', route('project.store'),
             array_merge($this->data(), ['name'=>''])
@@ -126,7 +126,7 @@ class ProjectTest extends TestCase
     *@test
     */
     public function ownerIsValidUser(){
-        $this->actingAs(factory(User::class)->create(), 'api');
+        $this->getActingAsUser();
 
         $response = $this->json('POST', route('project.store'),
             array_merge($this->data(), ['owner'=>'1'])
@@ -142,7 +142,7 @@ class ProjectTest extends TestCase
      *@test
      */
     public function ownerIsInValidUser(){
-        $this->actingAs(factory(User::class)->create(), 'api');
+        $this->getActingAsUser();
 
         $response = $this->json('POST', route('project.store'),
             array_merge($this->data(), ['owner'=>'524'])
@@ -159,7 +159,7 @@ class ProjectTest extends TestCase
      */
     public function descriptionIsRequiredForProject()
     {
-        $this->actingAs(factory(User::class)->create(), 'api');
+        $this->getActingAsUser();
 
         $response = $this->json('POST', route('project.store'),
             array_merge($this->data(), ['description'=>''])
@@ -175,7 +175,7 @@ class ProjectTest extends TestCase
      */
     public function updateProject()
     {
-        $this->actingAs(factory(User::class)->create(), 'api');
+        $this->getActingAsUser();
         $projects = $this->addProjects(1);
         $project = $projects[0]->toArray();
         $data = [
@@ -200,7 +200,7 @@ class ProjectTest extends TestCase
      */
     public function deleteProject()
     {
-        $this->actingAs(factory(User::class)->create(), 'api');
+        $this->getActingAsUser();
         $projects = $this->addProjects(1);
         $project = $projects[0]->toArray();
         $response = $this->json('DELETE', route('project.destroy', $project['id']));
@@ -213,7 +213,7 @@ class ProjectTest extends TestCase
      */
     public function viewProject()
     {
-        $this->actingAs(factory(User::class)->create(), 'api');
+        $this->getActingAsUser();
         $projects = $this->addProjects(1);
         $project = $projects[0]->toArray();
         $response = $this->json('GET', route('project.show', $project['id']));
@@ -234,7 +234,7 @@ class ProjectTest extends TestCase
      */
     public function getProjectTickets()
     {
-        $this->actingAs(factory(User::class)->create(), 'api');
+        $this->getActingAsUser();
         $projects = $this->addProjects(1);
         $project = $projects[0]->toArray();
         factory(Ticket::class, 10)->create(['project_id' => $project['id'], 'created_by'=> 1, 'assigned_to'=>1]);
@@ -266,7 +266,7 @@ class ProjectTest extends TestCase
     public function getProjectTime()
     {
         //todo: project files test
-        $this->actingAs(factory(User::class)->create(), 'api');
+        $this->getActingAsUser();
         $this->assertSame('todo', 'todo');
 
     }
@@ -277,7 +277,7 @@ class ProjectTest extends TestCase
     public function getProjectTimeSummary()
     {
         //Todo: project time summary
-        $this->actingAs(factory(User::class)->create(), 'api');
+        $this->getActingAsUser();
         $this->assertSame('todo', 'todo');
     }
 
@@ -287,7 +287,7 @@ class ProjectTest extends TestCase
     public function markProjectAsCompleted()
     {
         //todo: mark project as completed
-        $this->actingAs(factory(User::class)->create(), 'api');
+        $this->getActingAsUser();
         $this->assertSame('todo', 'todo');
     }
 
@@ -297,7 +297,12 @@ class ProjectTest extends TestCase
     public function projectSummary()
     {
         //todo: get project summary
-        $this->actingAs(factory(User::class)->create(), 'api');
+        $this->getActingAsUser();
         $this->assertSame('todo', 'todo');
+    }
+
+    private function getActingAsUser()
+    {
+        $this->actingAs(factory(User::class)->create(), 'api');
     }
 }

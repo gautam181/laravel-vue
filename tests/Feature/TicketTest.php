@@ -59,7 +59,7 @@ class TicketTest extends TestCase
      */
     public function createTickets()
     {
-        $this->actingAs(factory(User::class)->create(), 'api');
+        $this->getActingUser();
         $project = $this->getProject();
         $data = array_merge($this->data(), ['project_id'=> $project->id, 'assigned_to'=> 1]);
         $response = $this->json('POST', route('ticket.store'),$data );
@@ -74,7 +74,7 @@ class TicketTest extends TestCase
      */
     public function viewTicketsList()
     {
-        $this->actingAs(factory(User::class)->create(), 'api');
+        $this->getActingUser();
         $project = $this->getProject();
         $this->addTickets(10, ['assigned_to'=>1, 'project_id'=> $project->id, 'created_by'=> 1]);
         $response = $this->json('GET', route('ticket.list'));
@@ -104,7 +104,7 @@ class TicketTest extends TestCase
      */
     public function viewTicketsListWithoutProjectAndAssignedTo()
     {
-        $this->actingAs(factory(User::class)->create(), 'api');
+        $this->getActingUser();
         $this->addTickets(2, ['assigned_to'=> null, 'project_id'=> null, 'created_by'=> 1]);
         $response = $this->json('GET', route('ticket.list'));
         $response->assertStatus(200);
@@ -119,7 +119,7 @@ class TicketTest extends TestCase
      */
     public function titleIsequiredForTicket()
     {
-        $this->actingAs(factory(User::class)->create(), 'api');
+        $this->getActingUser();
 
         $response = $this->json('POST', route('ticket.store'),
             array_merge($this->data(), ['title'=>''])
@@ -134,7 +134,7 @@ class TicketTest extends TestCase
      *@test
      */
     public function assignedToIsValidUser(){
-        $this->actingAs(factory(User::class)->create(), 'api');
+        $this->getActingUser();
 
         $response = $this->json('POST', route('ticket.store'),
             array_merge($this->data(), ['assigned_to'=>'1'])
@@ -150,7 +150,7 @@ class TicketTest extends TestCase
      *@test
      */
     public function assignedToIsInValidUser(){
-        $this->actingAs(factory(User::class)->create(), 'api');
+        $this->getActingUser();
 
         $response = $this->json('POST', route('ticket.store'),
             array_merge($this->data(), ['assigned_to'=>'524'])
@@ -167,7 +167,7 @@ class TicketTest extends TestCase
      */
     public function createTicketWithValidProject()
     {
-        $this->actingAs(factory(User::class)->create(), 'api');
+        $this->getActingUser();
 
         $response = $this->json('POST', route('ticket.store'),
             array_merge($this->data(), ['created_by'=>1, 'project_id'=> $this->getProject()->id])
@@ -183,7 +183,7 @@ class TicketTest extends TestCase
      */
     public function createTicketWithInvalidProject()
     {
-        $this->actingAs(factory(User::class)->create(), 'api');
+        $this->getActingUser();
 
         $response = $this->json('POST', route('ticket.store'),
             array_merge($this->data(), ['created_by'=>1, 'project_id'=> 1231])
@@ -199,7 +199,7 @@ class TicketTest extends TestCase
      */
     public function updateTicket()
     {
-        $this->actingAs(factory(User::class)->create(), 'api');
+        $this->getActingUser();
         $Tickets = $this->addTickets(1, ['created_by'=> 1]);
         $Ticket = $Tickets[0]->toArray();
         $data = [
@@ -223,7 +223,7 @@ class TicketTest extends TestCase
      */
     public function deleteTicket()
     {
-        $this->actingAs(factory(User::class)->create(), 'api');
+        $this->getActingUser();
         $Tickets = $this->addTickets(1, ['created_by'=> 1]);
         $Ticket = $Tickets[0]->toArray();
         $response = $this->json('DELETE', route('ticket.destroy', $Ticket['id']));
@@ -236,7 +236,7 @@ class TicketTest extends TestCase
      */
     public function viewTicket()
     {
-        $this->actingAs(factory(User::class)->create(), 'api');
+        $this->getActingUser();
         $Tickets = $this->addTickets(1, ['created_by'=> 1, 'assigned_to'=> 1, 'project_id'=> $this->getProject()->id]);
         $Ticket = $Tickets[0]->toArray();
         $response = $this->json('GET', route('ticket.show', $Ticket['id']));
@@ -251,5 +251,10 @@ class TicketTest extends TestCase
             'project' => ['name'],
             "created_by" => ['name']
         ]);
+    }
+
+    private function getActingUser()
+    {
+        $this->actingAs(factory(User::class)->create(), 'api');
     }
 }
