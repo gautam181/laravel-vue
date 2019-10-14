@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\Auth\User;
 use App\Models\Project;
+use App\Models\Ticket;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -19,8 +20,9 @@ class ProjectTest extends TestCase
         return [
             'name' => 'Test project',
             'description' => 'Test Description',
-            'start_date' => null,
-            'end_date' => null,
+            'start_date' => '',
+            'end_date' => '',
+            'progress' => 0,
             'owner' => 1
         ];
     }
@@ -80,6 +82,7 @@ class ProjectTest extends TestCase
                     "description",
                     "start_date",
                     "end_date",
+                    "progress",
                     "owner",
                     "created_by"
                 ]
@@ -179,6 +182,7 @@ class ProjectTest extends TestCase
             'name' => 'edit project',
             'description' => 'Test Description',
             'start_date' => null,
+            'progress' => 0,
             'end_date' => null,
             'owner' => 1
         ];
@@ -225,4 +229,75 @@ class ProjectTest extends TestCase
         ]);
     }
 
+    /**
+     * @test
+     */
+    public function getProjectTickets()
+    {
+        $this->actingAs(factory(User::class)->create(), 'api');
+        $projects = $this->addProjects(1);
+        $project = $projects[0]->toArray();
+        factory(Ticket::class, 10)->create(['project_id' => $project['id'], 'created_by'=> 1, 'assigned_to'=>1]);
+        $response = $this->json('GET', route('project.ticket', $project['id']));
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            "current_page",
+            "total",
+            "data" => [
+                "*" => [
+                    "id",
+                    "title",
+                    "description",
+                    "start_date",
+                    "end_date",
+                    "assigned_to" => ["id", "name"],
+                    "project" => ["id", "name"],
+                    "created_by"
+                ]
+            ]
+        ]);
+
+
+    }
+
+    /**
+     * @test
+     */
+    public function getProjectTime()
+    {
+        //todo: project files test
+        $this->actingAs(factory(User::class)->create(), 'api');
+        $this->assertSame('todo', 'todo');
+
+    }
+
+    /**
+     * @test
+     */
+    public function getProjectTimeSummary()
+    {
+        //Todo: project time summary
+        $this->actingAs(factory(User::class)->create(), 'api');
+        $this->assertSame('todo', 'todo');
+    }
+
+    /**
+     * @test
+     */
+    public function markProjectAsCompleted()
+    {
+        //todo: mark project as completed
+        $this->actingAs(factory(User::class)->create(), 'api');
+        $this->assertSame('todo', 'todo');
+    }
+
+    /**
+     * @test
+     */
+    public function projectSummary()
+    {
+        //todo: get project summary
+        $this->actingAs(factory(User::class)->create(), 'api');
+        $this->assertSame('todo', 'todo');
+    }
 }
