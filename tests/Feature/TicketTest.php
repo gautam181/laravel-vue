@@ -207,7 +207,7 @@ class TicketTest extends TestCase
             'description' => 'Test Description',
             'start_date' => null,
             'end_date' => null,
-            'assigned_to' => 1
+            //'assigned_to' => 1
         ];
         $response = $this->json('PUT', route('ticket.update', $Ticket['id']),
             $data
@@ -215,7 +215,7 @@ class TicketTest extends TestCase
         $this->assertCount(1, Ticket::all());
         $response->assertStatus(202);
         $response->assertJson(['message' => "Ticket updated successfully"]);
-        $response->assertJson(['data' => $data]);
+        $response->assertJsonFragment($data);
     }
 
     /**
