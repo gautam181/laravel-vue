@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Auth\User;
 use App\Models\Project;
 use App\Models\Ticket;
+use App\Models\TimeLog;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -265,10 +266,38 @@ class ProjectTest extends TestCase
      */
     public function getProjectTime()
     {
-        //todo: project files test
         $this->getActingAsUser();
-        $this->assertSame('todo', 'todo');
-
+        $projects = $this->addProjects(1);
+        $project = $projects[0]->toArray();
+        factory(Ticket::class, 1)->create(['project_id' => $project['id'], 'created_by'=> 1, 'assigned_to'=>1]);
+        factory(TimeLog::class, 20)->create(['project_id' => $project['id'], 'ticket_id'=> 1, 'created_by'=>1, 'user_id'=>1]);
+        $response = $this->json('GET', route('project.time', $project['id']));
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            "current_page",
+            "total",
+            "data" => [
+                "*" => [
+                    "id",
+                    "project_id",
+                    "date",
+                    "time",
+                    "description",
+                    "hours",
+                    "minutes",
+                    "project_name",
+                    "project_status",
+                    "ticket_id",
+                    "ticket_name",
+                    "created_by",
+                    "user_id",
+                    "user_name",
+                    "user_email",
+                    "updated_at",
+                    "created_at",
+                ]
+            ]
+        ]);
     }
 
     /**
@@ -276,9 +305,21 @@ class ProjectTest extends TestCase
      */
     public function getProjectTimeSummary()
     {
-        //Todo: project time summary
         $this->getActingAsUser();
-        $this->assertSame('todo', 'todo');
+        $projects = $this->addProjects(1);
+        $project = $projects[0]->toArray();
+        factory(Ticket::class, 1)->create(['project_id' => $project['id'], 'created_by'=> 1, 'assigned_to'=>1]);
+        factory(TimeLog::class, 20)->create(['project_id' => $project['id'], 'ticket_id'=> 1, 'created_by'=>1, 'user_id'=>1]);
+        $response = $this->json('GET', route('project.time.summary', $project['id']));
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            "data" => [
+                "loggedHours",
+                "loggedMinutes",
+                "estimatedHours",
+                "estimatedMinutes"
+            ]
+        ]);
     }
 
     /**
