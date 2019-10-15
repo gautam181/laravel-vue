@@ -13,7 +13,7 @@ $factory->define(TimeLog::class, function (Faker $faker) {
         'hours' => $faker->numberBetween(0, 10),
         'minutes' => $faker->numberBetween(0, 59),
         'created_by' => null,
-        'user' => null,
+        'user_id' => null,
         'ticket_id' => null,
         'project_id' => null,
     ];
