@@ -40,7 +40,7 @@ class TimeLog extends Model
 
     public static function getSortBy($val ='')
     {
-        $sort = 'time_logs.date';
+        $sort = ['time_logs.date'];
         if(isset(self::$sort_options[$val]))
             $sort = self::$sort_options[$val];
         return $sort;
