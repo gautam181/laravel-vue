@@ -1,16 +1,16 @@
 <template>
-    <b-modal id="project-form" size="lg" top  ref="project-form" :ok-title="btn_ok_label" :title="modal_title" @ok="saveProject">
+    <b-modal id="project-form" size="lg" top  ref="project_form" :ok-title="btn_ok_label" :title="modal_title" @ok="handleOK">
         <div class="row">
             <div class="col-md-12">
                 <form method="get" class="form-horizontal">
-                    <div class="form-group">
+                    <div :class="{ 'form-group': true, 'has-error': errors.name }" ref="name">
                         <label class="control-label">Project title is:</label>
                         <div class=""><input type="text" name="title" v-model="project_info.name" class="form-control form-control-sm"></div>
                     </div>
                     <div>
                         <b-tabs nav-wrapper-class="nav-htabs">
                             <b-tab title="Description" :active="tab == 'description'">
-                                <div class="form-group">
+                                <div :class="{'form-group': true, 'has-error': errors.description }" ref="description">
                                     <label  for="project_desc">
                                         Provide a Description
                                     </label>
@@ -93,6 +93,7 @@
                     'id': '', 'name':'', 'description':'', 'owner': {}, 'start_date': '', 'end_date': ''
                 },
                 project_info: {'id': '', 'name':'', 'description':'', 'owner': {}, 'start_date': '', 'end_date': ''},
+                errors: {},
                 configs: {
                     timePicker: {
                         format: 'LT',
@@ -159,7 +160,7 @@
                         this.project = this.$store.getters['projects/getProject'](this.id);
                     })
             this.$store.dispatch('users/getUsersList');
-            this.$refs['project-form'].show();
+            this.$refs.project_form.show();
         },
         methods:{
             onStartChange(e) {
@@ -168,8 +169,11 @@
             onEndChange(e) {
                 this.$set(this.configs.start, 'maxDate', e.date || null);
             },
+            handleOK: function(bvModalEvt){
+                bvModalEvt.preventDefault();
+                this.saveProject();
+            },
             saveProject:function () {
-                //bvModalEvt.preventDefault();
                 this.$store.dispatch('projects/saveProject', {
                     id: this.project_info.id,
                     body: {
@@ -183,7 +187,7 @@
                     }
                 })
                     .then(response => {
-                        console.log(response);
+                        this.errors = {};
                         if (this.id < 1){
                             let project = response.data;
                             this.$router.push({'name': 'project-detail', params: {'id': project.id }});
@@ -195,9 +199,12 @@
                             timout: 3000,
                             position: 'bottomRight'
                         });
+                        this.$refs.project_form.hide();
                     })
-                    .catch(error => {
-                        this.$toast.warning('Error while updating the data!', "Warning", {
+                    .catch((error) => {
+                        let data = error.response.data;
+                        this.errors = data.errors;
+                        this.$toast.error(data.message, "Warning", {
                             timout: 3000,
                             position: 'bottomRight'
                         });
