@@ -71,7 +71,6 @@
                     </div>
                 </form>
             </div>
-
         </div>
     </b-modal>
 </template>
@@ -204,10 +203,11 @@
                     .catch((error) => {
                         let data = error.response.data;
                         this.errors = data.errors;
-                        this.$toast.error(data.message, "Warning", {
+                        /*this.$toast.error(data.message, "Warning", {
                             timout: 3000,
                             position: 'bottomRight'
-                        });
+                        });*/
+                        this.$root.$emit('showToast', data);
                     });
             }
         },

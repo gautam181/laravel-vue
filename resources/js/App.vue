@@ -12,6 +12,25 @@
                 </div>
             </div>
         </div>
+        <b-toast id="form_error" variant="danger" solid toaster="b-toaster-top-full">
+            <template v-slot:toast-title>
+                <div class="d-flex flex-grow-1 align-items-baseline">
+                    {{ toast.message }}
+                </div>
+            </template>
+            <ul>
+                <template v-for="(item, index) in toast.errors">
+                <li><template v-for="row in item">
+                        {{ row }}<br>
+                    </template>
+
+                </li>
+                </template>
+            </ul>
+
+
+
+        </b-toast>
     </div>
 </template>
 
@@ -31,6 +50,7 @@
         data(){
           return {
               pageHeaderData: '',
+              toast:{},
               settings: settings,
               height: 500,
               width:500,
@@ -49,10 +69,14 @@
             })
             window.addEventListener('resize', this.handleResize)
             this.handleResize();
+
         },
         mounted() {
             this.$insProgress.finish();
-            console.log('App mounted.', this.user);
+            this.$root.$on('showToast', (data)=>{
+                this.toast = data;
+                this.$bvToast.show('form_error');
+            });
         },
         methods:{
             handlePageHeader: function(data){
