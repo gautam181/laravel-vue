@@ -12,14 +12,14 @@
                 </div>
             </div>
         </div>
-        <b-toast id="form_error" variant="danger" solid toaster="b-toaster-top-full">
+        <b-toast id="message_alert" :variant="variant" solid :toaster="position">
             <template v-slot:toast-title>
                 <div class="d-flex flex-grow-1 align-items-baseline">
-                    {{ toast.message }}
+                    {{ message.message }}
                 </div>
             </template>
-            <ul>
-                <template v-for="(item, index) in toast.errors">
+            <ul v-if="message.errors">
+                <template v-for="(item, index) in message.errors">
                 <li><template v-for="row in item">
                         {{ row }}<br>
                     </template>
@@ -27,9 +27,7 @@
                 </li>
                 </template>
             </ul>
-
-
-
+            <p v-if="message.text">{{ message.text }}</p>
         </b-toast>
     </div>
 </template>
@@ -50,13 +48,18 @@
         data(){
           return {
               pageHeaderData: '',
-              toast:{},
+              message:{},
+              position: 'b-toaster-top-full',
               settings: settings,
               height: 500,
               width:500,
+
           }
         },
         computed:{
+            variant(){
+                return this.message.type ? this.message.type : (this.message.errors ? 'danger': '');
+            }
         },
         created(){
             this.$insProgress.start();
@@ -73,9 +76,9 @@
         },
         mounted() {
             this.$insProgress.finish();
-            this.$root.$on('showToast', (data)=>{
-                this.toast = data;
-                this.$bvToast.show('form_error');
+            this.$root.$on('showAlert', (data)=>{
+                this.message = data;
+                this.$bvToast.show('message_alert');
             });
         },
         methods:{

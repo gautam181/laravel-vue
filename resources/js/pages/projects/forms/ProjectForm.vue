@@ -194,6 +194,7 @@
                             this.$store.commit('projects/setProject', this.project_info);
                         }
                         this.$root.$emit('projectUpdate', this.project_info);
+                        //this.$root.$emit('showAlert',{message: 'Success', text: "Project updated successfully", type: 'success'});
                         this.$toast.success('Project updated successfully', "Success", {
                             timout: 3000,
                             position: 'bottomRight'
@@ -203,11 +204,8 @@
                     .catch((error) => {
                         let data = error.response.data;
                         this.errors = data.errors;
-                        /*this.$toast.error(data.message, "Warning", {
-                            timout: 3000,
-                            position: 'bottomRight'
-                        });*/
-                        this.$root.$emit('showToast', data);
+                        data.type = 'danger';
+                        this.$root.$emit('showAlert', data);
                     });
             }
         },
