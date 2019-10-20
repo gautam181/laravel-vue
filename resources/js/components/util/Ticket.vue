@@ -112,7 +112,9 @@
                             </div>
                         </div>
                     </div>
-                    <button class="btn btn-primary btn-sm" type="button" v-on:click="saveTicket()" >Save Changes</button> or
+                    <button class="btn btn-primary btn-sm" type="button" v-on:click="saveTicket()" :disabled="disable_save" >Save Changes
+                        <i class="fa fa-sync fa-spin" v-if="state.is_saving"></i>
+                    </button> or
                     <button class="btn w-xs btn-link btn-sm"  type="button" v-on:click="resetTicket()">Cancel</button>
                 </div>
             </div>
@@ -151,7 +153,10 @@
                 singleDatePicker: false,
                 linkedCalendars: true,
                 is_deleted: false,
-                ticket_detail: cloneDeep(this.ticket)
+                ticket_detail: cloneDeep(this.ticket),
+                state: {
+                    is_saving: false
+                }
             };
             return data
         },
@@ -164,6 +169,9 @@
                     startDate: this.ticket.start_date,
                     endDate: this.ticket.end_date
                 }
+            },
+            disable_save(){
+                return this.ticket_detail.title.length > 1? this.state.is_saving :true;
             },
             start_date:{
                 get: function(){
@@ -209,6 +217,7 @@
                 this.show_desc = !this.show_desc;
             },
             saveTicket: function () {
+                this.state.is_saving = true;
                 this.$store.dispatch('tickets/saveTicket', {
                     id: this.ticket_detail.id,
                     body: {
@@ -222,6 +231,7 @@
                     }
                 })
                     .then(response => {
+                        this.state.is_saving = false;
                         this.activated = false;
                         if(this.add=== false){
                             this.mode = 'view';
@@ -236,6 +246,7 @@
                         }
                     })
                     .catch(error => {
+                        this.state.is_saving = false;
                         let data = error.response.data;
                         this.errors = data.errors;
                         data.type = 'danger';
