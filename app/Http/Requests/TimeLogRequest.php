@@ -27,6 +27,12 @@ class TimeLogRequest extends FormRequest
             'ticket_id' => ['required', 'exists:Tickets,id'],
             'project_id' => ['required', 'exists:Projects,id'],
             'user_id' => ['required', 'exists:Users,id'],
+            'minutes' => [function ($attribute, $value, $fail) {
+                $hours = self::get('hours');
+                if($value < 1 && $hours < 1)
+                    $fail('Log time must be al least one minute ');
+            }],
+            'description' => ['required'],
         ];
     }
 }
