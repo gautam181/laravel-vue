@@ -236,7 +236,10 @@
                         }
                     })
                     .catch(error => {
-                        console.log(error);
+                        let data = error.response.data;
+                        this.errors = data.errors;
+                        data.type = 'danger';
+                        this.$root.$emit('showAlert', data);
                     });
             },
             resetTicket: function () {
