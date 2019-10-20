@@ -14,7 +14,7 @@
                             <editor v-model="comment_body" :html="comment_formatted" mode="wysiwyg" ref="commentEditor" height="200px" v-if="activated"></editor>
                             <div v-if="activated">
                                 <div class="hr-line-dashed"></div>
-                                <button class="btn btn-primary" type="button" v-on:click="saveComment()" :disabled="comment_body.length < 1">Save Comment</button> or
+                                <button class="btn btn-primary" type="button" v-on:click="saveComment()" :disabled="comment_body.length < 1">Save Comment <i class="fa fa-sync fa-spin" v-if="state.is_saving"></i></button> or
                                 <button class="btn w-xs btn-link"  type="button" v-on:click="resetComment()">Cancel</button>
                             </div>
 
@@ -32,8 +32,8 @@
                         <template slot="button-content">
                             <i class="fa fa-ellipsis-v"></i>
                         </template>
-                        <b-dropdown-item href="javascript:void(0);" @click="editComment()" >Edit</b-dropdown-item>
-                        <b-dropdown-item href="javascript:void(0);" @click="deleteComment()">Delete</b-dropdown-item>
+                        <a class="dropdown-item" href="javascript:void(0);" @click="editComment()"><i class="fa fa-pen"></i> Edit</a>
+                        <a class="dropdown-item" href="javascript:void(0);" @click="deleteComment()" :disabled="state.is_saving"><i class="fa fa-trash"></i> Delete</a>
                     </b-dropdown>
                 </div>
             </div>
@@ -51,6 +51,9 @@
         props: ['author', 'comment', 'ticket', 'edit'],
         data: function(){
             return {
+                state:{
+                    is_saving: false
+                },
                 mode: this.edit ? 'update': 'view',
                 comment_body: this.comment.comment,
                 comment_formatted : this.comment.comment,
@@ -72,6 +75,7 @@
         },
         methods: {
             saveComment: function () {
+                this.state.is_saving = true;
                 this.$store.dispatch('comments/saveComment', {
                     id: this.comment.id,
                     body: {
@@ -82,6 +86,7 @@
                     }
                 })
                     .then(response => {
+                        this.state.is_saving = false;
                         this.activated = false;
                         if(this.edit=== false)
                             this.mode = 'view';
@@ -90,7 +95,11 @@
                         this.$emit('commentUpdate', response);
                     })
                     .catch(error => {
-                        console.log(error);
+                        this.state.is_saving = false;
+                        let data = error.response.data;
+                        this.errors = data.errors;
+                        data.type = 'danger';
+                        this.$root.$emit('showAlert', data);
                     });
             },
             resetComment: function () {
@@ -108,13 +117,26 @@
                 console.info("Edit Called")
             },
             deleteComment(){
-                console.info("delete called");
-                this.$store.dispatch('comments/deleteComment', this.comment.id)
-                    .then(res=>{
-                        this.id_deleted = true;
-                    })
-
-
+                this.state.is_saving = true;
+                this.$swal(
+                    {
+                        title: 'Are you sure?',
+                        text: "You won't be able to revert this!",
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                        if (result.value) {
+                            this.$store.dispatch('comments/deleteComment', this.comment.id)
+                                .then(res=>{
+                                    this.state.is_saving = false;
+                                    this.id_deleted = true;
+                                })
+                        }
+                    }
+                );
             }
         },
 
