@@ -3,7 +3,7 @@
         <template v-slot:modal-footer="{ ok, cancel, hide }">
             <button type="button" class="btn btn-secondary mr-auto" @click="cancel()">Cancel</button>
             <button type="button" class="btn btn-danger mr-auto" v-if="time_log" @click="deleteTimeLog"><i class="fa fa-times"></i> Delete time Entry</button>
-            <button type="button" class="btn btn-success" @click="saveTimeLog">{{btn_ok_label}}</button>
+            <button type="button" class="btn btn-success" @click="saveTimeLog">{{btn_ok_label}}  <i class="fa fa-sync fa-spin" v-if="state.is_saving"></i></button>
         </template>
         <div class="modal-info-bar" v-if="ticket">
             <span class="modal-info-bar-label">Ticket</span>
@@ -125,6 +125,9 @@
                 myRoute : {},
                 project: {
                     'id': '', 'name':'', 'description':'', 'owner': {}, 'start_date': '', 'end_date': ''
+                },
+                state:{
+                    is_saving: false
                 },
                 timeEntry: {
                     user : {'id': this.$user.id, 'name': this.$user.name},
@@ -305,6 +308,7 @@
 
             },
             saveTimeLog:function () {
+                this.state.is_saving = true;
                 this.$store.dispatch('timelog/saveTime', {
                     id: this.timeEntry.id,
                     body: {
@@ -320,7 +324,7 @@
                     }
                 })
                     .then(response => {
-
+                        this.state.is_saving = false;
                         this.$root.$emit('timeUpdate', response);
                         this.$toast.success('Time Log updated successfully', "Success", {
                             timout: 3000,
@@ -329,11 +333,11 @@
                         this.$refs.time_form.hide();
                     })
                     .catch(error => {
-                        console.error(error);
-                        this.$toast.warning('Error while updating the data!', "Warning", {
-                            timout: 3000,
-                            position: 'bottomRight'
-                        });
+                        this.state.is_saving = false;
+                        let data = error.response.data;
+                        this.errors = data.errors;
+                        data.type = 'danger';
+                        this.$root.$emit('showAlert', data);
                     });
             },
             deleteTimeLog: function () {

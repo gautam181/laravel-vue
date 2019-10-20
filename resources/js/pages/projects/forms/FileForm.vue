@@ -44,6 +44,9 @@
         },
         data(){
             return {
+                state:{
+                    is_saving: false
+                },
                 file_info : {}
             }
         },
@@ -69,6 +72,7 @@
         },
         methods:{
             saveFileDetails:function (bvModalEvt) {
+                this.state.is_saving = true;
                 bvModalEvt.preventDefault();
                 this.$store.dispatch('files/saveFileDetails', {
                     id: this.file_info.id,
@@ -79,6 +83,7 @@
                     }
                 })
                     .then(response => {
+                        this.state.is_saving = false;
                         //this.$store.commit('projects/setProject', this.project_info);
                         this.$root.$emit('fileUpdate', this.file_info);
                         this.$toast.success('File updated successfully', "Success", {
@@ -88,10 +93,11 @@
                         this.$refs.file_form.hide();
                     })
                     .catch(error => {
-                        this.$toast.warning('Error while updating the data!', "Warning", {
-                            timout: 3000,
-                            position: 'bottomRight'
-                        });
+                        this.state.is_saving = false;
+                        let data = error.response.data;
+                        this.errors = data.errors;
+                        data.type = 'danger';
+                        this.$root.$emit('showAlert', data);
                     });
             }
         },

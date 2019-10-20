@@ -91,6 +91,9 @@
                 project: {
                     'id': '', 'name':'', 'description':'', 'owner': {}, 'start_date': '', 'end_date': ''
                 },
+                state:{
+                    is_saving: false
+                },
                 project_info: {'id': '', 'name':'', 'description':'', 'owner': {}, 'start_date': '', 'end_date': ''},
                 errors: {},
                 configs: {
@@ -170,9 +173,11 @@
             },
             handleOK: function(bvModalEvt){
                 bvModalEvt.preventDefault();
-                this.saveProject();
+                if (!this.state.is_saving)
+                    this.saveProject();
             },
             saveProject:function () {
+                this.state.is_saving = true;
                 this.$store.dispatch('projects/saveProject', {
                     id: this.project_info.id,
                     body: {
@@ -186,6 +191,7 @@
                     }
                 })
                     .then(response => {
+                        this.state.is_saving = false;
                         this.errors = {};
                         if (this.id < 1){
                             let project = response.data;
@@ -202,6 +208,7 @@
                         this.$refs.project_form.hide();
                     })
                     .catch((error) => {
+                        this.state.is_saving = false;
                         let data = error.response.data;
                         this.errors = data.errors;
                         data.type = 'danger';
