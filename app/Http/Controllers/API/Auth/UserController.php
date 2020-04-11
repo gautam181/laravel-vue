@@ -26,7 +26,7 @@ class UserController extends Controller
             return response()->json($response, $this-> successStatus);
         }
         else{
-            return response()->json(['error'=>'Unauthorised'], 401);
+            return response()->json(['error'=>'Invalid user credentials'], 401);
         }
     }
     /**
