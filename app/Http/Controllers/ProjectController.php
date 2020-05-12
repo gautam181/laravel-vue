@@ -172,7 +172,7 @@ class ProjectController extends Controller
     {
         $project = Project::with(['created_by', 'owner'])->findOrFail($id);
         $project->progress = 100;
-        $project->status = 1;
+        $project->status = !$project->status;
         $project->save();
 
         return response()->json(["message"=>"Project completed successfully", 'data'=> $project->toArray()], 202);
