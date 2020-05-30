@@ -26,7 +26,7 @@ import moment from 'moment';
 
 //plugins
 import VueRouter from 'vue-router';
-import Datatable from 'vue2-datatable-component';
+//import Datatable from 'vue2-datatable-component';
 import { Plugin } from 'vue-fragment';
 import BootstrapVue from 'bootstrap-vue';
 import VueBreadcrumbs from 'vue-breadcrumbs';
