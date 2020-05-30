@@ -19,7 +19,7 @@ class TimeLogTableSeeder extends Seeder
             $ticket = $this->getRandomTicket();
             factory(TimeLog::class, rand(10, 20))->create([
                 'created_by' => function() { return User::getRandomUser(); },
-                'user' => function() {return User::getRandomUser(); },
+                'user_id' => function() {return User::getRandomUser(); },
                 'project_id' => $ticket->project_id,
                 'ticket_id' => $ticket->id,
             ]);
