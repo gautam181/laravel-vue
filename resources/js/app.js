@@ -83,7 +83,7 @@ Vue.prototype.$app = window.application;
 Vue.prototype.$settings = settings;
 Vue.prototype.$filters = searchFilters;
 Vue.prototype.$ajaxHeader = window.ajaxHeaders;
-Vue.use(Datatable);
+//Vue.use(Datatable);
 Vue.use(Plugin);
 Vue.use(require('vue-moment'));
 //https://www.npmjs.com/package/vue-izitoast
