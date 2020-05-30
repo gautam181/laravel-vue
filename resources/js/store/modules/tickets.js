@@ -6,7 +6,7 @@
  */
 
 import axios from 'axios';
-import Vue from 'Vue';
+import Vue from 'vue';
 import filters from "../../config/Filters";
 import {validateDateRange} from "vue2-daterange-picker/src/components/util";
 
