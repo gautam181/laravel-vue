@@ -67,7 +67,7 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" data-dropdown-in="flipInX" data-dropdown-out="flipOutX">
                             <a class="dropdown-item" href="profile.html"><i class="fa fa-user"></i> Profile</a>
-                            <a class="dropdown-item" href="#"><i class="fa fa-power-off"></i> <span>Log out</span></a>
+                            <a class="dropdown-item" href="javascript:void(0);" v-on:click="logout"><i class="fa fa-power-off"></i> <span>Log out</span></a>
                         </div>
                     </li>
                 </ul>
@@ -106,6 +106,10 @@
                     console.log(this.$route.path.indexOf(path), path);
                     return this.$route.path.indexOf(path) === 0
                 })
+            },
+
+            logout: function () {
+                document.getElementById("logout-form").submit();
             }
         }
     }
