@@ -24,9 +24,9 @@ class TimeLogRequest extends FormRequest
     public function rules()
     {
         return [
-            'ticket_id' => ['required', 'exists:Tickets,id'],
-            'project_id' => ['required', 'exists:Projects,id'],
-            'user_id' => ['required', 'exists:Users,id'],
+            'ticket_id' => ['required', 'exists:tickets,id'],
+            'project_id' => ['required', 'exists:projects,id'],
+            'user_id' => ['required', 'exists:users,id'],
             'minutes' => [function ($attribute, $value, $fail) {
                 $hours = self::get('hours');
                 if($value < 1 && $hours < 1)

@@ -26,7 +26,7 @@ class ProjectRequest extends FormRequest
         return [
             'name' => 'required',
             'description' => 'required',
-            'owner' => ['nullable', 'exists:Users,id']
+            'owner' => ['nullable', 'exists:users,id']
         ];
     }
 }

@@ -25,9 +25,9 @@ class CommentRequest extends FormRequest
     {
         return [
             'comment' => 'required',
-            'ticket_id' => ['required', 'exists:Tickets,id'],
-            'project_id' => ['required', 'exists:Projects,id'],
-            'author_id' => ['required', 'exists:Users,id'],
+            'ticket_id' => ['required', 'exists:tickets,id'],
+            'project_id' => ['required', 'exists:projects,id'],
+            'author_id' => ['required', 'exists:users,id'],
         ];
     }
 }

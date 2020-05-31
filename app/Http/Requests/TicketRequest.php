@@ -25,8 +25,8 @@ class TicketRequest extends FormRequest
     {
         return [
             'title' => 'required|max:200',
-            'assigned_to' => ['nullable', 'exists:Users,id'],
-            'project_id' => ['nullable', 'exists:Projects,id'],
+            'assigned_to' => ['nullable', 'exists:users,id'],
+            'project_id' => ['nullable', 'exists:projects,id'],
         ];
     }
 }
